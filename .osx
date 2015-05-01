@@ -2,6 +2,8 @@
 
 # ~/.osx — https://mths.be/osx
 
+# Make a time machine backup before you run anything, just in case. 
+
 # Ask for the administrator password upfront
 sudo -v
 
