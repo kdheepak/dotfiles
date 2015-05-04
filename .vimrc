@@ -368,3 +368,37 @@ nnoremap <Leader>rtw :%s/\s\+$//ge<CR>
 :command Wq wq
 :command W w
 :command Q q
+
+inoremap $1 ()<esc>i
+inoremap $2 []<esc>i
+inoremap $3 {}<esc>i
+inoremap $4 {<esc>o}<esc>O
+inoremap $q ''<esc>i
+inoremap $e ""<esc>i
+inoremap $t <><esc>i
+
+
+iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
+vnoremap $e <esc>`>a"<esc>`<i"<esc>
+
+" Ignore case when searching
+set ignorecase
+"
+" " When searching try to be smart about cases 
+set smartcase
+
+
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+
+
