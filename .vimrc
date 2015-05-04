@@ -17,6 +17,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-repeat'
+Plugin 'molokai'
 Plugin 'kien/ctrlp.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'godlygeek/tabular'
@@ -70,11 +71,12 @@ set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
 set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
-"if has("mouse")
+"let g:solarized_termcolors=256
+let g:rehash256 = 1
+colorscheme molokai
+if has("mouse")
 set mouse=a
-"endif
+endif
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -195,7 +197,7 @@ map <C-K> <C-W>k<C-W>
 map <C-L> <C-W>l<C-W>
 map <C-H> <C-W>h<C-W>
 
-let g:pyflakes_use_quickfix = 0
+"let g:pyflakes_use_quickfix = 0
 
 map <silent> <C-h> :call WinMove('h')<cr>
 map <silent> <C-j> :call WinMove('j')<cr>
@@ -215,13 +217,13 @@ nnoremap <silent> $ g$
 " search for word under the cursor
 nnoremap <leader>/ "fyiw :/<c-r>f<cr>
 
-au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-
-set completeopt=menuone,longest,preview
-" faster redrawing
-
-" highlight conflicts
+"au FileType python set omnifunc=pythoncomplete#Complete
+"let g:SuperTabDefaultCompletionType = "context"
+"
+"set completeopt=menuone,longest,preview
+"" faster redrawing
+"
+"" highlight conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Set 7 lines to the cursor - when moving vertically using j/k
@@ -271,10 +273,10 @@ set pastetoggle=<F6>
 map <leader>v :set paste!<cr>
 
 " Unmap the arrow keys
-no <down> ddp
+no <down> <Nop>
 no <left> <Nop>
 no <right> <Nop>
-no <up> ddkP
+no <up> <Nop>
 ino <down> <Nop>
 ino <left> <Nop>
 ino <right> <Nop>
@@ -313,7 +315,7 @@ endfunction
 
 "autocmd! bufwritepost .vimrc source %
 
-let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_open = 1
 
 nnoremap <Leader>rtw :%s/\s\+$//ge<CR>
 
@@ -329,34 +331,34 @@ nnoremap <Leader>rtw :%s/\s\+$//ge<CR>
 " [[            Jump on previous class or function (normal, visual, operator modes)
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
-" ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1
-
-" Documentation
-let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
-
-"Linting
-let g:pymode_lint = 1
-let g:pymode_lint_checker = "pyflakes,pep8"
-" Auto check on save
-let g:pymode_lint_write = 1
-
-" Support virtualenv
-let g:pymode_virtualenv = 1
-
-" Enable breakpoints plugin
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_bind = '<leader>b'
-
-" syntax highlighting
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-noremap <F8> :PymodeLintAuto<CR>
-" Don't autofold code
-let g:pymode_folding = 0
+"" ]M            Jump on next class or method (normal, visual, operator modes)
+"let g:pymode_rope = 1
+"
+"" Documentation
+"let g:pymode_doc = 1
+"let g:pymode_doc_key = 'K'
+"
+""Linting
+"let g:pymode_lint = 1
+"let g:pymode_lint_checker = "pyflakes,pep8"
+"" Auto check on save
+"let g:pymode_lint_write = 1
+"
+"" Support virtualenv
+"let g:pymode_virtualenv = 1
+"
+"" Enable breakpoints plugin
+"let g:pymode_breakpoint = 1
+"let g:pymode_breakpoint_bind = '<leader>b'
+"
+"" syntax highlighting
+"let g:pymode_syntax = 1
+"let g:pymode_syntax_all = 1
+"let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+"let g:pymode_syntax_space_errors = g:pymode_syntax_all
+"noremap <F8> :PymodeLintAuto<CR>
+"" Don't autofold code
+"let g:pymode_folding = 0
 
 :command WQ wq
 :command Wq wq
