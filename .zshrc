@@ -83,7 +83,6 @@ source $ZSH/oh-my-zsh.sh
 # added by Anaconda 2.1.0 installer
 export PATH="/Users/$USER/anaconda/bin:$PATH"
 
-export PYTHONPATH="/Users/$USER/Documents/GitRepos/tdshub:$PYTHONPATH"
 export PATH="/Users/$USER/Documents/gridlabd/bin:$PATH"
 export PATH="/Users/$USER/Documents/GitRepos/macvim/src/MacVim:$PATH"
 export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
@@ -94,10 +93,6 @@ export GIT_EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
 #alias vim="/usr/local/Cellar/emacs/24.4/Emacs.app/Contents/MacOS/Emacs -nw"
 #alias vi="/usr/local/Cellar/emacs/24.4/Emacs.app/Contents/MacOS/Emacs -nw"
 alias emacs="/usr/local/Cellar/emacs/24.4/Emacs.app/Contents/MacOS/Emacs -nw"
-export PYTHONPATH="/Users/$USER/Documents/GitRepos/iesm-prototype:$PYTHONPATH"
-export PYTHONPATH="/Users/$USER/Documents/GitRepos/CSC_PyPDEVS/PyPDEVS:$PYTHONPATH"
-export PYTHONPATH="/Users/$USER/Documents/GitRepos/iesm-prototype/DEVS_controller:$PYTHONPATH"
-export PYTHONPATH="/Users/$USER/Documents/GitRepos/gridlabpy:$PYTHONPATH"
 
 if [[ $TERM == xterm ]]; then
     TERM=xterm-256color
