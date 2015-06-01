@@ -17,8 +17,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-repeat'
-Plugin 'molokai'
 Plugin 'kien/ctrlp.vim'
+Plugin 'tomasr/molokai'
 Plugin 'sjl/gundo.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'christoomey/vim-tmux-navigator'
@@ -31,8 +31,11 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'ervandew/supertab'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
 Plugin 'searchalternatives'
 Plugin 'searchcomplete'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'mileszs/ack.vim'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
@@ -41,7 +44,9 @@ Plugin 'wincent/Command-T'
 Plugin 'reinh/vim-makegreen' 
 Plugin 'vim-scripts/The-NERD-tree' 
 Plugin 'tpope/vim-unimpaired' 
+Plugin 'kshenoy/vim-signature' 
 Plugin 'davidhalter/jedi'
+
 let s:python_ver = 0
 silent! python import sys, vim;
 			\ vim.command("let s:python_ver="+"".join(map(str,sys.version_info[0:3])))
@@ -68,20 +73,31 @@ filetype plugin indent on    " required
 
 set ttymouse=xterm2
 
-syntax on
+syntax enable
+" tell it to use an undo file
+set undofile
+" set a directory to store the undo history
+set undodir=~/.vim/undodir
+
 set number
 set t_Co=256
 set encoding=utf-8
 set fillchars+=stl:\ ,stlnc:\
-set term=xterm-256color
+set term=screen-256color
+"set term=xterm-256color
 set termencoding=utf-8
 set background=dark
-"let g:solarized_termcolors=256
+let g:solarized_termcolors=256
 let g:rehash256 = 1
-colorscheme molokai
+
+colorscheme gruvbox
+
+
 if has("mouse")
     set mouse=a
 endif
+
+
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -98,21 +114,29 @@ vmap <C-x> "+c
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
-" Solarized -------------------------------------------------------------- {{{
-if exists('g:colors_name') && g:colors_name == 'solarized'
-    " Text is unreadable with background transparency.
-    if has('gui_macvim')
-        set transparency=0
-    endif
-
-    " Highlighted text is unreadable in Terminal.app because it
-    " does not support setting of the cursor foreground color.
-    if !has('gui_running') && $TERM_PROGRAM == 'Apple_Terminal'
-        if &background == 'dark'
-            hi Visual term=reverse cterm=reverse ctermfg=10 ctermbg=7
-        endif
-    endif
+" Mokolai
+if has('gui_running')
+    set background=light
+else
+    set background=dark
 endif
+
+
+"" Solarized -------------------------------------------------------------- {{{
+"if exists('g:colors_name') && g:colors_name == 'solarized'
+"    " Text is unreadable with background transparency.
+"    if has('gui_macvim')
+"        set transparency=0
+"    endif
+"
+"    " Highlighted text is unreadable in Terminal.app because it
+"    " does not support setting of the cursor foreground color.
+"    if !has('gui_running') && $TERM_PROGRAM == 'Apple_Terminal'
+"        if &background == 'dark'
+"            hi Visual term=reverse cterm=reverse ctermfg=10 ctermbg=7
+"        endif
+"    endif
+"endif
 
 
 set list listchars=tab:>-,extends:»,precedes:«
@@ -120,7 +144,7 @@ set list listchars=tab:>-,extends:»,precedes:«
 au filetype py set autoindent
 au filetype py set smartindent
 au filetype py set textwidth=79 " pep-8 friendly
-
+"
 au filetype python set omnifunc=pythoncomplete#complete
 let g:supertabdefaultcompletiontype = "context"
 
@@ -137,7 +161,7 @@ let g:airline_theme             = 'powerlineish'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-"
+
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
@@ -195,7 +219,7 @@ set nostartofline
 
 "toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
-
+nnoremap <F5> :GundoToggle<CR>
 " Easier moving in tabs and windows
 map <C-J> <C-W>j<C-W>
 map <C-K> <C-W>k<C-W>
@@ -387,3 +411,4 @@ set ignorecase
 set smartcase
 set ai "Apple_Terminaluto indent
 set si "Smart indent
+
