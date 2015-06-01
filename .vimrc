@@ -17,20 +17,21 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-repeat'
+Plugin 'molokai'
 Plugin 'kien/ctrlp.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'ervandew/supertab'
 Plugin 'searchalternatives'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
 Plugin 'searchcomplete'
 Plugin 'mileszs/ack.vim'
 Plugin 'fholgado/minibufexpl.vim'
@@ -79,14 +80,14 @@ set background=dark
 let g:rehash256 = 1
 colorscheme molokai
 if has("mouse")
-set mouse=a
+    set mouse=a
 endif
 set tabstop=4
 set shiftwidth=4
 set expandtab
 
-set nowrap "don't automatically wrap on load
-set fo-=t " don't automatically wrap text when typign
+set wrap "automatically wrap on load
+"set fo-=t " don't automatically wrap text when typign
 "set colorcolumn=80
 highlight ColorColumn ctermbg=233
 
@@ -281,14 +282,6 @@ no <down> <Nop>
 no <left> <Nop>
 no <right> <Nop>
 no <up> <Nop>
-ino <down> <Nop>
-ino <left> <Nop>
-ino <right> <Nop>
-ino <up> <Nop>
-vno <down> <Nop>
-vno <left> <Nop>
-vno <right> <Nop>
-vno <up> <Nop>
 
 " Textmate style indentation
 vmap <leader>[ <gv
@@ -364,10 +357,12 @@ nnoremap <Leader>rtw :%s/\s\+$//ge<CR>
 "" Don't autofold code
 "let g:pymode_folding = 0
 
+
 :command WQ wq
 :command Wq wq
 :command W w
 :command Q q
+
 
 inoremap $1 ()<esc>i
 inoremap $2 []<esc>i
@@ -377,28 +372,18 @@ inoremap $q ''<esc>i
 inoremap $e ""<esc>i
 inoremap $t <><esc>i
 
-
-iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
-
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
 vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $2 <escc>`>a]<esc>`<i[<esc>
 vnoremap $3 <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $inoremap$ <esc>`>a"<esc>`<i"<esc>
 vnoremap $q <esc>`>a'<esc>`<i'<esc>
 vnoremap $e <esc>`>a"<esc>`<i"<esc>
+
 
 " Ignore case when searching
 set ignorecase
 "
-" " When searching try to be smart about cases 
+" "                           When searching try to be smart about cases 
 set smartcase
-
-
-set ai "Auto indent
+set ai "Apple_Terminaluto indent
 set si "Smart indent
-set wrap "Wrap lines
-
-
