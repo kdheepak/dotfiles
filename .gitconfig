@@ -1,4 +1,21 @@
+[user]
+	name = Dheepak Krishnamurthy
+	email = dheepak.krishnamurthy@nrel.gov
+[push]
+	default = simple
+[core]
+	excludesfile = /Users/dkrishna/.gitignore
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[diff]
+	tool = vimdiff
 [alias]
+	co = checkout
+	
+	ls = log --graph --abbrev-commit --decorate --color=always --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)' --all
 
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
