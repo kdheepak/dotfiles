@@ -3,8 +3,6 @@
 	email = dheepak.krishnamurthy@nrel.gov
 [push]
 	default = simple
-[core]
-	excludesfile = /Users/dkrishna/.gitignore
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
