@@ -30,11 +30,13 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'ervandew/supertab'
+Plugin 'Shougo/neocomplete'
+Plugin 'Yggdroot/indentLine'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'morhetz/gruvbox'
 Plugin 'searchalternatives'
 Plugin 'searchcomplete'
+Plugin 'henrik/vim-indexed-search'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'mileszs/ack.vim'
 Plugin 'fholgado/minibufexpl.vim'
@@ -86,7 +88,7 @@ set fillchars+=stl:\ ,stlnc:\
 set term=screen-256color
 "set term=xterm-256color
 set termencoding=utf-8
-set background=dark
+set background=light
 let g:solarized_termcolors=256
 let g:rehash256 = 1
 
@@ -107,6 +109,7 @@ set wrap "automatically wrap on load
 "set colorcolumn=80
 highlight ColorColumn ctermbg=233
 
+let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
 
 " copy and paste
 vmap <C-c> "+yi
@@ -114,13 +117,13 @@ vmap <C-x> "+c
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
-" Mokolai
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
-
+"" Mokolai
+"if has('gui_running')
+"    set background=light
+"else
+"    set background=dark
+"endif
+"
 
 "" Solarized -------------------------------------------------------------- {{{
 "if exists('g:colors_name') && g:colors_name == 'solarized'
@@ -148,6 +151,7 @@ au filetype py set textwidth=79 " pep-8 friendly
 au filetype python set omnifunc=pythoncomplete#complete
 let g:supertabdefaultcompletiontype = "context"
 
+let g:neocomplete#enable_at_startup = 1
 
 " enable vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -271,7 +275,7 @@ set backspace=indent,eol,start
 
 " Use visual bell instead of beeping when doing something wrong
 
-set cmdheight=2
+set cmdheight=1
 " remove extra whitespace
 nmap <leader><space> :%s/\s\+$<cr>
 
@@ -386,6 +390,8 @@ nnoremap <Leader>rtw :%s/\s\+$//ge<CR>
 :command Wq wq
 :command W w
 :command Q q
+:command Qa qa
+:command QA qa
 
 
 inoremap $1 ()<esc>i
@@ -412,3 +418,12 @@ set smartcase
 set ai "Apple_Terminaluto indent
 set si "Smart indent
 
+" Vim
+let g:indentLine_color_term = 239
+
+"GVim
+let g:indentLine_color_gui = '#A4E57E'
+
+" none X terminal
+let g:indentLine_color_tty_light = 7 " (default: 4)
+let g:indentLine_color_dark = 1 " (default: 2)
