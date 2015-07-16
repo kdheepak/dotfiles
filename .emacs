@@ -39,7 +39,10 @@ Return a list of installed packages or nil for every skipped package."
 
 ;; Assuming you wish to install "iedit" and "magit"
 (ensure-package-installed 'iedit
+                          'evil-mark-replace
                           'magit
+                          'evil-exchange
+                          'evil-args
                           'evil
                           'projectile
                           'helm
@@ -273,7 +276,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (setq scroll-margin 5
-scroll-conservatively 1 
+scroll-conservatively 1
 scroll-step 1)
 
 (unless window-system
@@ -331,7 +334,7 @@ scroll-step 1)
    "A friendlier visual bell effect."
    (invert-face 'mode-line)
    (run-with-timer 0.1 nil 'invert-face 'mode-line))
- 
+
  (setq visible-bell nil
        ring-bell-function 'my-terminal-visible-bell)
 
@@ -339,13 +342,13 @@ scroll-step 1)
    "Use a nicer visual bell in terminals."
      (setq visible-bell nil
            ring-bell-function 'my-terminal-visible-bell))
- 
+
  (defun my-frame-config (frame)
    "Custom behaviours for new frames."
    (with-selected-frame frame
      (my-configure-visible-bell)))
  ;; Run now, for non-daemon Emacs...
- (My-frame-config (selected-frame))
+ (my-frame-config (selected-frame))
  ;; ...and later, for new frames / emacsclient
  (add-hook 'after-make-frame-functions 'my-frame-config)
  ;; ...and whenever a frame gains input focus.
@@ -366,3 +369,197 @@ scroll-step 1)
 ;;; Next visual line
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+(add-hook 'term-mode-hook
+          (lambda ()
+            (setq term-buffer-maximum-size 10000)))
+
+
+(add-hook 'term-mode-hook
+          (lambda ()
+            (add-to-list 'term-bind-key-alist '("M-[" . multi-term-prev))
+            (add-to-list 'term-bind-key-alist '("M-]" . multi-term-next))))
+
+(add-hook 'term-mode-hook
+          (lambda ()
+            (define-key term-raw-map (kbd "C-y") 'term-paste)))
+
+
+(require 'evil-surround)
+(global-evil-surround-mode 1)
+
+(require 'evil-numbers)
+(global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt)
+
+(evilnc-default-hotkeys)
+
+;; Vim key bindings
+(evil-leader/set-key
+  "ci" 'evilnc-comment-or-uncomment-lines
+  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cc" 'evilnc-copy-and-comment-lines
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "cv" 'evilnc-toggle-invert-comment-line-by-line
+  "\\" 'evilnc-comment-operator ; if you prefer backslash key
+)
+
+(require 'evil-mark-replace)
+
+(require 'evil-matchit)
+(global-evil-matchit-mode 1)
+
+(require 'evil-exchange)
+;; change default key bindings (if you want) HERE
+;; (setq evil-exchange-key (kbd "zx"))
+(evil-exchange-install)
+
+;; change default key bindings (if you want) HERE
+;; (setq evil-extra-operator-eval-key (kbd "ge"))
+;; (require 'evil-extra-operator)
+;; (global-evil-extra-operator-mode 1)
+
+;; locate and load the package
+(add-to-list 'load-path "path/to/evil-args")
+(require 'evil-args)
+
+;; bind evil-args text objects
+(define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+(define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+
+;; bind evil-forward/backward-args
+(define-key evil-normal-state-map "L" 'evil-forward-arg)
+(define-key evil-normal-state-map "H" 'evil-backward-arg)
+(define-key evil-motion-state-map "L" 'evil-forward-arg)
+(define-key evil-motion-state-map "H" 'evil-backward-arg)
+
+;; bind evil-jump-out-args
+(define-key evil-normal-state-map "K" 'evil-jump-out-args)
+
+; Overload shifts so that they don't lose the selection
+(define-key evil-visual-state-map (kbd ">") 'djoyner/evil-shift-right-visual)
+(define-key evil-visual-state-map (kbd "<") 'djoyner/evil-shift-left-visual)
+(define-key evil-visual-state-map [tab] 'djoyner/evil-shift-right-visual)
+(define-key evil-visual-state-map [S-tab] 'djoyner/evil-shift-left-visual)
+
+(defun djoyner/evil-shift-left-visual ()
+  (interactive)
+  (evil-shift-left (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
+(defun djoyner/evil-shift-right-visual ()
+  (interactive)
+  (evil-shift-right (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
+
+
+; Easy window navigation
+(define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+(define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+(define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+(define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
+
+; Y behaves as you'd expect
+(define-key evil-normal-state-map "Y" 'djoyner/copy-to-end-of-line)
+
+
+; Move RET and SPC kley bindings from the motion state map to the normal state map
+; so that when modes define them, RET and SPC bindings are available directly
+;(move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
+;(move-key evil-motion-state-map evil-normal-state-map " ")
+
+;; Visual state mappings
+
+; DEL deletes selection
+(define-key evil-visual-state-map (kbd "DEL") 'evil-delete)
+
+
+;; Leaders
+(evil-leader/set-key
+  "SPC" 'just-one-space
+  "DEL" 'delete-trailing-whitespace
+  "TAB" 'untabify
+  "S-TAB" 'tabify
+  "\\" 'evil-ex-nohighlight
+  "b" 'iswitchb-buffer
+  "B" 'list-buffers
+  "e" 'djoyner/evil-edit
+  "E" 'eval-last-sexp
+  "i" 'whitespace-mode
+  "k" 'evil-delete-buffer
+  "n" 'make-frame-command
+  "P" 'djoyner/evil-paste-clipboard-before
+  "p" 'djoyner/evil-paste-clipboard-after
+  "r" 'evil-read
+  "R" 'rename-file-and-buffer
+  "s" 'djoyner/evil-edit-split
+  "t" 'djoyner/evil-set-tab-width
+  "v" 'djoyner/evil-edit-vsplit
+  "x" 'execute-extended-command
+  "y" "\"*y")
+
+
+
+;; Other mode mappings
+
+; Override j/k mappings for ibuffer mode
+(eval-after-load 'ibuffer
+    '(progn
+       ;; use the standard ibuffer bindings as a base
+       (message "Setting up ibuffer mappings")
+       (set-keymap-parent
+        (evil-get-auxiliary-keymap ibuffer-mode-map 'normal t)
+        (assq-delete-all 'menu-bar (copy-keymap ibuffer-mode-map)))
+       (evil-define-key 'normal ibuffer-mode-map "j" 'ibuffer-forward-line)
+       (evil-define-key 'normal ibuffer-mode-map "k" 'ibuffer-backward-line)
+       (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer) ; "j"
+       ))
+
+
+;; Functions
+(defun djoyner/evil-paste-clipboard-before ()
+(interactive)
+(evil-paste-before 1 ?*))
+
+(defun djoyner/evil-paste-clipboard-after ()
+  (interactive)
+  (evil-paste-after 1 ?*))
+
+(defun djoyner/evil-shift-left-visual ()
+  (interactive)
+  (evil-shift-left (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
+(defun djoyner/evil-shift-right-visual ()
+  (interactive)
+  (evil-shift-right (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
+(defun djoyner/evil-edit (file)
+  (interactive "F:edit ")
+  (find-file file))
+
+(defun djoyner/evil-edit-split (file)
+  (interactive "F:split ")
+  (let ((new-win (split-window (selected-window))))
+    (find-file file)))
+
+(defun djoyner/evil-edit-vsplit (file)
+  (interactive "F:vsplit ")
+  (let ((new-win (split-window (selected-window) nil t)))
+    (find-file file)))
+
+(defun djoyner/evil-set-tab-width (value)
+  (interactive "ntab-width: ")
+  (set-variable 'tab-width value))
+
+(define-key evil-normal-state-map "vv" 'split-window-horizontally)
+(define-key evil-normal-state-map "ss" 'split-window-vertically)
