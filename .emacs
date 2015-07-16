@@ -112,7 +112,6 @@ Return a list of installed packages or nil for every skipped package."
 (setq vc-follow-symlinks t)
 (setq large-file-warning-threshold nil)
 (setq split-width-threshold nil)
-(setq visible-bell t)
 
 
 (setq evil-leader/in-all-states 1)
@@ -316,7 +315,35 @@ scroll-step 1)
   (setq multi-term-buffer-name "term"
         multi-term-program "/bin/zsh"))
 
+
 (server-start)
 
 (load-theme 'solarized t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;;; (setq visible-bell 'top-bottom)
+
+
+ (defun my-terminal-visible-bell ()
+   "A friendlier visual bell effect."
+   (invert-face 'mode-line)
+   (run-with-timer 0.1 nil 'invert-face 'mode-line))
+ 
+ (setq visible-bell nil
+       ring-bell-function 'my-terminal-visible-bell)
+
+ (defun my-configure-visible-bell ()
+   "Use a nicer visual bell in terminals."
+     (setq visible-bell nil
+           ring-bell-function 'my-terminal-visible-bell)
+ 
+ (defun my-frame-config (frame)
+   "Custom behaviours for new frames."
+   (with-selected-frame frame
+     (my-configure-visible-bell)))
+ ;; Run now, for non-daemon Emacs...
+ (my-frame-config (selected-frame))
+ ;; ...and later, for new frames / emacsclient
+ (add-hook 'after-make-frame-functions 'my-frame-config)
+ ;; ...and whenever a frame gains input focus.
+ (add-hook 'focus-in-hook 'my-configure-visible-bell)
