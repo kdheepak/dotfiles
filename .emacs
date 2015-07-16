@@ -3,8 +3,6 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-;; brew install emacs --HEAD --use-git-head --cocoa --with-gnutls --with-rsvg --with-imagemagick
-
 (package-initialize)
 
 (require 'package)
@@ -94,6 +92,7 @@ Return a list of installed packages or nil for every skipped package."
                           'ac-emmet
                           'flycheck
                           'helm-projectile
+                          'multi-term
                           'dtrt-indent)
 
 ;; Essential settings.
@@ -146,23 +145,6 @@ scroll-step 1)
 (powerline-evil-vim-color-theme)
 (display-time-mode t)
 
-;; flycheck
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
-;; 
-;; (after 'flycheck
-;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-;;   (setq flycheck-checkers (delq 'emacs-lisp-checkdoc flycheck-checkers))
-;;   (setq flycheck-checkers (delq 'html-tidy flycheck-checkers))
-;;   (setq flycheck-standard-error-navigation nil))
-;; 
-;; (global-flycheck-mode t)
-;; 
-;; ;; flycheck errors on a tooltip (doesnt work on console)
-;; (when (display-graphic-p (selected-frame))
-;;   (eval-after-load 'flycheck
-;;     '(custom-set-variables
-;;       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
- 
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
@@ -263,8 +245,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                        helm-c-source-locate)
                      "*helm-my-buffers*")))
 
-(load-theme 'gruvbox t)
-
 (toggle-frame-maximized)
 
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
@@ -318,3 +298,25 @@ scroll-step 1)
 
 (setq interprogram-cut-function 'paste-to-osx)
 (setq interprogram-paste-function 'copy-from-osx)
+
+(setq ns-pop-up-frames nil)
+
+(defadvice handle-delete-frame (around my-handle-delete-frame-advice activate)
+  "Hide Emacs instead of closing the last frame"
+  (let ((frame   (posn-window (event-start event)))
+        (numfrs  (length (frame-list))))
+    (if (> numfrs 1)
+      ad-do-it
+      (do-applescript "tell application \"System Events\" to tell process \"Emacs\" to set visible to false"))))
+
+(when (require 'multi-term nil t)
+  (global-set-key (kbd "<f5>") 'multi-term)
+  (global-set-key (kbd "<C-next>") 'multi-term-next)
+  (global-set-key (kbd "<C-prior>") 'multi-term-prev)
+  (setq multi-term-buffer-name "term"
+        multi-term-program "/bin/zsh"))
+
+(server-start)
+
+(load-theme 'solarized t)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
