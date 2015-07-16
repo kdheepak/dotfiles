@@ -345,7 +345,7 @@ scroll-step 1)
    (with-selected-frame frame
      (my-configure-visible-bell)))
  ;; Run now, for non-daemon Emacs...
- (my-frame-config (selected-frame))
+ (My-frame-config (selected-frame))
  ;; ...and later, for new frames / emacsclient
  (add-hook 'after-make-frame-functions 'my-frame-config)
  ;; ...and whenever a frame gains input focus.
@@ -355,5 +355,14 @@ scroll-step 1)
   (flycheck-mode))
 (add-hook 'python-mode-hook #'flycheck-python-setup)
 
+(add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
+(add-hook 'prog-mode-hook 'line-number-mode t)
+(add-hook 'prog-mode-hook 'column-number-mode t)
+
 (require 'powerline)
-(powerline-default-theme)
+(powerline-evil-vim-color-theme)
+(display-time-mode t)
+
+;;; Next visual line
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
