@@ -48,6 +48,7 @@ Return a list of installed packages or nil for every skipped package."
                           'projectile
                           'helm
                           'evil-tabs
+                          'minibuffer-complete-cycle
                           'projectile
                           'iedit
                           'evil-visual-mark-mode
@@ -594,3 +595,7 @@ scroll-step 1)
 
 ;;; autocomplete
 (ac-config-default)
+
+
+(require 'minibuffer-complete-cycle)
+(setq minibuffer-complete-cycle t)
