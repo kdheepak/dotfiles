@@ -13,23 +13,6 @@
 
 (setq package-enable-at-startup nil)
 (package-initialize)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("52706f54fd3e769a0895d1786796450081b994378901d9c3fb032d3094788337" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
- '(package-selected-packages
-   (quote
-    (gruvbox-theme dtrt-indent flycheck helm evil-tabs projectile iedit evil-visual-mark-mode zenburn-theme yaml-mode visual-regexp typopunct textmate tango-2-theme solarized-theme smex smartparens redo+ powerline polymode pandoc-mode pallet org-ac multiple-cursors monokai-theme maxframe markdown-mode magit latex-pretty-symbols jedi ipython inf-ruby idle-highlight-mode hl-line+ expand-region exec-path-from-shell evil-numbers evil-nerd-commenter evil-matchit evil-leader evil-indent-textobject evil-escape evil-easymotion browse-kill-ring anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (require 'evil)
 (evil-mode t)
@@ -67,7 +50,7 @@ Return a list of installed packages or nil for every skipped package."
                           'zenburn-theme
                           'yaml-mode
                           'visual-regexp
-                          'typopunct
+                          ;;; 'typopunct
                           'textmate
                           'tango-2-theme
                           'solarized-theme
@@ -86,7 +69,7 @@ Return a list of installed packages or nil for every skipped package."
                           'magit
                           'latex-pretty-symbols
                           'jedi
-                          'ipython
+                          ;;; 'ipython
                           'inf-ruby
                           'idle-highlight-mode
                           'hl-line+
@@ -104,9 +87,11 @@ Return a list of installed packages or nil for every skipped package."
                           'ag
                           'ace-jump-mode
                           'ac-ispell
+                          'gruvbox-theme
                           'ac-etags
                           'ac-emmet
                           'flycheck
+                          'helm-projectile
                           'dtrt-indent)
 
 ;; Essential settings.
@@ -320,3 +305,14 @@ scroll-step 1)
 
 (evilnc-default-hotkeys)
 
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
