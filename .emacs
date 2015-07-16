@@ -60,6 +60,7 @@ Return a list of installed packages or nil for every skipped package."
                           'powerline
                           'polymode
                           'pandoc-mode
+                          'evil-surround
                           'pallet
                           'org-ac
                           'multiple-cursors
@@ -334,10 +335,10 @@ scroll-step 1)
  (setq visible-bell nil
        ring-bell-function 'my-terminal-visible-bell)
 
- (defun my-configure-visible-bell ()
+(defun my-configure-visible-bell ()
    "Use a nicer visual bell in terminals."
      (setq visible-bell nil
-           ring-bell-function 'my-terminal-visible-bell)
+           ring-bell-function 'my-terminal-visible-bell))
  
  (defun my-frame-config (frame)
    "Custom behaviours for new frames."
@@ -353,3 +354,6 @@ scroll-step 1)
  (defun flycheck-python-setup ()
   (flycheck-mode))
 (add-hook 'python-mode-hook #'flycheck-python-setup)
+
+(require 'powerline)
+(powerline-default-theme)
