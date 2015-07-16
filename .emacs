@@ -561,10 +561,6 @@ scroll-step 1)
   (interactive "ntab-width: ")
   (set-variable 'tab-width value))
 
-(define-key evil-normal-state-map "vv" 'split-window-horizontally)
-(define-key evil-normal-state-map "ss" 'split-window-vertically)
-
-
 ;; recenter after search
 (defadvice
   isearch-forward
@@ -584,16 +580,6 @@ scroll-step 1)
   (recenter))
 (ad-activate 'isearch-repeat-backward)
 
-
-
-(defun vimlike-write-quit ()
-  "Vimlike ':wq' behavior: write then close..."
-  (interactive)
-  (save-buffer)
-  (vimlike-quit))
-
-(evil-ex-define-cmd "q" 'vimlike-quit)
-(evil-ex-define-cmd "wq" 'vimlike-write-quit)
 
 
 ;; c+ c- to increase/decrease number like Vim's C-a C-x
