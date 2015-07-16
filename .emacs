@@ -56,9 +56,9 @@ Return a list of installed packages or nil for every skipped package."
 
 ;; Assuming you wish to install "iedit" and "magit"
 (ensure-package-installed 'iedit
-			  'magit
-			  'evil
-			  'projectile
+                          'magit
+                          'evil
+                          'projectile
                           'helm
                           'evil-tabs
                           'projectile
@@ -128,13 +128,6 @@ Return a list of installed packages or nil for every skipped package."
 (setq split-width-threshold nil)
 (setq visible-bell t)
 
-
-(setq evil-emacs-state-cursor '("red" box))
-(setq evil-normal-state-cursor '("green" box))
-(setq evil-visual-state-cursor '("orange" box))
-(setq evil-insert-state-cursor '("red" bar))
-(setq evil-replace-state-cursor '("red" bar))
-(setq evil-operator-state-cursor '("red" hollow))
 
 (setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
@@ -224,11 +217,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq evil-move-cursor-back nil)
 
-;; turn on save place so that when opening a file, the cursor will be at the last position.
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file "~/.emacs.d/saved-places")
-
 (evil-leader/set-key "V" 'exchange-point-and-mark)
 
 (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
@@ -295,4 +283,40 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
 (setq-default save-place t)                   ;; activate it for all buffers
 (require 'saveplace)                          ;; get the package
+
+(setq evil-emacs-state-cursor '("red" box))
+(setq evil-normal-state-cursor '("green" box))
+(setq evil-visual-state-cursor '("orange" box))
+(setq evil-insert-state-cursor '("red" bar))
+(setq evil-replace-state-cursor '("red" bar))
+(setq evil-operator-state-cursor '("red" hollow))
+
+(setq evil-move-cursor-back nil)
+
+(define-key evil-normal-state-map (kbd "C-k") (lambda ()
+                    (interactive)
+                    (evil-scroll-up nil)))
+(define-key evil-normal-state-map (kbd "C-j") (lambda ()
+                        (interactive)
+                        (evil-scroll-down nil)))
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+
+(setq scroll-margin 5
+scroll-conservatively 1 
+scroll-step 1)
+
+(unless window-system
+  (xterm-mouse-mode 1)
+  (global-set-key [mouse-4] '(lambda ()
+                               (interactive)
+                               (scroll-down 1)))
+  (global-set-key [mouse-5] '(lambda ()
+                               (interactive)
+                               (scroll-up 1))))
+
+(setq x-select-enable-clipboard nil)
+
+(evilnc-default-hotkeys)
 
