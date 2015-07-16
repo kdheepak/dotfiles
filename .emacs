@@ -3,6 +3,7 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
+;; brew install emacs --HEAD --use-git-head --cocoa --with-gnutls --with-rsvg --with-imagemagick
 (package-initialize)
 
 (require 'package)
@@ -51,6 +52,7 @@ Return a list of installed packages or nil for every skipped package."
                           'iedit
                           'evil-visual-mark-mode
                           'zenburn-theme
+                          'auto-complete
                           'yaml-mode
                           'visual-regexp
                           ;;; 'typopunct
@@ -324,7 +326,7 @@ scroll-step 1)
 
 (server-start)
 
-(load-theme 'solarized t)
+(load-theme 'light-soap t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;;; (setq visible-bell 'top-bottom)
@@ -358,7 +360,7 @@ scroll-step 1)
   (flycheck-mode))
 (add-hook 'python-mode-hook #'flycheck-python-setup)
 
-(add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
+;;; (add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
 (add-hook 'prog-mode-hook 'line-number-mode t)
 (add-hook 'prog-mode-hook 'column-number-mode t)
 
@@ -589,3 +591,6 @@ scroll-step 1)
 
 (define-key evil-normal-state-map ",h" (lambda () (interactive) (split-window-vertically) (balance-windows)))
 (define-key evil-normal-state-map ",v" (lambda () (interactive) (split-window-horizontally) (balance-windows)))
+
+;;; autocomplete
+(ac-config-default)
