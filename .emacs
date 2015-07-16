@@ -93,7 +93,8 @@ Return a list of installed packages or nil for every skipped package."
                           'flycheck
                           'helm-projectile
                           'multi-term
-                          'dtrt-indent)
+                          'dtrt-indent
+                          'relative-line-numbers)
 
 ;; Essential settings.
 (setq inhibit-splash-screen t
@@ -113,6 +114,7 @@ Return a list of installed packages or nil for every skipped package."
 (setq large-file-warning-threshold nil)
 (setq split-width-threshold nil)
 
+(global-linum-mode t)
 
 (setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
@@ -214,10 +216,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-flycheck-mode t)
 
 ;; flycheck errors on a tooltip (doesnt work on console)
-(when (display-graphic-p (selected-frame))
-  (eval-after-load 'flycheck
-    '(custom-set-variables
-      '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
+;; (when (display-graphic-p (selected-frame))
+;;   (eval-after-load 'flycheck
+;;     '(custom-set-variables
+;;       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
 
 ;; helm settings (TAB in helm window for actions over selected items,
 ;; C-SPC to select items)
@@ -347,3 +349,7 @@ scroll-step 1)
  (add-hook 'after-make-frame-functions 'my-frame-config)
  ;; ...and whenever a frame gains input focus.
  (add-hook 'focus-in-hook 'my-configure-visible-bell)
+
+ (defun flycheck-python-setup ()
+  (flycheck-mode))
+(add-hook 'python-mode-hook #'flycheck-python-setup)
