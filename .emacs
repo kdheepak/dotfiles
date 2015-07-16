@@ -563,3 +563,43 @@ scroll-step 1)
 
 (define-key evil-normal-state-map "vv" 'split-window-horizontally)
 (define-key evil-normal-state-map "ss" 'split-window-vertically)
+
+
+;; recenter after search
+(defadvice
+  isearch-forward
+  (after isearch-forward-recenter activate)
+  (recenter))
+(ad-activate 'isearch-forward)
+
+(defadvice
+  isearch-repeat-forward
+  (after isearch-repeat-forward-recenter activate)
+  (recenter))
+(ad-activate 'isearch-repeat-forward)
+
+(defadvice
+  isearch-repeat-backward
+  (after isearch-repeat-backward-recenter activate)
+  (recenter))
+(ad-activate 'isearch-repeat-backward)
+
+
+
+(defun vimlike-write-quit ()
+  "Vimlike ':wq' behavior: write then close..."
+  (interactive)
+  (save-buffer)
+  (vimlike-quit))
+
+(evil-ex-define-cmd "q" 'vimlike-quit)
+(evil-ex-define-cmd "wq" 'vimlike-write-quit)
+
+
+;; c+ c- to increase/decrease number like Vim's C-a C-x
+(define-key evil-normal-state-map (kbd "C-+") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
+
+
+(define-key evil-normal-state-map ",h" (lambda () (interactive) (split-window-vertically) (balance-windows)))
+(define-key evil-normal-state-map ",v" (lambda () (interactive) (split-window-horizontally) (balance-windows)))
