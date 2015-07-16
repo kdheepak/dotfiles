@@ -63,7 +63,7 @@ Return a list of installed packages or nil for every skipped package."
                           'smex
                           'smartparens
                           'redo+
-                          'powerline
+                          'powerline-evil
                           'polymode
                           'pandoc-mode
                           'evil-surround
@@ -140,18 +140,15 @@ Return a list of installed packages or nil for every skipped package."
 (define-key evil-insert-state-map (kbd "C-8") (lambda() (interactive) (elscreen-goto 8)))
 (define-key evil-insert-state-map (kbd "C-9") (lambda() (interactive) (elscreen-goto 9)))
 
-(require 'evil-search-highlight-persist)
-(global-evil-search-highlight-persist t)
+(require 'powerline)
+(powerline-evil-vim-color-theme)
+(display-time-mode t)
 
 (evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
 
 (setq scroll-margin 5
 scroll-conservatively 9999
 scroll-step 1)
-
-(require 'powerline)
-(powerline-evil-vim-color-theme)
-(display-time-mode t)
 
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
@@ -365,9 +362,6 @@ scroll-step 1)
 (add-hook 'prog-mode-hook 'line-number-mode t)
 (add-hook 'prog-mode-hook 'column-number-mode t)
 
-(require 'powerline)
-(powerline-evil-vim-color-theme)
-(display-time-mode t)
 
 ;;; Next visual line
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -564,24 +558,24 @@ scroll-step 1)
   (interactive "ntab-width: ")
   (set-variable 'tab-width value))
 
-;; recenter after search
-(defadvice
-  isearch-forward
-  (after isearch-forward-recenter activate)
-  (recenter))
-(ad-activate 'isearch-forward)
-
-(defadvice
-  isearch-repeat-forward
-  (after isearch-repeat-forward-recenter activate)
-  (recenter))
-(ad-activate 'isearch-repeat-forward)
-
-(defadvice
-  isearch-repeat-backward
-  (after isearch-repeat-backward-recenter activate)
-  (recenter))
-(ad-activate 'isearch-repeat-backward)
+;;; ;; recenter after search
+;;; (defadvice
+;;;   isearch-forward
+;;;   (after isearch-forward-recenter activate)
+;;;   (recenter))
+;;; (ad-activate 'isearch-forward)
+;;; 
+;;; (defadvice
+;;;   isearch-repeat-forward
+;;;   (after isearch-repeat-forward-recenter activate)
+;;;   (recenter))
+;;; (ad-activate 'isearch-repeat-forward)
+;;; 
+;;; (defadvice
+;;;   isearch-repeat-backward
+;;;   (after isearch-repeat-backward-recenter activate)
+;;;   (recenter))
+;;; (ad-activate 'isearch-repeat-backward)
 
 
 
@@ -599,3 +593,7 @@ scroll-step 1)
 
 (require 'minibuffer-complete-cycle)
 (setq minibuffer-complete-cycle t)
+
+(require 'evil-search-highlight-persist)
+(global-evil-search-highlight-persist t)
+
