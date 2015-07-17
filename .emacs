@@ -100,6 +100,7 @@ Return a list of installed packages or nil for every skipped package."
                           'ac-etags
                           'ac-emmet
                           'flycheck
+                          'python-mode
                           'helm-projectile
                           'multi-term
                           'dtrt-indent
