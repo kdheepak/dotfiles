@@ -46,15 +46,14 @@ Return a list of installed packages or nil for every skipped package."
                           'evil-args
                           'evil
                           'projectile
+                          'key-chord
                           'helm
                           'evil-tabs
                           'minibuffer-complete-cycle
                           'projectile
                           'iedit
                           'evil-visual-mark-mode
-                          'light-soap-theme
                           'zenburn-theme
-                          'evil-search-highlight-persist
                           'auto-complete
                           'yaml-mode
                           'visual-regexp
@@ -100,11 +99,17 @@ Return a list of installed packages or nil for every skipped package."
                           'ac-etags
                           'ac-emmet
                           'flycheck
-                          'python-mode
                           'helm-projectile
+                          'simpleclip
                           'multi-term
                           'dtrt-indent
                           'relative-line-numbers)
+
+;;; Load theme
+(load-theme 'light-soap t)
+
+;;; Start maximized
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Essential settings.
 (setq inhibit-splash-screen t
@@ -124,6 +129,25 @@ Return a list of installed packages or nil for every skipped package."
 (setq large-file-warning-threshold nil)
 (setq split-width-threshold nil)
 
+;;; Powerline settings
+(require 'powerline)
+(powerline-evil-vim-color-theme)
+(display-time-mode t)
+
+;;; selection is not copied into clipboard
+(defun x-select-text (text))
+(setq x-select-enable-clipboard nil)
+(setq x-select-enable-primary nil)
+(setq mouse-drag-copy-region nil)
+
+;;; Saves clipboard into "0 or  "+ register
+(setq save-interprogram-paste-before-kill t)
+
+;;; Saves clipboard in "+ register from external applications. Accessed by cmd V
+(require 'simpleclip)
+(simpleclip-mode 1)
+
+
 (global-linum-mode t)
 
 (setq evil-leader/in-all-states 1)
@@ -142,10 +166,6 @@ Return a list of installed packages or nil for every skipped package."
 (define-key evil-insert-state-map (kbd "C-7") (lambda() (interactive) (elscreen-goto 7)))
 (define-key evil-insert-state-map (kbd "C-8") (lambda() (interactive) (elscreen-goto 8)))
 (define-key evil-insert-state-map (kbd "C-9") (lambda() (interactive) (elscreen-goto 9)))
-
-(require 'powerline)
-(powerline-evil-vim-color-theme)
-(display-time-mode t)
 
 (evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
 
@@ -175,8 +195,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 (global-set-key [escape] 'evil-exit-emacs-state)
 
- ;; start maximized
 
+;;; Scrolling
 
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
                     (interactive)
@@ -184,6 +204,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "C-j") (lambda ()
                         (interactive)
                         (evil-scroll-down nil)))
+
+
 
 ;;; Gets indent style from file
 (dtrt-indent-mode 1)
@@ -209,6 +231,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (visual-line-mode 1)
+
 
 
 ;; flycheck
@@ -254,8 +277,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                      "*helm-my-buffers*")))
 
 (toggle-frame-maximized)
-
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
+
 (setq-default save-place t)                   ;; activate it for all buffers
 (require 'saveplace)                          ;; get the package
 
@@ -291,21 +314,7 @@ scroll-step 1)
                                (interactive)
                                (scroll-up 1))))
 
-(setq x-select-enable-clipboard nil)
-
 (evilnc-default-hotkeys)
-
-(defun copy-from-osx ()
-  (shell-command-to-string "pbpaste"))
-
-(defun paste-to-osx (text &optional push)
-  (let ((process-connection-type nil))
-    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      (process-send-string proc text)
-      (process-send-eof proc))))
-
-(setq interprogram-cut-function 'paste-to-osx)
-(setq interprogram-paste-function 'copy-from-osx)
 
 (setq ns-pop-up-frames nil)
 
@@ -325,13 +334,7 @@ scroll-step 1)
         multi-term-program "/bin/zsh"))
 
 
-(server-start)
-
-(load-theme 'light-soap t)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 ;;; (setq visible-bell 'top-bottom)
-
 
  (defun my-terminal-visible-bell ()
    "A friendlier visual bell effect."
@@ -494,8 +497,6 @@ scroll-step 1)
   "i" 'whitespace-mode
   "k" 'evil-delete-buffer
   "n" 'make-frame-command
-  "P" 'djoyner/evil-paste-clipboard-before
-  "p" 'djoyner/evil-paste-clipboard-after
   "r" 'evil-read
   "R" 'rename-file-and-buffer
   "s" 'djoyner/evil-edit-split
@@ -521,15 +522,6 @@ scroll-step 1)
        (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer) ; "j"
        ))
 
-
-;; Functions
-(defun djoyner/evil-paste-clipboard-before ()
-(interactive)
-(evil-paste-before 1 ?*))
-
-(defun djoyner/evil-paste-clipboard-after ()
-  (interactive)
-  (evil-paste-after 1 ?*))
 
 (defun djoyner/evil-shift-left-visual ()
   (interactive)
@@ -599,5 +591,3 @@ scroll-step 1)
 
 (require 'evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
-
-
