@@ -52,7 +52,9 @@ Return a list of installed packages or nil for every skipped package."
                           'projectile
                           'iedit
                           'evil-visual-mark-mode
+                          'light-soap-theme
                           'zenburn-theme
+                          'evil-search-highlight-persist
                           'auto-complete
                           'yaml-mode
                           'visual-regexp
@@ -596,4 +598,5 @@ scroll-step 1)
 
 (require 'evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
+
 
