@@ -660,11 +660,3 @@ scroll-step 1)
 (evil-ex-define-cmd "W" 'save-buffer)
 (evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-butffer)
 (evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-butffer)
-
-
-(defadvice evil-inner-word (around underscore-as-word activate)
-  (let ((table (copy-syntax-table (syntax-table))))
-    (modify-syntax-entry ?_ "w" table)
-    (with-syntax-table table
-      ad-do-it)))
-
