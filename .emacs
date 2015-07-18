@@ -46,6 +46,7 @@ Return a list of installed packages or nil for every skipped package."
                           'evil-args
                           'evil
                           'projectile
+                          'elisp-slime-nav
                           'key-chord
                           'helm
                           'neotree
@@ -595,9 +596,6 @@ scroll-step 1)
 (require 'evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
 
-(require 'neotree)
- (global-set-key [f8] 'neotree-toggle)
-
 (setq tab-width 2
             indent-tabs-mode nil)
 
@@ -617,3 +615,37 @@ scroll-step 1)
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
                 `((".*" ,temporary-file-directory t)))
+
+(require 'neotree)
+ (global-set-key [f8] 'neotree-toggle)
+
+(add-hook 'neotree-mode-hook
+          (lambda ()
+            (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+            (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+            (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+            (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+
+
+;; Prevent quit command from exit Emacs
+(defun my-nokill-current-switch-scratch-butffer ()
+  :repeat nil
+  (interactive)
+  (message "Not killing current buffer")
+  (set-buffer "*scratch*")
+  (switch-to-buffer "*scratch*"))
+
+(defun my-save-nokill-current-switch-scratch-butffer ()
+  :repeat nil
+  (interactive)
+  (save-buffer)
+  (set-buffer "*scratch*")
+  (switch-to-buffer "*scratch*"))
+
+(evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-butffer)
+(evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-butffer)
+
+; dont care shift key
+(evil-ex-define-cmd "W" 'save-buffer)
+(evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-butffer)
+(evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-butffer)
