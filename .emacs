@@ -631,16 +631,27 @@ scroll-step 1)
 (defun my-nokill-current-switch-scratch-butffer ()
   :repeat nil
   (interactive)
-  (message "Not killing current buffer")
-  (set-buffer "*scratch*")
-  (switch-to-buffer "*scratch*"))
+  (if (buffer-file-name)  
+    (progn ; Evaluates more than one sexp
+     (kill-buffer (current-buffer))
+     (set-buffer "*scratch*")
+     (switch-to-buffer "*scratch*"))
+   (message "Already on scratch, do nothing")
+    )
+  )
 
 (defun my-save-nokill-current-switch-scratch-butffer ()
   :repeat nil
   (interactive)
-  (save-buffer)
-  (set-buffer "*scratch*")
-  (switch-to-buffer "*scratch*"))
+  (if (buffer-file-name)  
+    (progn ; Evaluates more than one sexp
+     (save-buffer)
+     (kill-buffer (current-buffer))
+     (set-buffer "*scratch*")
+     (switch-to-buffer "*scratch*"))
+   (message "Already on scratch, do nothing")
+    )
+  )
 
 (evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-butffer)
 (evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-butffer)
@@ -649,3 +660,11 @@ scroll-step 1)
 (evil-ex-define-cmd "W" 'save-buffer)
 (evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-butffer)
 (evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-butffer)
+
+
+(defadvice evil-inner-word (around underscore-as-word activate)
+  (let ((table (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?_ "w" table)
+    (with-syntax-table table
+      ad-do-it)))
+
