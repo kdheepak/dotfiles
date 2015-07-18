@@ -127,7 +127,7 @@ Return a list of installed packages or nil for every skipped package."
 (eval-after-load "vc" '(setq vc-handled-backends nil))
 (setq vc-follow-symlinks t)
 (setq large-file-warning-threshold nil)
-(setq split-width-threshold nil)
+;;; (setq split-width-threshold nil)
 
 ;;; Powerline settings
 (require 'powerline)
