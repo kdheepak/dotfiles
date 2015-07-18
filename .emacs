@@ -637,26 +637,29 @@ scroll-step 1)
      (condition-case nil
          (delete-frame)
        (error
-        (set-buffer "*scratch*")
-        (switch-to-buffer "*scratch*")
-        )))))
+        (if (equal "*scratch*" (buffer-name))
+            (message "On scratch")
+          (progn
+            (kill-buffer (current-buffer)))))))))
 
 (defun my-save-nokill-current-switch-scratch-buffer ()
   :repeat nil
-  (interactive)
+  (interactive) ;;;
+  (save-buffer)
   (condition-case nil
-      (save-buffer)
       (delete-window)
     (error
      (condition-case nil
-         (save-buffer)
          (delete-frame)
        (error
-        (save-buffer)
-        (kill-buffer (current-buffer))
-        (set-buffer "*scratch*")
-        (switch-to-buffer "*scratch*")
-        )))))
+        (if (equal "*scratch*" (buffer-name))
+            (message "On scratch")
+          (progn
+            (message "save and kill buffer")
+            (kill-buffer (current-buffer))
+            )))))))
+
+;;; custom save and quit commands
 
 (evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
 (evil-ex-define-cmd "Q[uit]" 'my-nokill-current-switch-scratch-buffer)
@@ -688,3 +691,8 @@ scroll-step 1)
 
 
 
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
