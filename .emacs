@@ -628,7 +628,7 @@ scroll-step 1)
 
 
 ;; Prevent quit command from exit Emacs
-(defun my-nokill-current-switch-scratch-butffer ()
+(defun my-nokill-current-switch-scratch-buffer ()
   :repeat nil
   (interactive)
   (if (buffer-file-name)  
@@ -640,7 +640,7 @@ scroll-step 1)
     )
   )
 
-(defun my-save-nokill-current-switch-scratch-butffer ()
+(defun my-save-nokill-current-switch-scratch-buffer ()
   :repeat nil
   (interactive)
   (if (buffer-file-name)  
@@ -653,10 +653,10 @@ scroll-step 1)
     )
   )
 
-(evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-butffer)
-(evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-butffer)
+(evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-buffer)
 
 ; dont care shift key
 (evil-ex-define-cmd "W" 'save-buffer)
-(evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-butffer)
-(evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-butffer)
+(evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-buffer)
