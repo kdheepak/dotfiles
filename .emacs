@@ -48,7 +48,10 @@ Return a list of installed packages or nil for every skipped package."
                           'projectile
                           'key-chord
                           'helm
+                          'neotree
                           'evil-tabs
+                          'flyspell
+                          'autopair
                           'minibuffer-complete-cycle
                           'projectile
                           'iedit
@@ -485,11 +488,11 @@ scroll-step 1)
 
 ;; Leaders
 (evil-leader/set-key
-  "SPC" 'just-one-space
+  ;; "SPC" 'just-one-space
   "DEL" 'delete-trailing-whitespace
   "TAB" 'untabify
   "S-TAB" 'tabify
-  "\\" 'evil-ex-nohighlight
+  ;; "\\" 'evil-ex-nohighlight
   "b" 'iswitchb-buffer
   "B" 'list-buffers
   "e" 'djoyner/evil-edit
@@ -559,13 +562,13 @@ scroll-step 1)
 ;;;   (after isearch-forward-recenter activate)
 ;;;   (recenter))
 ;;; (ad-activate 'isearch-forward)
-;;; 
+;;;
 ;;; (defadvice
 ;;;   isearch-repeat-forward
 ;;;   (after isearch-repeat-forward-recenter activate)
 ;;;   (recenter))
 ;;; (ad-activate 'isearch-repeat-forward)
-;;; 
+;;;
 ;;; (defadvice
 ;;;   isearch-repeat-backward
 ;;;   (after isearch-repeat-backward-recenter activate)
@@ -591,3 +594,26 @@ scroll-step 1)
 
 (require 'evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
+
+(require 'neotree)
+ (global-set-key [f8] 'neotree-toggle)
+
+(setq tab-width 2
+            indent-tabs-mode nil)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(require 'autopair)
+
+(setq flyspell-issue-welcome-flag nil)
+(if (eq system-type 'darwin)
+    (setq-default ispell-program-name "/usr/local/bin/aspell")
+  (setq-default ispell-program-name "/usr/bin/aspell"))
+(setq-default ispell-list-command "list")
+
+
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+                `((".*" ,temporary-file-directory t)))
