@@ -631,32 +631,60 @@ scroll-step 1)
 (defun my-nokill-current-switch-scratch-buffer ()
   :repeat nil
   (interactive)
-  (if (buffer-file-name)  
-    (progn ; Evaluates more than one sexp
-     (kill-buffer (current-buffer))
-     (set-buffer "*scratch*")
-     (switch-to-buffer "*scratch*"))
-   (message "Already on scratch, do nothing")
-    )
-  )
+    (condition-case nil
+      (delete-window)
+    (error
+     (condition-case nil
+         (delete-frame)
+       (error
+        (set-buffer "*scratch*")
+        (switch-to-buffer "*scratch*")
+        )))))
 
 (defun my-save-nokill-current-switch-scratch-buffer ()
   :repeat nil
   (interactive)
-  (if (buffer-file-name)  
-    (progn ; Evaluates more than one sexp
-     (save-buffer)
-     (kill-buffer (current-buffer))
-     (set-buffer "*scratch*")
-     (switch-to-buffer "*scratch*"))
-   (message "Already on scratch, do nothing")
-    )
-  )
+  (condition-case nil
+      (save-buffer)
+      (delete-window)
+    (error
+     (condition-case nil
+         (save-buffer)
+         (delete-frame)
+       (error
+        (save-buffer)
+        (kill-buffer (current-buffer))
+        (set-buffer "*scratch*")
+        (switch-to-buffer "*scratch*")
+        )))))
 
 (evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "Q[uit]" 'my-nokill-current-switch-scratch-buffer)
 (evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-buffer)
 
 ; dont care shift key
 (evil-ex-define-cmd "W" 'save-buffer)
 (evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-buffer)
 (evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-buffer)
+
+;;;(evil-ex-define-cmd "e" 'find-file)
+
+(defun switch-to-previous-buffer ()
+(interactive)
+(switch-to-buffer (other-buffer (current-buffer) 1)))
+
+
+(defmacro define-and-bind-text-object (key start-regex end-regex)
+  (let ((inner-name (make-symbol "inner-name"))
+        (outer-name (make-symbol "outer-name")))
+    `(progn
+       (evil-define-text-object ,inner-name (count &optional beg end type)
+         (evil-select-paren ,start-regex ,end-regex beg end type count nil))
+       (evil-define-text-object ,outer-name (count &optional beg end type)
+         (evil-select-paren ,start-regex ,end-regex beg end type count t))
+       (define-key evil-inner-text-objects-map ,key (quote ,inner-name))
+       (define-key evil-outer-text-objects-map ,key (quote ,outer-name)))))
+
+
+
+
