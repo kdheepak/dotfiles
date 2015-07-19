@@ -494,8 +494,8 @@ scroll-step 1)
   "TAB" 'untabify
   "S-TAB" 'tabify
   ;; "\\" 'evil-ex-nohighlight
-  "b" 'iswitchb-buffer
-  "B" 'list-buffers
+  "b" 'xah-next-user-buffer
+  "B" 'xah-previous-user-buffer
   "e" 'djoyner/evil-edit
   "E" 'eval-last-sexp
   "i" 'whitespace-mode
@@ -503,10 +503,13 @@ scroll-step 1)
   "n" 'make-frame-command
   "r" 'evil-read
   "R" 'rename-file-and-buffer
-  "s" 'djoyner/evil-edit-split
+  "h" 'dkrishna/evil-edit-hsplit
+  "v" 'dkrishna/evil-edit-vsplit
+  "_" 'djoyner/evil-edit-hsplit
+  "|" 'djoyner/evil-edit-vsplit
   "t" 'djoyner/evil-set-tab-width
-  "v" 'djoyner/evil-edit-vsplit
   "x" 'execute-extended-command
+  "," 'modi/switch-to-scratch-and-back
   "y" "\"*y")
 
 
@@ -539,8 +542,14 @@ scroll-step 1)
   (evil-normal-state)
   (evil-visual-restore))
 
-(defun djoyner/evil-edit-split (file)
-  (interactive "F:split ")
+(defun djoyner/evil-edit-hsplit (file)
+  (interactive "F:hsplit ")
+  (let ((new-win (split-window (selected-window))))
+    (find-file file))
+  (balance-windows))
+
+(defun djoyner/evil-edit-vsplit (file)
+  (interactive "F:vsplit ")
   (let ((new-win (split-window (selected-window))))
     (find-file file))
   (balance-windows))
@@ -549,11 +558,13 @@ scroll-step 1)
   (interactive "F:edit ")
   (find-file file))
 
-(defun djoyner/evil-edit-vsplit (file)
-  (interactive "F:vsplit ")
-  (let ((new-win (split-window (selected-window) nil t)))
-    (find-file file))
-  (balance-windows))
+(defun dkrishna/evil-edit-hsplit ()
+  (interactive)
+  (split-window-vertically) (balance-windows))
+
+(defun dkrishna/evil-edit-vsplit ()
+  (interactive)
+  (split-window-horizontally) (balance-windows))
 
 (defun djoyner/evil-set-tab-width (value)
   (interactive "ntab-width: ")
@@ -585,8 +596,8 @@ scroll-step 1)
 (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
 
 
-(define-key evil-normal-state-map ",h" (lambda () (interactive) (split-window-vertically) (balance-windows)))
-(define-key evil-normal-state-map ",v" (lambda () (interactive) (split-window-horizontally) (balance-windows)))
+;;; (define-key evil-normal-state-map ",h" (lambda () (interactive) (split-window-vertically) (balance-windows)))
+;;; (define-key evil-normal-state-map ",v" (lambda () (interactive) (split-window-horizontally) (balance-windows)))
 
 ;;; autocomplete
 (ac-config-default)
@@ -697,3 +708,86 @@ C-u C-u COMMAND -> Open/switch to a scratch buffer in `emacs-elisp-mode'"
       (funcall (intern mode-str))))) ; http://stackoverflow.com/a/7539787/1219634
 
 (setq-default evil-symbol-word-search t)
+
+;;; (defadvice evil-inner-word (around underscore-as-word activate)
+  ;;; (let ((table (copy-syntax-table (syntax-table))))
+    ;;; (modify-syntax-entry ?_ "w" table)
+    ;;; (with-syntax-table table
+      ;;; ad-do-it)))
+
+;;;(defmacro define-and-bind-text-object (key start-regex end-regex)
+  ;;;(let ((inner-name (make-symbol "inner-name"))
+        ;;;(outer-name (make-symbol "outer-name")))
+    ;;;`(progn
+      ;;;(evil-define-text-object ,inner-name (count &optional beg end type)
+        ;;;(evil-regexp-range count beg end type ,start-regex ,end-regex t))
+      ;;;(evil-define-text-object ,outer-name (count &optional beg end type)
+        ;;;(evil-regexp-range count beg end type ,start-regex ,end-regex nil))
+      ;;;(define-key evil-inner-text-objects-map ,key (quote ,inner-name))
+      ;;;(define-key evil-outer-text-objects-map ,key (quote ,outer-name)))))
+;;;
+;;;; between dollar signs:
+;;;(define-and-bind-text-object "$" "\\$" "\\$")
+;;;
+;;;; between pipe characters:
+;;;(define-and-bind-text-object "|" "|" "|")
+;;;
+;;;; between hypen signs:
+;;;(define-and-bind-text-object "-" "\\-" "\\-")
+
+(defun xah-next-user-buffer ()
+  "Switch to the next user buffer.
+ “user buffer” is a buffer whose name does not start with “*”.
+If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
+2015-01-05 URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'"
+  (interactive)
+  (next-buffer)
+  (let ((i 0))
+    (while (< i 20)
+      (if (or
+           (string-equal "*" (substring (buffer-name) 0 1))
+           (if (string-equal major-mode "dired-mode")
+               xah-switch-buffer-ignore-dired
+             nil
+             ))
+          (progn (next-buffer)
+                 (setq i (1+ i)))
+        (progn (setq i 100))))))
+
+(defun xah-previous-user-buffer ()
+  "Switch to the previous user buffer.
+ “user buffer” is a buffer whose name does not start with “*”.
+If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
+2015-01-05 URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'"
+  (interactive)
+  (previous-buffer)
+  (let ((i 0))
+    (while (< i 20)
+      (if (or
+           (string-equal "*" (substring (buffer-name) 0 1))
+           (if (string-equal major-mode "dired-mode")
+               xah-switch-buffer-ignore-dired
+             nil
+             ))
+          (progn (previous-buffer)
+                 (setq i (1+ i)))
+        (progn (setq i 100))))))
+
+(defun xah-next-emacs-buffer ()
+  "Switch to the next emacs buffer.
+ (buffer name that starts with “*”)"
+  (interactive)
+  (next-buffer)
+  (let ((i 0))
+    (while (and (not (string-equal "*" (substring (buffer-name) 0 1))) (< i 20))
+      (setq i (1+ i)) (next-buffer))))
+
+(defun xah-previous-emacs-buffer ()
+  "Switch to the previous emacs buffer.
+ (buffer name that starts with “*”)"
+  (interactive)
+  (previous-buffer)
+  (let ((i 0))
+    (while (and (not (string-equal "*" (substring (buffer-name) 0 1))) (< i 20))
+      (setq i (1+ i)) (previous-buffer))))
+
