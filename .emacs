@@ -817,3 +817,11 @@ If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
 ;;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 ;;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 ;;; (require 'helm-fuzzy-find)
+
+
+;; Use Emacs terminfo, not system terminfo
+(setq system-uses-terminfo nil)
+
+(custom-set-variables
+    '(term-default-bg-color "#000000")        ;; background color (black)
+    '(term-default-fg-color "#dddd00"))       ;; foreground color (yellow)
