@@ -133,6 +133,9 @@ Return a list of installed packages or nil for every skipped package."
 (setq large-file-warning-threshold nil)
 ;;; (setq split-width-threshold nil)
 
+(require 'ido)
+(ido-mode t)
+
 ;;; Powerline settings
 (require 'powerline)
 (powerline-evil-vim-color-theme)
@@ -496,7 +499,7 @@ scroll-step 1)
   ;; "\\" 'evil-ex-nohighlight
   "b" 'xah-next-user-buffer
   "B" 'xah-previous-user-buffer
-  "e" 'djoyner/evil-edit
+  "e" 'ido-find-file
   "E" 'eval-last-sexp
   "i" 'whitespace-mode
   "k" 'evil-delete-buffer
@@ -556,7 +559,7 @@ scroll-step 1)
 
 (defun djoyner/evil-edit (file)
   (interactive "F:edit ")
-  (find-file file))
+  (ido-find-file file))
 
 (defun dkrishna/evil-edit-hsplit ()
   (interactive)
