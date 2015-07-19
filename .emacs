@@ -109,6 +109,21 @@ Return a list of installed packages or nil for every skipped package."
                           'dtrt-indent
                           'relative-line-numbers)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (helm-fuzzy-find zenburn-theme yaml-mode visual-regexp textmate tango-2-theme solarized-theme smex smartparens simpleclip relative-line-numbers redo+ python-mode powerline-evil polymode pdf-tools pandoc-mode pallet org-ac neotree multiple-cursors multi-term monokai-theme mmm-mode minibuffer-complete-cycle maxframe markdown-mode+ magit light-soap-theme latex-pretty-symbols key-chord jedi inf-ruby iedit idle-highlight-mode icicles hl-line+ helm-projectile gruvbox-theme flycheck expand-region exec-path-from-shell evil-visual-mark-mode evil-tabs evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-mark-replace evil-leader evil-indent-textobject evil-exchange evil-escape evil-easymotion evil-args elisp-slime-nav dtrt-indent browse-kill-ring autopair auctex anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
 ;;; Load theme
 (load-theme 'light-soap t)
 
@@ -499,7 +514,7 @@ scroll-step 1)
   ;; "\\" 'evil-ex-nohighlight
   "b" 'xah-next-user-buffer
   "B" 'xah-previous-user-buffer
-  "e" 'ido-find-file
+  "e" 'djoyner/evil-edit
   "E" 'eval-last-sexp
   "i" 'whitespace-mode
   "k" 'evil-delete-buffer
@@ -689,6 +704,7 @@ scroll-step 1)
 
 ;;; (evil-ex-define-cmd "e" 'dkrishna/evil-edit)
 ;;; (pdf-tools-install)
+(define-key evil-ex-map "e" 'ido-find-file)
 
 (defun modi/switch-to-scratch-and-back (arg)
   "Toggle between *scratch-MODE* buffer and the current buffer.
@@ -793,4 +809,11 @@ If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
   (let ((i 0))
     (while (and (not (string-equal "*" (substring (buffer-name) 0 1))) (< i 20))
       (setq i (1+ i)) (previous-buffer))))
+
+(define-key evil-ex-map "b" 'helm-buffers-list)
+
+;;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+;;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+;;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+;;; (require 'helm-fuzzy-find)
 
