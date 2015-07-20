@@ -881,40 +881,40 @@ one more than the current position."
 
 (elpy-enable)
 
-;; Fixing a key binding bug in elpy
-(define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
-;; Fixing another key binding bug in iedit mode
-(define-key global-map (kbd "C-c o") 'iedit-mode)
+;; ;; Fixing a key binding bug in elpy
+;; (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+;; ;; Fixing another key binding bug in iedit mode
+;; (define-key global-map (kbd "C-c o") 'iedit-mode)
 
-  (require 'auto-complete)
-  (require 'auto-complete-config)
+;;   (require 'auto-complete)
+;;   (require 'auto-complete-config)
 
-  (setq ac-auto-show-menu t)
-  (setq ac-auto-start t)
-  (setq ac-comphist-file "~/.ac-comphist.dat")
-  (setq ac-quick-help-delay 0.3)
-  (setq ac-quick-help-height 30)
-  (setq ac-show-menu-immediately-on-auto-complete t)
+;;   (setq ac-auto-show-menu t)
+;;   (setq ac-auto-start t)
+;;   (setq ac-comphist-file "~/.ac-comphist.dat")
+;;   (setq ac-quick-help-delay 0.3)
+;;   (setq ac-quick-help-height 30)
+;;   (setq ac-show-menu-immediately-on-auto-complete t)
 
-  (dolist (mode '(vimrc-mode html-mode stylus-mode))
-    (add-to-list 'ac-modes mode))
+;;   (dolist (mode '(vimrc-mode html-mode stylus-mode))
+;;     (add-to-list 'ac-modes mode))
 
-  (ac-config-default)
+;;   (ac-config-default)
 
-  (after 'linum
-    (ac-linum-workaround))
+;;   (after 'linum
+;;     (ac-linum-workaround))
 
-  (after 'yasnippet
-    (add-hook 'yas-before-expand-snippet-hook (lambda () (auto-complete-mode -1)))
-    (add-hook 'yas-after-exit-snippet-hook (lambda () (auto-complete-mode t)))
-    (defadvice ac-expand (before advice-for-ac-expand activate)
-      (when (yas-expand)
-        (ac-stop))))
+;;   (after 'yasnippet
+;;     (add-hook 'yas-before-expand-snippet-hook (lambda () (auto-complete-mode -1)))
+;;     (add-hook 'yas-after-exit-snippet-hook (lambda () (auto-complete-mode t)))
+;;     (defadvice ac-expand (before advice-for-ac-expand activate)
+;;       (when (yas-expand)
+;;         (ac-stop))))
 
-  (require 'ac-etags)
-  (setq ac-etags-requires 1)
-  (after 'etags
-    (ac-etags-setup))
+;;   (require 'ac-etags)
+;;   (setq ac-etags-requires 1)
+;;   (after 'etags
+;;     (ac-etags-setup))
 
   (defun my-do-not-kill-scratch-buffer ()
   (if (member (buffer-name (current-buffer))
@@ -1024,6 +1024,7 @@ one more than the current position."
 (setq helm-locate-fuzzy-match t)
 
 ;;; Powerline theme based on https://github.com/jcf/emacs.d
+
 
 (require 'powerline)
 
@@ -1144,3 +1145,10 @@ one more than the current position."
  '(powerline-inactive2 ((t (:foreground "black" :background "#FFFFFF" :box nil)))))
 
 (kd-powerline-theme)
+
+
+(setq mac-command-modifier 'super)
+(global-set-key (kbd "s-<left>") 'move-beginning-of-line)
+(global-set-key (kbd "s-<right>") 'move-end-of-line)
+(global-set-key (kbd "s-<up>") 'beginning-of-buffer)
+(global-set-key (kbd "s-<down>") 'end-of-buffer)
