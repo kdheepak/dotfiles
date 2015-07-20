@@ -114,15 +114,18 @@ Return a list of installed packages or nil for every skipped package."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "55ed02951e7b458e4cd18837eefa1956884c9afd22bb514f697fd1d2d1abb3d3" "b06aaf5cefc4043ba018ca497a9414141341cb5a2152db84a9a80020d35644d1" "d9046dcd38624dbe0eb84605e77d165e24fdfca3a40c3b13f504728bab0bf99d" "52706f54fd3e769a0895d1786796450081b994378901d9c3fb032d3094788337" "c45539367c7526f69c6d8fa91060ab3b9f0b281762ad18a0ff696b9d70b7f945" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(package-selected-packages
    (quote
     (elpy helm-fuzzy-find zenburn-theme yaml-mode visual-regexp textmate tango-2-theme solarized-theme smex smartparens simpleclip relative-line-numbers redo+ python-mode powerline-evil polymode pdf-tools pandoc-mode pallet org-ac neotree multiple-cursors multi-term monokai-theme mmm-mode minibuffer-complete-cycle maxframe markdown-mode+ magit light-soap-theme latex-pretty-symbols key-chord jedi inf-ruby iedit idle-highlight-mode icicles hl-line+ helm-projectile gruvbox-theme flycheck expand-region exec-path-from-shell evil-visual-mark-mode evil-tabs evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-mark-replace evil-leader evil-indent-textobject evil-exchange evil-escape evil-easymotion evil-args elisp-slime-nav dtrt-indent browse-kill-ring autopair auctex anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
 
 ;;; Load theme
 (load-theme 'light-soap t)
@@ -814,43 +817,6 @@ If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
 ;; show the column number in the status bar
 (column-number-mode t)
 
-;;;Powerline settings
-(require 'powerline)
-(powerline-evil-vim-color-theme)
-(display-time-mode t)
-
-;;; (powerline-vim-theme)
-
-;;; 
-;;; 
-;;; (setq-default mode-line-format
-              ;;; '("%e"
-                ;;; (:eval
-                 ;;; (let* ((active (powerline-selected-window-active))
-                        ;;; (mode-line (if active 'mode-line 'mode-line-inactive))
-                        ;;; (face1 (if active 'powerline-active1 'powerline-inactive1))
-                        ;;; (face2 (if active 'powerline-active2 'powerline-inactive2))
-                        ;;; (separator-left (intern (format "powerline-%s-%s"
-                                                        ;;; powerline-default-separator
-                                                        ;;; (car powerline-default-separator-dir))))
-                        ;;; (separator-right (intern (format "powerline-%s-%s"
-                                                         ;;; powerline-default-separator
-                                                         ;;; (cdr powerline-default-separator-dir))))
-                        ;;; (lhs (list (powerline-buffer-id `(mode-line-buffer-id ,mode-line) 'l)
-                                   ;;; (when (and vc-mode buffer-file-name)
-                                     ;;; (let ((backend (vc-backend buffer-file-name)))
-                                       ;;; (when backend
-                                         ;;; (concat (powerline-raw "[" mode-line 'l)
-                                                 ;;; (powerline-raw (format "%s" (vc-working-revision buffer-file-name backend)))
-                                                 ;;; (powerline-raw "]" mode-line)))))))
-                        ;;; (rhs (list (powerline-raw global-mode-string mode-line 'r)
-                                   ;;; (powerline-raw "%l," mode-line 'l)
-                                   ;;; (powerline-raw (format-mode-line '(10 "%c")))
-                                   ;;; (powerline-raw (replace-regexp-in-string  "%" "%%" (format-mode-line '(-3 "%p"))) mode-line 'r))))
-                   ;;; (concat (powerline-render lhs)
-                           ;;; (powerline-fill mode-line (powerline-width rhs))
-                           ;;; (powerline-render rhs))))))
-
 
 ;;==============================================================================
 ;; Hack "*" to hightlight, but not jump to first match
@@ -1056,3 +1022,125 @@ one more than the current position."
       helm-recentf-fuzzy-match    t)
 
 (setq helm-locate-fuzzy-match t)
+
+;;; Powerline theme based on https://github.com/jcf/emacs.d
+
+(require 'powerline)
+
+(defface kd-powerline-emacs
+    '((t (:background "#af74e6" :foreground "#080808" :inherit mode-line)))
+    "Colour applied to Emacs mode indicator."
+    :group 'powerline)
+
+(defface kd-powerline-insert
+    '((t (:background "#66d9ef" :foreground "#080808" :inherit mode-line)))
+    "Colour applied to insert mode indicator."
+    :group 'powerline)
+
+(defface kd-powerline-motion
+    '((t (:background "#465457" :foreground "#1b1d1e" :inherit mode-line)))
+    "Colour applied to motion mode indicator."
+    :group 'powerline)
+
+(defface kd-powerline-normal
+    '((t (:background "green" :foreground "#080808" :inherit mode-line)))
+    ;;; '((t (:background "#e6db74" :foreground "#080808" :inherit mode-line)))
+    "Colour applied to normal mode indicator."
+    :group 'powerline)
+
+(defface kd-powerline-visual
+    '((t (:background "#fd971f" :foreground "#080808" :inherit mode-line)))
+    "Colour applied to visual mode indicator."
+    :group 'powerline)
+
+(defun kd-propertized-evil-mode-tag ()
+    (let* ((x (cond ((evil-emacs-state-p)  '(" EMACS  " kd-powerline-emacs))
+                    ((evil-insert-state-p) '(" INSERT " kd-powerline-insert))
+                    ((evil-motion-state-p) '(" MOTION " kd-powerline-motion))
+                    ((evil-normal-state-p) '(" NORMAL " kd-powerline-normal))
+                    ((evil-visual-state-p) '(" VISUAL " kd-powerline-visual))
+                    (t                     '("  ^.^ V " kd-powerline-emacs))))
+            (text (or (first x) ""))
+            (face (second x)))
+
+    (list
+        (powerline-raw text face face)
+        (powerline-arrow-left face nil))))
+
+;; (defface powerline-active1 '((t (:foreground "#d0d0f0" :background "purple" :inherit mode-line)))
+;;   "Powerline face 1."
+;;   :group 'powerline)
+
+;; (defface powerline-active2 '((t (:foreground "#63b132" :weight bold :background "black" :inherit mode-line)))
+;;   "Powerline face 2."
+;;   :group 'powerline)
+
+;; (defface powerline-active0 '((t (:foreground "deep pink" :weight bold :background "black" :inherit mode-line)))
+;;   "Powerline face 0."
+;;   :group 'powerline)
+
+;; (defface powerline-inactive0
+;;   '((t (:background "black" :weight bold :inherit mode-line-inactive)))
+;;   "Powerline face 0."
+;;   :group 'powerline)
+
+
+(defun kd-powerline-theme ()
+    (interactive)
+    (setq-default
+    mode-line-format
+    '("%e"
+        (:eval
+        (let* ((active (powerline-selected-window-active))
+                (kd-mode-line (if active 'mode-line 'mode-line-inactive))
+                (face1 (if active 'powerline-active1 'powerline-inactive1))
+                (face2 (if active 'powerline-active2 'powerline-inactive2))
+                (separator-left (intern (format "powerline-%s-%s"
+                                                powerline-default-separator
+                                                (car powerline-default-separator-dir))))
+                (separator-right (intern (format "powerline-%s-%s"
+                                                powerline-default-separator
+                                                (cdr powerline-default-separator-dir))))
+
+                (lhs (append
+                    (kd-propertized-evil-mode-tag)
+                    (list (powerline-raw "%*" nil 'l)
+                            (powerline-buffer-size nil 'l)
+                            (powerline-raw mode-line-mule-info nil 'l)
+                            (powerline-buffer-id nil 'l)
+                            (when (and (boundp 'which-func-mode) which-func-mode)
+                            (powerline-raw which-func-format nil 'l))
+                            (powerline-raw " ")
+                            (funcall separator-left kd-mode-line face1)
+                            (when (boundp 'erc-modified-channels-object)
+                            (powerline-raw erc-modified-channels-object face1 'l))
+                            (powerline-major-mode face1 'l)
+                            (powerline-process face1)
+                            (powerline-minor-modes face1 'l)
+                            (powerline-narrow face1 'l)
+                            (powerline-raw " " face1)
+                            (funcall separator-left face1 face2)
+                            (powerline-vc face2 'r))))
+                (rhs (list (powerline-raw global-mode-string face2 'r)
+                        (funcall separator-right face2 face1)
+                        (powerline-raw "%4l" face1 'l)
+                        (powerline-raw ":" face1 'l)
+                        (powerline-raw "%3c" face1 'r)
+                        (funcall separator-right face1 kd-mode-line)
+                        (powerline-raw " ")
+                        (powerline-raw "%6p" nil 'r)
+                        (powerline-hud face2 face1))))
+        (concat (powerline-render lhs)
+                (powerline-fill face2 (powerline-width rhs))
+                (powerline-render rhs)))))))
+
+(custom-set-faces
+ ;;; '(mode-line ((t (:foreground "#030303" :background "red" :box nil))))
+ ;;; '(mode-line-inactive ((t (:foreground "#030303" :background "red" :box nil))))
+ ;;; '(mode-line-inactive ((t (:foreground "#030303" :background "red" :box nil))))
+ '(powerline-active1 ((t (:foreground "white" :background "purple" :box nil))))
+ '(powerline-inactive1 ((t (:foreground "white" :background "purple" :box nil))))
+ '(powerline-active2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
+ '(powerline-inactive2 ((t (:foreground "black" :background "#FFFFFF" :box nil)))))
+
+(kd-powerline-theme)
