@@ -19,7 +19,6 @@
 
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
-
 Return a list of installed packages or nil for every skipped package."
   (mapcar
    (lambda (package)
@@ -46,6 +45,7 @@ Return a list of installed packages or nil for every skipped package."
                           'evil
                           'projectile
                           'elisp-slime-nav
+                          'evil-visualstar
                           'key-chord
                           'helm
                           'neotree
@@ -55,6 +55,7 @@ Return a list of installed packages or nil for every skipped package."
                           'minibuffer-complete-cycle
                           'projectile
                           'iedit
+                          'evil-commentary
                           'evil-visual-mark-mode
                           'zenburn-theme
                           'auto-complete
@@ -115,7 +116,7 @@ Return a list of installed packages or nil for every skipped package."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm-fuzzy-find zenburn-theme yaml-mode visual-regexp textmate tango-2-theme solarized-theme smex smartparens simpleclip relative-line-numbers redo+ python-mode powerline-evil polymode pdf-tools pandoc-mode pallet org-ac neotree multiple-cursors multi-term monokai-theme mmm-mode minibuffer-complete-cycle maxframe markdown-mode+ magit light-soap-theme latex-pretty-symbols key-chord jedi inf-ruby iedit idle-highlight-mode icicles hl-line+ helm-projectile gruvbox-theme flycheck expand-region exec-path-from-shell evil-visual-mark-mode evil-tabs evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-mark-replace evil-leader evil-indent-textobject evil-exchange evil-escape evil-easymotion evil-args elisp-slime-nav dtrt-indent browse-kill-ring autopair auctex anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
+    (elpy helm-fuzzy-find zenburn-theme yaml-mode visual-regexp textmate tango-2-theme solarized-theme smex smartparens simpleclip relative-line-numbers redo+ python-mode powerline-evil polymode pdf-tools pandoc-mode pallet org-ac neotree multiple-cursors multi-term monokai-theme mmm-mode minibuffer-complete-cycle maxframe markdown-mode+ magit light-soap-theme latex-pretty-symbols key-chord jedi inf-ruby iedit idle-highlight-mode icicles hl-line+ helm-projectile gruvbox-theme flycheck expand-region exec-path-from-shell evil-visual-mark-mode evil-tabs evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-mark-replace evil-leader evil-indent-textobject evil-exchange evil-escape evil-easymotion evil-args elisp-slime-nav dtrt-indent browse-kill-ring autopair auctex anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -150,10 +151,6 @@ Return a list of installed packages or nil for every skipped package."
 (require 'ido)
 (ido-mode t)
 
-;;;Powerline settings
-(require 'powerline)
-(powerline-evil-vim-color-theme)
-(display-time-mode t)
 
 ;;; selection is not copied into clipboard
 (defun x-select-text (text))
@@ -232,6 +229,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;; Gets indent style from file
 (dtrt-indent-mode 1)
  
+; Auto-indent with the Return key
 (define-key global-map (kbd "RET") 'newline-and-indent)
  
 (show-paren-mode t)
@@ -273,35 +271,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;     '(custom-set-variables
 ;;       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
 
-;; helm settings (TAB in helm window for actions over selected items,
-;; C-SPC to select items)
-
-(require 'helm-config)
-(require 'helm-misc)
-(require 'helm-projectile)
-(require 'helm-locate)
-(setq helm-quick-update t)
-(setq helm-bookmark-show-location t)
-(setq helm-buffers-fuzzy-matching t)
-
-(after 'projectile
-  (require 'helm-projectile))
-(global-set-key (kbd "M-x") 'helm-M-x)
-
-(defun helm-my-buffers ()
-  (interactive)
-  (let ((helm-ff-transformer-show-only-basename nil))
-  (helm-other-buffer '(helm-c-source-buffers-list
-                       helm-c-source-elscreen
-                       helm-c-source-projectile-files-list
-                       helm-c-source-ctags
-                       helm-c-source-recentf
-                       helm-c-source-locate)
-                     "*helm-my-buffers*")))
 
 (toggle-frame-maximized)
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
-
 (setq-default save-place t)                   ;; activate it for all buffers
 (require 'saveplace)                          ;; get the package
 
@@ -693,25 +665,25 @@ scroll-step 1)
 
 ;;; custom save and quit commands
 
-(evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
-(evil-ex-define-cmd "Q[uit]" 'my-nokill-current-switch-scratch-buffer)
-(evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-buffer)
+;;; (evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
+;;; (evil-ex-define-cmd "Q[uit]" 'my-nokill-current-switch-scratch-buffer)
 
 ; dont care shift key
 (evil-ex-define-cmd "W" 'save-buffer)
 (evil-ex-define-cmd "w" 'save-buffer)
-(evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-buffer)
-(evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-buffer)
+;;; (evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-buffer)
+;;; (evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-buffer)
+;;; (evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-buffer)
 
 ;;; (evil-ex-define-cmd "e" 'dkrishna/evil-edit)
 ;;; (pdf-tools-install)
 (define-key evil-ex-map "e" 'ido-find-file)
+(define-key evil-ex-map "E" 'helm-find-files)
 
 (defun modi/switch-to-scratch-and-back (arg)
   "Toggle between *scratch-MODE* buffer and the current buffer.
 If a scratch buffer does not exist, create it with the major mode set to that
 of the buffer from where this function is called.
-
     C-u COMMAND -> Open/switch to a scratch buffer in `org-mode'
 C-u C-u COMMAND -> Open/switch to a scratch buffer in `emacs-elisp-mode'"
   (interactive "P")
@@ -822,6 +794,251 @@ If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 
-(custom-set-variables
-    '(term-default-bg-color "#000000")        ;; background color (black)
-    '(term-default-fg-color "#dddd00"))       ;; foreground color (yellow)
+       ;; foreground color (yellow)
+
+
+(require 'evil-visualstar)
+(global-evil-visualstar-mode)
+
+
+(setq-default truncate-lines t)
+
+(defun linum-format-func (line)
+  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+     (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+
+(setq linum-format 'linum-format-func)
+;; use customized linum-format: add a addition space after the line number
+
+
+;; show the column number in the status bar
+(column-number-mode t)
+
+;;;Powerline settings
+(require 'powerline)
+(powerline-evil-vim-color-theme)
+(display-time-mode t)
+
+;;; (powerline-vim-theme)
+
+;;; 
+;;; 
+;;; (setq-default mode-line-format
+              ;;; '("%e"
+                ;;; (:eval
+                 ;;; (let* ((active (powerline-selected-window-active))
+                        ;;; (mode-line (if active 'mode-line 'mode-line-inactive))
+                        ;;; (face1 (if active 'powerline-active1 'powerline-inactive1))
+                        ;;; (face2 (if active 'powerline-active2 'powerline-inactive2))
+                        ;;; (separator-left (intern (format "powerline-%s-%s"
+                                                        ;;; powerline-default-separator
+                                                        ;;; (car powerline-default-separator-dir))))
+                        ;;; (separator-right (intern (format "powerline-%s-%s"
+                                                         ;;; powerline-default-separator
+                                                         ;;; (cdr powerline-default-separator-dir))))
+                        ;;; (lhs (list (powerline-buffer-id `(mode-line-buffer-id ,mode-line) 'l)
+                                   ;;; (when (and vc-mode buffer-file-name)
+                                     ;;; (let ((backend (vc-backend buffer-file-name)))
+                                       ;;; (when backend
+                                         ;;; (concat (powerline-raw "[" mode-line 'l)
+                                                 ;;; (powerline-raw (format "%s" (vc-working-revision buffer-file-name backend)))
+                                                 ;;; (powerline-raw "]" mode-line)))))))
+                        ;;; (rhs (list (powerline-raw global-mode-string mode-line 'r)
+                                   ;;; (powerline-raw "%l," mode-line 'l)
+                                   ;;; (powerline-raw (format-mode-line '(10 "%c")))
+                                   ;;; (powerline-raw (replace-regexp-in-string  "%" "%%" (format-mode-line '(-3 "%p"))) mode-line 'r))))
+                   ;;; (concat (powerline-render lhs)
+                           ;;; (powerline-fill mode-line (powerline-width rhs))
+                           ;;; (powerline-render rhs))))))
+
+
+;;==============================================================================
+;; Hack "*" to hightlight, but not jump to first match
+(defun my-evil-prepare-word-search (forward symbol)
+  "Prepare word search, but do not move yet."
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+                     evil-symbol-word-search))
+  (let ((string (car-safe regexp-search-ring))
+        (move (if forward #'forward-char #'backward-char))
+        (end (if forward #'eobp #'bobp)))
+    (setq isearch-forward forward)
+    (setq string (evil-find-thing forward (if symbol 'symbol 'word)))
+    (cond
+     ((null string)
+      (error "No word under point"))
+     (t
+      (setq string
+            (format (if symbol "\\_<%s\\_>" "\\<%s\\>")
+                    (regexp-quote string)))))
+    (evil-push-search-history string forward)
+    (my-evil-search string forward t)))
+
+(defun my-evil-search (string forward &optional regexp-p start)
+  "Highlight STRING matches.
+If FORWARD is nil, search backward, otherwise forward.
+If REGEXP-P is non-nil, STRING is taken to be a regular expression.
+START is the position to search from; if unspecified, it is
+one more than the current position."
+  (when (and (stringp string)
+             (not (string= string "")))
+    (let* ((orig (point))
+           (start (or start
+                      (if forward
+                          (min (point-max) (1+ orig))
+                        orig)))
+           (isearch-regexp regexp-p)
+           (isearch-forward forward)
+           (case-fold-search
+            (unless (and search-upper-case
+                         (not (isearch-no-upper-case-p string nil)))
+              case-fold-search)))
+      ;; no text properties, thank you very much
+      (set-text-properties 0 (length string) nil string)
+      (setq isearch-string string)
+      (isearch-update-ring string regexp-p)
+      ;; handle opening and closing of invisible area
+      (cond
+       ((boundp 'isearch-filter-predicates)
+        (dolist (pred isearch-filter-predicates)
+          (funcall pred (match-beginning 0) (match-end 0))))
+       ((boundp 'isearch-filter-predicate)
+        (funcall isearch-filter-predicate (match-beginning 0) (match-end 0))))
+      (evil-flash-search-pattern string t))))
+
+(define-key evil-motion-state-map "*" 'my-evil-prepare-word-search)
+(define-key evil-motion-state-map (kbd "*") 'my-evil-prepare-word-search)
+;; end highlight hack
+;;==============================================================================
+
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
+
+(elpy-enable)
+
+;; Fixing a key binding bug in elpy
+(define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+;; Fixing another key binding bug in iedit mode
+(define-key global-map (kbd "C-c o") 'iedit-mode)
+
+  (require 'auto-complete)
+  (require 'auto-complete-config)
+
+  (setq ac-auto-show-menu t)
+  (setq ac-auto-start t)
+  (setq ac-comphist-file "~/.ac-comphist.dat")
+  (setq ac-quick-help-delay 0.3)
+  (setq ac-quick-help-height 30)
+  (setq ac-show-menu-immediately-on-auto-complete t)
+
+  (dolist (mode '(vimrc-mode html-mode stylus-mode))
+    (add-to-list 'ac-modes mode))
+
+  (ac-config-default)
+
+  (after 'linum
+    (ac-linum-workaround))
+
+  (after 'yasnippet
+    (add-hook 'yas-before-expand-snippet-hook (lambda () (auto-complete-mode -1)))
+    (add-hook 'yas-after-exit-snippet-hook (lambda () (auto-complete-mode t)))
+    (defadvice ac-expand (before advice-for-ac-expand activate)
+      (when (yas-expand)
+        (ac-stop))))
+
+  (require 'ac-etags)
+  (setq ac-etags-requires 1)
+  (after 'etags
+    (ac-etags-setup))
+
+  (defun my-do-not-kill-scratch-buffer ()
+  (if (member (buffer-name (current-buffer))
+              '("*scratch*" "*Messages*" "*Require Times*"))
+      (progn
+        (bury-buffer)
+        nil)
+    t))
+(add-hook 'kill-buffer-query-functions 'my-do-not-kill-scratch-buffer)
+
+
+
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+
+
+(setq sentence-end-double-space nil)
+(setq delete-by-moving-to-trash t)
+(setq mark-ring-max 64)
+(setq global-mark-ring-max 128)
+(setq create-lockfiles nil)
+(setq echo-keystrokes 0.01)
+(setq gc-cons-threshold 10000000)
+(setq initial-major-mode 'emacs-lisp-mode)
+(setq eval-expression-print-level nil)
+(setq-default indent-tabs-mode nil)
+
+
+(require 'evil-commentary)
+(evil-commentary-mode t)
+
+
+(setq helm-command-prefix-key "C-c h")
+(setq helm-quick-update t)
+(setq helm-bookmark-show-location t)
+(setq helm-buffers-fuzzy-matching t)
+(setq helm-M-x-fuzzy-match t)
+(setq helm-apropos-fuzzy-match t)
+(setq helm-recentf-fuzzy-match t)
+(setq helm-locate-fuzzy-match t)
+(setq helm-file-cache-fuzzy-match t)
+(setq helm-semantic-fuzzy-match t)
+(setq helm-imenu-fuzzy-match t)
+(setq helm-lisp-fuzzy-completion t)
+(setq helm-completion-in-region-fuzzy-match t)
+(setq helm-mode-fuzzy-match t)
+
+;; helm settings (TAB in helm window for actions over selected items,
+;; C-SPC to select items)
+
+(require 'helm-config)
+(require 'helm-misc)
+(require 'helm-projectile)
+(require 'helm-locate)
+
+(after 'projectile
+  (require 'helm-projectile))
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+(defun helm-my-buffers ()
+  (interactive)
+  (let ((helm-ff-transformer-show-only-basename nil))
+  (helm-other-buffer '(helm-c-source-buffers-list
+                       helm-c-source-elscreen
+                       helm-c-source-projectile-files-list
+                       helm-c-source-ctags
+                       helm-c-source-recentf
+                       helm-c-source-locate)
+                     "*helm-my-buffers*")))
+(defun save-persistent-scratch ()
+  "Write the contents of *scratch* to the file name
+`persistent-scratch-file-name'."
+  (with-current-buffer (get-buffer-create "*scratch*")
+    (write-region (point-min) (point-max) "~/.emacs-persistent-scratch")))
+
+(defun load-persistent-scratch ()
+  "Load the contents of `persistent-scratch-file-name' into the
+  scratch buffer, clearing its contents first."
+  (if (file-exists-p "~/.emacs-persistent-scratch")
+      (with-current-buffer (get-buffer "*scratch*")
+        (delete-region (point-min) (point-max))
+        (insert-file-contents "~/.emacs-persistent-scratch"))))
+
+(push #'load-persistent-scratch after-init-hook)
+(push #'save-persistent-scratch kill-emacs-hook)
+
+(if (not (boundp 'save-persistent-scratch-timer))
+    (setq save-persistent-scratch-timer
+          (run-with-idle-timer 300 t 'save-persistent-scratch)))
