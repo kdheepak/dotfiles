@@ -167,6 +167,7 @@ Return a list of installed packages or nil for every skipped package."
 
 (global-linum-mode t)
 
+(require 'evil-leader)
 (setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
 (evil-leader/set-leader ",")
@@ -273,9 +274,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (toggle-frame-maximized)
+
+(save-place-mode)
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
 (setq-default save-place t)                   ;; activate it for all buffers
 (require 'saveplace)                          ;; get the package
+
+(add-hook 'find-file-hooks 'save-place-find-file-hook t)
+(add-hook 'kill-emacs-hook 'save-place-kill-emacs-hook)
+(add-hook 'kill-buffer-hook 'save-place-to-alist)
 
 (setq evil-emacs-state-cursor '("red" box))
 (setq evil-normal-state-cursor '("green" box))
@@ -485,8 +492,8 @@ scroll-step 1)
   "TAB" 'untabify
   "S-TAB" 'tabify
   ;; "\\" 'evil-ex-nohighlight
-  "b" 'xah-next-user-buffer
-  "B" 'xah-previous-user-buffer
+  "b" 'helm-mini
+  "B" 'xah-next-user-buffer
   "e" 'djoyner/evil-edit
   "E" 'eval-last-sexp
   "i" 'whitespace-mode
@@ -665,19 +672,19 @@ scroll-step 1)
 
 ;;; custom save and quit commands
 
-;;; (evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
-;;; (evil-ex-define-cmd "Q[uit]" 'my-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "q[uit]" 'my-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "Q[uit]" 'my-nokill-current-switch-scratch-buffer)
 
 ; dont care shift key
 (evil-ex-define-cmd "W" 'save-buffer)
 (evil-ex-define-cmd "w" 'save-buffer)
-;;; (evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-buffer)
-;;; (evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-buffer)
-;;; (evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "Wq" 'my-save-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "WQ" 'my-save-nokill-current-switch-scratch-buffer)
+(evil-ex-define-cmd "wq" 'my-save-nokill-current-switch-scratch-buffer)
 
 ;;; (evil-ex-define-cmd "e" 'dkrishna/evil-edit)
 ;;; (pdf-tools-install)
-(define-key evil-ex-map "e" 'ido-find-file)
+(define-key evil-ex-map "e" 'helm-find-files)
 (define-key evil-ex-map "E" 'helm-find-files)
 
 (defun modi/switch-to-scratch-and-back (arg)
@@ -783,7 +790,7 @@ If `xah-switch-buffer-ignore-dired' is true, also skip directory buffer.
     (while (and (not (string-equal "*" (substring (buffer-name) 0 1))) (< i 20))
       (setq i (1+ i)) (previous-buffer))))
 
-(define-key evil-ex-map "b" 'helm-buffers-list)
+;;; (define-key evil-ex-map "b" 'helm-buffers-list)
 
 ;;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
 ;;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
@@ -1022,6 +1029,7 @@ one more than the current position."
                        helm-c-source-recentf
                        helm-c-source-locate)
                      "*helm-my-buffers*")))
+
 (defun save-persistent-scratch ()
   "Write the contents of *scratch* to the file name
 `persistent-scratch-file-name'."
@@ -1042,3 +1050,16 @@ one more than the current position."
 (if (not (boundp 'save-persistent-scratch-timer))
     (setq save-persistent-scratch-timer
           (run-with-idle-timer 300 t 'save-persistent-scratch)))
+
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+(global-set-key (kbd "C-x b") 'helm-mini)
+
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t)
+
+(setq helm-locate-fuzzy-match t)
