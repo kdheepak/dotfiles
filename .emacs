@@ -148,9 +148,6 @@ Return a list of installed packages or nil for every skipped package."
 (setq large-file-warning-threshold nil)
 ;;; (setq split-width-threshold nil)
 
-(require 'ido)
-(ido-mode t)
-
 
 ;;; selection is not copied into clipboard
 (defun x-select-text (text))
@@ -494,7 +491,7 @@ scroll-step 1)
   ;; "\\" 'evil-ex-nohighlight
   "b" 'helm-mini
   "B" 'xah-next-user-buffer
-  "e" 'djoyner/evil-edit
+  "e" 'helm-find-files
   "E" 'eval-last-sexp
   "i" 'whitespace-mode
   "k" 'evil-delete-buffer
@@ -551,10 +548,6 @@ scroll-step 1)
   (let ((new-win (split-window (selected-window))))
     (find-file file))
   (balance-windows))
-
-(defun djoyner/evil-edit (file)
-  (interactive "F:edit ")
-  (ido-find-file file))
 
 (defun dkrishna/evil-edit-hsplit ()
   (interactive)
