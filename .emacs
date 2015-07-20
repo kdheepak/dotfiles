@@ -44,11 +44,22 @@ Return a list of installed packages or nil for every skipped package."
                           'evil-args
                           'evil
                           'projectile
+                          'python-mode
                           'elisp-slime-nav
                           'evil-visualstar
                           'key-chord
                           'helm
                           'neotree
+                          'auctex
+                          'matlab-mode
+                          ;;; 'nxhtml
+                          'pydoc-info
+                          'scss-mode
+                          ;;; 'popup
+                          'nyan-mode
+                          'helm-descbinds
+                          'js2-mode
+                          'yasnippet
                           'evil-tabs
                           'flyspell
                           'autopair
@@ -119,7 +130,7 @@ Return a list of installed packages or nil for every skipped package."
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "55ed02951e7b458e4cd18837eefa1956884c9afd22bb514f697fd1d2d1abb3d3" "b06aaf5cefc4043ba018ca497a9414141341cb5a2152db84a9a80020d35644d1" "d9046dcd38624dbe0eb84605e77d165e24fdfca3a40c3b13f504728bab0bf99d" "52706f54fd3e769a0895d1786796450081b994378901d9c3fb032d3094788337" "c45539367c7526f69c6d8fa91060ab3b9f0b281762ad18a0ff696b9d70b7f945" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(package-selected-packages
    (quote
-    (elpy helm-fuzzy-find zenburn-theme yaml-mode visual-regexp textmate tango-2-theme solarized-theme smex smartparens simpleclip relative-line-numbers redo+ python-mode powerline-evil polymode pdf-tools pandoc-mode pallet org-ac neotree multiple-cursors multi-term monokai-theme mmm-mode minibuffer-complete-cycle maxframe markdown-mode+ magit light-soap-theme latex-pretty-symbols key-chord jedi inf-ruby iedit idle-highlight-mode icicles hl-line+ helm-projectile gruvbox-theme flycheck expand-region exec-path-from-shell evil-visual-mark-mode evil-tabs evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-mark-replace evil-leader evil-indent-textobject evil-exchange evil-escape evil-easymotion evil-args elisp-slime-nav dtrt-indent browse-kill-ring autopair auctex anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
+    (request-deferred websocket ein elpy helm-fuzzy-find zenburn-theme yaml-mode visual-regexp textmate tango-2-theme solarized-theme smex smartparens simpleclip relative-line-numbers redo+ python-mode powerline-evil polymode pdf-tools pandoc-mode pallet org-ac neotree multiple-cursors multi-term monokai-theme mmm-mode minibuffer-complete-cycle maxframe markdown-mode+ magit light-soap-theme latex-pretty-symbols key-chord jedi inf-ruby iedit idle-highlight-mode icicles hl-line+ helm-projectile gruvbox-theme flycheck expand-region exec-path-from-shell evil-visual-mark-mode evil-tabs evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-mark-replace evil-leader evil-indent-textobject evil-exchange evil-escape evil-easymotion evil-args elisp-slime-nav dtrt-indent browse-kill-ring autopair auctex anti-zenburn-theme ag ace-jump-mode ac-ispell ac-etags ac-emmet))))
 ;; (custom-set-faces
 ;;  ;; custom-set-faces was added by Custom.
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1135,14 +1146,6 @@ one more than the current position."
                 (powerline-fill face2 (powerline-width rhs))
                 (powerline-render rhs)))))))
 
-(custom-set-faces
- ;;; '(mode-line ((t (:foreground "#030303" :background "red" :box nil))))
- ;;; '(mode-line-inactive ((t (:foreground "#030303" :background "red" :box nil))))
- ;;; '(mode-line-inactive ((t (:foreground "#030303" :background "red" :box nil))))
- '(powerline-active1 ((t (:foreground "white" :background "purple" :box nil))))
- '(powerline-inactive1 ((t (:foreground "white" :background "purple" :box nil))))
- '(powerline-active2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
- '(powerline-inactive2 ((t (:foreground "black" :background "#FFFFFF" :box nil)))))
 
 (kd-powerline-theme)
 
@@ -1152,3 +1155,107 @@ one more than the current position."
 (global-set-key (kbd "s-<right>") 'move-end-of-line)
 (global-set-key (kbd "s-<up>") 'beginning-of-buffer)
 (global-set-key (kbd "s-<down>") 'end-of-buffer)
+
+
+(require 'magit)
+
+;-------------------;
+;;; Auto-Complete ;;;
+;-------------------;
+
+(setq ac-directory "~/.emacs.d/auto-complete")
+(add-to-list 'load-path ac-directory)
+(require 'auto-complete) 
+
+(require 'auto-complete-config) 
+(ac-config-default)
+(global-auto-complete-mode 1)
+(setq-default ac-sources '(ac-source-yasnippet
+                           ac-source-abbrev
+                           ac-source-dictionary
+                           ac-source-words-in-same-mode-buffers))
+
+; hack to fix ac-sources after pycomplete.el breaks it
+(add-hook 'python-mode-hook
+          '(lambda ()
+             (setq ac-sources '(ac-source-pycomplete
+                                ac-source-yasnippet
+                                ac-source-abbrev
+                                ac-source-dictionary
+                                ac-source-words-in-same-mode-buffers))))
+
+;; from http://truongtx.me/2013/01/06/config-yasnippet-and-autocomplete-on-emacs/
+; set the trigger key so that it can work together with yasnippet on
+; tab key, if the word exists in yasnippet, pressing tab will cause
+; yasnippet to activate, otherwise, auto-complete will
+(ac-set-trigger-key "TAB")
+(ac-set-trigger-key "<tab>")
+
+;; from http://blog.deadpansincerity.com/2011/05/setting-up-emacs-as-a-javascript-editing-environment-for-fun-and-profit/
+; Start auto-completion after 2 characters of a word
+(setq ac-auto-start 2)
+; case sensitivity is important when finding matches
+(setq ac-ignore-case nil)
+
+;----------------------;
+;;; Custom Functions ;;;
+;----------------------;
+
+; unfill a paragraph, i.e., make it so the text does not wrap in the
+; paragraph where the cursor is
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
+; unfill a region, i.e., make is so the text in that region does not
+; wrap
+(defun unfill-region ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-region (region-beginning) (region-end) nil)))
+
+(defun system-is-mac ()
+  (interactive)
+  (string-equal system-type "darwin"))
+
+(defun system-is-linux ()
+  (interactive)
+  (string-equal system-type "gnu/linux"))
+
+(defun make-plugin-path (plugin)
+  (expand-file-name
+   (concat plugin-path plugin)))
+
+(defun include-plugin (plugin)
+  (add-to-list 'load-path (make-plugin-path plugin)))
+
+(defun make-elget-path (plugin)
+  (expand-file-name
+   (concat elget-path plugin)))
+
+(defun include-elget-plugin (plugin)
+  (add-to-list 'load-path (make-elget-path plugin)))
+
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ein:cell-input-area ((t (:background "#042028"))))
+ '(ein:cell-input-prompt ((t (:inherit header-line :background "#002b35" :foreground "#859900" :inverse-video nil :weight bold))))
+ '(ein:cell-output-prompt ((t (:inherit header-line :background "#002b35" :foreground "#dc322f" :inverse-video nil :weight bold))))
+ '(magit-item-highlight ((t (:inherit highlight :background "#042028"))))
+ '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 210))))
+ '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 190))))
+ '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 170))))
+ '(markdown-header-face-4 ((t (:inherit markdown-header-face :height 150))))
+ '(markdown-header-face-5 ((t (:inherit markdown-header-face :slant italic :weight bold))))
+ '(markdown-header-face-6 ((t (:inherit markdown-header-face :slant italic :weight normal))))
+ '(markdown-math-face ((t (:inherit font-lock-string-face :foreground "#cb4b16" :slant italic))))
+ '(powerline-active1 ((t (:foreground "white" :background "purple" :box nil))))
+ '(powerline-active2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
+ '(powerline-inactive1 ((t (:foreground "white" :background "purple" :box nil))))
+ '(powerline-inactive2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
+ '(py-variable-name-face ((t (:inherit default :foreground "#268bd2")))))
