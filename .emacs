@@ -643,39 +643,53 @@ scroll-step 1)
             (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
             (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
 
-
 ;; Prevent quit command from exit Emacs
 (defun my-nokill-current-switch-scratch-buffer ()
   :repeat nil
   (interactive)
     (condition-case nil
-      (delete-window)
-    (error
-     (condition-case nil
-         (delete-frame)
-       (error
         (if (equal "*scratch*" (buffer-name))
-            (message "On scratch")
           (progn
-            (message "Killing buffer")
-            (kill-buffer (current-buffer)))))))))
+            (condition-case nil
+            (delete-window)
+                (error nil
+               ))
+            (my-server-exit-hook)
+            (delete-frame)
+            (message "On scratch")
+            )
+          (progn
+            (kill-buffer (current-buffer))
+            (message "Killed buffer")
+            (condition-case nil
+            (delete-window)
+                (error nil
+                       ))
+            )
+        )))
 
 (defun my-save-nokill-current-switch-scratch-buffer ()
   :repeat nil
   (interactive) ;;;
-  (save-buffer)
-  (condition-case nil
-      (delete-window)
-    (error
-     (condition-case nil
-         (delete-frame)
-       (error
+    (condition-case nil
         (if (equal "*scratch*" (buffer-name))
-            (message "On scratch")
           (progn
-            (message "save and kill buffer")
+            (condition-case nil
+            (delete-window)
+                (error nil
+               ))
+            (message "On scratch")
+            )
+          (progn
+            (save-buffer)
             (kill-buffer (current-buffer))
-            )))))))
+            (message "Saved and killed buffer")
+            (condition-case nil
+            (delete-window)
+                (error nil
+                       ))
+            )
+        )))
 
 ;;; custom save and quit commands
 
@@ -1366,3 +1380,47 @@ one more than the current position."
   '(define-key python-mode-map (kbd "C-c !") 'python-shell-switch-to-shell))
 (eval-after-load 'python
   '(define-key python-mode-map (kbd "C-c |") 'python-shell-send-region))
+
+(defun recompile-quietly ()
+  "Re-compile without changing the window configuration."
+  (interactive)
+  (save-window-excursion
+    (recompile)))
+
+
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook
+  '(lambda() (set-fill-column 80)))
+
+
+; from enberg on #emacs
+(setq compilation-finish-function
+  (lambda (buf str)
+    (if (null (string-match ".*exited abnormally.*" str))
+        ;;no errors, make the compilation window go away in a few seconds
+        (progn
+          (run-at-time
+           "2 sec" nil 'delete-windows-on
+           (get-buffer-create "*compilation*"))
+          (message "No Compilation Errors!")))))
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+(defun my-server-visit-hook()
+       (interactive)
+       (shell-command
+	  "osascript -e 'tell application \"Emacs\" to activate'"))
+
+(add-hook 'server-visit-hook 'my-server-visit-hook)
+
+(defun my-server-exit-hook()
+  "Returns focus back to terminal"
+       (interactive)
+       (shell-command
+        "osascript -e 'tell application \"Terminal\" to activate'"))
+
+(add-hook 'delete-frame-functions 'my-server-exit-hook)
