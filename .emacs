@@ -286,14 +286,22 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (toggle-frame-maximized)
 
-(save-place-mode)
-(setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
-(setq-default save-place t)                   ;; activate it for all buffers
-(require 'saveplace)                          ;; get the package
+;;; (use-package saveplace
+;;; :init (save-place-mode))
 
-(add-hook 'find-file-hooks 'save-place-find-file-hook t)
-(add-hook 'kill-emacs-hook 'save-place-kill-emacs-hook)
-(add-hook 'kill-buffer-hook 'save-place-to-alist)
+;;; (save-place-mode)
+;;; (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
+;;; (setq-default save-place t)                   ;; activate it for all buffers
+;;; (require 'saveplace)                          ;; get the package
+
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/.emacs.d/saved-places")
+(setq save-place-forget-unreadable-files nil)
+
+;;; (add-hook 'find-file-hooks 'save-place-find-file-hook t)
+;;; (add-hook 'kill-emacs-hook 'save-place-kill-emacs-hook)
+;;; (add-hook 'kill-buffer-hook 'save-place-to-alist)
 
 (setq evil-emacs-state-cursor '("red" box))
 (setq evil-normal-state-cursor '("green" box))
