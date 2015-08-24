@@ -250,10 +250,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (evil-leader/set-key "V" 'exchange-point-and-mark)
 
-(define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-(define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-(define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-(define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+;; (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+;; (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
  
 (defmacro after (feature &rest body)
   "After FEATURE is loaded, evaluate BODY."
@@ -1514,3 +1514,52 @@ one more than the current position."
   (shell-command-on-region (region-beginning) (region-end) "pbcopy")
 )
 
+(defgroup navigate nil
+  "seamlessly navigate between Emacs and tmux"
+  :prefix "navigate-"
+  :group 'evil)
+
+; Without unsetting C-h this is useless
+(global-unset-key (kbd "C-h"))
+
+; This requires windmove commands
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+(defun tmux-navigate (direction)
+  (let
+    ((cmd (concat "windmove-" direction)))
+      (condition-case nil
+          (funcall (read cmd))
+        (error
+          (tmux-command direction)))))
+
+(defun tmux-command (direction)
+  (shell-command-to-string
+    (concat "tmux select-pane -"
+      (tmux-direction direction))))
+
+(defun tmux-direction (direction)
+  (upcase
+    (substring direction 0 1)))
+
+(define-key evil-normal-state-map
+            (kbd "C-h")
+            (lambda ()
+              (interactive)
+              (tmux-navigate "left")))
+(define-key evil-normal-state-map
+            (kbd "C-j")
+            (lambda ()
+              (interactive)
+              (tmux-navigate "down")))
+(define-key evil-normal-state-map
+            (kbd "C-k")
+            (lambda ()
+              (interactive)
+              (tmux-navigate "up")))
+(define-key evil-normal-state-map
+            (kbd "C-l")
+            (lambda ()
+              (interactive)
+              (tmux-navigate "right")))
