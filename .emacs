@@ -896,531 +896,621 @@ one more than the current position."
         (funcall isearch-filter-predicate (match-beginning 0) (match-end 0))))
       (evil-flash-search-pattern string t))))
 
+(setq evil-esc-delay 0)
+
 (define-key evil-motion-state-map "*" 'my-evil-prepare-word-search)
 (define-key evil-motion-state-map (kbd "*") 'my-evil-prepare-word-search)
+
 ;; end highlight hack
 ;;==============================================================================
 
 (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)                 ; optional
-
+ (setq jedi:complete-on-dot t)                 ; optional
+ 
 (elpy-enable)
 
-;; ;; Fixing a key binding bug in elpy
-;; (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
-;; ;; Fixing another key binding bug in iedit mode
-;; (define-key global-map (kbd "C-c o") 'iedit-mode)
-
-;;   (require 'auto-complete)
-;;   (require 'auto-complete-config)
-
-;;   (setq ac-auto-show-menu t)
-;;   (setq ac-auto-start t)
-;;   (setq ac-comphist-file "~/.ac-comphist.dat")
-;;   (setq ac-quick-help-delay 0.3)
-;;   (setq ac-quick-help-height 30)
-;;   (setq ac-show-menu-immediately-on-auto-complete t)
-
-;;   (dolist (mode '(vimrc-mode html-mode stylus-mode))
-;;     (add-to-list 'ac-modes mode))
-
-;;   (ac-config-default)
-
-;;   (after 'linum
-;;     (ac-linum-workaround))
-
-;;   (after 'yasnippet
-;;     (add-hook 'yas-before-expand-snippet-hook (lambda () (auto-complete-mode -1)))
-;;     (add-hook 'yas-after-exit-snippet-hook (lambda () (auto-complete-mode t)))
-;;     (defadvice ac-expand (before advice-for-ac-expand activate)
-;;       (when (yas-expand)
-;;         (ac-stop))))
+;; ;; ;; Fixing a key binding bug in elpy
+;; ;; (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+;; ;; ;; Fixing another key binding bug in iedit mode
+;; ;; (define-key global-map (kbd "C-c o") 'iedit-mode)
+;; 
+;; ;;   (require 'auto-complete)
+;; ;;   (require 'auto-complete-config)
+;; 
+;; ;;   (setq ac-auto-show-menu t)
+;; ;;   (setq ac-auto-start t)
+;; ;;   (setq ac-comphist-file "~/.ac-comphist.dat")
+;; ;;   (setq ac-quick-help-delay 0.3)
+;; ;;   (setq ac-quick-help-height 30)
+;; ;;   (setq ac-show-menu-immediately-on-auto-complete t)
+;; 
+;; ;;   (dolist (mode '(vimrc-mode html-mode stylus-mode))
+;; ;;     (add-to-list 'ac-modes mode))
+;; 
+;; ;;   (ac-config-default)
+;; 
+;; ;;   (after 'linum
+;; ;;     (ac-linum-workaround))
+;; 
+;; ;;   (after 'yasnippet
+;; ;;     (add-hook 'yas-before-expand-snippet-hook (lambda () (auto-complete-mode -1)))
+;; ;;     (add-hook 'yas-after-exit-snippet-hook (lambda () (auto-complete-mode t)))
+;; ;;     (defadvice ac-expand (before advice-for-ac-expand activate)
+;; ;;       (when (yas-expand)
+;; ;;         (ac-stop))))
 
 ;;   (require 'ac-etags)
 ;;   (setq ac-etags-requires 1)
 ;;   (after 'etags
 ;;     (ac-etags-setup))
 
-  (defun my-do-not-kill-scratch-buffer ()
-  (if (member (buffer-name (current-buffer))
-              '("*scratch*" "*Messages*" "*Require Times*"))
-      (progn
-        (bury-buffer)
-        nil)
-    t))
-(add-hook 'kill-buffer-query-functions 'my-do-not-kill-scratch-buffer)
+   (defun my-do-not-kill-scratch-buffer ()
+   (if (member (buffer-name (current-buffer))
+               '("*scratch*" "*Messages*" "*Require Times*"))
+       (progn
+         (bury-buffer)
+         nil)
+     t))
+ (add-hook 'kill-buffer-query-functions 'my-do-not-kill-scratch-buffer)
 
 
 
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+ (setq locale-coding-system 'utf-8)
+ (set-terminal-coding-system 'utf-8)
+ (set-keyboard-coding-system 'utf-8)
+ (set-selection-coding-system 'utf-8)
+ (prefer-coding-system 'utf-8)
 
 
 
-(setq sentence-end-double-space nil)
-(setq delete-by-moving-to-trash t)
-(setq mark-ring-max 64)
-(setq global-mark-ring-max 128)
-(setq create-lockfiles nil)
-(setq echo-keystrokes 0.01)
-(setq gc-cons-threshold 10000000)
-(setq initial-major-mode 'emacs-lisp-mode)
-(setq eval-expression-print-level nil)
-(setq-default indent-tabs-mode nil)
+ (setq sentence-end-double-space nil)
+ (setq delete-by-moving-to-trash t)
+ (setq mark-ring-max 64)
+ (setq global-mark-ring-max 128)
+ (setq create-lockfiles nil)
+ (setq echo-keystrokes 0.01)
+ (setq gc-cons-threshold 10000000)
+ (setq initial-major-mode 'emacs-lisp-mode)
+ (setq eval-expression-print-level nil)
+ (setq-default indent-tabs-mode nil)
 
 
-(require 'evil-commentary)
-(evil-commentary-mode t)
+ (require 'evil-commentary)
+ (evil-commentary-mode t)
 
 
-(setq helm-command-prefix-key "C-c h")
-(setq helm-quick-update t)
-(setq helm-bookmark-show-location t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-M-x-fuzzy-match t)
-(setq helm-apropos-fuzzy-match t)
-(setq helm-recentf-fuzzy-match t)
-(setq helm-locate-fuzzy-match t)
-(setq helm-file-cache-fuzzy-match t)
-(setq helm-semantic-fuzzy-match t)
-(setq helm-imenu-fuzzy-match t)
-(setq helm-lisp-fuzzy-completion t)
-(setq helm-completion-in-region-fuzzy-match t)
-(setq helm-mode-fuzzy-match t)
+ (setq helm-command-prefix-key "C-c h")
+ (setq helm-quick-update t)
+ (setq helm-bookmark-show-location t)
+ (setq helm-buffers-fuzzy-matching t)
+ (setq helm-M-x-fuzzy-match t)
+ (setq helm-apropos-fuzzy-match t)
+ (setq helm-recentf-fuzzy-match t)
+ (setq helm-locate-fuzzy-match t)
+ (setq helm-file-cache-fuzzy-match t)
+ (setq helm-semantic-fuzzy-match t)
+ (setq helm-imenu-fuzzy-match t)
+ (setq helm-lisp-fuzzy-completion t)
+ (setq helm-completion-in-region-fuzzy-match t)
+ (setq helm-mode-fuzzy-match t)
 
-;; helm settings (TAB in helm window for actions over selected items,
-;; C-SPC to select items)
+ ;; helm settings (TAB in helm window for actions over selected items,
+ ;; C-SPC to select items)
 
-(require 'helm-config)
-(require 'helm-misc)
-(require 'helm-projectile)
-(require 'helm-locate)
+ (require 'helm-config)
+ (require 'helm-misc)
+ (require 'helm-projectile)
+ (require 'helm-locate)
 
-(after 'projectile
-  (require 'helm-projectile))
-(global-set-key (kbd "M-x") 'helm-M-x)
+ (projectile-global-mode)
 
-(defun helm-my-buffers ()
+ (after 'projectile
+   (require 'helm-projectile))
+ (global-set-key (kbd "M-x") 'helm-M-x)
+
+ (defun helm-my-buffers ()
+   (interactive)
+   (let ((helm-ff-transformer-show-only-basename nil))
+   (helm-other-buffer '(helm-c-source-buffers-list
+                        helm-c-source-elscreen
+                        helm-c-source-projectile-files-list
+                        helm-c-source-ctags
+                        helm-c-source-recentf
+                        helm-c-source-locate)
+                      "*helm-my-buffers*")))
+
+ (defun save-persistent-scratch ()
+   "Write the contents of *scratch* to the file name
+ `persistent-scratch-file-name'."
+   (with-current-buffer (get-buffer-create "*scratch*")
+     (write-region (point-min) (point-max) "~/.emacs-persistent-scratch")))
+
+ (defun load-persistent-scratch ()
+   "Load the contents of `persistent-scratch-file-name' into the
+   scratch buffer, clearing its contents first."
+   (if (file-exists-p "~/.emacs-persistent-scratch")
+       (with-current-buffer (get-buffer "*scratch*")
+         (delete-region (point-min) (point-max))
+         (insert-file-contents "~/.emacs-persistent-scratch"))))
+
+ (push #'load-persistent-scratch after-init-hook)
+ (push #'save-persistent-scratch kill-emacs-hook)
+
+ (if (not (boundp 'save-persistent-scratch-timer))
+     (setq save-persistent-scratch-timer
+           (run-with-idle-timer 300 t 'save-persistent-scratch)))
+
+
+ (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+ (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+ (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+ (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+ (global-set-key (kbd "C-x b") 'helm-mini)
+
+ (setq helm-buffers-fuzzy-matching t
+       helm-recentf-fuzzy-match    t)
+
+ (setq helm-locate-fuzzy-match t)
+
+ ;;; Powerline theme based on https://github.com/jcf/emacs.d
+
+
+ (require 'powerline)
+
+ (defface kd-powerline-emacs
+     '((t (:background "#af74e6" :foreground "#080808" :inherit mode-line)))
+     "Colour applied to Emacs mode indicator."
+     :group 'powerline)
+
+ (defface kd-powerline-insert
+     '((t (:background "#66d9ef" :foreground "#080808" :inherit mode-line)))
+     "Colour applied to insert mode indicator."
+     :group 'powerline)
+
+ (defface kd-powerline-motion
+     '((t (:background "#465457" :foreground "#1b1d1e" :inherit mode-line)))
+     "Colour applied to motion mode indicator."
+     :group 'powerline)
+
+ (defface kd-powerline-normal
+     '((t (:background "green" :foreground "#080808" :inherit mode-line)))
+     ;;; '((t (:background "#e6db74" :foreground "#080808" :inherit mode-line)))
+     "Colour applied to normal mode indicator."
+     :group 'powerline)
+
+ (defface kd-powerline-visual
+     '((t (:background "#fd971f" :foreground "#080808" :inherit mode-line)))
+     "Colour applied to visual mode indicator."
+     :group 'powerline)
+
+ (defun kd-propertized-evil-mode-tag ()
+     (let* ((x (cond ((evil-emacs-state-p)  '(" EMACS  " kd-powerline-emacs))
+                     ((evil-insert-state-p) '(" INSERT " kd-powerline-insert))
+                     ((evil-motion-state-p) '(" MOTION " kd-powerline-motion))
+                     ((evil-normal-state-p) '(" NORMAL " kd-powerline-normal))
+                     ((evil-visual-state-p) '(" VISUAL " kd-powerline-visual))
+                     (t                     '("  ^.^ V " kd-powerline-emacs))))
+             (text (or (first x) ""))
+             (face (second x)))
+
+     (list
+         (powerline-raw text face face)
+         (powerline-arrow-left face nil))))
+
+ ;; (defface powerline-active1 '((t (:foreground "#d0d0f0" :background "purple" :inherit mode-line)))
+ ;;   "Powerline face 1."
+ ;;   :group 'powerline)
+
+ ;; (defface powerline-active2 '((t (:foreground "#63b132" :weight bold :background "black" :inherit mode-line)))
+ ;;   "Powerline face 2."
+ ;;   :group 'powerline)
+
+ ;; (defface powerline-active0 '((t (:foreground "deep pink" :weight bold :background "black" :inherit mode-line)))
+ ;;   "Powerline face 0."
+ ;;   :group 'powerline)
+
+ ;; (defface powerline-inactive0
+ ;;   '((t (:background "black" :weight bold :inherit mode-line-inactive)))
+ ;;   "Powerline face 0."
+ ;;   :group 'powerline)
+
+
+ (defun kd-powerline-theme ()
+     (interactive)
+     (setq-default
+     mode-line-format
+     '("%e"
+         (:eval
+         (let* ((active (powerline-selected-window-active))
+                 (kd-mode-line (if active 'mode-line 'mode-line-inactive))
+                 (face1 (if active 'powerline-active1 'powerline-inactive1))
+                 (face2 (if active 'powerline-active2 'powerline-inactive2))
+                 (separator-left (intern (format "powerline-%s-%s"
+                                                 powerline-default-separator
+                                                 (car powerline-default-separator-dir))))
+                 (separator-right (intern (format "powerline-%s-%s"
+                                                 powerline-default-separator
+                                                 (cdr powerline-default-separator-dir))))
+
+                 (lhs (append
+                     (kd-propertized-evil-mode-tag)
+                     (list (powerline-raw "%*" nil 'l)
+                             (powerline-buffer-size nil 'l)
+                             (powerline-raw mode-line-mule-info nil 'l)
+                             (powerline-buffer-id nil 'l)
+                             (when (and (boundp 'which-func-mode) which-func-mode)
+                             (powerline-raw which-func-format nil 'l))
+                             (powerline-raw " ")
+                             (funcall separator-left kd-mode-line face1)
+                             (when (boundp 'erc-modified-channels-object)
+                             (powerline-raw erc-modified-channels-object face1 'l))
+                             (powerline-major-mode face1 'l)
+                             (powerline-process face1)
+                             (powerline-minor-modes face1 'l)
+                             (powerline-narrow face1 'l)
+                             (powerline-raw " " face1)
+                             (funcall separator-left face1 face2)
+                             (powerline-vc face2 'r))))
+                 (rhs (list (powerline-raw global-mode-string face2 'r)
+                         (funcall separator-right face2 face1)
+                         (powerline-raw "%4l" face1 'l)
+                         (powerline-raw ":" face1 'l)
+                         (powerline-raw "%3c" face1 'r)
+                         (funcall separator-right face1 kd-mode-line)
+                         (powerline-raw " ")
+                         (powerline-raw "%6p" nil 'r)
+                         (powerline-hud face2 face1))))
+         (concat (powerline-render lhs)
+                 (powerline-fill face2 (powerline-width rhs))
+                 (powerline-render rhs)))))))
+
+
+ (kd-powerline-theme)
+
+
+ (setq mac-command-modifier 'super)
+ (global-set-key (kbd "s-<left>") 'move-beginning-of-line)
+ (global-set-key (kbd "s-<right>") 'move-end-of-line)
+ (global-set-key (kbd "s-<up>") 'beginning-of-buffer)
+ (global-set-key (kbd "s-<down>") 'end-of-buffer)
+
+
+ (require 'magit)
+
+ ;-------------------;
+ ;;; Auto-Complete ;;;
+ ;-------------------;
+
+ (setq ac-directory "~/.emacs.d/auto-complete")
+ (add-to-list 'load-path ac-directory)
+ (require 'auto-complete) 
+
+ (require 'auto-complete-config) 
+ (ac-config-default)
+ (global-auto-complete-mode 1)
+ (setq-default ac-sources '(ac-source-yasnippet
+                            ac-source-abbrev
+                            ac-source-dictionary
+                            ac-source-words-in-same-mode-buffers))
+
+ ; hack to fix ac-sources after pycomplete.el breaks it
+ (add-hook 'python-mode-hook
+           '(lambda ()
+              (setq ac-sources '(ac-source-pycomplete
+                                 ac-source-yasnippet
+                                 ac-source-abbrev
+                                 ac-source-dictionary
+                                 ac-source-words-in-same-mode-buffers))))
+
+ ;; from http://truongtx.me/2013/01/06/config-yasnippet-and-autocomplete-on-emacs/
+ ; set the trigger key so that it can work together with yasnippet on
+ ; tab key, if the word exists in yasnippet, pressing tab will cause
+ ; yasnippet to activate, otherwise, auto-complete will
+ (ac-set-trigger-key "TAB")
+ (ac-set-trigger-key "<tab>")
+
+ ;; from http://blog.deadpansincerity.com/2011/05/setting-up-emacs-as-a-javascript-editing-environment-for-fun-and-profit/
+ ; Start auto-completion after 2 characters of a word
+ (setq ac-auto-start 2)
+ ; case sensitivity is important when finding matches
+ (setq ac-ignore-case nil)
+
+ ;----------------------;
+ ;;; Custom Functions ;;;
+ ;----------------------;
+
+ ; unfill a paragraph, i.e., make it so the text does not wrap in the
+ ; paragraph where the cursor is
+ (defun unfill-paragraph ()
+   (interactive)
+   (let ((fill-column (point-max)))
+     (fill-paragraph nil)))
+
+ ; unfill a region, i.e., make is so the text in that region does not
+ ; wrap
+ (defun unfill-region ()
+   (interactive)
+   (let ((fill-column (point-max)))
+     (fill-region (region-beginning) (region-end) nil)))
+
+ (defun system-is-mac ()
+   (interactive)
+   (string-equal system-type "darwin"))
+
+ (defun system-is-linux ()
+   (interactive)
+   (string-equal system-type "gnu/linux"))
+
+ (defun make-plugin-path (plugin)
+   (expand-file-name
+    (concat plugin-path plugin)))
+
+ (defun include-plugin (plugin)
+   (add-to-list 'load-path (make-plugin-path plugin)))
+
+ (defun make-elget-path (plugin)
+   (expand-file-name
+    (concat elget-path plugin)))
+
+ (defun include-elget-plugin (plugin)
+   (add-to-list 'load-path (make-elget-path plugin)))
+
+
+ (custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(ein:cell-input-area ((t (:background "#042028"))))
+  '(ein:cell-input-prompt ((t (:inherit header-line :background "#002b35" :foreground "#859900" :inverse-video nil :weight bold))))
+  '(ein:cell-output-prompt ((t (:inherit header-line :background "#002b35" :foreground "#dc322f" :inverse-video nil :weight bold))))
+  '(magit-item-highlight ((t (:inherit highlight :background "#042028"))))
+  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 210))))
+  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 190))))
+  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 170))))
+  '(markdown-header-face-4 ((t (:inherit markdown-header-face :height 150))))
+  '(markdown-header-face-5 ((t (:inherit markdown-header-face :slant italic :weight bold))))
+  '(markdown-header-face-6 ((t (:inherit markdown-header-face :slant italic :weight normal))))
+  '(markdown-math-face ((t (:inherit font-lock-string-face :foreground "#cb4b16" :slant italic))))
+  '(powerline-active1 ((t (:foreground "white" :background "purple" :box nil))))
+  '(powerline-active2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
+  '(powerline-inactive1 ((t (:foreground "white" :background "purple" :box nil))))
+  '(powerline-inactive2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
+  '(py-variable-name-face ((t (:inherit default :foreground "#268bd2")))))
+
+ ;------------------------;
+ ;;; Python Programming ;;;
+ ;------------------------;
+
+ ;; -----------------------
+ ;; python.el configuration
+ ;; -----------------------
+
+ ; from python.el
+ (require 'python)
+
+ (setq
+  python-shell-interpreter "ipython"
+  python-shell-interpreter-args (if (system-is-mac)
+ 				   "--matplotlib=osx --colors=Linux"
+                                    (if (system-is-linux)
+ 				       "--gui=wx --matplotlib=wx --colors=Linux"))
+  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+  python-shell-completion-setup-code
+    "from IPython.core.completerlib import module_completion"
+  python-shell-completion-module-string-code
+    "';'.join(module_completion('''%s'''))\n"
+  python-shell-completion-string-code
+    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+
+ ;; -----------------------------
+ ;; emacs IPython notebook config
+ ;; -----------------------------
+
+ ; use autocompletion, but don't start to autocomplete after a dot
+ (setq ein:complete-on-dot -1)
+ (setq ein:use-auto-complete 1)
+
+ ; set python console args
+ (setq ein:console-args
+       (if (system-is-mac)
+ 	  '("--gui=osx" "--matplotlib=osx" "--colors=Linux")
+ 	(if (system-is-linux)
+ 	    '("--gui=wx" "--matplotlib=wx" "--colors=Linux"))))
+
+ ; timeout settings
+ (setq ein:query-timeout 1000)
+
+ ; IPython notebook
+ (require 'ein)
+
+ ; shortcut function to load notebooklist
+ (defun load-ein () 
+   (ein:notebooklist-load)
+   (interactive)
+   (ein:notebooklist-open))
+
+
+ ;; ------------------
+ ;; misc python config
+ ;; ------------------
+
+ ; pydoc info
+ (require 'pydoc-info)
+
+ ;; ; jedi python completion
+ ;; (include-elget-plugin "ctable")   ; required for epc
+ ;; (include-elget-plugin "deferred") ; required for epc
+ ;; (include-elget-plugin "epc")      ; required for jedi
+ ;; (include-elget-plugin "jedi")
+ ;; (require 'jedi)
+ ;; (setq jedi:setup-keys t)
+ ;; (autoload 'jedi:setup "jedi" nil t)
+ ;; (add-hook 'python-mode-hook 'jedi:setup)
+
+ ;; pyflakes flymake integration
+ ;; http://stackoverflow.com/a/1257306/347942
+ (when (load "flymake" t)
+   (defun flymake-pyflakes-init ()
+     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                        'flymake-create-temp-inplace))
+            (local-file (file-relative-name
+                         temp-file
+                         (file-name-directory buffer-file-name))))
+       (list "pycheckers" (list local-file))))
+   (add-to-list 'flymake-allowed-file-name-masks
+                '("\\.py\\'" flymake-pyflakes-init)))
+ (add-hook 'python-mode-hook
+ 	  (lambda ()
+ 	    (unless (eq buffer-file-name nil) (flymake-mode 1))))
+
+ ; Set PYTHONPATH, because we don't load .bashrc
+ (defun set-python-path-from-shell-PYTHONPATH ()
+   (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo $PYTHONPATH'")))
+     (setenv "PYTHONPATH" path-from-shell)))
+
+ (if window-system (set-python-path-from-shell-PYTHONPATH))
+
+ (setq auto-mode-alist
+       (append 
+        (list '("\\.pyx" . python-mode)
+              '("SConstruct" . python-mode))
+        auto-mode-alist))
+
+ ; keybindings
+ (eval-after-load 'python
+   '(define-key python-mode-map (kbd "C-c !") 'python-shell-switch-to-shell))
+ (eval-after-load 'python
+   '(define-key python-mode-map (kbd "C-c |") 'python-shell-send-region))
+
+ (defun recompile-quietly ()
+   "Re-compile without changing the window configuration."
+   (interactive)
+   (save-window-excursion
+     (recompile)))
+
+
+ ;;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+ ;;; (add-hook 'text-mode-hook
+ ;;;  '(lambda() (set-fill-column 80)))
+
+
+ ; from enberg on #emacs
+ (setq compilation-finish-function
+   (lambda (buf str)
+     (if (null (string-match ".*exited abnormally.*" str))
+         ;;no errors, make the compilation window go away in a few seconds
+         (progn
+           (run-at-time
+            "2 sec" nil 'delete-windows-on
+            (get-buffer-create "*compilation*"))
+           (message "No Compilation Errors!")))))
+
+ ;; store all backup and autosave files in the tmp dir
+ (setq backup-directory-alist
+       `((".*" . ,temporary-file-directory)))
+ (setq auto-save-file-name-transforms
+       `((".*" ,temporary-file-directory t)))
+
+ ;; (defun my-server-visit-hook()
+ ;;        (interactive)
+ ;;        (shell-command
+ ;; 	  "osascript -e 'tell application \"Emacs\" to activate'"))
+
+ ;; (add-hook 'server-visit-hook 'my-server-visit-hook)
+
+ (defun my-server-exit-hook()
+   "Returns focus back to terminal"
+        (interactive)
+        (shell-command
+         "osascript -e 'tell application \"Terminal\" to activate'"))
+
+ (add-hook 'delete-frame-functions 'my-server-exit-hook)
+
+
+;;  ;;; Code:
+;;  (defvar pbcopy-program (executable-find "pbcopy")
+;;    "Name of Pbcopy program tool.")
+;;  (defvar pbpaste-program (executable-find "pbpaste")
+;;    "Name of Pbpaste program tool.")
+
+;;  (defvar pbcopy-select-enable-clipboard nil
+;;    "Non-nil means cutting and pasting uses the clipboard.
+;;  This is in addition to, but in preference to, the primary selection.")
+
+;;  (defvar pbcopy-last-selected-text-clipboard nil
+;;    "The value of the CLIPBOARD X selection from pbcopy.")
+
+;;  (defvar pbcopy-last-selected-text-primary nil
+;;    "The value of the PRIMARY X selection from pbcopy.")
+
+;;  (defun pbcopy-set-selection (type data)
+;;    "TYPE is a symbol: primary, secondary and clipboard.
+;;  See `x-set-selection'."
+;;    (when pbcopy-program
+;;      (let* ((process-connection-type nil)
+;;             (proc (start-process "pbcopy" nil "pbcopy")))
+;;        (process-send-string proc data)
+;;        (process-send-eof proc))))
+
+;;  (defun pbcopy-select-text (text &optional push)
+;;    "See `x-select-text'."
+;;    (pbcopy-set-selection 'primary text)
+;;    (setq pbcopy-last-selected-text-primary text)
+;;    (when pbcopy-select-enable-clipboard
+;;      (pbcopy-set-selection 'clipboard text)
+;;      (setq pbcopy-last-selected-text-clipboard text)))
+
+;;  (defun pbcopy-selection-value ()
+;;    "See `x-cut-buffer-or-selection-value'."
+;;    (when pbcopy-program
+;;      (let (clip-text primary-text)
+;;        (when pbcopy-select-enable-clipboard
+;;          (setq clip-text (shell-command-to-string "pbpaste"))
+;;          (setq clip-text
+;;                (cond ;; check clipboard selection
+;;                 ((or (not clip-text) (string= clip-text ""))
+;;                  (setq pbcopy-last-selected-text-primary nil))
+;;                 ((eq      clip-text pbcopy-last-selected-text-clipboard) nil)
+;;                 ((string= clip-text pbcopy-last-selected-text-clipboard)
+;;                  ;; Record the newer string,
+;;                  ;; so subsequent calls can use the `eq' test.
+;;                  (setq pbcopy-last-selected-text-clipboard clip-text)
+;;                  nil)
+;;                 (t (setq pbcopy-last-selected-text-clipboard clip-text)))))
+;;        (setq primary-text (shell-command-to-string "pbpaste"))
+;;        (setq primary-text
+;;              (cond ;; check primary selection
+;;               ((or (not primary-text) (string= primary-text ""))
+;;                (setq pbcopy-last-selected-text-primary nil))
+;;               ((eq      primary-text pbcopy-last-selected-text-primary) nil)
+;;               ((string= primary-text pbcopy-last-selected-text-primary)
+;;                ;; Record the newer string,
+;;                ;; so subsequent calls can use the `eq' test.
+;;                (setq pbcopy-last-selected-text-primary primary-text)
+;;                nil)
+;;               (t (setq pbcopy-last-selected-text-primary primary-text))))
+;;        (or clip-text primary-text))))
+
+;;  ;;;###autoload
+;;  (defun turn-on-pbcopy ()
+;;    (interactive)
+;;    (setq interprogram-cut-function 'pbcopy-select-text)
+;;    (setq interprogram-paste-function 'pbcopy-selection-value))
+
+;;  ;;;###autoload
+;;  (defun turn-off-pbcopy ()
+;;    (interactive)
+;;    (setq interprogram-cut-function nil)
+;;    (setq interprogram-paste-function nil))
+
+;; (add-hook 'terminal-init-xterm-hook 'turn-on-pbcopy)
+
+(defun my-osx-copy ()
   (interactive)
-  (let ((helm-ff-transformer-show-only-basename nil))
-  (helm-other-buffer '(helm-c-source-buffers-list
-                       helm-c-source-elscreen
-                       helm-c-source-projectile-files-list
-                       helm-c-source-ctags
-                       helm-c-source-recentf
-                       helm-c-source-locate)
-                     "*helm-my-buffers*")))
+  (shell-command-on-region (region-beginning) (region-end) "pbcopy")
+)
 
-(defun save-persistent-scratch ()
-  "Write the contents of *scratch* to the file name
-`persistent-scratch-file-name'."
-  (with-current-buffer (get-buffer-create "*scratch*")
-    (write-region (point-min) (point-max) "~/.emacs-persistent-scratch")))
-
-(defun load-persistent-scratch ()
-  "Load the contents of `persistent-scratch-file-name' into the
-  scratch buffer, clearing its contents first."
-  (if (file-exists-p "~/.emacs-persistent-scratch")
-      (with-current-buffer (get-buffer "*scratch*")
-        (delete-region (point-min) (point-max))
-        (insert-file-contents "~/.emacs-persistent-scratch"))))
-
-(push #'load-persistent-scratch after-init-hook)
-(push #'save-persistent-scratch kill-emacs-hook)
-
-(if (not (boundp 'save-persistent-scratch-timer))
-    (setq save-persistent-scratch-timer
-          (run-with-idle-timer 300 t 'save-persistent-scratch)))
-
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
-(global-set-key (kbd "C-x b") 'helm-mini)
-
-(setq helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match    t)
-
-(setq helm-locate-fuzzy-match t)
-
-;;; Powerline theme based on https://github.com/jcf/emacs.d
-
-
-(require 'powerline)
-
-(defface kd-powerline-emacs
-    '((t (:background "#af74e6" :foreground "#080808" :inherit mode-line)))
-    "Colour applied to Emacs mode indicator."
-    :group 'powerline)
-
-(defface kd-powerline-insert
-    '((t (:background "#66d9ef" :foreground "#080808" :inherit mode-line)))
-    "Colour applied to insert mode indicator."
-    :group 'powerline)
-
-(defface kd-powerline-motion
-    '((t (:background "#465457" :foreground "#1b1d1e" :inherit mode-line)))
-    "Colour applied to motion mode indicator."
-    :group 'powerline)
-
-(defface kd-powerline-normal
-    '((t (:background "green" :foreground "#080808" :inherit mode-line)))
-    ;;; '((t (:background "#e6db74" :foreground "#080808" :inherit mode-line)))
-    "Colour applied to normal mode indicator."
-    :group 'powerline)
-
-(defface kd-powerline-visual
-    '((t (:background "#fd971f" :foreground "#080808" :inherit mode-line)))
-    "Colour applied to visual mode indicator."
-    :group 'powerline)
-
-(defun kd-propertized-evil-mode-tag ()
-    (let* ((x (cond ((evil-emacs-state-p)  '(" EMACS  " kd-powerline-emacs))
-                    ((evil-insert-state-p) '(" INSERT " kd-powerline-insert))
-                    ((evil-motion-state-p) '(" MOTION " kd-powerline-motion))
-                    ((evil-normal-state-p) '(" NORMAL " kd-powerline-normal))
-                    ((evil-visual-state-p) '(" VISUAL " kd-powerline-visual))
-                    (t                     '("  ^.^ V " kd-powerline-emacs))))
-            (text (or (first x) ""))
-            (face (second x)))
-
-    (list
-        (powerline-raw text face face)
-        (powerline-arrow-left face nil))))
-
-;; (defface powerline-active1 '((t (:foreground "#d0d0f0" :background "purple" :inherit mode-line)))
-;;   "Powerline face 1."
-;;   :group 'powerline)
-
-;; (defface powerline-active2 '((t (:foreground "#63b132" :weight bold :background "black" :inherit mode-line)))
-;;   "Powerline face 2."
-;;   :group 'powerline)
-
-;; (defface powerline-active0 '((t (:foreground "deep pink" :weight bold :background "black" :inherit mode-line)))
-;;   "Powerline face 0."
-;;   :group 'powerline)
-
-;; (defface powerline-inactive0
-;;   '((t (:background "black" :weight bold :inherit mode-line-inactive)))
-;;   "Powerline face 0."
-;;   :group 'powerline)
-
-
-(defun kd-powerline-theme ()
-    (interactive)
-    (setq-default
-    mode-line-format
-    '("%e"
-        (:eval
-        (let* ((active (powerline-selected-window-active))
-                (kd-mode-line (if active 'mode-line 'mode-line-inactive))
-                (face1 (if active 'powerline-active1 'powerline-inactive1))
-                (face2 (if active 'powerline-active2 'powerline-inactive2))
-                (separator-left (intern (format "powerline-%s-%s"
-                                                powerline-default-separator
-                                                (car powerline-default-separator-dir))))
-                (separator-right (intern (format "powerline-%s-%s"
-                                                powerline-default-separator
-                                                (cdr powerline-default-separator-dir))))
-
-                (lhs (append
-                    (kd-propertized-evil-mode-tag)
-                    (list (powerline-raw "%*" nil 'l)
-                            (powerline-buffer-size nil 'l)
-                            (powerline-raw mode-line-mule-info nil 'l)
-                            (powerline-buffer-id nil 'l)
-                            (when (and (boundp 'which-func-mode) which-func-mode)
-                            (powerline-raw which-func-format nil 'l))
-                            (powerline-raw " ")
-                            (funcall separator-left kd-mode-line face1)
-                            (when (boundp 'erc-modified-channels-object)
-                            (powerline-raw erc-modified-channels-object face1 'l))
-                            (powerline-major-mode face1 'l)
-                            (powerline-process face1)
-                            (powerline-minor-modes face1 'l)
-                            (powerline-narrow face1 'l)
-                            (powerline-raw " " face1)
-                            (funcall separator-left face1 face2)
-                            (powerline-vc face2 'r))))
-                (rhs (list (powerline-raw global-mode-string face2 'r)
-                        (funcall separator-right face2 face1)
-                        (powerline-raw "%4l" face1 'l)
-                        (powerline-raw ":" face1 'l)
-                        (powerline-raw "%3c" face1 'r)
-                        (funcall separator-right face1 kd-mode-line)
-                        (powerline-raw " ")
-                        (powerline-raw "%6p" nil 'r)
-                        (powerline-hud face2 face1))))
-        (concat (powerline-render lhs)
-                (powerline-fill face2 (powerline-width rhs))
-                (powerline-render rhs)))))))
-
-
-(kd-powerline-theme)
-
-
-(setq mac-command-modifier 'super)
-(global-set-key (kbd "s-<left>") 'move-beginning-of-line)
-(global-set-key (kbd "s-<right>") 'move-end-of-line)
-(global-set-key (kbd "s-<up>") 'beginning-of-buffer)
-(global-set-key (kbd "s-<down>") 'end-of-buffer)
-
-
-(require 'magit)
-
-;-------------------;
-;;; Auto-Complete ;;;
-;-------------------;
-
-(setq ac-directory "~/.emacs.d/auto-complete")
-(add-to-list 'load-path ac-directory)
-(require 'auto-complete) 
-
-(require 'auto-complete-config) 
-(ac-config-default)
-(global-auto-complete-mode 1)
-(setq-default ac-sources '(ac-source-yasnippet
-                           ac-source-abbrev
-                           ac-source-dictionary
-                           ac-source-words-in-same-mode-buffers))
-
-; hack to fix ac-sources after pycomplete.el breaks it
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (setq ac-sources '(ac-source-pycomplete
-                                ac-source-yasnippet
-                                ac-source-abbrev
-                                ac-source-dictionary
-                                ac-source-words-in-same-mode-buffers))))
-
-;; from http://truongtx.me/2013/01/06/config-yasnippet-and-autocomplete-on-emacs/
-; set the trigger key so that it can work together with yasnippet on
-; tab key, if the word exists in yasnippet, pressing tab will cause
-; yasnippet to activate, otherwise, auto-complete will
-(ac-set-trigger-key "TAB")
-(ac-set-trigger-key "<tab>")
-
-;; from http://blog.deadpansincerity.com/2011/05/setting-up-emacs-as-a-javascript-editing-environment-for-fun-and-profit/
-; Start auto-completion after 2 characters of a word
-(setq ac-auto-start 2)
-; case sensitivity is important when finding matches
-(setq ac-ignore-case nil)
-
-;----------------------;
-;;; Custom Functions ;;;
-;----------------------;
-
-; unfill a paragraph, i.e., make it so the text does not wrap in the
-; paragraph where the cursor is
-(defun unfill-paragraph ()
-  (interactive)
-  (let ((fill-column (point-max)))
-    (fill-paragraph nil)))
-
-; unfill a region, i.e., make is so the text in that region does not
-; wrap
-(defun unfill-region ()
-  (interactive)
-  (let ((fill-column (point-max)))
-    (fill-region (region-beginning) (region-end) nil)))
-
-(defun system-is-mac ()
-  (interactive)
-  (string-equal system-type "darwin"))
-
-(defun system-is-linux ()
-  (interactive)
-  (string-equal system-type "gnu/linux"))
-
-(defun make-plugin-path (plugin)
-  (expand-file-name
-   (concat plugin-path plugin)))
-
-(defun include-plugin (plugin)
-  (add-to-list 'load-path (make-plugin-path plugin)))
-
-(defun make-elget-path (plugin)
-  (expand-file-name
-   (concat elget-path plugin)))
-
-(defun include-elget-plugin (plugin)
-  (add-to-list 'load-path (make-elget-path plugin)))
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ein:cell-input-area ((t (:background "#042028"))))
- '(ein:cell-input-prompt ((t (:inherit header-line :background "#002b35" :foreground "#859900" :inverse-video nil :weight bold))))
- '(ein:cell-output-prompt ((t (:inherit header-line :background "#002b35" :foreground "#dc322f" :inverse-video nil :weight bold))))
- '(magit-item-highlight ((t (:inherit highlight :background "#042028"))))
- '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 210))))
- '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 190))))
- '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 170))))
- '(markdown-header-face-4 ((t (:inherit markdown-header-face :height 150))))
- '(markdown-header-face-5 ((t (:inherit markdown-header-face :slant italic :weight bold))))
- '(markdown-header-face-6 ((t (:inherit markdown-header-face :slant italic :weight normal))))
- '(markdown-math-face ((t (:inherit font-lock-string-face :foreground "#cb4b16" :slant italic))))
- '(powerline-active1 ((t (:foreground "white" :background "purple" :box nil))))
- '(powerline-active2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
- '(powerline-inactive1 ((t (:foreground "white" :background "purple" :box nil))))
- '(powerline-inactive2 ((t (:foreground "black" :background "#FFFFFF" :box nil))))
- '(py-variable-name-face ((t (:inherit default :foreground "#268bd2")))))
-
-;------------------------;
-;;; Python Programming ;;;
-;------------------------;
-
-;; -----------------------
-;; python.el configuration
-;; -----------------------
-
-; from python.el
-(require 'python)
-
-(setq
- python-shell-interpreter "ipython"
- python-shell-interpreter-args (if (system-is-mac)
-				   "--matplotlib=osx --colors=Linux"
-                                   (if (system-is-linux)
-				       "--gui=wx --matplotlib=wx --colors=Linux"))
- python-shell-prompt-regexp "In \\[[0-9]+\\]: "
- python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
- python-shell-completion-setup-code
-   "from IPython.core.completerlib import module_completion"
- python-shell-completion-module-string-code
-   "';'.join(module_completion('''%s'''))\n"
- python-shell-completion-string-code
-   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-
-
-;; -----------------------------
-;; emacs IPython notebook config
-;; -----------------------------
-
-; use autocompletion, but don't start to autocomplete after a dot
-(setq ein:complete-on-dot -1)
-(setq ein:use-auto-complete 1)
-
-; set python console args
-(setq ein:console-args
-      (if (system-is-mac)
-	  '("--gui=osx" "--matplotlib=osx" "--colors=Linux")
-	(if (system-is-linux)
-	    '("--gui=wx" "--matplotlib=wx" "--colors=Linux"))))
-
-; timeout settings
-(setq ein:query-timeout 1000)
-
-; IPython notebook
-(require 'ein)
-
-; shortcut function to load notebooklist
-(defun load-ein () 
-  (ein:notebooklist-load)
-  (interactive)
-  (ein:notebooklist-open))
-
-
-;; ------------------
-;; misc python config
-;; ------------------
-
-; pydoc info
-(require 'pydoc-info)
-
-;; ; jedi python completion
-;; (include-elget-plugin "ctable")   ; required for epc
-;; (include-elget-plugin "deferred") ; required for epc
-;; (include-elget-plugin "epc")      ; required for jedi
-;; (include-elget-plugin "jedi")
-;; (require 'jedi)
-;; (setq jedi:setup-keys t)
-;; (autoload 'jedi:setup "jedi" nil t)
-;; (add-hook 'python-mode-hook 'jedi:setup)
-
-;; pyflakes flymake integration
-;; http://stackoverflow.com/a/1257306/347942
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "pycheckers" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (unless (eq buffer-file-name nil) (flymake-mode 1))))
-
-; Set PYTHONPATH, because we don't load .bashrc
-(defun set-python-path-from-shell-PYTHONPATH ()
-  (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo $PYTHONPATH'")))
-    (setenv "PYTHONPATH" path-from-shell)))
-
-(if window-system (set-python-path-from-shell-PYTHONPATH))
-
-(setq auto-mode-alist
-      (append 
-       (list '("\\.pyx" . python-mode)
-             '("SConstruct" . python-mode))
-       auto-mode-alist))
-
-; keybindings
-(eval-after-load 'python
-  '(define-key python-mode-map (kbd "C-c !") 'python-shell-switch-to-shell))
-(eval-after-load 'python
-  '(define-key python-mode-map (kbd "C-c |") 'python-shell-send-region))
-
-(defun recompile-quietly ()
-  "Re-compile without changing the window configuration."
-  (interactive)
-  (save-window-excursion
-    (recompile)))
-
-
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook
-  '(lambda() (set-fill-column 80)))
-
-
-; from enberg on #emacs
-(setq compilation-finish-function
-  (lambda (buf str)
-    (if (null (string-match ".*exited abnormally.*" str))
-        ;;no errors, make the compilation window go away in a few seconds
-        (progn
-          (run-at-time
-           "2 sec" nil 'delete-windows-on
-           (get-buffer-create "*compilation*"))
-          (message "No Compilation Errors!")))))
-
-;; store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-(defun my-server-visit-hook()
-       (interactive)
-       (shell-command
-	  "osascript -e 'tell application \"Emacs\" to activate'"))
-
-(add-hook 'server-visit-hook 'my-server-visit-hook)
-
-(defun my-server-exit-hook()
-  "Returns focus back to terminal"
-       (interactive)
-       (shell-command
-        "osascript -e 'tell application \"Terminal\" to activate'"))
-
-(add-hook 'delete-frame-functions 'my-server-exit-hook)
