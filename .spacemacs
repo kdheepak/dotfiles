@@ -19,6 +19,7 @@
      ;; ----------------------------------------------------------------
      ;; auto-completion
      ;; better-defaults
+     osx
      emacs-lisp
      ;; git
      ;; markdown
@@ -28,7 +29,7 @@
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
-     version-control
+    version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -158,7 +159,6 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
    )
   ;; User initialization goes here
-  (setq-default dotspacemacs-configuration-layers '(osx))
   )
 
 (defun dotspacemacs/config ()
@@ -221,6 +221,38 @@ layers configuration."
       (shell-command
        "osascript -e 'tell application \"Terminal\" to activate'"))
 
+    (setq evil-esc-delay 0)
+
+
+    ;; (add-hook 'after-make-frame-functions 'my-server-visit-hook)
+
+    (evil-define-command evil-quit (&optional force)
+      "Closes the current window, current frame, Emacs.
+If the current frame belongs to some client the client connection
+is closed."
+      :repeat nil
+      (interactive "<!>")
+      (condition-case nil
+          (delete-window)
+        (error
+         (if (and (boundp 'server-buffer-clients)
+                  (fboundp 'server-edit)
+                  (fboundp 'server-buffer-done)
+                  server-buffer-clients)
+             (if force
+                 (server-buffer-done (current-buffer))
+               (server-edit))
+           (progn
+             (my-server-exit-hook)
+            (condition-case nil
+                (delete-frame)
+                (error
+                (if force
+                    (kill-emacs)
+                    (save-buffers-kill-emacs))))
+           )
+           )))
+      )
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
