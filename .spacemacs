@@ -165,7 +165,6 @@ before layers configuration."
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
-
     (global-linum-mode) ; Show line numbers by default
     (add-to-list 'default-frame-alist '(fullscreen . maximized))
     ;; Setting and showing the 80-character column width
@@ -215,6 +214,18 @@ layers configuration."
     (global-set-key (kbd "C-h")
         '(lambda () (interactive) (windmove-emacs-or-tmux "left"  "tmux select-pane -L")))
 
+    (defun copy-from-osx ()
+      (shell-command-to-string "pbpaste"))
+
+    (defun paste-to-osx (text &optional push)
+      (let ((process-connection-type nil))
+        (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+          (process-send-string proc text)
+          (process-send-eof proc))))
+
+    (setq interprogram-cut-function 'paste-to-osx)
+    (setq interprogram-paste-function 'copy-from-osx)
+
     (defun my-server-exit-hook()
       "Returns focus back to terminal"
       (interactive)
@@ -222,7 +233,6 @@ layers configuration."
        "osascript -e 'tell application \"Terminal\" to activate'"))
 
     (setq evil-esc-delay 0)
-
 
     ;; (add-hook 'after-make-frame-functions 'my-server-visit-hook)
 
@@ -253,7 +263,10 @@ is closed."
            )
            )))
       )
+    (message "Initialization complete")
 )
+
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
