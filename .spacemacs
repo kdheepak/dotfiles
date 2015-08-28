@@ -17,19 +17,17 @@
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
-     osx
+     auto-completion
      emacs-lisp
-     ;; git
-     ;; markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-    version-control
+     git
+     markdown
+     org
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     spell-checking
+     syntax-checking
+     version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -106,7 +104,8 @@ before layers configuration."
    ;; Default value is `cache'.
    dotspacemacs-auto-save-file-location 'cache
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
-   ;; `find-files' (SPC f f) is replaced.
+   ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
+   ;; `find-contrib-file' (SPC f e c) are replaced.
    dotspacemacs-use-ido nil
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content.
@@ -265,8 +264,6 @@ is closed."
       )
     (message "Initialization complete")
 )
-
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
