@@ -126,8 +126,8 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Down", function()
 end)
 
 
--- This has to be the last config in init.lua
-
+-- Config reload has to be the last config in init.lua
+-- see http://www.hammerspoon.org/go/#simplereload
 
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
   hs.reload()
