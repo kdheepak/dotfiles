@@ -4,77 +4,13 @@
 -- Place in ($HOME)/.hammerspoon/init.lua
 -- 
 
+--- Defining variables
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Y", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.x = f.x - 10
-  f.y = f.y - 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "K", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.y = f.y - 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "U", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.x = f.x + 10
-  f.y = f.y - 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "H", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.x = f.x - 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "L", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.x = f.x + 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "B", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.x = f.x - 10
-  f.y = f.y + 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "J", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.y = f.y + 10
-  win:setFrame(f)
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "N", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-
-  f.x = f.x + 10
-  f.y = f.y + 10
-  win:setFrame(f)
-end)
+local mash = {"cmd", "alt", "ctrl"}
+local mashshift = {"cmd", "alt", "ctrl", "shift"}
 
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Left", function()
+hs.hotkey.bind(mashshift, "H", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -87,7 +23,7 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Left", function()
 end)
 
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Right", function()
+hs.hotkey.bind(mashshift, "L", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -100,7 +36,7 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Right", function()
 end)
 
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Up", function()
+hs.hotkey.bind(mashshift, "K", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -113,7 +49,7 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Up", function()
 end)
 
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Down", function()
+hs.hotkey.bind(mashshift, "J", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -126,8 +62,34 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Down", function()
 end)
 
 
--- Config reload has to be the last config in init.lua
--- see http://www.hammerspoon.org/go/#simplereload
+hs.hotkey.bind(mash, "E", function()
+  hs.application.focus("Emacsclient")
+end)
+
+-- change focus
+hs.hotkey.bind(mash, 'H', function() hs.window.focusedWindow():focusWindowWest() end)
+hs.hotkey.bind(mash, 'L', function() hs.window.focusedWindow():focusWindowEast() end)
+hs.hotkey.bind(mash, 'K', function() hs.window.focusedWindow():focusWindowNorth() end)
+hs.hotkey.bind(mash, 'J', function() hs.window.focusedWindow():focusWindowSouth() end)
+
+-- maximize window
+hs.hotkey.bind(mash, 'M', function()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+  f.x = max.x 
+  f.y = max.y 
+  f.w = max.w 
+  f.h = max.h 
+  win:setFrame(f)
+end)
+
+hs.hotkey.bind(mash, 't', function () hs.application.launchOrFocus("terminal") end)
+
+-- Config reload key binding has to be the last config in init.lua
+-- See http://www.hammerspoon.org/go/#simplereload
+
 
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
   hs.reload()
