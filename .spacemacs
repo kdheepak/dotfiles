@@ -18,14 +18,14 @@
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
+     better-defaults
      emacs-lisp
      git
      markdown
      org
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     spell-checking
+     ;; (shell :variables
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom)
      syntax-checking
      version-control
      )
@@ -33,7 +33,8 @@
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(pdf-tools
+                                      hexrgb)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -48,10 +49,8 @@ before layers configuration."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
-   ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
-   ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
-   ;; unchanged.
+   ;; Either `vim' or `emacs'. Evil is always enabled but if the variable
+   ;; is `emacs' then the `holy-mode' is enabled at startup.
    dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer.
    dotspacemacs-verbose-loading nil
@@ -69,9 +68,9 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-light
-                         spacemacs-dark
-                         spacemacs-light
                          solarized-dark
+                         spacemacs-light
+                         spacemacs-dark
                          leuven
                          monokai
                          zenburn)
@@ -104,8 +103,7 @@ before layers configuration."
    ;; Default value is `cache'.
    dotspacemacs-auto-save-file-location 'cache
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
-   ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
-   ;; `find-contrib-file' (SPC f e c) are replaced.
+   ;; `find-files' (SPC f f) is replaced.
    dotspacemacs-use-ido nil
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content.
@@ -143,12 +141,11 @@ before layers configuration."
    dotspacemacs-smooth-scrolling t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    dotspacemacs-smartparens-strict-mode nil
-   ;; Select a scope to highlight delimiters. Possible values are `any',
-   ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
-   ;; emphasis the current one).
+   ;; Select a scope to highlight delimiters. Possible value is `all',
+   ;; `current' or `nil'. Default is `all'
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil advises quit functions to keep server open when quitting.
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
@@ -164,7 +161,8 @@ before layers configuration."
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
-    (global-linum-mode) ; Show line numbers by default
+
+      (global-linum-mode) ; Show line numbers by default
     (add-to-list 'default-frame-alist '(fullscreen . maximized))
     ;; Setting and showing the 80-character column width
     (set-fill-column 80)
@@ -233,36 +231,17 @@ layers configuration."
 
     (setq evil-esc-delay 0)
 
+    (add-to-list 'delete-frame-functions #'my-server-exit-hook)
+    (add-hook 'delete-frame-functions 'my-server-exit-hook)
     ;; (add-hook 'after-make-frame-functions 'my-server-visit-hook)
 
-    (evil-define-command evil-quit (&optional force)
-      "Closes the current window, current frame, Emacs.
-If the current frame belongs to some client the client connection
-is closed."
-      :repeat nil
-      (interactive "<!>")
-      (condition-case nil
-          (delete-window)
-        (error
-         (if (and (boundp 'server-buffer-clients)
-                  (fboundp 'server-edit)
-                  (fboundp 'server-buffer-done)
-                  server-buffer-clients)
-             (if force
-                 (server-buffer-done (current-buffer))
-               (server-edit))
-           (progn
-             (my-server-exit-hook)
-            (condition-case nil
-                (delete-frame)
-                (error
-                (if force
-                    (kill-emacs)
-                    (save-buffers-kill-emacs))))
-           )
-           )))
-      )
-    (message "Initialization complete")
+  (x-focus-frame nil)
+
+  ; Disables copy on highlight
+  (setq mouse-drag-copy-region nil)
+
+  (message "Initialization complete")
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
