@@ -226,13 +226,16 @@ layers configuration."
     (defun my-server-exit-hook()
       "Returns focus back to terminal"
       (interactive)
+      (when (= (length (window-list)) 1)
       (shell-command
-       "osascript -e 'tell application \"Terminal\" to activate'"))
+       "osascript -e 'tell application \"Terminal\" to activate'")))
 
     (setq evil-esc-delay 0)
 
-    (add-to-list 'delete-frame-functions #'my-server-exit-hook)
-    (add-hook 'delete-frame-functions 'my-server-exit-hook)
+    (advice-add 'evil-quit :before #'my-server-exit-hook)
+
+    ;; (add-to-list 'delete-frame-functions 'my-server-exit-hook)
+    ;; (add-hook 'delete-frame-functions 'my-server-exit-hook)
     ;; (add-hook 'after-make-frame-functions 'my-server-visit-hook)
 
   (x-focus-frame nil)
@@ -243,6 +246,3 @@ layers configuration."
   (message "Initialization complete")
 
 )
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
