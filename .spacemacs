@@ -23,6 +23,7 @@
      git
      markdown
      org
+     osx
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -211,18 +212,6 @@ layers configuration."
     (global-set-key (kbd "C-h")
         '(lambda () (interactive) (windmove-emacs-or-tmux "left"  "tmux select-pane -L")))
 
-    (defun copy-from-osx ()
-      (shell-command-to-string "pbpaste"))
-
-    (defun paste-to-osx (text &optional push)
-      (let ((process-connection-type nil))
-        (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-          (process-send-string proc text)
-          (process-send-eof proc))))
-
-    (setq interprogram-cut-function 'paste-to-osx)
-    (setq interprogram-paste-function 'copy-from-osx)
-
     (defun my-server-exit-hook()
       "Returns focus back to terminal"
       (interactive)
@@ -239,6 +228,46 @@ layers configuration."
     ;; (add-hook 'after-make-frame-functions 'my-server-visit-hook)
 
   (x-focus-frame nil)
+
+  (defun isolate-kill-ring()
+    "Isolate Emacs kill ring from OS X system pasteboard.
+This function is only necessary in window system."
+    (interactive)
+    (setq interprogram-cut-function nil)
+    (setq interprogram-paste-function nil))
+
+  (defun pasteboard-copy()
+    "Copy region to OS X system pasteboard."
+    (interactive)
+    (shell-command-on-region
+     (region-beginning) (region-end) "pbcopy"))
+
+  (defun pasteboard-paste()
+    "Paste from OS X system pasteboard via `pbpaste' to point."
+    (interactive)
+    (shell-command-on-region
+     (point) (if mark-active (mark) (point)) "pbpaste" nil t))
+
+  (defun pasteboard-cut()
+    "Cut region and put on OS X system pasteboard."
+    (interactive)
+    (pasteboard-copy)
+    (delete-region (region-beginning) (region-end)))
+
+  (if window-system
+      (progn
+        (isolate-kill-ring)
+        ;; bind CMD+C to pasteboard-copy
+        (global-set-key (kbd "s-c") 'pasteboard-copy)
+        ;; bind CMD+V to pasteboard-paste
+        (global-set-key (kbd "s-v") 'pasteboard-paste)
+        ;; bind CMD+X to pasteboard-cut
+        (global-set-key (kbd "s-x") 'pasteboard-cut))
+
+    ;; you might also want to assign some keybindings for non-window
+    ;; system usage (i.e., in your text terminal, where the
+    ;; command->super does not work)
+    )
 
   ; Disables copy on highlight
   (setq mouse-drag-copy-region nil)
