@@ -22,11 +22,12 @@
      emacs-lisp
      git
      markdown
+     python
      org
      osx
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+             shell-default-height 30
+             shell-default-position 'bottom)
      syntax-checking
      version-control
      )
@@ -35,6 +36,7 @@
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(pdf-tools
+                                      ob-ipython
                                       hexrgb)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -269,8 +271,35 @@ This function is only necessary in window system."
     ;; command->super does not work)
     )
 
+
   ; Disables copy on highlight
   (setq mouse-drag-copy-region nil)
+
+
+  (evil-define-key 'normal python-mode-map (kbd "C-k")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "up"  "tmux select-pane -U")))
+  (evil-define-key 'normal python-mode-map (kbd "C-j")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "down"  "tmux select-pane -D")))
+  (evil-define-key 'normal python-mode-map (kbd "C-l")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "right"  "tmux select-pane -R")))
+  (evil-define-key 'normal python-mode-map (kbd "C-h")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "left"  "tmux select-pane -L")))
+
+  (evil-define-key 'normal inferior-python-mode-map (kbd "C-k")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "up"  "tmux select-pane -U")))
+  (evil-define-key 'normal inferior-python-mode-map (kbd "C-j")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "down"  "tmux select-pane -D")))
+  (evil-define-key 'normal inferior-python-mode-map (kbd "C-l")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "right"  "tmux select-pane -R")))
+  (evil-define-key 'normal inferior-python-mode-map (kbd "C-h")
+    '(lambda () (interactive) (windmove-emacs-or-tmux "left"  "tmux select-pane -L")))
+
+
+   ;; put H and L to line start and end
+  (define-key evil-normal-state-map "H" 'evil-first-non-blank)
+  (define-key evil-normal-state-map "L" 'evil-end-of-line)
+  (define-key evil-visual-state-map "L" 'evil-end-of-line)
+  (define-key evil-visual-state-map "H" 'evil-first-non-blank)
 
   (message "Initialization complete")
 
