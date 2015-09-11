@@ -13,41 +13,43 @@ Plugin 'gmarik/Vundle.vim'
 " the following are examples of different formats supported.
 " plugin from http://vim-scripts.org/vim/scripts.html
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-repeat'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tomasr/molokai'
-Plugin 'sjl/gundo.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'Shougo/neocomplete'
 Plugin 'Yggdroot/indentLine'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'benmills/vimux'
+Plugin 'bling/vim-airline'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'davidhalter/jedi'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'godlygeek/tabular'
+Plugin 'henrik/vim-indexed-search'
+Plugin 'honza/vim-snippets'
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kshenoy/vim-signature'
+Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'reinh/vim-makegreen'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'searchalternatives'
 Plugin 'searchcomplete'
-Plugin 'henrik/vim-indexed-search'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'mileszs/ack.vim'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-Plugin 'tpope/vim-git' 
-Plugin 'wincent/Command-T' 
-Plugin 'reinh/vim-makegreen' 
-Plugin 'vim-scripts/The-NERD-tree' 
-Plugin 'tpope/vim-unimpaired' 
-Plugin 'kshenoy/vim-signature' 
-Plugin 'davidhalter/jedi'
+Plugin 'sjl/gundo.vim'
+Plugin 'tomasr/molokai'
+Plugin 'tomtom/tlib_vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-scripts/The-NERD-tree'
+Plugin 'wincent/Command-T'
+Plugin 'jgors/vimux-ipy'
 
 let s:python_ver = 0
 silent! python import sys, vim;
@@ -73,7 +75,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for faq
 " put your non-plugin stuff after this line
 
-set ttymouse=xterm2
+"set ttymouse=xterm2
 
 syntax enable
 " tell it to use an undo file
@@ -85,7 +87,7 @@ set number
 set t_Co=256
 set encoding=utf-8
 set fillchars+=stl:\ ,stlnc:\
-set term=screen-256color
+"set term=screen-256color
 "set term=xterm-256color
 set termencoding=utf-8
 set background=light
@@ -303,7 +305,11 @@ noremap Q <NOP>
 set pastetoggle=<F6>
 
 " toggle paste mode
-map <leader>v :set paste!<cr>
+" map <leader>v :set paste!<cr>
+
+map <Leader>vip :call VimuxIpy()<CR>
+vmap <silent> <Leader>e :python run_visual_code()<CR>
+noremap <silent> <Leader>c :python run_cell(save_position=False, cell_delim='####')<CR>
 
 " Unmap the arrow keys
 no <down> <Nop>
@@ -413,7 +419,7 @@ vnoremap $e <esc>`>a"<esc>`<i"<esc>
 " Ignore case when searching
 set ignorecase
 "
-" "                           When searching try to be smart about cases 
+" "                           When searching try to be smart about cases
 set smartcase
 set ai "Apple_Terminaluto indent
 set si "Smart indent
