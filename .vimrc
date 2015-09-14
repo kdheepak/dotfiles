@@ -40,7 +40,7 @@ Plugin 'godlygeek/csapprox.git'
 Plugin 'godlygeek/tabular'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'honza/vim-snippets'
-Plugin 'itchyny/lightline.vim'
+"Plugin 'itchyny/lightline.vim'
 Plugin 'jby/tmux.vim.git'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'jgors/vimux-ipy'
@@ -68,11 +68,9 @@ Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-" Plugin 'vim-scripts/ShowMarks'
+"" Plugin 'vim-scripts/ShowMarks'
 Plugin 'vim-scripts/The-NERD-tree'
 Plugin 'wincent/Command-T'
-
-
 
 let mapleader=","       " leader is comma
 
