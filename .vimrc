@@ -18,26 +18,35 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kdheepak89/dotvim'
 
 
+
+" Plugin 'sjl/gundo.vim'
+" Plugin 'julienr/vim-cellmode'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
-Plugin 'jtratner/vim-flavored-markdown'
-Plugin 'jistr/vim-nerdtree-tabs'
+" Plugin 'Shougo/neocomplete.vim'
+Plugin 'Yggdroot/indentLine'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'benekastah/neomake'
 Plugin 'bfredl/nvim-ipy'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-visual-star-search'
+Plugin 'chrisbra/color_highlight.git'
+Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'davidhalter/jedi'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'garbas/vim-snipmate'
+Plugin 'godlygeek/csapprox.git' 
 Plugin 'godlygeek/tabular'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'honza/vim-snippets'
+Plugin 'itchyny/lightline.vim'
+Plugin 'jby/tmux.vim.git'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'jgors/vimux-ipy'
-Plugin 'julienr/vim-cellmode'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'kdheepak89/vim-cellmode'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'mileszs/ack.vim'
@@ -48,31 +57,20 @@ Plugin 'powerline/fonts'
 Plugin 'reinh/vim-makegreen'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'searchalternatives'
 Plugin 'searchcomplete'
 Plugin 'simnalamburt/vim-mundo'
-" Plugin 'sjl/gundo.vim'
 Plugin 'tomasr/molokai'
 Plugin 'tomtom/tlib_vim'
-Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+" Plugin 'vim-scripts/ShowMarks'
 Plugin 'vim-scripts/The-NERD-tree'
 Plugin 'wincent/Command-T'
-Plugin "chrisbra/color_highlight.git"
-Plugin "skwp/vim-colors-solarized"
-Plugin "itchyny/lightline.vim"
-Plugin "jby/tmux.vim.git"
-Plugin "morhetz/gruvbox"
-Plugin "xsunsmile/showmarks.git"
-Plugin "chriskempson/base16-vim"
-
-" Required for Gblame in terminal vim
-Plugin "godlygeek/csapprox.git" 
 
 
 
