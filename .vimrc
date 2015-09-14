@@ -63,6 +63,18 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-scripts/The-NERD-tree'
 Plugin 'wincent/Command-T'
+Plugin "chrisbra/color_highlight.git"
+Plugin "skwp/vim-colors-solarized"
+Plugin "itchyny/lightline.vim"
+Plugin "jby/tmux.vim.git"
+Plugin "morhetz/gruvbox"
+Plugin "xsunsmile/showmarks.git"
+Plugin "chriskempson/base16-vim"
+
+" Required for Gblame in terminal vim
+Plugin "godlygeek/csapprox.git" 
+
+
 
 let mapleader=","       " leader is comma
 
