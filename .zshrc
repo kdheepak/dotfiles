@@ -21,6 +21,10 @@ source $ZSH/oh-my-zsh.sh
 # redefine prompt_context for hiding user@hostname
 prompt_context () { }
 
+# Don't show context
+export DEFAULT_USER=<username>
+
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
