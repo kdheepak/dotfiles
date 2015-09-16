@@ -18,6 +18,15 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 source $ZSH/oh-my-zsh.sh
 
+export ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_DIR_BACKGROUND='blue'
+POWERLEVEL9K_DIR_FOREGROUND='white'
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="↱"
+# POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
+POWERLEVEL9K_MODE='awesome-patched'
+
+
 # redefine prompt_context for hiding user@hostname
 prompt_context () { }
 
@@ -27,6 +36,7 @@ export DEFAULT_USER=<username>
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+
 
 
 # Load zsh-syntax-highlighting.
