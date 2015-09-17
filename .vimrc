@@ -18,10 +18,9 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kdheepak89/dotvim'
 
 
-
 " Plugin 'sjl/gundo.vim'
-" Plugin 'julienr/vim-cellmode'
-" Plugin 'Shougo/neocomplete.vim'
+Plugin 'julienr/vim-cellmode'
+" Plugin 'Shougo/deoplete.nvim'
 "" Plugin 'vim-scripts/ShowMarks'
 "Plugin 'itchyny/lightline.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -47,7 +46,6 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'jgors/vimux-ipy'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jtratner/vim-flavored-markdown'
-Plugin 'kdheepak89/vim-cellmode'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'mileszs/ack.vim'
@@ -71,6 +69,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-scripts/The-NERD-tree'
 Plugin 'wincent/Command-T'
+Plugin 'Valloric/YouCompleteMe'
 
 let mapleader=","       " leader is comma
 
@@ -105,6 +104,8 @@ syntax enable
 set undofile
 " set a directory to store the undo history
 set undodir=~/.vim/undodir
+
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
 set number
 set t_Co=256
@@ -154,5 +155,5 @@ let g:NERDTreeShowHidden=1
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Use deoplete.
-" let g:deoplete#enable_at_startup = 1
+autocmd FileType c nnoremap <buffer> <silent> <C-]> :YcmCompleter GoTo<cr>
+
