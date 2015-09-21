@@ -13,21 +13,24 @@ Plugin 'gmarik/Vundle.vim'
 " the following are examples of different formats supported.
 " plugin from http://vim-scripts.org/vim/scripts.html
 
-" Plugin 'benmills/vimux'
 "Plugin 'jpalardy/vim-slime'
 Plugin 'kdheepak89/dotvim'
 
 
-" Plugin 'sjl/gundo.vim'
-Plugin 'julienr/vim-cellmode'
 " Plugin 'Shougo/deoplete.nvim'
+" Plugin 'sjl/gundo.vim'
 "" Plugin 'vim-scripts/ShowMarks'
 "Plugin 'itchyny/lightline.vim'
+"Plugin 'jgors/vimux-ipy'
+"Plugin 'pitluga/vimux-nose-test'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'Raimondi/delimitMate'
+"Plugin 'Valloric/ListToggle'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'benekastah/neomake'
+Plugin 'benmills/vimux'
 Plugin 'bfredl/nvim-ipy'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-visual-star-search'
@@ -43,19 +46,21 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'honza/vim-snippets'
 Plugin 'jby/tmux.vim.git'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-Plugin 'jgors/vimux-ipy'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'jtratner/vim-flavored-markdown'
+"Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'julienr/vim-cellmode'
+Plugin 'kdheepak89/vimux-nose-test'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'plasticboy/vim-markdown'
 Plugin 'powerline/fonts'
 Plugin 'reinh/vim-makegreen'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'searchalternatives'
 Plugin 'searchcomplete'
 Plugin 'simnalamburt/vim-mundo'
@@ -69,7 +74,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-scripts/The-NERD-tree'
 Plugin 'wincent/Command-T'
-Plugin 'Valloric/YouCompleteMe'
 
 let mapleader=","       " leader is comma
 
@@ -87,6 +91,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 " to ignore plugin indent changes, instead use:
 "filetype plugin on
+set cindent
 "
 " brief help
 " :pluginlist       - lists configured plugins
@@ -105,7 +110,6 @@ set undofile
 " set a directory to store the undo history
 set undodir=~/.vim/undodir
 
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
 set number
 set t_Co=256
@@ -157,3 +161,24 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 autocmd FileType c nnoremap <buffer> <silent> <C-]> :YcmCompleter GoTo<cr>
 
+"let g:python_host_prog = '/usr/bin/python'
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
+
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_use_vim_stdout = 1
+let g:ycm_server_log_level = 'debug'
+
+let g:ycm_autoclose_preview_window_after_completion=1
+"
+" YouCompleteMe
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"Do not ask when starting vim
+let g:ycm_confirm_extra_conf = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+set tags+=./.tags
+
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
