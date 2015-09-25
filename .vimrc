@@ -19,7 +19,7 @@ Plugin 'kdheepak89/dotvim'
 
 " Plugin 'Shougo/deoplete.nvim'
 " Plugin 'sjl/gundo.vim'
-"" Plugin 'vim-scripts/ShowMarks'
+" Plugin 'vim-scripts/ShowMarks'
 "Plugin 'itchyny/lightline.vim'
 "Plugin 'jgors/vimux-ipy'
 "Plugin 'pitluga/vimux-nose-test'
