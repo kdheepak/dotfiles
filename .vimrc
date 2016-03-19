@@ -13,24 +13,25 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
+Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'morhetz/gruvbox'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
+Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/tabular'
-Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
+Plugin 'morhetz/gruvbox'
 Plugin 'powerline/fonts'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kdheepak89/dotvim'
 
 
@@ -55,4 +56,5 @@ let g:python_host_prog = '/usr/local/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_auto_trigger = 1
 
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
