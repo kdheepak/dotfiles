@@ -4,181 +4,55 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-" alternatively, pass a path where vundle should install plugins
+" alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-" let vundle manage vundle, required
-Plugin 'gmarik/Vundle.vim'
-" the following are examples of different formats supported.
-" plugin from http://vim-scripts.org/vim/scripts.html
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-"Plugin 'jpalardy/vim-slime'
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'morhetz/gruvbox'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Yggdroot/indentLine'
+Plugin 'bronson/vim-visual-star-search'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'godlygeek/tabular'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kshenoy/vim-signature'
+Plugin 'powerline/fonts'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 Plugin 'kdheepak89/dotvim'
 
 
-" Plugin 'Shougo/deoplete.nvim'
-" Plugin 'sjl/gundo.vim'
-" Plugin 'vim-scripts/ShowMarks'
-"Plugin 'itchyny/lightline.vim'
-"Plugin 'jgors/vimux-ipy'
-"Plugin 'pitluga/vimux-nose-test'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'Raimondi/delimitMate'
-"Plugin 'Valloric/ListToggle'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Yggdroot/indentLine'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'benekastah/neomake'
-Plugin 'benmills/vimux'
-Plugin 'bfredl/nvim-ipy'
-Plugin 'bling/vim-airline'
-Plugin 'bronson/vim-visual-star-search'
-Plugin 'chrisbra/color_highlight.git'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'davidhalter/jedi'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'godlygeek/csapprox.git' 
-Plugin 'godlygeek/tabular'
-Plugin 'henrik/vim-indexed-search'
-Plugin 'honza/vim-snippets'
-Plugin 'jby/tmux.vim.git'
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-Plugin 'jistr/vim-nerdtree-tabs'
-"Plugin 'jtratner/vim-flavored-markdown'
-Plugin 'julienr/vim-cellmode'
-Plugin 'kdheepak89/vimux-nose-test'
-Plugin 'kien/ctrlp.vim'
-Plugin 'kshenoy/vim-signature'
-Plugin 'mileszs/ack.vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'nathanaelkane/vim-indent-guides'
-"Plugin 'plasticboy/vim-markdown'
-Plugin 'powerline/fonts'
-Plugin 'reinh/vim-makegreen'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'searchalternatives'
-Plugin 'searchcomplete'
-Plugin 'simnalamburt/vim-mundo'
-Plugin 'tomasr/molokai'
-Plugin 'tomtom/tlib_vim'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-scripts/The-NERD-tree'
-Plugin 'wincent/Command-T'
-
-let mapleader=","       " leader is comma
-
-let s:python_ver = 0
-silent! python import sys, vim;
-            \ vim.command("let s:python_ver="+"".join(map(str,sys.version_info[0:3])))
-
-" python plugin bundles
-if (has('python') || has('python3')) && s:python_ver >= 260
-endif
-
-" all of your plugins must be added before the following line
+" All of your Plugins must be added before the following line
 call vundle#end()            " required
 
 filetype plugin indent on    " required
-" to ignore plugin indent changes, instead use:
+
+" To ignore plugin indent changes, instead use:
 "filetype plugin on
-set cindent
 "
-" brief help
-" :pluginlist       - lists configured plugins
-" :plugininstall    - installs plugins; append `!` to update or just :pluginupdate
-" :pluginsearch foo - searches for foo; append `!` to refresh local cache
-" :pluginclean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
-" see :h vundle for more details or wiki for faq
-" put your non-plugin stuff after this line
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
-" set ttymouse=xterm2
-
-syntax enable
-" tell it to use an undo file
-set undofile
-" set a directory to store the undo history
-set undodir=~/.vim/undodir
-
-
-set number
-set t_Co=256
-" set encoding=utf-8
-set fillchars+=stl:\ ,stlnc:\
-"set term=screen-256color
-"set term=xterm-256color
-set termencoding=utf-8
-set background=light
-let g:solarized_termcolors=256
-let g:rehash256 = 1
-
-let g:cellmode_tmux_sessionname=''
-let g:cellmode_tmux_windowname=''
-let g:cellmode_tmux_panenumber='2'
-let g:cellmode_use_tmux=1
-
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
-set guifont=Source\ Code\ Pro\ for\ Powerline "make sure to escape the spaces in the name properly<F37>
-
-" move to beginning/end of line
-nnoremap B ^
-nnoremap E $
-
-" $/^ doesn't do anything
-nnoremap $ <nop>
-nnoremap ^ <nop>
-
-" highlight last inserted text
-nnoremap gV `[v`]
-
-" toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
-
-" edit vimrc/zshrc and load vimrc bindings
-nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>ez :vsp ~/.zshrc<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
-
-" autocmd VimEnter * NERDTree
-" autocmd BufEnter * NERDTreeMirror
-
-" autocmd VimEnter * wincmd w
-
-let g:NERDTreeShowHidden=1
-
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-autocmd FileType c nnoremap <buffer> <silent> <C-]> :YcmCompleter GoTo<cr>
-
-"let g:python_host_prog = '/usr/bin/python'
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
-
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_use_vim_stdout = 1
-let g:ycm_server_log_level = 'debug'
-
+let g:python_host_prog = '/usr/local/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
-"
-" YouCompleteMe
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-"Do not ask when starting vim
-let g:ycm_confirm_extra_conf = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-set tags+=./.tags
+let g:ycm_auto_trigger = 1
 
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_signs=1
+
