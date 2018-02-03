@@ -1,80 +1,84 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" Specify a directory for plugins
+" - For Neovim:
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.local/share/nvim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'morhetz/gruvbox'
 
-Plugin 'morhetz/gruvbox'        " Theme
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" If installed using Homebrew
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'Shougo/echodoc.vim'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
-Plugin 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-jedi'
 
-" Plugin 'myusuf3/numbers.vim'    " Toggle automatically line numbers between normal and insert mode
+Plug 'vim-airline/vim-airline' " Airline status bar
+Plug 'vim-airline/vim-airline-themes'
 
-Plugin 'vim-airline/vim-airline' " Airline status bar
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
 
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'christoomey/vim-tmux-runner'
+Plug 'itchyny/vim-cursorword'
 
-Plugin 'itchyny/vim-cursorword'
+Plug 'ap/vim-css-color'
 
-Plugin 'ap/vim-css-color'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'rhysd/vim-gfm-syntax'
 
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'rhysd/vim-gfm-syntax'
+Plug 'vim-python/python-syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'vim-scripts/python_match.vim'
+Plug 'raimon49/requirements.txt.vim'
 
-Plugin 'vim-python/python-syntax'
-Plugin 'Vimjas/vim-python-pep8-indent'
-Plugin 'vim-scripts/python_match.vim'
-Plugin 'raimon49/requirements.txt.vim'
+Plug 'tmux-plugins/vim-tmux'
 
-Plugin 'tmux-plugins/vim-tmux'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-jdaddy'
 
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-tbone'
-Plugin 'tpope/vim-jdaddy'
+Plug 'kana/vim-niceblock'
+Plug 'mbbill/undotree'
+Plug 'reedes/vim-wordy'
+Plug 'wellle/tmux-complete.vim'
+Plug 'farmergreg/vim-lastplace'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'neomake/neomake'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
-Plugin 'kana/vim-niceblock'
+Plug 'kdheepak/gridlabd.vim'
 
-Plugin 'mbbill/undotree'
+" Initialize plugin system
+call plug#end()
 
-Plugin 'reedes/vim-wordy'
-
-Plugin 'wellle/tmux-complete.vim'
-
-Plugin 'farmergreg/vim-lastplace'
-
-Plugin 'ntpeters/vim-better-whitespace'
-
-Plugin 'neomake/neomake'
-
-Plugin 'kdheepak/gridlabd.vim'
-
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
 filetype plugin indent on    " required
 
-set termguicolors
+" Call the theme one
 colorscheme gruvbox
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-let g:python_highlight_all = 1
+" Note, the above line is ignored in Neovim 0.1.5 above, use this line instead.
+set termguicolors
+
+" https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
+" Add Find command to vim
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+" Use rg for grepprg
+set grepprg=rg\ --vimgrep
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -96,33 +100,13 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-autocmd FileType python nnoremap <leader>y :0,$!yapf<Cr>
-
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
-set relativenumber
-set number
-
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
-
+set number relativenumber " line numbers
 set cursorline " highlightcurrent line
+set showcmd " show command in bottom bar<Paste>
 
-set showcmd " show command in bottom bar
-
-set wildmenu
-
-set lazyredraw
-set foldenable
-
-set foldnestmax=10      " 10 nested fold max
-
-set foldlevelstart=10   " open most folds by default
-set foldmethod=indent   " fold based on indent level
-
-set cindent
-
-" " Set 7 lines to the cursor - when moving vertically using j/k
+" Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
 nnoremap Y y$
@@ -154,6 +138,7 @@ augroup omnifuncs
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
+
 
 let g:airline#extensions#tabline#enabled = 1
 "
@@ -192,23 +177,14 @@ if has("persistent_undo")
     set undofile
 endif
 
+
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
 autocmd! BufWritePost * Neomake
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_checkers = ['pylint', 'flake8']
 
 " Use tab for indenting in visual mode
 vnoremap <Tab> >gv|
@@ -238,5 +214,7 @@ set list
 set listchars=tab:>-
 
 nnoremap * *N
+
+
 
 
