@@ -1,17 +1,31 @@
+# This is Git's per-user configuration file.
 [user]
+# Please adapt and uncomment the following lines:
 	name = Dheepak Krishnamurthy
+
+[help]
+	autocorrect = 2
+
 [push]
 	default = simple
 [merge]
 	tool = vimdiff
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
 	conflictstyle = diff3
+
 [mergetool]
 	prompt = false
 [diff]
 	tool = vimdiff
+
+	# Detect copies as well as renames
+	renames = copies
+
 [alias]
 	co = checkout
-	
+
+	lg = log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 	ls = log --graph --abbrev-commit --decorate --color=always --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)' --all
 
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
@@ -135,46 +149,3 @@
 	changed = green
 	untracked = cyan
 
-[diff]
-
-	# Detect copies as well as renames
-	renames = copies
-
-[help]
-
-	# Automatically correct and execute mistyped commands
-	autocorrect = 1
-
-[merge]
-
-	# Include summaries of merged commits in newly created merge commit messages
-	log = true
-
-[push]
-
-	# Use the Git 1.x.x default to avoid errors on machines with old Git
-	# installations. To use `simple` instead, add this to your `~/.extra` file:
-	# `git config --global push.default simple`. See http://git.io/mMah-w.
-	default = matching
-
-# URL shorthands
-
-[url "git@github.com:"]
-
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
-
-[url "git://github.com/"]
-
-	insteadOf = "github:"
-
-[url "git@gist.github.com:"]
-
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
-
-[url "git://gist.github.com/"]
-
-	insteadOf = "gist:"
