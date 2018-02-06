@@ -52,6 +52,8 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-fugitive'
 
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
+
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
