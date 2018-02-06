@@ -12,6 +12,7 @@ Plug 'morhetz/gruvbox'
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'dracula/vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -34,7 +35,6 @@ Plug 'itchyny/vim-cursorword'
 Plug 'ap/vim-css-color'
 
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
 Plug 'rhysd/vim-gfm-syntax'
 
 Plug 'vim-python/python-syntax'
@@ -50,6 +50,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-fugitive'
 
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
@@ -212,6 +213,7 @@ let g:neomake_python_enabled_makers = ['flake8']
 
 set list
 set listchars=tab:>-
+set nofoldenable    " disable folding
 
 nnoremap * *N
 
