@@ -63,6 +63,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'neomake/neomake'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
+Plug 'rust-lang/rust.vim'
+
 Plug 'kdheepak/gridlabd.vim'
 
 " Initialize plugin system
