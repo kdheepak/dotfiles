@@ -15,11 +15,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'dracula/vim'
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 Plug 'zchee/deoplete-jedi'
@@ -64,6 +64,9 @@ Plug 'neomake/neomake'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 Plug 'rust-lang/rust.vim'
+Plug 'danro/rename.vim'
+
+Plug 'Chiel92/vim-autoformat'
 
 Plug 'kdheepak/gridlabd.vim'
 
@@ -96,7 +99,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
 
 if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
+    let g:deoplete#omni#input_patterns = {}
 endif
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -136,12 +139,12 @@ set ai "Apple_Terminaluto indent
 set si "Smart indent
 
 augroup omnifuncs
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    autocmd!
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
 
 
@@ -191,6 +194,12 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 
 autocmd! BufWritePost * Neomake
 
+au BufWrite * :Autoformat
+
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
 " Use tab for indenting in visual mode
 vnoremap <Tab> >gv|
 vnoremap <S-Tab> <gv
@@ -206,13 +215,12 @@ nnoremap M @q
 vnoremap M :norm @q<CR>
 
 let g:neomake_python_flake8_maker = {
-    \ 'args': ['--ignore=F403',  '--format=default', '--max-line-length=160', '--max-complexity=15', '--exclude=tests/*'],
-    \ 'errorformat':
-        \ '%E%f:%l: could not compile,%-Z%p^,' .
-        \ '%A%f:%l:%c: %t%n %m,' .
-        \ '%A%f:%l: %t%n %m,' .
-        \ '%-G%.%#'
-    \ }
+            \ 'errorformat':
+            \ '%E%f:%l: could not compile,%-Z%p^,' .
+            \ '%A%f:%l:%c: %t%n %m,' .
+            \ '%A%f:%l: %t%n %m,' .
+            \ '%-G%.%#'
+            \ }
 let g:neomake_python_enabled_makers = ['flake8']
 
 set list
@@ -221,6 +229,17 @@ set nofoldenable    " disable folding
 
 nnoremap * *N
 
+" tabstop:          Width of tab character
+" softtabstop:      Fine tunes the amount of white space to be added
+" shiftwidth        Determines the amount of whitespace to add in normal mode
+" expandtab:        When on uses space instead of tabs
+set tabstop     =4
+set softtabstop =4
+set shiftwidth  =4
+set expandtab
 
+set mouse=a
 
+" wrap around line
+set whichwrap+=h,l
 
