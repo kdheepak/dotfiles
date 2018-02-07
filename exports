@@ -1,5 +1,7 @@
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
 # Make vim the default editor.
-export EDITOR='mvim -v';
+export EDITOR='nvim';
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768';
