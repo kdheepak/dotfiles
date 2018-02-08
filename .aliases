@@ -141,4 +141,9 @@ if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
     . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
 fi
 
+# tmux aliases
+alias ta='tmux attach'
+alias tls='tmux ls'
+alias tat='tmux attach -t'
+alias tns='tmux new-session -s'
 

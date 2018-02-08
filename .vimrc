@@ -68,6 +68,7 @@ Plug 'danro/rename.vim'
 
 Plug 'Chiel92/vim-autoformat'
 
+Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
 
 " Initialize plugin system
