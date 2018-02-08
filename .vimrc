@@ -1,6 +1,13 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+"
 " Specify a directory for plugins
 " - For Neovim:
 " - Avoid using standard Vim directory names like 'plugin'
@@ -195,7 +202,7 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 
 autocmd! BufWritePost * Neomake
 
-au BufWrite * :Autoformat
+"au BufWrite * :Autoformat
 
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
