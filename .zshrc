@@ -69,6 +69,10 @@ plugins=(
   terminalapp
 )
 
+export ZSH_THEME="powerlevel9k/powerlevel9k"
+
+source $ZSH/oh-my-zsh.sh
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -109,7 +113,6 @@ source ~/.config/.aliases
 source ~/.config/.exports
 source ~/.bash_profile
 
-export ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_DIR_BACKGROUND='blue'
 POWERLEVEL9K_DIR_FOREGROUND='white'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -134,8 +137,6 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
-
-source $ZSH/oh-my-zsh.sh
 
 echo 'Successfully sourced zshrc'
 
