@@ -244,3 +244,5 @@ set mouse=a
 " wrap around line
 set whichwrap+=h,l
 
+set viminfo+=n~/.config/nvim/viminfo
+
