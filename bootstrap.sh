@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 echo "Symlinking files from $(pwd)"
-mkdir -p ~/.config; 
-mkdir -p ~/.config/yapf; 
-mkdir -p ~/.config/nvim; 
+mkdir -p ~/.config;
+mkdir -p ~/.config/yapf;
+mkdir -p ~/.config/nvim;
 rm ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
