@@ -202,7 +202,7 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 
 autocmd! BufWritePost * Neomake
 
-"au BufWrite * :Autoformat
+au BufWrite * :Autoformat
 
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -252,4 +252,10 @@ set mouse=a
 set whichwrap+=h,l
 
 set viminfo+=n~/.config/nvim/viminfo
+
+" TODO: Searches for word and always replacing
+:nnoremap <Leader>s <Esc>* \| :%s///g<Left><Left>
+
+" Ensure comments don't go to beginning of line by default
+au! FileType python setl nosmartindent
 
