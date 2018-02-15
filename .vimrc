@@ -62,10 +62,11 @@ Plug 'Raimondi/delimitMate'
 Plug 'rust-lang/rust.vim'
 Plug 'danro/rename.vim'
 Plug 'Chiel92/vim-autoformat'
-Plug 'kdheepak/SearchHighlighting.vim'
-Plug 'kdheepak/gridlabd.vim'
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'sjl/gundo.vim'
+Plug 'kdheepak/SearchHighlighting.vim'
+Plug 'kdheepak/gridlabd.vim'
 
 " Initialize plugin system
 call plug#end()
