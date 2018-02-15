@@ -115,6 +115,9 @@ set hlsearch            " highlight matches
 " display
 set display+=lastline
 
+" Always use vertical diffs
+set diffopt+=vertical
+
 " show status at the bottom
 set laststatus=2
 set showmode
@@ -156,6 +159,11 @@ endif
 set whichwrap+=h,l
 
 set viminfo+=n~/.config/nvim/viminfo
+
+set scrolloff=10
+
+" Use one space, not two, after punctuation.
+set nojoinspaces
 
 
 " Disable autocomment
