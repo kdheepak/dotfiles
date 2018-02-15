@@ -188,8 +188,8 @@ nnoremap N Nzzzv
 map Q gq
 
  " visual shifting (does not exit Visual mode)
- vnoremap < <gv
- vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " Disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -262,8 +262,6 @@ nnoremap Y y$
 :command Q q
 :command Qa qa
 :command QA qa
-
-:map Q <Nop>
 
 "" Split
 noremap <Leader>h :<C-u>split<CR>
@@ -411,7 +409,6 @@ nnoremap < <<_
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Macros
-nnoremap Q q
 nnoremap M @q
 vnoremap M :norm @q<CR>
 
