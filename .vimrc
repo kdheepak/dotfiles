@@ -14,13 +14,11 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
-
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dracula/vim'
-
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -28,29 +26,20 @@ else
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
-
 Plug 'zchee/deoplete-jedi'
-
 Plug 'vim-airline/vim-airline' " Airline status bar
 Plug 'vim-airline/vim-airline-themes'
-
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
-
 Plug 'itchyny/vim-cursorword'
-
 Plug 'ap/vim-css-color'
-
 Plug 'godlygeek/tabular'
 Plug 'rhysd/vim-gfm-syntax'
-
 Plug 'vim-python/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'vim-scripts/python_match.vim'
 Plug 'raimon49/requirements.txt.vim'
-
 Plug 'tmux-plugins/vim-tmux'
-
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
@@ -58,26 +47,20 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-fugitive'
-
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
-
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-
 Plug 'rust-lang/rust.vim'
 Plug 'danro/rename.vim'
-
 Plug 'Chiel92/vim-autoformat'
-
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
-
 " Initialize plugin system
 call plug#end()
 
@@ -86,8 +69,59 @@ filetype plugin indent on    " required
 " Call the theme one
 colorscheme gruvbox
 
+syntax enable           " enable syntax processing
+
 " Note, the above line is ignored in Neovim 0.1.5 above, use this line instead.
 set termguicolors
+
+
+" tabstop:          Width of tab character
+" softtabstop:      Fine tunes the amount of white space to be added
+" shiftwidth        Determines the amount of whitespace to add in normal mode
+" expandtab:        When on uses space instead of tabs
+set tabstop     =4
+set softtabstop =4
+set shiftwidth  =4
+set expandtab
+
+set mouse=a
+
+set number relativenumber " line numbers
+set cursorline " highlightcurrent line
+set showcmd " show command in bottom bar
+
+filetype indent on
+
+set wildmenu            " visual autocomplete for command menu
+set lazyredraw          " redraw only when we need to.
+set showmatch           " highlight matching [{()}]
+
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+"
+" turn off search highlight
+nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
+
+" highlight last inserted text
+nnoremap gV `[v`]
+
+let mapleader=","       " leader is comma
+
+" toggle gundo
+nnoremap <leader>u :GundoToggle<CR>
+
+" edit vimrc/zshrc and load vimrc bindings
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>ez :vsp ~/.zshrc<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
 " Add Find command to vim
@@ -115,12 +149,6 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
-set number relativenumber " line numbers
-set cursorline " highlightcurrent line
-set showcmd " show command in bottom bar<Paste>
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
@@ -200,7 +228,7 @@ let g:VtrAppendNewline = 1
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
 
 " au BufWrite * :Autoformat
 
@@ -236,17 +264,6 @@ set listchars=tab:>-
 set nofoldenable    " disable folding
 
 nnoremap * *N
-
-" tabstop:          Width of tab character
-" softtabstop:      Fine tunes the amount of white space to be added
-" shiftwidth        Determines the amount of whitespace to add in normal mode
-" expandtab:        When on uses space instead of tabs
-set tabstop     =4
-set softtabstop =4
-set shiftwidth  =4
-set expandtab
-
-set mouse=a
 
 " wrap around line
 set whichwrap+=h,l
