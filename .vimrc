@@ -48,6 +48,7 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
@@ -71,9 +72,12 @@ colorscheme gruvbox
 
 syntax enable           " enable syntax processing
 
+filetype indent on
+
 " Note, the above line is ignored in Neovim 0.1.5 above, use this line instead.
 set termguicolors
 
+let mapleader = ' '
 
 " tabstop:          Width of tab character
 " softtabstop:      Fine tunes the amount of white space to be added
@@ -84,13 +88,22 @@ set softtabstop =4
 set shiftwidth  =4
 set expandtab
 
-set mouse=a
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
 
-set number relativenumber " line numbers
-set cursorline " highlightcurrent line
-set showcmd " show command in bottom bar
+" wrap
+let &showbreak='↳ '
+set breakindent
+set linebreak
+set wrap
 
-filetype indent on
+" Ignore case when searching
+set ignorecase
+" When searching try to be smart about cases
+set smartcase
 
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
@@ -98,13 +111,70 @@ set showmatch           " highlight matching [{()}]
 
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
-"
+
+" display
+set display+=lastline
+
+" show status at the bottom
+set laststatus=2
+set showmode
+
+set number relativenumber " line numbers
+set cursorline " highlightcurrent line
+set showcmd " show command in bottom bar
+
+" buffer
+set autoread
+set encoding=utf-8
+set hidden
+
+set nobackup
+set nowritebackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set autowrite     " Automatically :write before running commands
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+set nofoldenable    " disable folding
+
+set mouse=a
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+set nofoldenable    " disable folding
+
+" Always show git gutter
+set signcolumn=yes
+
+if has('nvim')
+    set inccommand=split
+endif
+
+" wrap around line
+set whichwrap+=h,l
+
+set viminfo+=n~/.config/nvim/viminfo
+
+
+" Disable autocomment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
 " turn off search highlight
 nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
 
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
+
+" move vertically by actual line
+nnoremap J j
+nnoremap K k
+
+" remap Join lines and help
+nnoremap <Leader>J J
+nnoremap <Leader>H K
 
 " move to beginning/end of line
 nnoremap B ^
@@ -113,15 +183,13 @@ nnoremap E $
 " highlight last inserted text
 nnoremap gV `[v`]
 
-let mapleader=","       " leader is comma
-
 " toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
 
 " edit vimrc/zshrc and load vimrc bindings
-nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>ez :vsp ~/.zshrc<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <silent> <Leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
 
 " https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
 " Add Find command to vim
@@ -150,12 +218,7 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
-
 nnoremap Y y$
-" " make backspace behave in a sane manner
-set backspace=indent,eol,start
 
 :command W w
 :command WQ wq
@@ -166,14 +229,6 @@ set backspace=indent,eol,start
 
 :map Q <Nop>
 
-" Ignore case when searching
-set ignorecase
-
-"                           When searching try to be smart about cases
-set smartcase
-set ai "Apple_Terminaluto indent
-set si "Smart indent
-
 augroup omnifuncs
     autocmd!
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -182,7 +237,6 @@ augroup omnifuncs
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
-
 
 let g:airline#extensions#tabline#enabled = 1
 "
@@ -259,20 +313,20 @@ let g:neomake_python_flake8_maker = {
             \ }
 let g:neomake_python_enabled_makers = ['flake8']
 
-set list
-set listchars=tab:>-
-set nofoldenable    " disable folding
 
 nnoremap * *N
-
-" wrap around line
-set whichwrap+=h,l
-
-set viminfo+=n~/.config/nvim/viminfo
 
 " TODO: Searches for word and always replacing
 :nnoremap <Leader>s <Esc>* \| :%s///g<Left><Left>
 
 " Ensure comments don't go to beginning of line by default
+
 au! FileType python setl nosmartindent
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
 
