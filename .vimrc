@@ -166,6 +166,14 @@ set scrolloff=10
 set nojoinspaces
 
 
+" Don't use Ex mode, use Q for formatting.
+" Revert with ":unmap Q".
+map Q gq
+
+ " visual shifting (does not exit Visual mode)
+ vnoremap < <gv
+ vnoremap > >gv
+
 " Disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
