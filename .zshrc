@@ -59,6 +59,7 @@ plugins=(
   catimg
   git
   git-extras
+  gitfast
   osx
   z
   zsh-syntax-highlighting
@@ -67,6 +68,7 @@ plugins=(
   history
   history-substring-search
   terminalapp
+  fzf-z
 )
 
 export ZSH_THEME="powerlevel9k/powerlevel9k"
