@@ -1,145 +1,76 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Check if zplug is installed
+if [[ ! -d ~/.config/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.config/.zplug
+  source ~/.zplug/init.zsh && zplug update
+fi
 
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+source ~/.zplug/init.zsh
 
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+zplug "modules/environment", from:prezto
+zplug "modules/completion", from:prezto
+zplug "modules/history-substring-search", from:prezto
+zplug "modules/ssh", from:prezto
+zplug "modules/git", from:prezto
+zplug "modules/fasd", from:prezto
+zplug "modules/tmux", from:prezto
+zplug "modules/archive", from:prezto
+zplug "modules/directory", from:prezto
+zplug "modules/terminal", from:prezto
+zplug "modules/editor", from:prezto
+zplug "modules/history", from:prezto
+zplug "modules/spectrum", from:prezto
+zplug "modules/utility", from:prezto
+zplug "chrissicool/zsh-256color"
+zplug "willghatch/zsh-saneopt"
+zplug "mafredri/zsh-async"
+zplug "djui/alias-tips"
+zplug "supercrabtree/k"
+zplug "Tarrasch/zsh-bd"
+zplug "johnhamelink/env-zsh"
+zplug "joshuarubin/zsh-fzf"
+zplug "uvaes/fzf-marks"
+zplug "atweiden/fzf-extras"
+zplug "srijanshetty/zsh-suffix-alias"
+zplug "ascii-soup/zsh-url-highlighter"
+zplug "TBSliver/zsh-plugin-tmux-simple"
+zplug "wbinglee/zsh-wakatime"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "srijanshetty/zsh-pip-completion"
+zplug "vasyharan/zsh-brew-services"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+zplug "plugins/z", from:oh-my-zsh
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+zplug "plugins/brew-cask", from:oh-my-zsh
+zplug "plugins/brew", from:oh-my-zsh
+zplug "plugins/osx", from:oh-my-zsh
+zplug "plugins/xcode", from:oh-my-zsh
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# zplug "felixr/docker-zsh-completion"
+# zplug "akoenig/gulp.plugin.zsh"
+# zplug "DimitriSteyaert/Zsh-tugboat"
+# zplug "edouard-lopez/yeoman-zsh-plugin"
+# zplug "lukechilds/zsh-better-npm-completion"
+# zplug "johnhamelink/rvm-zsh"
+# zplug "lukechilds/zsh-nvm"
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+  zplug install
+fi
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+# Then, source plugins and add commands to $PATH
+zplug load
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  brew
-  brew-cask
-  catimg
-  git
-  git-extras
-  gitfast
-  osx
-  z
-  zsh-syntax-highlighting
-  zsh-completions
-  zsh-autosuggestions
-  history
-  history-substring-search
-  terminalapp
-  fzf-z
-)
-
-export ZSH_THEME="powerlevel9k/powerlevel9k"
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-setopt inc_append_history
-setopt share_history
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-[ -f ~/.config/.fzf.zsh ] && source ~/.config/.fzf.zsh
 
 source ~/.config/.aliases
 source ~/.config/.exports
 source ~/.bash_profile
 
-POWERLEVEL9K_DIR_BACKGROUND='blue'
-POWERLEVEL9K_DIR_FOREGROUND='white'
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-# POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="↱"
-# POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
-
-DEFAULT_USER=$USER
-
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=10000000
-SAVEHIST=10000000
-setopt BANG_HIST                 # Treat the '!' character specially during expansion.
-setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
-setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
-setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
-setopt HIST_BEEP                 # Beep when accessing nonexistent history.
-
-echo 'Successfully sourced zshrc'
-
-
+#zprof
