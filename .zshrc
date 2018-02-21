@@ -1,4 +1,7 @@
 # brew install zplug
+
+export POWERLEVEL9K_MODE='awesome-fontconfig'
+
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
