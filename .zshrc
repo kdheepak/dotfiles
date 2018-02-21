@@ -45,9 +45,10 @@ zplug "plugins/z", from:oh-my-zsh
 # zplug "plugins/osx", from:oh-my-zsh
 # zplug "plugins/xcode", from:oh-my-zsh
 
-zplug "mafredri/zsh-async", from:github
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zdharma/fast-syntax-highlighting", defer:2
+export POWERLEVEL9K_MODE='nerdfont-complete'
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
@@ -71,5 +72,6 @@ zplug load
 source ~/.config/.aliases
 source ~/.config/.exports
 source ~/.bash_profile
+
 
 #zprof
