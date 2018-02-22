@@ -70,6 +70,17 @@ bindkey '^[[B' history-substring-search-down
 # vi-mode (based on oh-my-zsh plugin)
 ########################################################################
 
+prompt_vi_mode() {
+  case ${KEYMAP} in
+    vicmd)
+      "$1_prompt_segment" "$0_NORMAL" "$2" "$DEFAULT_COLOR" "default" "$POWERLEVEL9K_VI_COMMAND_MODE_STRING"
+    ;;
+    main|viins|*)
+    ;;
+  esac
+}
+
+
 function zle-keymap-select zle-line-init
 {
     # change cursor shape in iTerm2
