@@ -1,5 +1,9 @@
 # brew install zplug
 
+source ~/.config/.aliases
+source ~/.config/.exports
+source ~/.bash_profile
+
 source ~/.fonts/devicons-regular.sh
 source ~/.fonts/fontawesome-regular.sh
 source ~/.fonts/octicons-regular.sh
@@ -26,6 +30,9 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "rupa/z", use:z.sh
+zplug "andrewferrier/fzf-z", on:"rupa/z"
+zplug "junegunn/fzf", as:plugin, use:'shell/completion.zsh'
+zplug "junegunn/fzf", as:plugin, use:'shell/key-bindings.zsh'
 
 zplug "srijanshetty/zsh-pip-completion"
 zplug "zdharma/fast-syntax-highlighting", defer:2
@@ -48,9 +55,5 @@ zplug load
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-source ~/.config/.aliases
-source ~/.config/.exports
-source ~/.bash_profile
 
 #zprof
