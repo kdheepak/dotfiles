@@ -146,7 +146,7 @@ set fileformats=unix,dos,mac
 
 set nobackup
 set nowritebackup
-set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+" set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 set autowrite     " Automatically :write before running commands
 
 " Display extra whitespace
@@ -380,10 +380,11 @@ let g:airline_skip_empty_sections = 1
 
 
 if has("persistent_undo")
-    set undodir=~/.undodir/
+    set undodir=~/.local/share/nvim/undo//
+    set backupdir=~/.local/share/nvim/backup//
+    set directory=~/.local/share/nvim/swap//
     set undofile
 endif
-
 
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
