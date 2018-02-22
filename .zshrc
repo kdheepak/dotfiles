@@ -15,7 +15,7 @@ source $ZPLUG_HOME/init.zsh
 POWERLEVEL9K_MODE='awesome-fontconfig'
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv dir_writable vcs anaconda)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs history time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time background_jobs history time)
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
@@ -29,13 +29,19 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting"
+
+zplug "junegunn/fzf", use:"shell/{completion.zsh,key-bindings.zsh}"
 zplug "rupa/z", use:z.sh
 zplug "andrewferrier/fzf-z", on:"rupa/z"
-zplug "junegunn/fzf", as:plugin, use:'shell/completion.zsh'
-zplug "junegunn/fzf", as:plugin, use:'shell/key-bindings.zsh'
+
+zplug "plugins/vi-mode", from:oh-my-zsh
 
 zplug "srijanshetty/zsh-pip-completion"
 zplug "zdharma/fast-syntax-highlighting", defer:2
+
+zplug "mollifier/cd-gitroot"
+
+zplug "hlissner/zsh-autopair", defer:2
 
 # zplug "plugins/brew-cask", from:oh-my-zsh
 # zplug "plugins/brew", from:oh-my-zsh
