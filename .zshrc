@@ -20,7 +20,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time backgr
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 zplug "modules/history", from:prezto
-zplug "modules/utility", from:prezto
 zplug "modules/completion", from:prezto
 zplug "modules/directory", from:prezto
 zplug "modules/git", from:prezto
@@ -44,8 +43,6 @@ zplug "mollifier/cd-gitroot"
 
 zplug "hlissner/zsh-autopair", defer:2
 
-# zplug "plugins/brew-cask", from:oh-my-zsh
-# zplug "plugins/brew", from:oh-my-zsh
 # zplug "plugins/osx", from:oh-my-zsh
 # zplug "plugins/xcode", from:oh-my-zsh
 
@@ -101,5 +98,7 @@ function zle-line-finish
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
+
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 #zprof
