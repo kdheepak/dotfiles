@@ -38,6 +38,7 @@ zplug "plugins/vi-mode", from:oh-my-zsh
 
 zplug "srijanshetty/zsh-pip-completion"
 zplug "zdharma/fast-syntax-highlighting", defer:2
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "mollifier/cd-gitroot"
 
@@ -49,7 +50,10 @@ zplug "hlissner/zsh-autopair", defer:2
 # zplug "plugins/xcode", from:oh-my-zsh
 
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-# zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# Async for zsh, used by pure
+# zplug "laurenkt/zsh-vimto"
+# zplug "mafredri/zsh-async", from:github, defer:0
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
