@@ -5,24 +5,13 @@ alias vim='nvim'
 # Shortcuts
 alias G="cd ~/GitRepos"
 
-# List all files colorized in long format
-alias ls="command exa"
-
-# List all files colorized in long format
-alias l="exa -lhF"
-
-# List all files colorized in long format, including dot files
-alias la="exa -haF"
-alias lla="exa -lhaF"
-
-# List files with human readable sizes
-alias ll="exa -lah"
+alias ls="exa --git -lFh"
+alias lg='exa --git -lahF'
 
 # List only directories
 alias lsd="exa -lhF | grep --color=never '^d'"
 
-alias lt='exa --tree'
-alias lg='exa --git'
+alias tree="exa --tree"
 
 # Get week number
 alias week='date +%V'
