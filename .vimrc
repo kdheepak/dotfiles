@@ -394,7 +394,7 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 
 " autocmd! BufWritePost * Neomake
 
-" au BufWrite * :Autoformat
+nnoremap <Leader>a :Autoformat<CR>
 
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -471,4 +471,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+" vim-markdown
+let g:vim_markdown_conceal = 0
 
