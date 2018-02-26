@@ -1,9 +1,5 @@
 # brew install zplug
 
-source ~/.config/.aliases
-source ~/.config/.exports
-source ~/.bash_profile
-
 source ~/.fonts/devicons-regular.sh
 source ~/.fonts/fontawesome-regular.sh
 source ~/.fonts/octicons-regular.sh
@@ -19,9 +15,15 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time backgr
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
+zplug "modules/environment", from:prezto
+zplug "modules/terminal", from:prezto
+zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
-zplug "modules/completion", from:prezto
 zplug "modules/directory", from:prezto
+zplug "modules/spectrum", from:prezto
+# zplug "modules/utility", from:prezto
+zplug "modules/completion", from:prezto
+# zplug "modules/prompt", from:prezto
 zplug "modules/git", from:prezto
 
 zplug "zsh-users/zsh-autosuggestions"
@@ -100,5 +102,10 @@ zle -N zle-line-finish
 zle -N zle-keymap-select
 
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+source ~/.config/.aliases
+source ~/.config/.exports
+source ~/.bash_profile
+
 
 #zprof
