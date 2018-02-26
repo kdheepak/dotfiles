@@ -65,6 +65,8 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'sjl/gundo.vim'
+Plug 'racer-rust/vim-racer'
+Plug 'sebastianmarkow/deoplete-rust'
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
 
@@ -164,9 +166,7 @@ set nofoldenable    " disable folding
 " Always show git gutter
 set signcolumn=yes
 
-if has('nvim')
-    set inccommand=split
-endif
+set inccommand=split
 
 " wrap around line
 set whichwrap+=h,l
@@ -473,4 +473,9 @@ let g:airline_symbols.linenr = ''
 
 " vim-markdown
 let g:vim_markdown_conceal = 0
+
+let g:racer_cmd = "~/.cargo/bin/racer"
+let g:deoplete#sources#rust#racer_binary = "~/.cargo/bin/racer"
+let g:deoplete#sources#rust#rust_source_path="~/GitRepos/rust/src"
+
 
