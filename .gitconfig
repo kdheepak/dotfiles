@@ -99,6 +99,7 @@
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
 		fi \
 	}; f"
+	root = rev-parse --show-toplevel
 
 [apply]
 

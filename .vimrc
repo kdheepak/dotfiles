@@ -19,13 +19,7 @@ Plug 'morhetz/gruvbox'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dracula/vim'
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'vim-airline/vim-airline' " Airline status bar
 Plug 'vim-airline/vim-airline-themes'
@@ -59,12 +53,12 @@ Plug 'w0rp/ale'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " Plug 'sheerun/vim-polyglot'
 Plug 'Raimondi/delimitMate'
-Plug 'rust-lang/rust.vim'
 Plug 'danro/rename.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'sjl/gundo.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'sebastianmarkow/deoplete-rust'
 Plug 'kdheepak/SearchHighlighting.vim'
@@ -475,7 +469,9 @@ let g:airline_symbols.linenr = ''
 let g:vim_markdown_conceal = 0
 
 let g:racer_cmd = "~/.cargo/bin/racer"
-let g:deoplete#sources#rust#racer_binary = "~/.cargo/bin/racer"
-let g:deoplete#sources#rust#rust_source_path="~/GitRepos/rust/src"
+if executable('racer')
+  let g:deoplete#sources#rust#racer_binary = systemlist('which racer')[0]
+endif
 
+let g:deoplete#sources#rust#rust_source_path = expand('~/GitRepos/rust/src')
 
