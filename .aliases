@@ -111,6 +111,8 @@ cdf() {
     fi
 }
 
+alias cdg='cd $(git root)'
+
 if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
     . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
 fi
