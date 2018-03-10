@@ -81,6 +81,7 @@ set termguicolors
 
 let mapleader = ' '
 
+set smarttab
 " tabstop:          Width of tab character
 " softtabstop:      Fine tunes the amount of white space to be added
 " shiftwidth        Determines the amount of whitespace to add in normal mode
@@ -94,7 +95,6 @@ set autoindent
 set smartindent
 set backspace=indent,eol,start
 set complete-=i
-set smarttab
 
 " wrap
 let &showbreak='↳ '
@@ -133,8 +133,8 @@ set autoread
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-set bomb
-set binary
+" set bomb
+" set binary
 
 set hidden
 
@@ -148,12 +148,7 @@ set autowrite     " Automatically :write before running commands
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
 
-set nofoldenable    " disable folding
-
 set mouse=a
-
-" Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
 
 set nofoldenable    " disable folding
 
