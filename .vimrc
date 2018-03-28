@@ -20,19 +20,11 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dracula/vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
 Plug 'vim-airline/vim-airline' " Airline status bar
 Plug 'vim-airline/vim-airline-themes'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'christoomey/vim-tmux-runner'
 Plug 'itchyny/vim-cursorword'
 Plug 'ap/vim-css-color'
 Plug 'godlygeek/tabular'
-Plug 'rhysd/vim-gfm-syntax'
-Plug 'vim-python/python-syntax'
-Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'vim-scripts/python_match.vim'
-Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
@@ -51,16 +43,31 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 " Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-" Plug 'sheerun/vim-polyglot'
 Plug 'Raimondi/delimitMate'
 Plug 'danro/rename.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'sjl/gundo.vim'
+" Tmux
+Plug 'tmux-plugins/vim-tmux'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
+" Markdown
+Plug 'rhysd/vim-gfm-syntax'
+" Python
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'vim-python/python-syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'vim-scripts/python_match.vim'
+Plug 'zchee/deoplete-jedi'
+" Rust
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'sebastianmarkow/deoplete-rust'
+" Java
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'tfnico/vim-gradle'
+
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
 
