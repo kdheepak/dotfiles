@@ -17,7 +17,7 @@ alias tree="exa --tree"
 alias week='date +%V'
 
 # Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+# alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
 # Flush Directory Service cache
 # alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
@@ -49,12 +49,12 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 # alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
 # Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+# alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+# alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
 # Hide/show all desktop icons (useful when presenting)
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+# alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+# alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 
 # URL-encode strings
 # alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
@@ -81,9 +81,9 @@ alias badge="tput bel"
 alias map="xargs -n1"
 
 # One of @janmoesen’s ProTip™s
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-	alias "$method"="lwp-request -m '$method'"
-done
+# for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+	# alias "$method"="lwp-request -m '$method'"
+# done
 
 # Make Grunt print stack traces by default
 # command -v grunt > /dev/null && alias grunt="grunt --stack"
@@ -102,25 +102,30 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
 
-cdf() {
-    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-    if [ "$target" != "" ]; then
-        cd "$target"; pwd
-    else
-        echo 'No Finder window found' >&2
-    fi
+# cdf() {
+    # target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    # if [ "$target" != "" ]; then
+        # cd "$target"; pwd
+    # else
+        # echo 'No Finder window found' >&2
+    # fi
+# }
+
+alias cdg='cd-gitroot'
+
+ssh() {
+    tmux rename-window -t${TMUX_PANE} "$*"
+    command ssh "$@"
+    tmux rename-window -t${TMUX_PANE} "zsh"
 }
 
-alias cdg='cd $(git root)'
-
-if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
-    . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
-fi
+# if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
+    # . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
+# fi
 
 # tmux aliases
 alias ta='tmux attach'
 alias tls='tmux ls'
 alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
-alias julia='~/Applications/Julia-0.6.app/Contents/Resources/julia/bin/julia'
 

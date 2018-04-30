@@ -67,6 +67,8 @@ Plug 'sebastianmarkow/deoplete-rust'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'tfnico/vim-gradle'
+" Julia
+Plug 'JuliaEditorSupport/julia-vim'
 
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'

@@ -1,9 +1,9 @@
 # brew install zplug
 
-source ~/.fonts/devicons-regular.sh
-source ~/.fonts/fontawesome-regular.sh
-source ~/.fonts/octicons-regular.sh
-source ~/.fonts/pomicons-regular.sh
+# source ~/.fonts/devicons-regular.sh
+# source ~/.fonts/fontawesome-regular.sh
+# source ~/.fonts/octicons-regular.sh
+# source ~/.fonts/pomicons-regular.sh
 
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
@@ -108,4 +108,3 @@ source ~/.config/.exports
 source ~/.bash_profile
 
 
-#zprof
