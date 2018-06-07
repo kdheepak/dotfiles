@@ -516,9 +516,6 @@ augroup pencil
   autocmd Filetype mail         call pencil#init({'wrap': 'hard', 'textwidth': 60})
                             \ | call litecorrect#init()
                             \ | setl spell spl=en_us et sw=2 ts=2 noai nonu nornu
-  autocmd Filetype html,xml     call pencil#init({'wrap': 'soft'})
-                            \ | call litecorrect#init()
-                            \ | setl spell spl=en_us et sw=2 ts=2
 augroup END
 
 nnoremap <silent> Q gqap
