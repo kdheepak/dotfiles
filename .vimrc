@@ -72,8 +72,12 @@ Plug 'sebastianmarkow/deoplete-rust'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'tfnico/vim-gradle'
+
+Plug 'neomake/neomake'
+
 " Julia
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'zyedidia/julialint.vim'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'roxma/nvim-completion-manager'  " optional
 
@@ -540,3 +544,5 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+let g:latex_to_unicode_auto = 1
