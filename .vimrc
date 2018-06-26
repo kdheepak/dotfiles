@@ -41,6 +41,7 @@ Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
+Plug 'neomake/neomake'
 " Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
@@ -57,7 +58,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 " Markdown
 Plug 'rhysd/vim-gfm-syntax'
-Plug 'reedes/vim-pencil'
 " Python
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'vim-python/python-syntax'
@@ -72,9 +72,6 @@ Plug 'sebastianmarkow/deoplete-rust'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'tfnico/vim-gradle'
-
-Plug 'neomake/neomake'
-
 " Julia
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'zyedidia/julialint.vim'
@@ -504,25 +501,9 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init({'wrap': 'hard', 'autoformat': 1})
-                            \ | setl spell spl=en_us fdl=4 noru nonu nornu
-                            \ | setl fdo+=search
-  autocmd Filetype git,gitsendemail,*COMMIT*
-                            \   call pencil#init({'wrap': 'hard', 'textwidth': 72})
-                            \ | call litecorrect#init()
-                            \ | setl spell spl=en_us et sw=2 ts=2 noai
-  autocmd Filetype mail         call pencil#init({'wrap': 'hard', 'textwidth': 60})
-                            \ | call litecorrect#init()
-                            \ | setl spell spl=en_us et sw=2 ts=2 noai nonu nornu
-augroup END
-
 nnoremap <silent> Q gqap
 xnoremap <silent> Q gq
 nnoremap <silent> <leader>Q vapJgqap
-
-let g:pencil#textwidth = 88
 
 " julia
 let g:default_julia_version = '0.6'
