@@ -151,3 +151,9 @@
 	changed = green
 	untracked = cyan
 
+[gpg]
+	program = gpg
+[http]
+	sslVerify = false
+	postBuffer = 2M
+
