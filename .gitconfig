@@ -13,7 +13,10 @@
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
 	conflictstyle = diff3
-
+[mergetool]
+  prompt = true
+[mergetool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [mergetool]
 	prompt = false
 [diff]
