@@ -25,6 +25,11 @@
 	# Detect copies as well as renames
 	renames = copies
 
+[pretty]
+    lg = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an%C(reset)%C(yellow)%d%C(reset)
+    lge = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an <%ae>%C(reset)%C(yellow)%d%C(reset)
+    reflg = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an%C(reset) %C(yellow)(%gd)%C(reset)
+
 [alias]
 	co = checkout
 
@@ -159,4 +164,3 @@
 [http]
 	sslVerify = false
 	postBuffer = 2M
-
