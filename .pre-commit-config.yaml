@@ -1,0 +1,11 @@
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: 1.4.0
+  hooks:
+      - id: trailing-whitespace
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: fix-encoding-pragma
+      - id: mixed-line-ending
+      - id: pretty-format-json

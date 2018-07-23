@@ -27,6 +27,8 @@ docs/_build
 # Folder view configuration files
 Desktop.ini
 
+*.orig
+
 # Created by https://www.gitignore.io/api/rust
 
 ### Rust ###
