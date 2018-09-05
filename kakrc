@@ -40,9 +40,20 @@ map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 map global goto m '<esc>m;' -docstring 'matching char'
 
 # add line numbers
-add-highlighter global/ number-lines -relative -hlcursor
 
+hook global WinCreate .* %{
+  addhl window/wrap wrap
+  addhl window/number-lines number-lines -relative -hlcursor
+  addhl window/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf ' ' -spc ' ' -nbsp '⍽'
+  addhl window/show-matching show-matching
+  addhl window/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
+  # smarttab-enable
+  # tab-completion-enable
+  show-trailing-whitespace-enable; face window TrailingWhitespace default,magenta
+  # search-highlighting-enable; face window Search +bi
+  # volatile-highlighting-enable; face window Volatile +bi
+}
 
 # relative line numbers
 hook global WinCreate .* %{addhl number_lines -relative}
