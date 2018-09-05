@@ -8,7 +8,7 @@ addhl global/ wrap
 
 # this is going to be a really long line so that I can test the soft wrap of the editor kakoune. I can't really think of what to type over here
 
-# Tab completions and tabstop 
+# Tab completions and tabstop
 hook global InsertCompletionShow .* %{
     try %{
         # this command temporarily removes cursors preceded by whitespace;
@@ -28,6 +28,7 @@ hook global InsertCompletionHide .* %{
 
 # simulate Vim's textwidth (but hardcoded to some value)
 # hook global BufNew .* autowrap-enable
+hook global WinCreate .* %{ autowrap-enable }
 
 # vim old habits
 map global normal D '<a-l>d' -docstring 'delete to end of line'
@@ -39,4 +40,9 @@ map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 map global goto m '<esc>m;' -docstring 'matching char'
 
 # add line numbers
-add-highlighter global/ number-lines
+add-highlighter global/ number-lines -relative -hlcursor
+
+
+
+# relative line numbers
+hook global WinCreate .* %{addhl number_lines -relative}
