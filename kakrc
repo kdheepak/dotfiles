@@ -13,7 +13,7 @@ set-option global makecmd 'make --jobs=4'
 set-option global grepcmd 'rg --column --with-filename'
 
 # soft wrap
-addhl global/ wrap
+add-highlighter global/ wrap
 
 # this is going to be a really long line so that I can test the soft wrap of the editor kakoune. I can't really think of what to type over here
 
@@ -55,11 +55,11 @@ map global goto m '<esc>m;' -docstring 'matching char'
 # add line numbers
 
 hook global WinCreate .* %{
-  addhl window/wrap wrap
-  addhl window/number-lines number-lines -relative -hlcursor
-  addhl window/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf ' ' -spc ' ' -nbsp '⍽'
-  addhl window/show-matching show-matching
-  addhl window/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
+  add-highlighter window/wrap wrap
+  add-highlighter window/number-lines number-lines -relative -hlcursor
+  add-highlighter window/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf ' ' -spc ' ' -nbsp '⍽'
+  add-highlighter window/show-matching show-matching
+  add-highlighter window/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
   smarttab-enable
   tab-completion-enable
@@ -69,7 +69,7 @@ hook global WinCreate .* %{
 }
 
 # relative line numbers
-hook global WinCreate .* %{addhl number_lines -relative}
+hook global WinCreate .* %{add-highlighter number_lines -relative}
 
 map global normal <%> '<c-s>%' # Save position before %
 map global normal <x> <a-x>
@@ -106,7 +106,7 @@ def git-log-lines %{
 }
 def git-toggle-blame %{
   try %{
-    addhl window/git-blame group
+    add-highlighter window/git-blame group
     rmhl window/git-blame
     git blame
   } catch %{
@@ -130,7 +130,7 @@ map global git L ': git-log-lines<ret>'          -docstring 'log blame'
 # What I really want is to only not highlight trailing whitespace as I'm
 # inserting it, but that doesn't seem possible right now.
 def show-trailing-whitespace-enable %{
-  # addhl window/TrailingWhitespace regex \h+$ 0:TrailingWhitespaceActive
+  # add-highlighter window/TrailingWhitespace regex \h+$ 0:TrailingWhitespaceActive
   # face window TrailingWhitespaceActive TrailingWhitespace
   hook -group trailing-whitespace window ModeChange 'normal:insert' \
     %{ face window TrailingWhitespaceActive '' }
@@ -138,7 +138,7 @@ def show-trailing-whitespace-enable %{
     %{ face window TrailingWhitespaceActive TrailingWhitespace }
 }
 def show-trailing-whitespace-disable %{
-  rmhl window/TrailingWhitespace
+  remove-highlighter window/TrailingWhitespace
   rmhooks window trailing-whitespace
 }
 face global TrailingWhitespace ''
@@ -235,4 +235,6 @@ hook -group GitWrapper global WinSetOption filetype=git-commit %{
     autowrap-enable
     hook window WinSetOption filetype=(?!git-commit).* %{ autowrap-disable }
 }
+
+evaluate-commands %sh{kak-lsp --config ~/.config/kak/kak-lsp.toml --kakoune -s $kak_session}
 

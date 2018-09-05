@@ -19,3 +19,4 @@ rm ~/.gdbinit; ln -s $(pwd)/.gdbinit ~/.gdbinit
 rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
 rm ~/.pylintrc; ln -s $(pwd)/.pylintrc ~/.pylintrc
 rm ~/.config/kak/kakrc; ln -s $(pwd)/kakrc ~/.config/kak/kakrc
+rm ~/.config/kak/kak-lsp.toml; ln -s $(pwd)/kak-lsp.toml ~/.config/kak/kak-lsp.toml
