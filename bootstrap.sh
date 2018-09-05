@@ -18,4 +18,4 @@ rm ~/.config/.fzf.zsh; ln -s $(pwd)/.fzf.zsh ~/.config/.fzf.zsh
 rm ~/.gdbinit; ln -s $(pwd)/.gdbinit ~/.gdbinit
 rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
 rm ~/.pylintrc; ln -s $(pwd)/.pylintrc ~/.pylintrc
-rm ~/.config/kakrc; ln -s $(pwd)/kakrc ~/.config/kakrc
+rm ~/.config/kak/kakrc; ln -s $(pwd)/kakrc ~/.config/kak/kakrc
