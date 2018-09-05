@@ -47,7 +47,6 @@ map global normal Y '<a-l>y' -docstring 'yank to end of line'
 map global normal <a-D> '<a-h>d'
 # Copy from line begin to the current position
 map global normal <a-Y> '<a-h>y'
-
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
