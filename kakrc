@@ -2,6 +2,15 @@ colorscheme gruvbox
 
 set global tabstop 4
 set global indentwidth 4
+set-option global BOM none
+set-option global eolformat lf
+set-option global ui_options ncurses_assistant=cat
+set-option global autoreload yes
+set-option global scrolloff 3,5
+set-option global makecmd 'make --jobs=4'
+
+# Use ripgrep as grep
+set-option global grepcmd 'rg --column --with-filename'
 
 # soft wrap
 addhl global/ wrap
@@ -48,11 +57,11 @@ hook global WinCreate .* %{
   addhl window/show-matching show-matching
   addhl window/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
-  # smarttab-enable
-  # tab-completion-enable
+  smarttab-enable
+  tab-completion-enable
   show-trailing-whitespace-enable; face window TrailingWhitespace default,magenta
-  # search-highlighting-enable; face window Search +bi
-  # volatile-highlighting-enable; face window Volatile +bi
+  search-highlighting-enable; face window Search +bi
+  volatile-highlighting-enable; face window Volatile +bi
 }
 
 # relative line numbers
