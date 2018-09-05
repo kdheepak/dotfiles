@@ -43,6 +43,11 @@ hook global WinCreate .* %{ autowrap-enable }
 map global normal D '<a-l>d' -docstring 'delete to end of line'
 map global normal Y '<a-l>y' -docstring 'yank to end of line'
 
+# Delete from line begin to the current position
+map global normal <a-D> '<a-h>d'
+# Copy from line begin to the current position
+map global normal <a-Y> '<a-h>y'
+
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
@@ -152,4 +157,83 @@ def switch-to-modified-buffer %{
   }
 }
 
+define-command trim-whitespaces %{
+   try %{
+        exec -draft '%s\h+$<ret>d'
+        echo -markup "{Information}trimmed"
+    } catch %{
+        echo -markup "{Information}nothing to trim"
+    }
+}
+
+# Grep navigation
+hook global BufOpenFifo '\Q*grep*' %{
+    map global normal <c-n> ':grep-next-match<ret>'
+    map global normal <c-p> ':grep-previous-match<ret>'
+}
+
+# Make navigation
+hook global BufOpenFifo '\Q*make*' %{
+    map global normal <c-n> ':make-next-error<ret>'
+    map global normal <c-p> ':make-previous-error<ret>'
+}
+
+# Restore global mappings
+hook global BufCloseFifo '\*(grep|make)\*' %{
+    map global normal <c-n> ':buffer-next<ret>'
+    map global normal <c-p> ':buffer-previous<ret>'
+}
+
+
+# Indent or deindent when the <tab> is pressed
+# map global normal <tab>   '<a-;><gt>'
+# map global normal <s-tab> '<a-;><lt>'
+
+# User mappings ────────────────────────────────────────────────────────────────
+
+# Paste from system register
+map global user p '!xsel --output --clipboard<ret>' -docstring "paste after"
+map global user P '<a-!>xsel --output --clipboard<ret>' -docstring "paste before"
+
+# Replace from system register
+map global user R '|xsel --output --clipboard<ret>' -docstring "replace"
+
+# Toggle word wrapping
+map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100 <ret>' -docstring 'wrap'
+
+# Select all occurences of the main selection
+map global user a '*%s<ret>' -docstring "select all"
+
+# Show length of selection
+map global user s ':selection-length<ret>' -docstring "selection length"
+
+# Trim all whitespaces
+map global user t ':trim-whitespaces<ret>' -docstring "trim whitespaces"
+
+# Expand selection to outer scope
+map global user e ':expand<ret>' -docstring "expand"
+
+# 'lock' mapping where pressing 'e' repeatedly will expand the selection
+declare-user-mode expand
+map global user E ':expand; enter-user-mode -lock expand<ret>' -docstring "expand ↻"
+map global expand e ':expand<ret>' -docstring "expand"
+
+# Select all lines directly below, above and both that contain the current selection at the same position
+map global user v     ':select-down<ret>' -docstring "select down"
+map global user <a-v> ':select-up<ret>' -docstring "select up"
+map global user V     ':select-vertically<ret>' -docstring "select all up/down"
+
+# Highlighters ─────────────────────────────────────────────────────────────────
+
+# Highlight trailing spaces
+add-highlighter global/trailing_white_spaces regex \h+$ 0:Error
+
+# File-types ───────────────────────────────────────────────────────────────────
+
+# Add autowrap to 72 characters in git-commit
+hook -group GitWrapper global WinSetOption filetype=git-commit %{
+    set-option buffer autowrap_column 72
+    autowrap-enable
+    hook window WinSetOption filetype=(?!git-commit).* %{ autowrap-disable }
+}
 
