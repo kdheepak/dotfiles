@@ -1,12 +1,48 @@
+
 colorscheme gruvbox
 
 set global tabstop 4
 set global indentwidth 4
+set global aligntab false
+
+map global insert <tab> <space><space><space><space>
+# map global insert <backtab> '<a-;><lt>'
+map global insert <backspace> '<a-;>:insert-bs<ret>'
+map global normal ';' <a-i>
+# map global object 'x' 'x' -docstring "line"
+
+hook global InsertChar \t %{
+    exec -draft h@
+}
+
+def -hidden insert-bs %{
+    try %{
+        # delete indentwidth spaces before cursor
+        exec -draft h %opt{indentwidth}HL <a-k>\A<space>+\z<ret> d
+    } catch %{
+        exec <backspace>
+    }
+}
+
+def -params 1 extend-line-down %{
+  exec "<a-:>%arg{1}X"
+}
+def -params 1 extend-line-up %{
+  exec "<a-:><a-;>%arg{1}K<a-;>"
+  try %{
+    exec -draft ';<a-K>\n<ret>'
+    exec X
+  }
+  exec '<a-;><a-X>'
+}
+map global normal x ':extend-line-down %val{count}<ret>'
+map global normal X ':extend-line-up %val{count}<ret>'
+
 set-option global BOM none
 set-option global eolformat lf
 set-option global ui_options ncurses_assistant=cat
 set-option global autoreload yes
-set-option global scrolloff 3,5
+set-option global scrolloff 12,5
 set-option global makecmd 'make --jobs=4'
 
 # Use ripgrep as grep
@@ -34,10 +70,9 @@ hook global InsertCompletionHide .* %{
     unmap window insert <s-tab> <c-p>
 }
 
-
 # simulate Vim's textwidth (but hardcoded to some value)
 # hook global BufNew .* autowrap-enable
-hook global WinCreate .* %{ autowrap-enable }
+# hook global WinCreate .* %{ autowrap-enable }
 
 # vim old habits
 map global normal D '<a-l>d' -docstring 'delete to end of line'
@@ -72,7 +107,6 @@ hook global WinCreate .* %{
 hook global WinCreate .* %{add-highlighter number_lines -relative}
 
 map global normal <%> '<c-s>%' # Save position before %
-map global normal <x> <a-x>
 
 ######################################################
 # https://github.com/mawww/kakoune/wiki/Bc
@@ -159,11 +193,11 @@ def switch-to-modified-buffer %{
 define-command trim-whitespaces %{
    try %{
         exec -draft '%s\h+$<ret>d'
-        echo -markup "{Information}trimmed"
     } catch %{
-        echo -markup "{Information}nothing to trim"
     }
 }
+
+hook global BufWritePre .* trim-whitespaces
 
 # Grep navigation
 hook global BufOpenFifo '\Q*grep*' %{
@@ -191,11 +225,16 @@ hook global BufCloseFifo '\*(grep|make)\*' %{
 # User mappings ────────────────────────────────────────────────────────────────
 
 # Paste from system register
-map global user p '!xsel --output --clipboard<ret>' -docstring "paste after"
-map global user P '<a-!>xsel --output --clipboard<ret>' -docstring "paste before"
+# map global user p '!xsel --output --clipboard<ret>' -docstring "paste after"
+# map global user P '<a-!>xsel --output --clipboard<ret>' -docstring "paste before"
+map global user p '!pbpaste<ret>' -docstring "paste after"
+map global user P '<a-!>pbpaste<ret>' -docstring "paste before"
 
 # Replace from system register
-map global user R '|xsel --output --clipboard<ret>' -docstring "replace"
+# map global user R '|xsel --output --clipboard<ret>' -docstring "replace"
+map global user r '|pbpaste<ret>' -docstring "replace"
+
+map global user c '<a-|>pbcopy<ret>' -docstring "copy"
 
 # Toggle word wrapping
 map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100 <ret>' -docstring 'wrap'
@@ -238,3 +277,23 @@ hook -group GitWrapper global WinSetOption filetype=git-commit %{
 
 evaluate-commands %sh{kak-lsp --config ~/.config/kak/kak-lsp.toml --kakoune -s $kak_session}
 
+# foo_bar → fooBar
+# foo-bar → fooBar
+# foo bar → fooBar
+def camelcase %{
+  exec '`s[-_<space>]<ret>d~<a-i>w'
+}
+
+# fooBar → foo_bar
+# foo-bar → foo_bar
+# foo bar → foo_bar
+def snakecase %{
+  exec '<a-:><a-\;>s-|[a-z][A-Z]<ret>\;a<space><esc>s[-\s]+<ret>c_<esc><a-i>w`'
+}
+
+# fooBar → foo-bar
+# foo_bar → foo-bar
+# foo bar → foo-bar
+def kebabcase %{
+  exec '<a-:><a-\;>s_|[a-z][A-Z]<ret>\;a<space><esc>s[_\s]+<ret>c-<esc><a-i>w`'
+}
