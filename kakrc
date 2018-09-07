@@ -9,7 +9,7 @@ map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
 map global insert <backspace> '<a-;>:insert-bs<ret>'
 map global normal ';' <a-i>
-# map global object 'x' 'x' -docstring "line"
+map global object x <esc><a-x> -docstring "line"
 
 hook global InsertChar \t %{
     exec -draft h@
@@ -92,9 +92,10 @@ map global goto m '<esc>m;' -docstring 'matching char'
 hook global WinCreate .* %{
   add-highlighter window/wrap wrap
   add-highlighter window/number-lines number-lines -relative -hlcursor
-  add-highlighter window/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf ' ' -spc ' ' -nbsp '⍽'
+  add-highlighter window/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf '↵' -spc ' ' -nbsp '⍽'
   add-highlighter window/show-matching show-matching
   add-highlighter window/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
+  set-face global Whitespace bright-black,default
 
   smarttab-enable
   tab-completion-enable
@@ -297,3 +298,6 @@ def snakecase %{
 def kebabcase %{
   exec '<a-:><a-\;>s_|[a-z][A-Z]<ret>\;a<space><esc>s[_\s]+<ret>c-<esc><a-i>w`'
 }
+
+lsp-auto-hover-enable
+set-option global lsp_hover_anchor true

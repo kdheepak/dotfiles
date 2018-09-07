@@ -129,3 +129,15 @@ alias tls='tmux ls'
 alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
 
+kak() {
+    server_name=$(tmux display-message -p '#S')
+    socket_file=$(kak -l | grep $server_name)
+
+    if [[ $socket_file == "" ]]; then
+        # Create new kakoune daemon for current dir
+        kak -d -s $server_name >/dev/null 2>&1 </dev/null
+    fi
+
+    # and run kakoune (with any arguments passed to the script)
+    kak -c $server_name $@
+}
