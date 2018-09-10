@@ -89,20 +89,22 @@ map global goto m '<esc>m;' -docstring 'matching char'
 
 # add line numbers
 
-hook global WinCreate .* %{
-  add-highlighter window/wrap wrap
-  add-highlighter window/number-lines number-lines -relative -hlcursor
-  add-highlighter window/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf '↵' -spc ' ' -nbsp '⍽'
-  add-highlighter window/show-matching show-matching
-  add-highlighter window/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
-  set-face global Whitespace bright-black,default
 
-  smarttab-enable
-  tab-completion-enable
-  show-trailing-whitespace-enable; face window TrailingWhitespace default,magenta
-  search-highlighting-enable; face window Search +bi
-  volatile-highlighting-enable; face window Volatile +bi
+hook global WinCreate .* %{
+    add-highlighter global/number-lines number-lines -relative -hlcursor
+    add-highlighter global/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf '↵' -spc ' ' -nbsp '⍽'
+    add-highlighter global/wrap wrap -word -marker "↳ "
+    add-highlighter global/show-matching show-matching
+    add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
+    # set-face global Whitespace bright-black,default
+    set-face global Whitespace rgb:363636,default
+    smarttab-enable
+    tab-completion-enable
+    show-trailing-whitespace-enable; face window TrailingWhitespace default,magenta
+    search-highlighting-enable; face window Search +bi
+    volatile-highlighting-enable; face window Volatile +bi
 }
+
 
 # relative line numbers
 hook global WinCreate .* %{add-highlighter number_lines -relative}
@@ -176,7 +178,7 @@ def show-trailing-whitespace-disable %{
   remove-highlighter window/TrailingWhitespace
   rmhooks window trailing-whitespace
 }
-face global TrailingWhitespace ''
+# face global TrailingWhitespace ''
 
 def switch-to-modified-buffer %{
   eval -save-regs a %{
@@ -244,7 +246,7 @@ map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100
 map global user a '*%s<ret>' -docstring "select all"
 
 # Show length of selection
-map global user s ':selection-length<ret>' -docstring "selection length"
+# map global user s ':selection-length<ret>' -docstring "selection length"
 
 # Trim all whitespaces
 map global user t ':trim-whitespaces<ret>' -docstring "trim whitespaces"
@@ -258,9 +260,9 @@ map global user E ':expand; enter-user-mode -lock expand<ret>' -docstring "expan
 map global expand e ':expand<ret>' -docstring "expand"
 
 # Select all lines directly below, above and both that contain the current selection at the same position
-map global user v     ':select-down<ret>' -docstring "select down"
-map global user <a-v> ':select-up<ret>' -docstring "select up"
-map global user V     ':select-vertically<ret>' -docstring "select all up/down"
+# map global user v     ':select-down<ret>' -docstring "select down"
+# map global user <a-v> ':select-up<ret>' -docstring "select up"
+# map global user V     ':select-vertically<ret>' -docstring "select all up/down"
 
 # Highlighters ─────────────────────────────────────────────────────────────────
 
@@ -301,3 +303,7 @@ def kebabcase %{
 
 lsp-auto-hover-enable
 set-option global lsp_hover_anchor true
+
+map global normal C <a-l>c
+map global normal <a-c> C
+map global normal w <a-i>w
