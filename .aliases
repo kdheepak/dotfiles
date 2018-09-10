@@ -130,6 +130,7 @@ alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
 
 kak() {
+    command kak -clear
     server_name=$(command tmux display-message -p '#S')
     socket_file=$(command kak -l | grep $server_name)
 
@@ -138,6 +139,12 @@ kak() {
         command kak -d -s $server_name >/dev/null 2>&1 </dev/null
     fi
 
-    # and run kakoune (with any arguments passed to the script)
-    command kak -c $server_name $@
+    if [ $# -eq 0 ]; then
+        # No arguments passed
+        command kak -c $server_name -e ':edit -scratch *scratch*'
+    else
+        # and run kakoune (with any arguments passed to the script)
+        command kak -c $server_name $@
+    fi
+
 }
