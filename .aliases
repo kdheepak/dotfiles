@@ -141,7 +141,7 @@ kak() {
 
     if [ $# -eq 0 ]; then
         # No arguments passed
-        command kak -c $server_name -e ':edit -scratch *scratch*'
+        command kak -c $server_name -e 'edit -scratch *scratch*'
     else
         # and run kakoune (with any arguments passed to the script)
         command kak -c $server_name $@
