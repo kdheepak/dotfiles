@@ -4,6 +4,7 @@ mkdir -p ~/.config;
 mkdir -p ~/.config/yapf;
 mkdir -p ~/.config/nvim;
 mkdir -p ~/.config/kak;
+mkdir -p ~/.julia/config;
 rm ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
@@ -20,3 +21,4 @@ rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
 rm ~/.pylintrc; ln -s $(pwd)/.pylintrc ~/.pylintrc
 rm ~/.config/kak/kakrc; ln -s $(pwd)/kakrc ~/.config/kak/kakrc
 rm ~/.config/kak/kak-lsp.toml; ln -s $(pwd)/kak-lsp.toml ~/.config/kak/kak-lsp.toml
+rm ~/.julia/config/startup.jl; ln -s $(pwd)/.juliarc.jl ~/.julia/config/startup.jl
