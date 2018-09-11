@@ -238,6 +238,7 @@ map global user P '<a-!>pbpaste<ret>' -docstring "paste before"
 map global user r '|pbpaste<ret>' -docstring "replace"
 
 map global user c '<a-|>pbcopy<ret>' -docstring "copy"
+map global user y '<a-|>pbcopy<ret>' -docstring "yank"
 
 # Toggle word wrapping
 map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100 <ret>' -docstring 'wrap'
