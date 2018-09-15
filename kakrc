@@ -1,9 +1,7 @@
 
 colorscheme gruvbox
 
-set global tabstop 4
-set global indentwidth 4
-set global aligntab false
+plug "kdheepak/kak-sensible"
 
 map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
@@ -38,11 +36,6 @@ def -params 1 extend-line-up %{
 map global normal x ':extend-line-down %val{count}<ret>'
 map global normal X ':extend-line-up %val{count}<ret>'
 
-set-option global BOM none
-set-option global eolformat lf
-set-option global ui_options ncurses_assistant=cat
-set-option global autoreload yes
-set-option global scrolloff 12,5
 set-option global makecmd 'make --jobs=4'
 
 # Use ripgrep as grep
@@ -87,8 +80,21 @@ map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
 map global goto m '<esc>m;' -docstring 'matching char'
 
-# add line numbers
-
+# Highlight trailing whitespace in normal mode, with the TrailingWhitespace face.
+# What I really want is to only not highlight trailing whitespace as I'm
+# inserting it, but that doesn't seem possible right now.
+def show-trailing-whitespace-enable %{
+  # add-highlighter window/TrailingWhitespace regex \h+$ 0:TrailingWhitespaceActive
+  # face window TrailingWhitespaceActive TrailingWhitespace
+  hook -group trailing-whitespace window ModeChange 'normal:insert' \
+    %{ face window TrailingWhitespaceActive '' }
+  hook -group trailing-whitespace window ModeChange 'insert:normal' \
+    %{ face window TrailingWhitespaceActive TrailingWhitespace }
+}
+def show-trailing-whitespace-disable %{
+  remove-highlighter window/TrailingWhitespace
+  rmhooks window trailing-whitespace
+}
 
 hook global WinCreate .* %{
     # set-face global Whitespace bright-black,default
@@ -99,16 +105,11 @@ hook global WinCreate .* %{
     # volatile-highlighting-enable; face window Volatile +bi
 }
 
-
 # relative line numbers
 # hook global WinCreate .* %{add-highlighter number_lines -relative}
 add-highlighter global/number-lines number-lines -relative -hlcursor
 
 add-highlighter global/wrap wrap -word -marker "↳ "
-
-add-highlighter global/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf '↵' -spc ' ' -nbsp '⍽'
-
-add-highlighter global/show-matching show-matching
 
 add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
@@ -168,21 +169,6 @@ map global git H ': git-hide-diff<ret>'          -docstring 'hide diff'
 map global git w ': git-show-blamed-commit<ret>' -docstring 'show blamed commit'
 map global git L ': git-log-lines<ret>'          -docstring 'log blame'
 
-# Highlight trailing whitespace in normal mode, with the TrailingWhitespace face.
-# What I really want is to only not highlight trailing whitespace as I'm
-# inserting it, but that doesn't seem possible right now.
-def show-trailing-whitespace-enable %{
-  # add-highlighter window/TrailingWhitespace regex \h+$ 0:TrailingWhitespaceActive
-  # face window TrailingWhitespaceActive TrailingWhitespace
-  hook -group trailing-whitespace window ModeChange 'normal:insert' \
-    %{ face window TrailingWhitespaceActive '' }
-  hook -group trailing-whitespace window ModeChange 'insert:normal' \
-    %{ face window TrailingWhitespaceActive TrailingWhitespace }
-}
-def show-trailing-whitespace-disable %{
-  remove-highlighter window/TrailingWhitespace
-  rmhooks window trailing-whitespace
-}
 # face global TrailingWhitespace ''
 
 def switch-to-modified-buffer %{
@@ -269,11 +255,6 @@ map global expand e ':expand<ret>' -docstring "expand"
 # map global user v     ':select-down<ret>' -docstring "select down"
 # map global user <a-v> ':select-up<ret>' -docstring "select up"
 # map global user V     ':select-vertically<ret>' -docstring "select all up/down"
-
-# Highlighters ─────────────────────────────────────────────────────────────────
-
-# Highlight trailing spaces
-add-highlighter global/trailing_white_spaces regex \h+$ 0:Error
 
 # File-types ───────────────────────────────────────────────────────────────────
 
