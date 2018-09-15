@@ -1,6 +1,4 @@
 alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
-alias vi='nvim'
-alias vim='nvim'
 
 # Shortcuts
 alias G="cd ~/GitRepos"
@@ -148,3 +146,7 @@ kak() {
     fi
 
 }
+
+alias vi='kak'
+alias vim='kak'
+

@@ -7,7 +7,7 @@ set global aligntab false
 
 map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
-map global insert <backspace> '<a-;>:insert-bs<ret>'
+# map global insert <backspace> '<a-;>:insert-bs<ret>'
 map global normal ';' <a-i>
 map global object x <esc><a-x> -docstring "line"
 
@@ -49,7 +49,7 @@ set-option global makecmd 'make --jobs=4'
 set-option global grepcmd 'rg --column --with-filename'
 
 # soft wrap
-add-highlighter global/ wrap
+# add-highlighter global/ wrap
 
 # this is going to be a really long line so that I can test the soft wrap of the editor kakoune. I can't really think of what to type over here
 
@@ -91,23 +91,28 @@ map global goto m '<esc>m;' -docstring 'matching char'
 
 
 hook global WinCreate .* %{
-    add-highlighter global/number-lines number-lines -relative -hlcursor
-    add-highlighter global/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf '↵' -spc ' ' -nbsp '⍽'
-    add-highlighter global/wrap wrap -word -marker "↳ "
-    add-highlighter global/show-matching show-matching
-    add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
     # set-face global Whitespace bright-black,default
-    set-face global Whitespace rgb:363636,default
-    smarttab-enable
-    tab-completion-enable
+    # smarttab-enable
+    # tab-completion-enable
     show-trailing-whitespace-enable; face window TrailingWhitespace default,magenta
-    search-highlighting-enable; face window Search +bi
-    volatile-highlighting-enable; face window Volatile +bi
+    # search-highlighting-enable; face window Search +bi
+    # volatile-highlighting-enable; face window Volatile +bi
 }
 
 
 # relative line numbers
-hook global WinCreate .* %{add-highlighter number_lines -relative}
+# hook global WinCreate .* %{add-highlighter number_lines -relative}
+add-highlighter global/number-lines number-lines -relative -hlcursor
+
+add-highlighter global/wrap wrap -word -marker "↳ "
+
+add-highlighter global/show-whitespaces show-whitespaces -tab '›' -tabpad '⋅' -lf '↵' -spc ' ' -nbsp '⍽'
+
+add-highlighter global/show-matching show-matching
+
+add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
+
+set-face global Whitespace rgb:363636,default
 
 map global normal <%> '<c-s>%' # Save position before %
 
