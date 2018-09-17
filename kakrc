@@ -1,8 +1,8 @@
-
 colorscheme gruvbox
 
 plug "kdheepak/kak-sensible"
 plug "alexherbo2/volatile-highlighting.kak"
+plug "occivink/kakoune-phantom-selection"
 
 map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
@@ -60,27 +60,37 @@ hook global InsertCompletionShow .* %{
         map window insert <s-tab> <c-p>
     }
 }
+
 hook global InsertCompletionHide .* %{
     unmap window insert <tab> <c-n>
     unmap window insert <s-tab> <c-p>
 }
 
+
 # simulate Vim's textwidth (but hardcoded to some value)
 # hook global BufNew .* autowrap-enable
 # hook global WinCreate .* %{ autowrap-enable }
 
+map global normal <x> <a-x>
+
 # vim old habits
 map global normal D '<a-l>d' -docstring 'delete to end of line'
 map global normal Y '<a-l>y' -docstring 'yank to end of line'
+map global normal C '<a-l>c' -docstring 'change to end of line'
+
+map global normal <a-c> 'C' -docstring 'copy selection to next line'
 
 # Delete from line begin to the current position
-map global normal <a-D> '<a-h>d'
+map global normal <a-D> '<a-h>d' -docstring 'delete from beginning of line'
 # Copy from line begin to the current position
-map global normal <a-Y> '<a-h>y'
+map global normal <a-Y> '<a-h>y' -docstring 'copy from beginning of line'
+map global normal <a-C> '<a-h>c' -docstring 'change from beginning of line'
+
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
 map global goto m '<esc>m;' -docstring 'matching char'
+
 
 # Highlight trailing whitespace in normal mode, with the TrailingWhitespace face.
 # What I really want is to only not highlight trailing whitespace as I'm
@@ -98,21 +108,23 @@ def show-trailing-whitespace-disable %{
   rmhooks window trailing-whitespace
 }
 
+
 hook global WinCreate .* %{
     # set-face global Whitespace bright-black,default
     # smarttab-enable
     # tab-completion-enable
     show-trailing-whitespace-enable; face window TrailingWhitespace default,magenta
     # search-highlighting-enable; face window Search +bi
-    # volatile-highlighting-enable; face window Volatile +bi
+    volatile-highlighting-enable; face window Volatile +bi
 }
+
 
 # relative line numbers
 # hook global WinCreate .* %{add-highlighter number_lines -relative}
 add-highlighter global/number-lines number-lines -relative -hlcursor
 
 add-highlighter global/wrap wrap -word -marker "↳ "
-add-highlighter global/ show-matching
+# add-highlighter global/ show-matching
 
 add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
@@ -132,11 +144,63 @@ def -hidden -params 2 inc %{ %sh{
     fi
     printf '%s%s\n' 'exec h"_/\d<ret><a-i>na' "$2($count)<esc>|bc<ret>h"
 } }
+
 map global normal <c-a> ':inc %val{count} +<ret>'
 map global normal <c-x> ':inc %val{count} -<ret>'
 
 map global object q Q -docstring 'double quote string'
 map global object Q q -docstring 'single quote string'
+
+
+# User mappings ────────────────────────────────────────────────────────────────
+
+# Paste from system register
+# map global user p '!xsel --output --clipboard<ret>' -docstring "paste after"
+# map global user P '<a-!>xsel --output --clipboard<ret>' -docstring "paste before"
+map global user p '!pbpaste<ret>' -docstring "paste after"
+map global user P '<a-!>pbpaste<ret>' -docstring "paste before"
+
+# Replace from system register
+# map global user R '|xsel --output --clipboard<ret>' -docstring "replace"
+map global user r '|pbpaste<ret>' -docstring "replace"
+
+map global user c '<a-|>pbcopy<ret>' -docstring "copy"
+map global user y '<a-|>pbcopy<ret>' -docstring "yank"
+
+# Toggle word wrapping
+map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100 <ret>' -docstring 'wrap'
+
+# Select all occurences of the main selection
+map global user a '*%s<ret>' -docstring "select all"
+
+# Show length of selection
+# map global user s ':selection-length<ret>' -docstring "selection length"
+
+# Trim all whitespaces
+map global user t ':trim-whitespaces<ret>' -docstring "trim whitespaces"
+
+# Extend selections
+map global user x ':extend-line-down %val{count}<ret>' -docstring "extend line down"
+map global user X ':extend-line-up %val{count}<ret>' -docstring "extend line up"
+
+# map global user <,>     -docstring 'choose buffer'          ': buffer-chooser<ret>'
+# map global user <.>     -docstring 'choose file'            ': file-chooser<ret>'
+map global user b -docstring 'next buffer' ':buffer-next<ret>'
+map global user B -docstring 'next buffer' ':buffer-previous<ret>'
+map global user f       -docstring 'format'                 ': format<ret>'
+
+# Expand selection to outer scope
+# map global user e ':expand<ret>' -docstring "expand"
+
+# 'lock' mapping where pressing 'e' repeatedly will expand the selection
+# declare-user-mode expand
+# map global user E ':expand; enter-user-mode -lock expand<ret>' -docstring "expand ↻"
+# map global expand e ':expand<ret>' -docstring "expand"
+
+# Select all lines directly below, above and both that contain the current selection at the same position
+# map global user v     ':select-down<ret>' -docstring "select down"
+# map global user <a-v> ':select-up<ret>' -docstring "select up"
+# map global user V     ':select-vertically<ret>' -docstring "select all up/down"
 
 ## More:
 # Git extras.
@@ -219,50 +283,6 @@ hook global BufCloseFifo '\*(grep|make)\*' %{
 # map global normal <tab>   '<a-;><gt>'
 # map global normal <s-tab> '<a-;><lt>'
 
-# User mappings ────────────────────────────────────────────────────────────────
-
-# Paste from system register
-# map global user p '!xsel --output --clipboard<ret>' -docstring "paste after"
-# map global user P '<a-!>xsel --output --clipboard<ret>' -docstring "paste before"
-map global user p '!pbpaste<ret>' -docstring "paste after"
-map global user P '<a-!>pbpaste<ret>' -docstring "paste before"
-
-# Replace from system register
-# map global user R '|xsel --output --clipboard<ret>' -docstring "replace"
-map global user r '|pbpaste<ret>' -docstring "replace"
-
-map global user c '<a-|>pbcopy<ret>' -docstring "copy"
-map global user y '<a-|>pbcopy<ret>' -docstring "yank"
-
-# Toggle word wrapping
-map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100 <ret>' -docstring 'wrap'
-
-# Select all occurences of the main selection
-map global user a '*%s<ret>' -docstring "select all"
-
-# Show length of selection
-# map global user s ':selection-length<ret>' -docstring "selection length"
-
-# Trim all whitespaces
-map global user t ':trim-whitespaces<ret>' -docstring "trim whitespaces"
-
-# Extend selections
-map global user x ':extend-line-down %val{count}<ret>' -docstring "extend line down"
-map global user X ':extend-line-up %val{count}<ret>' -docstring "extend line up"
-
-# Expand selection to outer scope
-# map global user e ':expand<ret>' -docstring "expand"
-
-# 'lock' mapping where pressing 'e' repeatedly will expand the selection
-# declare-user-mode expand
-# map global user E ':expand; enter-user-mode -lock expand<ret>' -docstring "expand ↻"
-# map global expand e ':expand<ret>' -docstring "expand"
-
-# Select all lines directly below, above and both that contain the current selection at the same position
-# map global user v     ':select-down<ret>' -docstring "select down"
-# map global user <a-v> ':select-up<ret>' -docstring "select up"
-# map global user V     ':select-vertically<ret>' -docstring "select all up/down"
-
 # File-types ───────────────────────────────────────────────────────────────────
 
 # Add autowrap to 72 characters in git-commit
@@ -273,6 +293,7 @@ hook -group GitWrapper global WinSetOption filetype=git-commit %{
 }
 
 evaluate-commands %sh{kak-lsp --config ~/.config/kak/kak-lsp.toml --kakoune -s $kak_session}
+lsp-start
 
 # foo_bar → fooBar
 # foo-bar → fooBar
@@ -302,5 +323,20 @@ set-option global lsp_hover_anchor true
 # map global normal <a-c> C
 # map global normal w <a-i>w
 
-volatile-highlighting-enable
+declare-option -hidden range-specs show_matching_range
 
+hook global InsertChar '[[\](){}<>]' %{
+    eval -draft %{
+        try %{
+            exec '<esc>;hm<a-k>..<ret>;'
+            set window show_matching_range %val{timestamp} "%val{selection_desc}|MatchingChar"
+        } catch %{
+            set window show_matching_range 0
+        }
+        hook window -once InsertChar '[^[\](){}<>]' %{
+            set window show_matching_range 0
+        }
+    }
+}
+
+add-highlighter global/ ranges show_matching_range
