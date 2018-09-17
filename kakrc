@@ -325,20 +325,3 @@ set-option global lsp_hover_anchor true
 # map global normal <a-c> C
 # map global normal w <a-i>w
 
-declare-option -hidden range-specs show_matching_range
-
-hook global InsertChar '[[\](){}<>]' %{
-    eval -draft %{
-        try %{
-            exec '<esc>;hm<a-k>..<ret>;'
-            set window show_matching_range %val{timestamp} "%val{selection_desc}|MatchingChar"
-        } catch %{
-            set window show_matching_range 0
-        }
-        hook window -once InsertChar '[^[\](){}<>]' %{
-            set window show_matching_range 0
-        }
-    }
-}
-
-add-highlighter global/ ranges show_matching_range
