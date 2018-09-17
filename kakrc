@@ -2,12 +2,13 @@
 colorscheme gruvbox
 
 plug "kdheepak/kak-sensible"
+plug "alexherbo2/volatile-highlighting.kak"
 
 map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
 # map global insert <backspace> '<a-;>:insert-bs<ret>'
 map global normal ';' <a-i>
-map global object x <esc><a-x> -docstring "line"
+# map global object x <esc><a-x> -docstring "line"
 
 hook global InsertChar \t %{
     exec -draft h@
@@ -33,8 +34,9 @@ def -params 1 extend-line-up %{
   }
   exec '<a-;><a-X>'
 }
-map global normal x ':extend-line-down %val{count}<ret>'
-map global normal X ':extend-line-up %val{count}<ret>'
+
+# map global normal x ':extend-line-down %val{count}<ret>'
+# map global normal X ':extend-line-up %val{count}<ret>'
 
 set-option global makecmd 'make --jobs=4'
 
@@ -110,6 +112,7 @@ hook global WinCreate .* %{
 add-highlighter global/number-lines number-lines -relative -hlcursor
 
 add-highlighter global/wrap wrap -word -marker "↳ "
+add-highlighter global/ show-matching
 
 add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
@@ -243,13 +246,17 @@ map global user a '*%s<ret>' -docstring "select all"
 # Trim all whitespaces
 map global user t ':trim-whitespaces<ret>' -docstring "trim whitespaces"
 
+# Extend selections
+map global user x ':extend-line-down %val{count}<ret>' -docstring "extend line down"
+map global user X ':extend-line-up %val{count}<ret>' -docstring "extend line up"
+
 # Expand selection to outer scope
-map global user e ':expand<ret>' -docstring "expand"
+# map global user e ':expand<ret>' -docstring "expand"
 
 # 'lock' mapping where pressing 'e' repeatedly will expand the selection
-declare-user-mode expand
-map global user E ':expand; enter-user-mode -lock expand<ret>' -docstring "expand ↻"
-map global expand e ':expand<ret>' -docstring "expand"
+# declare-user-mode expand
+# map global user E ':expand; enter-user-mode -lock expand<ret>' -docstring "expand ↻"
+# map global expand e ':expand<ret>' -docstring "expand"
 
 # Select all lines directly below, above and both that contain the current selection at the same position
 # map global user v     ':select-down<ret>' -docstring "select down"
@@ -291,6 +298,9 @@ def kebabcase %{
 lsp-auto-hover-enable
 set-option global lsp_hover_anchor true
 
-map global normal C <a-l>c
-map global normal <a-c> C
-map global normal w <a-i>w
+# map global normal C <a-l>c
+# map global normal <a-c> C
+# map global normal w <a-i>w
+
+volatile-highlighting-enable
+
