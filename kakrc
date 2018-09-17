@@ -129,6 +129,7 @@ add-highlighter global/wrap wrap -word -marker "↳ "
 add-highlighter global/VisibleWords regex \b(?:FIXME|TODO|XXX)\b 0:default+rb
 
 set-face global Whitespace rgb:363636,default
+set-face global MatchingChar white,white
 
 map global normal <%> '<c-s>%' # Save position before %
 
@@ -187,7 +188,8 @@ map global user X ':extend-line-up %val{count}<ret>' -docstring "extend line up"
 # map global user <.>     -docstring 'choose file'            ': file-chooser<ret>'
 map global user b -docstring 'next buffer' ':buffer-next<ret>'
 map global user B -docstring 'next buffer' ':buffer-previous<ret>'
-map global user f       -docstring 'format'                 ': format<ret>'
+map global user f -docstring 'format' ': format<ret>'
+map global normal * -docstring 'search word under cursor' '<a-i><a-w>*'
 
 # Expand selection to outer scope
 # map global user e ':expand<ret>' -docstring "expand"
