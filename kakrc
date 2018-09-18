@@ -1,8 +1,12 @@
 colorscheme gruvbox
 
+plugBegin
+
 plug "kdheepak/kak-sensible"
 plug "alexherbo2/volatile-highlighting.kak"
 plug "occivink/kakoune-phantom-selection"
+
+plugEnd
 
 map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
@@ -187,7 +191,7 @@ map global user X ':extend-line-up %val{count}<ret>' -docstring "extend line up"
 # map global user <,>     -docstring 'choose buffer'          ': buffer-chooser<ret>'
 # map global user <.>     -docstring 'choose file'            ': file-chooser<ret>'
 map global user b -docstring 'next buffer' ':buffer-next<ret>'
-map global user B -docstring 'next buffer' ':buffer-previous<ret>'
+map global user B -docstring 'previous buffer' ':buffer-previous<ret>'
 map global user f -docstring 'format' ': format<ret>'
 # map global normal * -docstring 'search word under cursor' '<a-i><a-w>*'
 
