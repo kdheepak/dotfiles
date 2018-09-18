@@ -14,6 +14,7 @@ rm ~/.zshrc; ln -s $(pwd)/.zshrc ~/.zshrc
 rm ~/.condarc; ln -s $(pwd)/.condarc ~/.condarc
 rm ~/.config/yapf/style; ln -s $(pwd)/.yapf-style ~/.config/yapf/style
 rm ~/.config/flake8; ln -s $(pwd)/.flake8 ~/.config/flake8
+rm ~/.config/pycodestyle; ln -s $(pwd)/.pycodestyle ~/.config/pycodestyle
 rm ~/.config/.fzf.bash; ln -s $(pwd)/.fzf.bash ~/.config/.fzf.bash
 rm ~/.config/.fzf.zsh; ln -s $(pwd)/.fzf.zsh ~/.config/.fzf.zsh
 rm ~/.gdbinit; ln -s $(pwd)/.gdbinit ~/.gdbinit

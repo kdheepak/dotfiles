@@ -189,7 +189,7 @@ map global user X ':extend-line-up %val{count}<ret>' -docstring "extend line up"
 map global user b -docstring 'next buffer' ':buffer-next<ret>'
 map global user B -docstring 'next buffer' ':buffer-previous<ret>'
 map global user f -docstring 'format' ': format<ret>'
-map global normal * -docstring 'search word under cursor' '<a-i><a-w>*'
+# map global normal * -docstring 'search word under cursor' '<a-i><a-w>*'
 
 # Expand selection to outer scope
 # map global user e ':expand<ret>' -docstring "expand"
@@ -319,7 +319,7 @@ def kebabcase %{
 }
 
 lsp-auto-hover-enable
-set-option global lsp_hover_anchor true
+# set-option global lsp_hover_anchor true
 
 # map global normal C <a-l>c
 # map global normal <a-c> C
