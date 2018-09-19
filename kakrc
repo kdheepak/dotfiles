@@ -1,17 +1,15 @@
 colorscheme gruvbox
 
-plugBegin
-
 plug "kdheepak/kak-sensible"
 plug "alexherbo2/volatile-highlighting.kak"
 plug "occivink/kakoune-phantom-selection"
 
-plugEnd
 
 map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
 # map global insert <backspace> '<a-;>:insert-bs<ret>'
 map global normal ';' <a-i>
+map global normal '<a-;>' <a-a>
 # map global object x <esc><a-x> -docstring "line"
 
 hook global InsertChar \t %{
@@ -300,6 +298,8 @@ hook -group GitWrapper global WinSetOption filetype=git-commit %{
 
 evaluate-commands %sh{kak-lsp --config ~/.config/kak/kak-lsp.toml --kakoune -s $kak_session}
 lsp-start
+lsp-auto-hover-enable
+# set-option global lsp_hover_anchor true
 
 # foo_bar → fooBar
 # foo-bar → fooBar
@@ -321,9 +321,6 @@ def snakecase %{
 def kebabcase %{
   exec '<a-:><a-\;>s_|[a-z][A-Z]<ret>\;a<space><esc>s[_\s]+<ret>c-<esc><a-i>w`'
 }
-
-lsp-auto-hover-enable
-# set-option global lsp_hover_anchor true
 
 # map global normal C <a-l>c
 # map global normal <a-c> C
