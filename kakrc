@@ -9,8 +9,7 @@ map global insert <tab> <space><space><space><space>
 # map global insert <backtab> '<a-;><lt>'
 # map global insert <backspace> '<a-;>:insert-bs<ret>'
 map global normal ';' <a-i>
-map global normal '<a-;>' <a-a>
-# map global object x <esc><a-x> -docstring "line"
+map global normal '<a-;>' <a-a> # map global object x <esc><a-x> -docstring "line"
 
 hook global InsertChar \t %{
     exec -draft h@
@@ -78,9 +77,8 @@ map global normal <x> <a-x>
 # vim old habits
 map global normal D '<a-l>d' -docstring 'delete to end of line'
 map global normal Y '<a-l>y' -docstring 'yank to end of line'
-map global normal C '<a-l>c' -docstring 'change to end of line'
-
-map global normal <a-c> 'C' -docstring 'copy selection to next line'
+# map global normal C '<a-l>c' -docstring 'change to end of line'
+# map global normal <a-c> 'C' -docstring 'copy selection to next line'
 
 # Delete from line begin to the current position
 map global normal <a-D> '<a-h>d' -docstring 'delete from beginning of line'
@@ -169,6 +167,10 @@ map global user r '|pbpaste<ret>' -docstring "replace"
 
 map global user c '<a-|>pbcopy<ret>' -docstring "copy"
 map global user y '<a-|>pbcopy<ret>' -docstring "yank"
+map global user d '|pbcopy>/dev/null<ret>' -docstring "cut"
+map global user R ':e!<ret>' -docstring 'Reload buffer'
+# map global user m :mark-word<ret> -docstring 'mark word'
+# map global user M :mark-clear<ret> -docstring 'mark clear'
 
 # Toggle word wrapping
 map global user w ':toggle-highlighter window/wrap wrap -word -indent -width 100 <ret>' -docstring 'wrap'
@@ -326,3 +328,7 @@ def kebabcase %{
 # map global normal <a-c> C
 # map global normal w <a-i>w
 
+declare-user-mode search
+map -docstring "case insensitive search" global search i '/(?i)'
+map -docstring "case sensitive search" global search I '/'
+map global normal / ':enter-user-mode search<ret>i'

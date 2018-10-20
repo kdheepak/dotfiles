@@ -54,6 +54,8 @@ zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 # zplug "mafredri/zsh-async", from:github, defer:0
 # zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
+zplug "nim-lang/nimble"
+
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
   zplug install

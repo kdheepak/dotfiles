@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v1.4.0
+  rev: v2.0.0
   hooks:
       - id: trailing-whitespace
       - id: check-executables-have-shebangs
@@ -9,6 +9,7 @@ repos:
       - id: check-symlinks
       - id: fix-encoding-pragma
       - id: mixed-line-ending
+      - id: flake8
       - id: pretty-format-json
         args: [--autofix]
 - repo: https://github.com/ambv/black
