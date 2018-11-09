@@ -147,6 +147,6 @@ alias tns='tmux new-session -s'
 #
 # }
 
-alias vi='kak'
-alias vim='kak'
+alias vi='nvim'
+alias vim='nvim'
 

@@ -19,7 +19,6 @@ Plug 'morhetz/gruvbox'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dracula/vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-airline/vim-airline' " Airline status bar
 Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/vim-cursorword'
@@ -75,7 +74,6 @@ Plug 'tfnico/vim-gradle'
 " Julia
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'zyedidia/julialint.vim'
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 
 " assuming your using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
@@ -84,6 +82,15 @@ Plug 'roxma/nvim-yarp'
 
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Initialize plugin system
 call plug#end()
@@ -216,8 +223,8 @@ nnoremap J j
 nnoremap K k
 
 " remap Join lines and help
-nnoremap <Leader>J J
-nnoremap <Leader>H K
+" nnoremap <Leader>J J
+" nnoremap <Leader>H K
 
 nnoremap <silent> <leader>sh :terminal<CR>
 
@@ -302,8 +309,11 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 noremap YY "+y<CR>
-noremap <leader>p "+gP<CR>
-noremap XX "+x<CR>
+noremap <Leader>P "+gP<CR>
+
+noremap X V
+noremap gj G
+noremap gk gg
 
 if has('macunix')
   " pbcopy for OSX copy/paste
@@ -358,8 +368,6 @@ let g:airline#extensions#virtualenv#enabled = 1
 " Default highlight is better than polyglot
 let g:polyglot_disabled = ['python']
 let python_highlight_all = 1
-
-
 
 
 "" Close buffer
@@ -431,7 +439,6 @@ let g:neomake_python_flake8_maker = {
             \ '%-G%.%#'
             \ }
 let g:neomake_python_enabled_makers = ['flake8']
-
 
 nnoremap * *N
 
@@ -523,9 +530,9 @@ let g:LanguageClient_serverCommands = {
 \   '],
 \ }
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> <F3> :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <F4> :call LanguageClient_textDocument_definition()<CR>
 
 let g:latex_to_unicode_auto = 1
 
