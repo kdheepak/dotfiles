@@ -74,7 +74,9 @@ Plug 'tfnico/vim-gradle'
 " Julia
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'zyedidia/julialint.vim'
-
+" Dart
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'reisub0/hot-reload.vim'
 " assuming your using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
 " ncm2 requires nvim-yarp
@@ -82,6 +84,7 @@ Plug 'roxma/nvim-yarp'
 
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
+Plug 'baabelfish/nvim-nim'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',

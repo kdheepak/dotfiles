@@ -17,6 +17,7 @@ Thumbs.db
 ################
 *.egg-info
 __pycache__
+.pytest_cache/*
 
 docs/_build
 .ipynb_checkpoints
