@@ -51,12 +51,13 @@ Plug 'sjl/gundo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc-after'
 " Tmux
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 " Markdown
-Plug 'rhysd/vim-gfm-syntax'
+" Plug 'rhysd/vim-gfm-syntax'
 " Python
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'vim-python/python-syntax'
@@ -379,7 +380,7 @@ noremap <leader>c :bd<CR>
 augroup omnifuncs
     autocmd!
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    " autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags

@@ -110,3 +110,6 @@ source ~/.config/.exports
 source ~/.bash_profile
 
 
+
+# added by travis gem
+[ -f /Users/$USER/.travis/travis.sh ] && source /Users/$USER/.travis/travis.sh
