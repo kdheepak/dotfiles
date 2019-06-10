@@ -111,11 +111,11 @@ alias reload="exec $SHELL -l"
 
 alias cdg='cd-gitroot'
 
-ssh() {
-    tmux rename-window -t${TMUX_PANE} "$*"
-    command ssh "$@"
-    tmux rename-window -t${TMUX_PANE} "zsh"
-}
+# ssh() {
+    # tmux rename-window -t${TMUX_PANE} "$*"
+    # command ssh "$@"
+    # tmux rename-window -t${TMUX_PANE} "zsh"
+# }
 
 # if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
     # . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash

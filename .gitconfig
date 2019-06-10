@@ -65,7 +65,7 @@
 	remotes = remote -v
 
 	# Amend the currently staged files to the latest commit
-	amend = commit --amend --reuse-message=HEAD
+	amend = commit -C HEAD --amend
 
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"

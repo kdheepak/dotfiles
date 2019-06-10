@@ -25,4 +25,3 @@ fi
 # bind 'TAB:menu-complete'
 
 
-export PATH="$HOME/.cargo/bin:$PATH"

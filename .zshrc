@@ -11,7 +11,14 @@ source $ZPLUG_HOME/init.zsh
 POWERLEVEL9K_MODE='awesome-fontconfig'
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv dir_writable vcs anaconda)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time background_jobs history time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time background_jobs time)
+POWERLEVEL9K_TIME_BACKGROUND='none'
+POWERLEVEL9K_DIR_HOME_BACKGROUND='black'
+POWERLEVEL9K_DIR_HOME_FOREGROUND='white'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='black'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='white'
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='yellow'
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='black'
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
@@ -108,8 +115,6 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 source ~/.config/.aliases
 source ~/.config/.exports
 source ~/.bash_profile
-
-
 
 # added by travis gem
 [ -f /Users/$USER/.travis/travis.sh ] && source /Users/$USER/.travis/travis.sh

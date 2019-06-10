@@ -25,7 +25,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'ap/vim-css-color'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-tbone'
@@ -40,7 +40,7 @@ Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 " Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
@@ -49,9 +49,9 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'davidhalter/jedi-vim'
 Plug 'sjl/gundo.vim'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-pandoc-after'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc-after'
 " Tmux
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
@@ -64,7 +64,7 @@ Plug 'vim-python/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'vim-scripts/python_match.vim'
 Plug 'zchee/deoplete-jedi'
-Plug 'ambv/black'
+" Plug 'ambv/black'
 " Rust
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
@@ -86,6 +86,9 @@ Plug 'roxma/nvim-yarp'
 Plug 'kdheepak/SearchHighlighting.vim'
 Plug 'kdheepak/gridlabd.vim'
 Plug 'baabelfish/nvim-nim'
+
+Plug 'vim-scripts/DrawIt'
+Plug 'gyim/vim-boxdraw'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -494,6 +497,8 @@ let g:airline_symbols.linenr = ''
 
 " vim-markdown
 let g:vim_markdown_conceal = 0
+let g:vim_markdown_emphasis_multiline = 0
+let g:vim_markdown_folding_disabled = 1
 
 let g:racer_cmd = "~/.cargo/bin/racer"
 if executable('racer')
@@ -545,3 +550,9 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
+
+
+set virtualedit+=all
+
+set nomodeline
+
