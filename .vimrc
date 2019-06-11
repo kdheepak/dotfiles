@@ -41,8 +41,8 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 " Plug 'neomake/neomake'
-" Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
-Plug 'thaerkh/vim-indentguides'
+Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
+" Plug 'thaerkh/vim-indentguides'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
 Plug 'danro/rename.vim'
@@ -193,7 +193,7 @@ set mouse=a
 set nofoldenable    " disable folding
 
 " Always show git gutter
-set signcolumn=yes
+" set signcolumn=yes
 
 set inccommand=split
 
@@ -575,5 +575,9 @@ let g:unicoder_cancel_normal = 1
 let g:unicoder_cancel_insert = 1
 let g:unicoder_cancel_visual = 1
 let g:unicoder_no_map = 1
+
+"
+" 'Yggdroot/indentLine'
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 
