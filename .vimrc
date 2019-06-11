@@ -101,6 +101,8 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'junegunn/fzf'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+Plug 'joom/latex-unicoder.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -545,8 +547,6 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> <F3> :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <F4> :call LanguageClient_textDocument_definition()<CR>
 
-let g:latex_to_unicode_auto = 1
-
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
@@ -562,3 +562,5 @@ let g:gitgutter_override_sign_column_highlight = 0
 
 highlight clear SignColumn
 
+let g:latex_to_unicode_auto = 1
+let g:latex_to_unicode_cmd_mapping = ['<C-J>']
