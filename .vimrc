@@ -42,6 +42,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 " Plug 'neomake/neomake'
 " Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
+Plug 'thaerkh/vim-indentguides'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
 Plug 'danro/rename.vim'
@@ -161,7 +162,8 @@ set laststatus=2
 set showmode
 
 set number relativenumber " line numbers
-set cursorline " highlightcurrent line
+set cursorline " highlight current line
+" set cursorcolumn " highlight current column
 set showcmd " show command in bottom bar
 
 " buffer
@@ -369,9 +371,6 @@ let g:jedi#smart_auto_mappings = 0
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
-
 " Syntax highlight
 " Default highlight is better than polyglot
 let g:polyglot_disabled = ['python']
@@ -397,15 +396,18 @@ endif
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 " vim-airline
-let g:airline_theme = 'gruvbox'
+
+" let g:airline_theme = 'gruvbox'
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_skip_empty_sections = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " air-line
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
