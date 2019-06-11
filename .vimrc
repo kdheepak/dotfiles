@@ -66,12 +66,9 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'vim-python/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'vim-scripts/python_match.vim'
-Plug 'zchee/deoplete-jedi'
 " Plug 'ambv/black'
 " Rust
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'
-Plug 'sebastianmarkow/deoplete-rust'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'tfnico/vim-gradle'
@@ -91,16 +88,19 @@ Plug 'baabelfish/nvim-nim'
 Plug 'vim-scripts/DrawIt'
 Plug 'gyim/vim-boxdraw'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
 
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'joom/latex-unicoder.vim'
+
+" Or install latest release tag
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 
 " Initialize plugin system
 call plug#end()
@@ -181,8 +181,12 @@ set fileformats=unix,dos,mac
 
 set nobackup
 set nowritebackup
+set cmdheight=1
 " set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 set autowrite     " Automatically :write before running commands
+
+set updatetime=300
+set shortmess+=c
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
@@ -191,8 +195,8 @@ set mouse=a
 
 set nofoldenable    " disable folding
 
-" Always show git gutter
-" set signcolumn=yes
+" Always show git gutter / sign column
+set signcolumn=yes
 
 set inccommand=split
 
@@ -317,33 +321,33 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 set grepprg=rg\ --vimgrep
 
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#show_docstring = 1
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#sources#jedi#show_docstring = 1
 
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
+" if !exists('g:deoplete#omni#input_patterns')
+    " let g:deoplete#omni#input_patterns = {}
+" endif
 
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
-
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " autocmd CompleteDone * pclose " To close preview window of deoplete automagically
 
 " deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" Enable snipMate compatibility feature.
+" let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+" let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
 
 nnoremap Y y$
 
-:command W w
-:command WQ wq
-:command Wq wq
-:command Q q
-:command Qa qa
-:command QA qa
+command! W w
+command! WQ wq
+command! Wq wq
+command! Q q
+command! Qa qa
+command! QA qa
 
 "" Tabs
 nnoremap <Tab> gt
@@ -558,3 +562,119 @@ let g:unicoder_no_map = 1
 "
 " 'Yggdroot/indentLine'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" coc.nvim
+let g:coc_node_path = expand("~/miniconda3/bin/node")
+" :CocInstall coc-dictionary
+" :CocInstall coc-tag
+" :CocInstall coc-emoji
+" :CocInstall coc-omni
+" :CocInstall coc-syntax
+" :CocInstall coc-ultisnips
+" :CocInstall coc-neosnippet
+" :CocInstall coc-browser
+" :CocInstall coc-json
+" :CocInstall coc-rls
+" :CocInstall coc-python
+" :CocInstall coc-highlight
+" :CocInstall coc-git
+" :CocInstall coc-yank
+" :CocInstall coc-lists
+" :CocInstall coc-marketplace
+" :CocInstall coc-vimtex
+" :CocInstall coc-github
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <leader>cla  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <leader>cle  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <leader>clc  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <leader>clo  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <leader>cls  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <leader>ccj  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <leader>cck  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
