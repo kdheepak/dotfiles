@@ -408,6 +408,10 @@ let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
 " air-line
 " let g:airline_powerline_fonts = 1
 
@@ -565,3 +569,11 @@ highlight clear SignColumn
 let g:latex_to_unicode_auto = 1
 let g:latex_to_unicode_tab = 0
 let g:latex_to_unicode_cmd_mapping = ['<C-J>']
+
+" TODO: add shortcut to transform string
+let g:unicoder_cancel_normal = 1
+let g:unicoder_cancel_insert = 1
+let g:unicoder_cancel_visual = 1
+let g:unicoder_no_map = 1
+
+
