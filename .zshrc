@@ -144,5 +144,5 @@ zle -N zle-keymap-select
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# added by travis gem
-[ -f /Users/$USER/.travis/travis.sh ] && source /Users/$USER/.travis/travis.sh
+source ~/.config/.exports
+source ~/.profile
