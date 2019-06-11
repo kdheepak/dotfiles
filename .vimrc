@@ -82,8 +82,6 @@ Plug 'zyedidia/julialint.vim'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'reisub0/hot-reload.vim'
 " assuming your using vim-plug: https://github.com/junegunn/vim-plug
-Plug 'ncm2/ncm2'
-" ncm2 requires nvim-yarp
 Plug 'roxma/nvim-yarp'
 
 Plug 'kdheepak/SearchHighlighting.vim'
@@ -262,10 +260,11 @@ nnoremap <silent> <leader>sh :terminal<CR>
 " toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
 
-" edit vimrc/zshrc and load vimrc bindings
+" edit vimrc/zshrc/tmux and load vimrc bindings
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
+nnoremap <silent> <leader>et :e ~/.tmux.conf<CR>
 
 "" Split
 noremap <leader>h :<C-u>split<CR>
@@ -375,17 +374,6 @@ augroup vimrc-python
       \ formatoptions+=croq softtabstop=4
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
-
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
 
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
@@ -549,13 +537,6 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> <F3> :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <F4> :call LanguageClient_textDocument_definition()<CR>
 
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-
 set virtualedit+=all
 
 set nomodeline
@@ -577,4 +558,3 @@ let g:unicoder_no_map = 1
 "
 " 'Yggdroot/indentLine'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
