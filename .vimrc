@@ -31,6 +31,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
@@ -118,7 +119,7 @@ filetype indent on
 " Note, the above line is ignored in Neovim 0.1.5 above, use this line instead.
 set termguicolors
 
-let mapleader = ' '
+let mapleader = ' ' " Map leader to space
 
 set smarttab
 " tabstop:          Width of tab character
@@ -223,8 +224,12 @@ vnoremap > >gv
 " Disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" turn off search highlight
-nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
+
+" highlight last inserted text
+nnoremap gV `[v`]
 
 " move vertically by visual line
 nnoremap j gj
@@ -234,27 +239,76 @@ nnoremap k gk
 nnoremap J j
 nnoremap K k
 
+" nnoremap <silent> Q gqap
+" xnoremap <silent> Q gq
+" reformat paragraph
+nnoremap <silent> <leader>q vapkJgqap
+vnoremap <silent> <leader>q Jgqap
+
+" turn off search highlight
+nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
+
+nnoremap <leader>a :Autoformat<CR>
+
+" TODO: Searches for word and always replacing
+:nnoremap <leader>s <Esc>* \| :%s///g<Left><Left>
+
 " remap Join lines and help
-" nnoremap <Leader>J J
-" nnoremap <Leader>H K
+" nnoremap <leader>J J
+" nnoremap <leader>H K
 
 nnoremap <silent> <leader>sh :terminal<CR>
-
-
-" move to beginning/end of line
-nnoremap B ^
-nnoremap E $
-
-" highlight last inserted text
-nnoremap gV `[v`]
 
 " toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
 
 " edit vimrc/zshrc and load vimrc bindings
-nnoremap <silent> <Leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
+
+"" Split
+noremap <leader>h :<C-u>split<CR>
+noremap <leader>v :<C-u>vsplit<CR>
+
+"" Git
+noremap <leader>ga :Gwrite<CR>
+noremap <leader>gc :Gcommit<CR>
+noremap <leader>gsh :Gpush<CR>
+noremap <leader>gll :Gpull<CR>
+noremap <leader>gs :Gstatus<CR>
+noremap <leader>gb :Gblame<CR>
+noremap <leader>gd :Gvdiff<CR>
+noremap <leader>gr :Gremove<CR>
+" Open current line on GitHub
+nnoremap <leader>go :.Gbrowse<CR>
+
+" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
+
+" Opens an edit command with the path of the currently edited file filled in
+noremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" Opens a tab edit command with the path of the currently edited file filled
+noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+nnoremap yy V"+y
+vnoremap <leader>y "+y
+noremap <leader>p "+gP<CR>
+
+" Buffers
+nnoremap <silent> <leader>bb :Buffers<CR>
+noremap <leader>bls :ls<CR>
+
+" Buffer nav
+noremap <leader>bp :bp<CR>
+noremap <leader>bn :bn<CR>
+
+" Close buffer
+noremap <leader>bd :bd<CR>
+noremap <leader>bw :bw<CR>
+
+nnoremap <silent> <leader>rg :FZF -m<CR>
 
 " https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
 " Add Find command to vim
@@ -292,36 +346,10 @@ nnoremap Y y$
 :command Qa qa
 :command QA qa
 
-"" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
-
-"" Git
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
-
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
-
-"" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-"" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-"" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-noremap YY "+y<CR>
-noremap <Leader>P "+gP<CR>
 
 noremap X V
 noremap gj G
@@ -334,21 +362,10 @@ if has('macunix')
 endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
-
-"" Buffer nav
-noremap <leader>z :bp<CR>
-noremap <leader>q :bp<CR>
-noremap <leader>x :bn<CR>
-noremap <leader>w :bn<CR>
 
 "" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-
-"" Open current line on GitHub
-nnoremap <Leader>o :.Gbrowse<CR>
 
 " python
 " vim-python
@@ -378,10 +395,6 @@ let g:syntastic_python_checkers=['python', 'flake8']
 let g:polyglot_disabled = ['python']
 let python_highlight_all = 1
 
-
-"" Close buffer
-noremap <leader>c :bd<CR>
-
 augroup omnifuncs
     autocmd!
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -390,12 +403,6 @@ augroup omnifuncs
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
-
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
-
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 " vim-airline
 
@@ -459,8 +466,6 @@ let g:strip_whitespace_confirm=0
 
 " autocmd! BufWritePost * make
 
-nnoremap <Leader>a :Autoformat<CR>
-
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
@@ -488,9 +493,6 @@ let g:neomake_python_flake8_maker = {
 let g:neomake_python_enabled_makers = ['flake8']
 
 nnoremap * *N
-
-" TODO: Searches for word and always replacing
-:nnoremap <Leader>s <Esc>* \| :%s///g<Left><Left>
 
 " Ensure comments don't go to beginning of line by default
 
@@ -528,10 +530,6 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-nnoremap <silent> Q gqap
-xnoremap <silent> Q gq
-nnoremap <silent> <leader>Q vapJgqap
 
 " julia
 let g:default_julia_version = '0.6'
@@ -579,5 +577,4 @@ let g:unicoder_no_map = 1
 "
 " 'Yggdroot/indentLine'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
 
