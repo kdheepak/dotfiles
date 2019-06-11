@@ -4,7 +4,6 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.g
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 export TERM=xterm-256color
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.

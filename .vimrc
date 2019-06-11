@@ -122,6 +122,8 @@ Plug 'neoclide/coc-denite'
 " Plug 'neoclide/coc-marketplace'
 
 Plug 'Shougo/denite.nvim'
+Plug 'chemzqm/denite-extra'
+Plug 'chemzqm/denite-git'
 
 " Initialize plugin system
 call plug#end()
@@ -690,4 +692,5 @@ nnoremap <silent> <leader>ccj  :<C-u>CocNext<CR>
 nnoremap <silent> <leader>cck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
+
 
