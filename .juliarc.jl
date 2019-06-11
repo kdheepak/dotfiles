@@ -1,4 +1,4 @@
-using OhMyREPL
+# using OhMyREPL
 
 USER = ENV["USER"]
 

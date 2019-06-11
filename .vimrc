@@ -101,6 +101,24 @@ Plug 'joom/latex-unicoder.vim'
 
 " Or install latest release tag
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc-json'
+Plug 'neoclide/coc-rls'
+Plug 'neoclide/coc-python'
+Plug 'neoclide/coc-highlight'
+Plug 'neoclide/coc-git'
+Plug 'neoclide/coc-yank'
+Plug 'neoclide/coc-lists'
+Plug 'neoclide/coc-vimtex'
+" Plug 'neoclide/coc-github'
+" Plug 'neoclide/coc-dictionary'
+" Plug 'neoclide/coc-tag'
+" Plug 'neoclide/coc-emoji'
+" Plug 'neoclide/coc-omni'
+" Plug 'neoclide/coc-syntax'
+" Plug 'neoclide/coc-ultisnips'
+" Plug 'neoclide/coc-neosnippet'
+" Plug 'neoclide/coc-browser'
+" Plug 'neoclide/coc-marketplace'
 
 " Initialize plugin system
 call plug#end()
