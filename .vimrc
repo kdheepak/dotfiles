@@ -563,4 +563,5 @@ let g:gitgutter_override_sign_column_highlight = 0
 highlight clear SignColumn
 
 let g:latex_to_unicode_auto = 1
+let g:latex_to_unicode_tab = 0
 let g:latex_to_unicode_cmd_mapping = ['<C-J>']
