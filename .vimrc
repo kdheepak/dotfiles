@@ -109,6 +109,7 @@ Plug 'neoclide/coc-git'
 Plug 'neoclide/coc-yank'
 Plug 'neoclide/coc-lists'
 Plug 'neoclide/coc-vimtex'
+Plug 'neoclide/coc-denite'
 " Plug 'neoclide/coc-github'
 " Plug 'neoclide/coc-dictionary'
 " Plug 'neoclide/coc-tag'
@@ -119,6 +120,8 @@ Plug 'neoclide/coc-vimtex'
 " Plug 'neoclide/coc-neosnippet'
 " Plug 'neoclide/coc-browser'
 " Plug 'neoclide/coc-marketplace'
+
+Plug 'Shougo/denite.nvim'
 
 " Initialize plugin system
 call plug#end()
