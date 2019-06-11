@@ -387,15 +387,6 @@ let g:syntastic_python_checkers=['python', 'flake8']
 let g:polyglot_disabled = ['python']
 let python_highlight_all = 1
 
-augroup omnifuncs
-    autocmd!
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    " autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
-
 " vim-airline
 
 " let g:airline_theme = 'gruvbox'
@@ -678,3 +669,4 @@ nnoremap <silent> <leader>ccj  :<C-u>CocNext<CR>
 nnoremap <silent> <leader>cck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
+

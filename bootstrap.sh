@@ -10,6 +10,7 @@ rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
 rm ~/.tmux.conf; ln -s $(pwd)/.tmux.conf ~/.tmux.conf
 rm ~/.bash_profile; ln -s $(pwd)/.bash_profile ~/.bash_profile
+rm ~/.zshenv; ln -s $(pwd)/.zshrc ~/.zshenv
 rm ~/.zshrc; ln -s $(pwd)/.zshrc ~/.zshrc
 rm ~/.condarc; ln -s $(pwd)/.condarc ~/.condarc
 rm ~/.config/yapf/style; ln -s $(pwd)/.yapf-style ~/.config/yapf/style
