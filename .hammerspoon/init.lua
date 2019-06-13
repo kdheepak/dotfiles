@@ -1,6 +1,27 @@
-hyper = {"ctrl", "alt", "cmd", "shift"}
-hypershift = {"ctrl", "alt", "cmd"}
+ctrlaltcmdshift = {"ctrl", "alt", "cmd", "shift"}
+ctrlaltcmd = {"ctrl", "alt", "cmd"}
 cmdctrlshift = {"cmd", "ctrl", "shift"}
+
+-- A global variable for the Hyper Mode
+hyper = hs.hotkey.modal.new({}, 'F17')
+
+-- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
+function enterHyperMode()
+  hyper.triggered = false
+  hyper:enter()
+end
+
+-- Leave Hyper Mode when F18 (Hyper/Capslock) is pressed,
+-- send ESCAPE if no other keys are pressed.
+function exitHyperMode()
+  hyper:exit()
+  if not hyper.triggered then
+    hs.eventtap.keyStroke({}, 'ESCAPE')
+  end
+end
+
+-- Bind the Hyper key
+f18 = hs.hotkey.bind({}, 'F18', enterHyperMode, exitHyperMode)
 
 hs.grid.setGrid('12x12') -- allows us to place on quarters, thirds and halves
 hs.grid.MARGINX = 0
@@ -15,10 +36,12 @@ hs.loadSpoon("SpoonInstall")
 spoon.SpoonInstall:andUse("ReloadConfiguration",
                {
                     config = { watch_paths = { os.getenv("HOME") .. "/GitRepos/dotfiles/.hammerspoon" } },
-                    hotkeys = { reloadConfiguration = { hyper, "r" } },
                     start = true,
                }
 )
+hyper:bind({}, 'r', function()
+    hs.reload()
+end)
 
 mouseCircle = nil
 mouseCircleTimer = nil
@@ -71,9 +94,10 @@ function move_window(direction)
         win:setFrame(f, 0.0)
     end
 end
-hs.hotkey.bind(hyper, "h", move_window("left"))
-hs.hotkey.bind(hyper, "l", move_window("right"))
-hs.hotkey.bind(hyper, "k", move_window("up"))
-hs.hotkey.bind(hyper, "j", move_window("down"))
+
+hyper:bind({}, "h", move_window("left"))
+hyper:bind({}, "l", move_window("right"))
+hyper:bind({}, "k", move_window("up"))
+hyper:bind({}, "j", move_window("down"))
 
 hs.alert.show("Config loaded!")

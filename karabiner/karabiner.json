@@ -32,11 +32,6 @@
                                         "key_code": "f18"
                                     }
                                 ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "escape"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
