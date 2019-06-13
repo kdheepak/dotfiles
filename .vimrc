@@ -418,7 +418,7 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
-let g:airline_skip_empty_sections = 1
+" let g:airline_skip_empty_sections = 1 " causes json to crash
 let g:airline_section_c = '%t'
 
 let g:airline#extensions#tabline#left_sep = ''
@@ -734,4 +734,6 @@ endfunction
 
 " jsonc comment syntax highlighting
 autocmd FileType json syntax match Comment +\/\/.\+$+
+" disable indent line plugin for json
+autocmd Filetype json :IndentLinesDisable
 
