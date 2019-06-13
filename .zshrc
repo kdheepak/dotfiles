@@ -11,7 +11,7 @@ source $ZPLUG_HOME/init.zsh
 POWERLEVEL9K_MODE='awesome-fontconfig'
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs anaconda)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode command_execution_time background_jobs)
 POWERLEVEL9K_TIME_BACKGROUND='none'
 # gruvbox colors
 GB_BG0="230"    # fbf1c7
@@ -105,21 +105,6 @@ zplug load
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-########################################################################
-# vi-mode (based on oh-my-zsh plugin)
-########################################################################
-
-prompt_vi_mode() {
-  case ${KEYMAP} in
-    vicmd)
-      "$1_prompt_segment" "$0_NORMAL" "$2" "$DEFAULT_COLOR" "default" "$POWERLEVEL9K_VI_COMMAND_MODE_STRING"
-    ;;
-    main|viins|*)
-    ;;
-  esac
-}
-
 
 function zle-keymap-select zle-line-init
 {

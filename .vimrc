@@ -323,8 +323,8 @@ vnoremap <leader>y "+y
 noremap <leader>p "+gP<CR>
 
 " Buffers
-nnoremap <silent> <leader>bb :Buffers<CR>
-noremap <leader>bls :ls<CR>
+nnoremap <silent> <leader>bb :Denite buffer<CR>
+nnoremap <silent> <leader>rf :Denite files/rec -start-filter<CR>
 
 " Buffer nav
 noremap <leader>bp :bp<CR>
@@ -706,9 +706,11 @@ call denite#custom#option('default', {
       \ 'prompt': '❯'
       \ })
 
+call denite#custom#var('file/rec', 'command',
+\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts',
-      \ ['--hidden', '--vimgrep', '--smart-case'])
+call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
@@ -726,21 +728,10 @@ function! s:denite_my_settings() abort
   \ denite#do_map('quit')
   nnoremap <silent><buffer><expr> i
   \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
 endfunction
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+" jsonc comment syntax highlighting
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
