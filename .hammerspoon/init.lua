@@ -4,6 +4,7 @@ cmdctrlshift = {"cmd", "ctrl", "shift"}
 
 -- A global variable for the Hyper Mode
 hyper = hs.hotkey.modal.new({}, 'F17')
+hyperCounter = 0
 
 -- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
 function enterHyperMode()
@@ -17,16 +18,181 @@ function exitHyperMode()
   hyper:exit()
   if not hyper.triggered then
     hs.eventtap.keyStroke({}, 'ESCAPE')
+    -- double tap hyper to find mouse cursor
+    hyperCounter = hyperCounter + 1
+    hs.timer.doAfter(0.050, function()
+        if hyperCounter >= 2 then
+            mouseHighlight()
+            hyperCounter = 0
+        else
+            hyperCounter = 0
+        end
+    end)
   end
 end
 
 -- Bind the Hyper key
 f18 = hs.hotkey.bind({}, 'F18', enterHyperMode, exitHyperMode)
 
-hs.grid.setGrid('12x12') -- allows us to place on quarters, thirds and halves
+-------------------------------------------------------------------------------------
+
+hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 hs.window.animationDuration = 0 -- disable animations
+
+hyper:bind({}, "3", function () -- hyper #
+    local windows = hs.window.allWindows()
+    for i in pairs(windows) do
+        local window = windows[i]
+        hs.grid.snap(window)
+    end
+end)
+
+hyper:bind({}, "j", function () hs.grid.pushWindowDown(hs.window.focusedWindow()) end)
+hyper:bind({}, "k", function () hs.grid.pushWindowUp(hs.window.focusedWindow()) end)
+hyper:bind({}, "h", function () hs.grid.pushWindowLeft(hs.window.focusedWindow()) end)
+hyper:bind({}, "l", function () hs.grid.pushWindowRight(hs.window.focusedWindow()) end)
+
+hyper:bind({}, "s", function () hs.grid.maximizeWindow(hs.window.focusedWindow()) end)
+
+hyper:bind({}, "a", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "d", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 2)
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "w", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h / 2
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "x", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y + (max.h / 2)
+    f.w = max.w
+    f.h = max.h / 2
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "q", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h / 2
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "z", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y + (max.h / 2)
+    f.w = max.w / 2
+    f.h = max.h / 2
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "e", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 2)
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h / 2
+
+    win:setFrame(f)
+end)
+
+hyper:bind({}, "c", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 2)
+    f.y = max.y + (max.h / 2)
+    f.w = max.w / 2
+    f.h = max.h / 2
+
+    win:setFrame(f)
+end)
+
+hyper:bind({"shift"}, "h", function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
+hyper:bind({"shift"}, "l", function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
+hyper:bind({"shift"}, "j", function() hs.grid.resizeWindowTaller(hs.window.focusedWindow()) end)
+hyper:bind({"shift"}, "k", function() hs.grid.resizeWindowShorter(hs.window.focusedWindow()) end)
+
+hyper:bind({}, "left", function()
+  -- move the focused window one display to the left
+  local win = hs.window.focusedWindow()
+  win:moveOneScreenWest()
+end)
+
+hyper:bind({}, "right", function()
+  -- move the focused window one display to the right
+  local win = hs.window.focusedWindow()
+  win:moveOneScreenEast()
+end)
+
+hyper:bind({}, "left", function()
+  -- move the focused window one display to the left
+  local win = hs.window.focusedWindow()
+  win:moveOneScreenWest()
+end)
+
+
+-------------------------------------------------------------------------------------
 
 -- Reload configuration
 -- Download and install http://www.hammerspoon.org/Spoons/SpoonInstall.html
@@ -43,13 +209,17 @@ hyper:bind({}, 'r', function()
     hs.reload()
 end)
 
+-------------------------------------------------------------------------------------
+
 mouseCircle = nil
 mouseCircleTimer = nil
 
 function mouseHighlight()
+    size = 150
     -- Delete an existing highlight if it exists
     if mouseCircle then
         mouseCircle:delete()
+        mouseCircle2:delete()
         if mouseCircleTimer then
             mouseCircleTimer:stop()
         end
@@ -57,47 +227,21 @@ function mouseHighlight()
     -- Get the current co-ordinates of the mouse pointer
     mousepoint = hs.mouse.getAbsolutePosition()
     -- Prepare a big red circle around the mouse pointer
-    mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-40, mousepoint.y-40, 80, 80))
+    mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-(size/2), mousepoint.y-(size/2), size, size))
+    mouseCircle2 = hs.drawing.circle(hs.geometry.rect(mousepoint.x-(size/4), mousepoint.y-(size/4), size/2, size/2))
     mouseCircle:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
+    mouseCircle2:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
     mouseCircle:setFill(false)
-    mouseCircle:setStrokeWidth(5)
+    mouseCircle2:setFill(false)
+    mouseCircle:setStrokeWidth(3)
+    mouseCircle2:setStrokeWidth(5)
     mouseCircle:show()
+    mouseCircle2:show()
 
     -- Set a timer to delete the circle after 3 seconds
-    mouseCircleTimer = hs.timer.doAfter(3, function() mouseCircle:delete() end)
-end
-hs.hotkey.bind({"cmd","alt","shift"}, "D", mouseHighlight)
-
-function move_window(direction)
-    return function()
-        local win      = hs.window.focusedWindow()
-        local app      = win:application()
-        local app_name = app:name()
-        local f        = win:frame()
-        local screen   = win:screen()
-        local max      = screen:frame()
-        if direction == "left" then
-            f.x = max.x + 6
-            f.w = (max.w / 2) - 9
-        elseif direction == "right" then
-            f.x = (max.x + (max.w / 2)) + 3
-            f.w = (max.w / 2) - 9
-        elseif direction == "up" then
-            f.x = max.x + 6
-            f.w = max.w - 12
-        elseif direction == "down" then
-            f.x = (max.x + (max.w / 8)) + 6
-            f.w = (max.w * 3 / 4) - 12
-        end
-        f.y = max.y + 6
-        f.h = max.h - 12
-        win:setFrame(f, 0.0)
-    end
+    mouseCircleTimer = hs.timer.doAfter(1.5, function() mouseCircle:delete() mouseCircle2:delete() end)
 end
 
-hyper:bind({}, "h", move_window("left"))
-hyper:bind({}, "l", move_window("right"))
-hyper:bind({}, "k", move_window("up"))
-hyper:bind({}, "j", move_window("down"))
+-------------------------------------------------------------------------------------
 
 hs.alert.show("Config loaded!")

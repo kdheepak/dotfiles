@@ -16,7 +16,7 @@
                 },
                 "rules": [
                     {
-                        "description": "CapsLock to Hyper/Escape",
+                        "description": "CapsLock to Hyper",
                         "manipulators": [
                             {
                                 "from": {
