@@ -49,11 +49,6 @@ hyper:bind({}, "3", function () -- hyper #
     end
 end)
 
-hyper:bind({}, "j", function () hs.grid.pushWindowDown(hs.window.focusedWindow()) end)
-hyper:bind({}, "k", function () hs.grid.pushWindowUp(hs.window.focusedWindow()) end)
-hyper:bind({}, "h", function () hs.grid.pushWindowLeft(hs.window.focusedWindow()) end)
-hyper:bind({}, "l", function () hs.grid.pushWindowRight(hs.window.focusedWindow()) end)
-
 hyper:bind({}, "s", function () hs.grid.maximizeWindow(hs.window.focusedWindow()) end)
 
 hyper:bind({}, "a", function ()
@@ -168,10 +163,26 @@ hyper:bind({}, "c", function ()
     win:setFrame(f)
 end)
 
-hyper:bind({"shift"}, "h", function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
-hyper:bind({"shift"}, "l", function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
-hyper:bind({"shift"}, "j", function() hs.grid.resizeWindowTaller(hs.window.focusedWindow()) end)
-hyper:bind({"shift"}, "k", function() hs.grid.resizeWindowShorter(hs.window.focusedWindow()) end)
+-- make mouse always in the center of focused window
+hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
+    local f = window:screen():frame()
+    hs.mouse.setAbsolutePosition({x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))})
+end)
+
+hyper:bind({"shift"}, "[", function () hs.eventtap.keyStroke({"ctrl"}, "down") end)
+hyper:bind({"shift"}, "]", function () hs.eventtap.keyStroke({"ctrl"}, "up") end)
+hyper:bind({}, "[", function () hs.eventtap.keyStroke({"ctrl"}, "left") end)
+hyper:bind({}, "]", function () hs.eventtap.keyStroke({"ctrl"}, "right") end)
+
+hyper:bind({"shift"}, "j", function () hs.grid.pushWindowDown(hs.window.focusedWindow()) end)
+hyper:bind({"shift"}, "k", function () hs.grid.pushWindowUp(hs.window.focusedWindow()) end)
+hyper:bind({"shift"}, "h", function () hs.grid.pushWindowLeft(hs.window.focusedWindow()) end)
+hyper:bind({"shift"}, "l", function () hs.grid.pushWindowRight(hs.window.focusedWindow()) end)
+
+hyper:bind({"ctrl", "shift"}, "h", function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
+hyper:bind({"ctrl", "shift"}, "l", function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
+hyper:bind({"ctrl", "shift"}, "j", function() hs.grid.resizeWindowTaller(hs.window.focusedWindow()) end)
+hyper:bind({"ctrl", "shift"}, "k", function() hs.grid.resizeWindowShorter(hs.window.focusedWindow()) end)
 
 hyper:bind({}, "left", function()
   -- move the focused window one display to the left
