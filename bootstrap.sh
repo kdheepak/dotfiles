@@ -27,3 +27,4 @@ rm ~/.config/kak/kak-lsp.toml; ln -s $(pwd)/kak-lsp.toml ~/.config/kak/kak-lsp.t
 rm ~/.julia/config/startup.jl; ln -s $(pwd)/.juliarc.jl ~/.julia/config/startup.jl
 rm ~/.hammerspoon/init.lua; ln -s $(pwd)/.hammerspoon/init.lua ~/.hammerspoon/init.lua
 rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
+rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
