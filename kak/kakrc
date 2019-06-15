@@ -1,4 +1,4 @@
-colorscheme gruvbox
+colorscheme gruvbox-light
 
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
 
