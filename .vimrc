@@ -286,6 +286,8 @@ nnoremap <silent> <leader>sh :terminal<CR>
 
 " toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
+nnoremap U <C-R>
+
 
 " edit vimrc/zshrc/tmux and load vimrc bindings
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>

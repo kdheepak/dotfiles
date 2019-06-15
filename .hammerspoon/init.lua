@@ -165,7 +165,7 @@ end)
 
 -- make mouse always in the center of focused window
 hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
-    local f = window:screen():frame()
+    local f = window:frame()
     hs.mouse.setAbsolutePosition({x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))})
 end)
 
@@ -252,6 +252,16 @@ function mouseHighlight()
     -- Set a timer to delete the circle after 3 seconds
     mouseCircleTimer = hs.timer.doAfter(1.5, function() mouseCircle:delete() mouseCircle2:delete() end)
 end
+
+-------------------------------------------------------------------------------------
+
+hs.window.switcher.ui.showThumbnails = false
+hs.window.switcher.ui.showSelectedThumbnail = true
+hs.window.switcher.ui.textSize = 10
+hs.window.switcher.ui.showTitles = false
+
+hs.hotkey.bind('alt', '`', hs.window.switcher.nextWindow, nil, hs.window.switcher.nextWindow) -- Move focus to next window
+hs.hotkey.bind('alt-shift', '`', hs.window.switcher.previousWindow, nil, hs.window.switcher.previousWindow) -- Move focus to previous window
 
 -------------------------------------------------------------------------------------
 
