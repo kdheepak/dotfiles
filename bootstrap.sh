@@ -22,9 +22,8 @@ rm ~/.config/.fzf.zsh; ln -s $(pwd)/.fzf.zsh ~/.config/.fzf.zsh
 rm ~/.gdbinit; ln -s $(pwd)/.gdbinit ~/.gdbinit
 rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
 rm ~/.pylintrc; ln -s $(pwd)/.pylintrc ~/.pylintrc
-rm ~/.config/kak/kakrc; ln -s $(pwd)/kakrc ~/.config/kak/kakrc
-rm ~/.config/kak/kak-lsp.toml; ln -s $(pwd)/kak-lsp.toml ~/.config/kak/kak-lsp.toml
 rm ~/.julia/config/startup.jl; ln -s $(pwd)/.juliarc.jl ~/.julia/config/startup.jl
 rm ~/.hammerspoon/init.lua; ln -s $(pwd)/.hammerspoon/init.lua ~/.hammerspoon/init.lua
 rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
+rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak

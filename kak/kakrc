@@ -1,5 +1,7 @@
 colorscheme gruvbox
 
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+
 plug "kdheepak/kak-sensible"
 plug "alexherbo2/volatile-highlighting.kak"
 plug "occivink/kakoune-phantom-selection"
