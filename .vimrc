@@ -125,6 +125,8 @@ Plug 'Shougo/denite.nvim'
 Plug 'chemzqm/denite-extra'
 Plug 'chemzqm/denite-git'
 Plug 'machakann/vim-highlightedyank'
+Plug 'kassio/neoterm'
+Plug 'Vigemus/nvimux'
 
 " Initialize plugin system
 call plug#end()
