@@ -10,6 +10,9 @@ evaluate-commands %sh{
     aqua="rgb:689d6a"
     orange="rgb:d65d0e"
 
+    aqua2="8ec07c"
+
+    bg0_s="rgb:f2e5bc"
     bg="rgb:fbf1c7"
     bg1="rgb:ebdbb2"
     bg2="rgb:d5c4a1"
@@ -49,12 +52,12 @@ evaluate-commands %sh{
         face global list      ${fg}
 
         face global Default            ${fg},${bg}
-        face global PrimarySelection   ${fg},${blue}+fg
-        face global SecondarySelection ${bg},${blue}+fg
-        face global PrimaryCursor      ${bg},${fg}+fg
-        face global SecondaryCursor    ${bg},${bg4}+fg
-        face global PrimaryCursorEol   ${bg},${fg4}+fg
-        face global SecondaryCursorEol ${bg},${bg2}+fg
+        face global PrimarySelection   ${bg},${bg4}+fg
+        face global SecondarySelection ${bg},${fg}+fg
+        face global PrimaryCursor      ${bg},${bg4}+fg
+        face global SecondaryCursor    ${bg},${fg}+fg
+        face global PrimaryCursorEol   ${bg},${bg4}+fg
+        face global SecondaryCursorEol ${bg},${fg}+fg
         face global LineNumbers        ${bg4}
         face global LineNumberCursor   ${yellow},${bg1}
         face global LineNumbersWrapped ${bg1}
@@ -71,6 +74,6 @@ evaluate-commands %sh{
         face global Prompt             ${yellow}
         face global MatchingChar       ${fg},${bg3}+b
         face global BufferPadding      ${bg2},${bg}
-        face global Whitespace         ${bg2}+f
+        face global Whitespace         ${bg0_s}
     "
 }
