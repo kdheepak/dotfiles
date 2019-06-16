@@ -166,7 +166,9 @@ end)
 -- make mouse always in the center of focused window
 hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
     local f = window:frame()
-    hs.mouse.setAbsolutePosition({x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))})
+    point = {x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))}
+    hs.mouse.setAbsolutePosition(point)
+    -- hs.eventtap.leftClick(point)
 end)
 
 hyper:bind({"shift"}, "[", function () hs.eventtap.keyStroke({"ctrl"}, "down") end)
