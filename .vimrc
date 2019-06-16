@@ -124,6 +124,7 @@ Plug 'neoclide/coc-denite'
 Plug 'Shougo/denite.nvim'
 Plug 'chemzqm/denite-extra'
 Plug 'chemzqm/denite-git'
+Plug 'machakann/vim-highlightedyank'
 
 " Initialize plugin system
 call plug#end()
@@ -286,6 +287,7 @@ nnoremap <silent> <leader>sh :terminal<CR>
 
 " toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
+" redo
 nnoremap U <C-R>
 
 
@@ -368,9 +370,6 @@ set grepprg=rg\ --vimgrep
 nnoremap Y y$
 
 command! W w
-command! WQ wq
-command! Wq wq
-command! Q q
 command! Qa qa
 command! QA qa
 
@@ -738,4 +737,18 @@ endfunction
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " disable indent line plugin for json
 autocmd Filetype json :IndentLinesDisable
+
+if has('nvim')
+  " pip install neovim-remote
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <A-[> <Esc>
+  tnoremap <c-h> <c-\><c-n><c-w>h
+  tnoremap <c-j> <c-\><c-n><c-w>j
+  tnoremap <c-k> <c-\><c-n><c-w>k
+  tnoremap <c-l> <c-\><c-n><c-w>l
+  tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
+endif
+
+hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
 
