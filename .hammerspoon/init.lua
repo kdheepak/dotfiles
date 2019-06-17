@@ -3,7 +3,7 @@ ctrlaltcmd = {"ctrl", "alt", "cmd"}
 cmdctrlshift = {"cmd", "ctrl", "shift"}
 
 -- A global variable for the Hyper Mode
-hyper = hs.hotkey.modal.new({}, 'F17')
+hyper = hs.hotkey.modal.new({}, "F17")
 hyperCounter = 0
 
 -- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
@@ -17,7 +17,7 @@ end
 function exitHyperMode()
   hyper:exit()
   if not hyper.triggered then
-    hs.eventtap.keyStroke({}, 'ESCAPE')
+    hs.eventtap.keyStroke({}, "ESCAPE")
     -- double tap hyper to find mouse cursor
     hyperCounter = hyperCounter + 1
     hs.timer.doAfter(0.050, function()
@@ -32,12 +32,12 @@ function exitHyperMode()
 end
 
 -- Bind the Hyper key
-f18 = hs.hotkey.bind({}, 'F18', enterHyperMode, exitHyperMode)
+f18 = hs.hotkey.bind({}, "F18", enterHyperMode, exitHyperMode)
 
 -------------------------------------------------------------------------------------
 
-hs.grid.setGrid('12x12')
-hs.grid.MARGINX = 0
+hs.grid.setGrid("12x12")
+hs.grid.MARGINX = 10
 hs.grid.MARGINY = 0
 hs.window.animationDuration = 0 -- disable animations
 
@@ -47,43 +47,59 @@ hyper:bind({}, "3", function () -- hyper #
         local window = windows[i]
         hs.grid.snap(window)
     end
+    hyper.triggered = true
 end)
 
-hyper:bind({}, "s", function () hs.grid.maximizeWindow(hs.window.focusedWindow()) end)
+hyper:bind({}, "s", function ()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:fullFrame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h
+
+    win:setFrame(f)
+    hyper.triggered = true
+end)
 
 hyper:bind({}, "a", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x
     f.y = max.y
-    f.w = max.w / 2
+    f.w = (max.w / 2)
     f.h = max.h
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "d", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y
-    f.w = max.w / 2
+    f.w = (max.w / 2)
     f.h = max.h
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "w", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x
     f.y = max.y
@@ -91,13 +107,14 @@ hyper:bind({}, "w", function ()
     f.h = max.h / 2
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "x", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x
     f.y = max.y + (max.h / 2)
@@ -105,13 +122,14 @@ hyper:bind({}, "x", function ()
     f.h = max.h / 2
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "q", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x
     f.y = max.y
@@ -119,13 +137,14 @@ hyper:bind({}, "q", function ()
     f.h = max.h / 2
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "z", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x
     f.y = max.y + (max.h / 2)
@@ -133,13 +152,14 @@ hyper:bind({}, "z", function ()
     f.h = max.h / 2
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "e", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y
@@ -147,13 +167,14 @@ hyper:bind({}, "e", function ()
     f.h = max.h / 2
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "c", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
+    local max = screen:fullFrame()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y + (max.h / 2)
@@ -161,49 +182,137 @@ hyper:bind({}, "c", function ()
     f.h = max.h / 2
 
     win:setFrame(f)
+    hyper.triggered = true
 end)
 
--- make mouse always in the center of focused window
-hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
-    local f = window:frame()
-    point = {x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))}
-    hs.mouse.setAbsolutePosition(point)
-    -- hs.eventtap.leftClick(point)
+hyper:bind({"shift"}, "[", function ()
+    hs.eventtap.keyStroke({"ctrl"}, "down")
+    hyper.triggered = true
+end)
+hyper:bind({"shift"}, "]", function ()
+    hs.eventtap.keyStroke({"ctrl"}, "up")
+    hyper.triggered = true
+end)
+hyper:bind({}, "[", function ()
+    hs.eventtap.keyStroke({"ctrl"}, "left")
+    hyper.triggered = true
+end)
+hyper:bind({}, "]", function ()
+    hs.eventtap.keyStroke({"ctrl"}, "right")
+    hyper.triggered = true
 end)
 
-hyper:bind({"shift"}, "[", function () hs.eventtap.keyStroke({"ctrl"}, "down") end)
-hyper:bind({"shift"}, "]", function () hs.eventtap.keyStroke({"ctrl"}, "up") end)
-hyper:bind({}, "[", function () hs.eventtap.keyStroke({"ctrl"}, "left") end)
-hyper:bind({}, "]", function () hs.eventtap.keyStroke({"ctrl"}, "right") end)
+hyper:bind({"shift"}, "j", function ()
+    hs.grid.pushWindowDown(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
+hyper:bind({"shift"}, "k", function ()
+    hs.grid.pushWindowUp(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
+hyper:bind({"shift"}, "h", function ()
+    hs.grid.pushWindowLeft(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
+hyper:bind({"shift"}, "l", function ()
+    hs.grid.pushWindowRight(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
 
-hyper:bind({"shift"}, "j", function () hs.grid.pushWindowDown(hs.window.focusedWindow()) end)
-hyper:bind({"shift"}, "k", function () hs.grid.pushWindowUp(hs.window.focusedWindow()) end)
-hyper:bind({"shift"}, "h", function () hs.grid.pushWindowLeft(hs.window.focusedWindow()) end)
-hyper:bind({"shift"}, "l", function () hs.grid.pushWindowRight(hs.window.focusedWindow()) end)
-
-hyper:bind({"ctrl", "shift"}, "h", function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
-hyper:bind({"ctrl", "shift"}, "l", function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
-hyper:bind({"ctrl", "shift"}, "j", function() hs.grid.resizeWindowTaller(hs.window.focusedWindow()) end)
-hyper:bind({"ctrl", "shift"}, "k", function() hs.grid.resizeWindowShorter(hs.window.focusedWindow()) end)
+hyper:bind({"ctrl", "shift"}, "h", function()
+    hs.grid.resizeWindowThinner(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
+hyper:bind({"ctrl", "shift"}, "l", function()
+    hs.grid.resizeWindowWider(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
+hyper:bind({"ctrl", "shift"}, "j", function()
+    hs.grid.resizeWindowTaller(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
+hyper:bind({"ctrl", "shift"}, "k", function()
+    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
+    hyper.triggered = true
+end)
 
 hyper:bind({}, "left", function()
-  -- move the focused window one display to the left
-  local win = hs.window.focusedWindow()
-  win:moveOneScreenWest()
+    -- move the focused window one display to the left
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenWest()
+    hyper.triggered = true
 end)
 
 hyper:bind({}, "right", function()
-  -- move the focused window one display to the right
-  local win = hs.window.focusedWindow()
-  win:moveOneScreenEast()
+    -- move the focused window one display to the right
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenEast()
+    hyper.triggered = true
 end)
 
-hyper:bind({}, "left", function()
-  -- move the focused window one display to the left
-  local win = hs.window.focusedWindow()
-  win:moveOneScreenWest()
+hyper:bind({}, "up", function()
+    local win = hs.window.focusedWindow()
+    if win == nil then
+        return
+    end
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h
+    win:setFrame(f)
+    hyper.triggered = true
 end)
 
+-------------------------------------------------------------------------------------
+
+-- focus left
+hyper:bind({}, "h", function()
+    local screen = hs.screen.mainScreen()
+    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
+    -- local win = hs.window.focusedWindow()
+    if win == nil then
+        return
+    end
+    win:focusWindowWest(nil, false, true)
+    hyper.triggered = true
+end)
+
+-- focus right
+hyper:bind({}, "l", function()
+    local screen = hs.screen.mainScreen()
+    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
+    if win == nil then
+        return
+    end
+    win:focusWindowEast(nil, false, true)
+    hyper.triggered = true
+end)
+
+-- focus up
+hyper:bind({}, "k", function()
+    local screen = hs.screen.mainScreen()
+    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
+    if win == nil then
+        return
+    end
+    win:focusWindowNorth(nil, false, true)
+    hyper.triggered = true
+end)
+
+-- focus down
+hyper:bind({}, "j", function()
+    local screen = hs.screen.mainScreen()
+    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
+    if win == nil then
+        return
+    end
+    win:focusWindowSouth(nil, false, true)
+    hyper.triggered = true
+end)
 
 -------------------------------------------------------------------------------------
 
@@ -218,8 +327,9 @@ spoon.SpoonInstall:andUse("ReloadConfiguration",
                     start = true,
                }
 )
-hyper:bind({}, 'r', function()
+hyper:bind({}, "r", function()
     hs.reload()
+    hyper.triggered = true
 end)
 
 -------------------------------------------------------------------------------------
@@ -262,9 +372,47 @@ hs.window.switcher.ui.showSelectedThumbnail = true
 hs.window.switcher.ui.textSize = 10
 hs.window.switcher.ui.showTitles = false
 
-hs.hotkey.bind('alt', '`', hs.window.switcher.nextWindow, nil, hs.window.switcher.nextWindow) -- Move focus to next window
-hs.hotkey.bind('alt-shift', '`', hs.window.switcher.previousWindow, nil, hs.window.switcher.previousWindow) -- Move focus to previous window
+function switcher_next()
+    local win = hs.window.focusedWindow()
+    local screen = win:screen()
+    filter = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
+    switcher = hs.window.switcher.new(filter)
+    switcher:next()
+end
+function switcher_previous()
+    local win = hs.window.focusedWindow()
+    local screen = win:screen()
+    filter = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
+    switcher = hs.window.switcher.new(filter)
+    switcher:previous()
+end
+hs.hotkey.bind("alt", "`", switcher_next, nil, switcher_next) -- Move focus to next window in the same screen
+hs.hotkey.bind("alt-shift", "`", switcher_previous, nil, switcher_previous) -- Move focus to previous window in the same screen
+
+-------------------------------------------------------------------------------------
+
+function tile_windows(screen)
+    local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()}):getWindows()
+    local max = screen:frame()
+    local rect = hs.geometry(max.x, max.y, max.w, max.h)
+    hs.window.tiling.tileWindows(wins, rect)
+end
+
+-------------------------------------------------------------------------------------
+
+hyper:bind({}, "t", function()
+    local screen = hs.screen.mainScreen()
+    tile_windows(screen)
+    hyper.triggered = true
+end)
+
+-- allwindows = hs.window.filter.new(nil)
+-- allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() end)
+-- allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
+-- allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
+-- allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
 
 -------------------------------------------------------------------------------------
 
 hs.alert.show("Config loaded!")
+

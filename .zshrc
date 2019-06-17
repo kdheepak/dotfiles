@@ -129,5 +129,9 @@ zle -N zle-keymap-select
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+disable r
+
 source ~/.config/.exports
 source ~/.profile
+
+clear
