@@ -147,8 +147,17 @@ alias tns='tmux new-session -s'
 #
 # }
 
-alias vi='nvim'
-alias vim='nvim'
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    alias vi=nvr
+    alias vim=nvr
+    alias nvim=nvr
+else
+    alias vi=nvim
+    alias vim=nvim
+fi
+
+alias :q="exit"
+alias :e="vim"
 
 alias julia-1.1="$HOME/Applications/Julia-1.1.app/Contents/Resources/julia/bin/julia"
 alias julia-1.0.3="$HOME/Applications/Julia-1.0.3.app/Contents/Resources/julia/bin/julia"

@@ -1,7 +1,12 @@
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+else
+    export VISUAL="nvim"
+fi
+
 # Make neovim the default editor.
-export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 export TERM=xterm-256color

@@ -25,7 +25,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'ap/vim-css-color'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-tbone'
@@ -42,7 +42,7 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 " Plug 'neomake/neomake'
-Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
+" Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
 " Plug 'thaerkh/vim-indentguides'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
@@ -126,7 +126,6 @@ Plug 'chemzqm/denite-extra'
 Plug 'chemzqm/denite-git'
 Plug 'machakann/vim-highlightedyank'
 Plug 'kassio/neoterm'
-Plug 'Vigemus/nvimux'
 
 " Initialize plugin system
 call plug#end()
@@ -267,85 +266,48 @@ nnoremap k gk
 nnoremap J j
 nnoremap K k
 
+" Denite
+
+" reset 50% winheight on window resize
+augroup deniteresize
+  autocmd!
+  autocmd VimResized,VimEnter * call denite#custom#option('default',
+        \'winheight', winheight(0) / 2)
+augroup end
+
+call denite#custom#option('default', {
+      \ 'prompt': '❯'
+      \ })
+
+call denite#custom#var('files/rec', 'command',
+\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
+
 " nnoremap <silent> Q gqap
 " xnoremap <silent> Q gq
-" reformat paragraph
-nnoremap <silent> <leader>q vapkJgqap
-vnoremap <silent> <leader>q Jgqap
-
-" turn off search highlight
-nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
-
-nnoremap <leader>a :Autoformat<CR>
-
-" TODO: Searches for word and always replacing
-:nnoremap <leader>s <Esc>* \| :%s///g<Left><Left>
-
-" remap Join lines and help
-" nnoremap <leader>J J
-" nnoremap <leader>H K
-
-nnoremap <silent> <leader>sh :terminal<CR>
-
-" toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
-" redo
-nnoremap U <C-R>
-
-
-" edit vimrc/zshrc/tmux and load vimrc bindings
-nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
-nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
-nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
-nnoremap <silent> <leader>et :e ~/.tmux.conf<CR>
-
-"" Split
-noremap <leader>h :<C-u>split<CR>
-noremap <leader>v :<C-u>vsplit<CR>
-
-"" Git
-noremap <leader>ga :Gwrite<CR>
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gsh :Gpush<CR>
-noremap <leader>gll :Gpull<CR>
-noremap <leader>gs :Gstatus<CR>
-noremap <leader>gb :Gblame<CR>
-noremap <leader>gd :Gvdiff<CR>
-noremap <leader>gr :Gremove<CR>
-" Open current line on GitHub
-nnoremap <leader>go :.Gbrowse<CR>
-
-" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-" Opens an edit command with the path of the currently edited file filled in
-noremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" Opens a tab edit command with the path of the currently edited file filled
-noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-nnoremap yy V"+y
-vnoremap <leader>y "+y
-noremap <leader>p "+gP<CR>
-
-" Buffers
-nnoremap <silent> <leader>bb :Denite buffer<CR>
-nnoremap <silent> <leader>rf :Denite files/rec -start-filter<CR>
-
-" Buffer nav
-noremap <leader>bp :bp<CR>
-noremap <leader>bn :bn<CR>
-
-" Close buffer
-noremap <leader>bd :bd<CR>
-noremap <leader>bw :bw<CR>
-
-nnoremap <silent> <leader>rg :FZF -m<CR>
-
-" https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
-" Add Find command to vim
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
 " Use rg for grepprg
 set grepprg=rg\ --vimgrep
 
@@ -631,6 +593,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 " Use K to show documentation in preview window
 nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
 
@@ -641,9 +606,6 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -696,61 +658,93 @@ nnoremap <silent> <leader>cck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
 
-" Denite
-
-" reset 50% winheight on window resize
-augroup deniteresize
-  autocmd!
-  autocmd VimResized,VimEnter * call denite#custom#option('default',
-        \'winheight', winheight(0) / 2)
-augroup end
-
-call denite#custom#option('default', {
-      \ 'prompt': '❯'
-      \ })
-
-call denite#custom#var('file/rec', 'command',
-\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
-
 " jsonc comment syntax highlighting
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " disable indent line plugin for json
 autocmd Filetype json :IndentLinesDisable
 
-if has('nvim')
+if has('nvim') && executable('nvr')
   " pip install neovim-remote
-  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
+if has('nvim')
   tnoremap <Esc> <C-\><C-n>
+  " send the escape key to the temrinal
   tnoremap <A-[> <Esc>
   tnoremap <c-h> <c-\><c-n><c-w>h
   tnoremap <c-j> <c-\><c-n><c-w>j
   tnoremap <c-k> <c-\><c-n><c-w>k
   tnoremap <c-l> <c-\><c-n><c-w>l
   tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
+  hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
+
+  "" Split
+  " noremap <leader>\| :vsp|wincmd l|terminal<CR>
+  " noremap <leader>-  :NvimuxHorizontalSplit<CR>
+  noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
+  noremap <silent> <leader>\| :vsplit\|wincmd l\|terminal<CR>
 endif
 
-hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
+" reformat paragraph
+nnoremap <silent> <leader>q vapkJgqap
+vnoremap <silent> <leader>q Jgqap
+
+" turn off search highlight
+nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
+
+nnoremap <leader>a :Autoformat<CR>
+
+" TODO: Searches for word and always replacing
+:nnoremap <leader>s <Esc>* \| :%s///g<Left><Left>
+
+" remap Join lines and help
+" nnoremap <leader>J J
+" nnoremap <leader>H K
+
+nnoremap <silent> <leader>sh :terminal<CR>
+
+" toggle gundo
+nnoremap <leader>u :GundoToggle<CR>
+" redo
+nnoremap U <C-R>
+
+" edit vimrc/zshrc/tmux and load vimrc bindings
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
+
+"" Git
+noremap <leader>ga :Gwrite<CR>
+noremap <leader>gc :Gcommit<CR>
+noremap <leader>gsh :Gpush<CR>
+noremap <leader>gll :Gpull<CR>
+noremap <leader>gs :Gstatus<CR>
+noremap <leader>gb :Gblame<CR>
+noremap <leader>gd :Gvdiff<CR>
+noremap <leader>gr :Gremove<CR>
+" Open current line on GitHub
+nnoremap <leader>go :.Gbrowse<CR>
+
+" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
+
+" Opens an edit command with the path of the currently edited file filled in
+noremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" Opens a tab edit command with the path of the currently edited file filled
+noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+nnoremap yy V"+y
+vnoremap <leader>y "+y
+noremap <leader>p "+gP<CR>
+
+" Buffers
+nnoremap <silent> <leader>bb :Denite buffer<CR>
+nnoremap <silent> <leader>ag :Denite files/rec -start-filter<CR>
+nnoremap <silent> <leader>rg :Denite grep -start-filter<CR>
+
+" Close buffer
+noremap <leader>Bd :bd!<CR>
+noremap <leader>bd :bd<CR>
+noremap <leader>bw :bw<CR>
 
