@@ -54,7 +54,7 @@ hyper:bind({}, "s", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x
     f.y = max.y
@@ -69,12 +69,22 @@ hyper:bind({}, "a", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x
     f.y = max.y
     f.w = (max.w / 2)
     f.h = max.h
+
+    hs.alert.show("max.x = " .. max.x)
+    hs.alert.show("max.y = " .. max.y)
+    hs.alert.show("max.w = " .. max.w)
+    hs.alert.show("max.h = " .. max.h)
+
+    hs.alert.show("f.x = " .. f.x)
+    hs.alert.show("f.y = " .. f.y)
+    hs.alert.show("f.w = " .. f.w)
+    hs.alert.show("f.h = " .. f.h)
 
     win:setFrame(f)
     hyper.triggered = true
@@ -84,7 +94,7 @@ hyper:bind({}, "d", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y
@@ -99,7 +109,7 @@ hyper:bind({}, "w", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x
     f.y = max.y
@@ -114,7 +124,7 @@ hyper:bind({}, "x", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x
     f.y = max.y + (max.h / 2)
@@ -129,7 +139,7 @@ hyper:bind({}, "q", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x
     f.y = max.y
@@ -144,7 +154,7 @@ hyper:bind({}, "z", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x
     f.y = max.y + (max.h / 2)
@@ -159,7 +169,7 @@ hyper:bind({}, "e", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y
@@ -174,12 +184,22 @@ hyper:bind({}, "c", function ()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:fullFrame()
+    local max = screen:frame()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y + (max.h / 2)
     f.w = max.w / 2
     f.h = max.h / 2
+
+    hs.alert.show("max.x = " .. max.x)
+    hs.alert.show("max.y = " .. max.y)
+    hs.alert.show("max.w = " .. max.w)
+    hs.alert.show("max.h = " .. max.h)
+
+    hs.alert.show("f.x = " .. f.x)
+    hs.alert.show("f.y = " .. f.y)
+    hs.alert.show("f.w = " .. f.w)
+    hs.alert.show("f.h = " .. f.h)
 
     win:setFrame(f)
     hyper.triggered = true
@@ -269,48 +289,104 @@ end)
 
 -------------------------------------------------------------------------------------
 
+function xshake(window)
+
+    local f = window:frame()
+
+    f.x = f.x - 5
+    window:setFrame(f)
+    f.x = f.x - 5
+    window:setFrame(f)
+
+    f.x = f.x + 5
+    window:setFrame(f)
+    f.x = f.x + 5
+    window:setFrame(f)
+
+    f.x = f.x + 5
+    window:setFrame(f)
+    f.x = f.x + 5
+    window:setFrame(f)
+
+    f.x = f.x - 5
+    window:setFrame(f)
+    f.x = f.x - 5
+    window:setFrame(f)
+
+end
+
+function yshake(window)
+
+    local f = window:frame()
+
+    f.y = f.y - 5
+    window:setFrame(f)
+    f.y = f.y - 5
+    window:setFrame(f)
+
+    f.y = f.y + 5
+    window:setFrame(f)
+    f.y = f.y + 5
+    window:setFrame(f)
+
+    f.y = f.y + 5
+    window:setFrame(f)
+    f.y = f.y + 5
+    window:setFrame(f)
+
+    f.y = f.y - 5
+    window:setFrame(f)
+    f.y = f.y - 5
+    window:setFrame(f)
+
+end
+
+
 -- focus left
 hyper:bind({}, "h", function()
-    local screen = hs.screen.mainScreen()
-    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
-    -- local win = hs.window.focusedWindow()
-    if win == nil then
-        return
+    -- local screen = hs.screen.mainScreen()
+    local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
+    local windows = wins:getWindows()
+    local win = hs.window.frontmostWindow()
+    if not win:focusWindowWest(windows, false, true) then
+        xshake(win)
     end
-    win:focusWindowWest(nil, false, true)
     hyper.triggered = true
 end)
 
 -- focus right
 hyper:bind({}, "l", function()
-    local screen = hs.screen.mainScreen()
-    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
-    if win == nil then
-        return
+    -- local screen = hs.screen.mainScreen()
+    local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
+    local windows = wins:getWindows()
+    local win = hs.window.frontmostWindow()
+    if not win:focusWindowEast(windows, false, true) then
+        xshake(win)
     end
-    win:focusWindowEast(nil, false, true)
     hyper.triggered = true
 end)
 
 -- focus up
 hyper:bind({}, "k", function()
-    local screen = hs.screen.mainScreen()
-    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
-    if win == nil then
-        return
+    -- local screen = hs.screen.mainScreen()
+    local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
+    local windows = wins:getWindows()
+    local win = hs.window.frontmostWindow()
+    if not win:focusWindowNorth(windows, false, true) then
+        yshake(win)
     end
-    win:focusWindowNorth(nil, false, true)
     hyper.triggered = true
 end)
 
 -- focus down
 hyper:bind({}, "j", function()
-    local screen = hs.screen.mainScreen()
-    local win = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()})
-    if win == nil then
-        return
+    -- local screen = hs.screen.mainScreen()
+    local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
+    local windows = wins:getWindows()
+    local win = hs.window.frontmostWindow()
+    if not win:focusWindowSouth(windows, false, true) then
+        yshake(win)
     end
-    win:focusWindowSouth(nil, false, true)
     hyper.triggered = true
 end)
 
