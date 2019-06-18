@@ -447,25 +447,34 @@ hs.hotkey.bind("alt-shift", "`", switcher_previous, nil, switcher_previous) -- M
 
 -------------------------------------------------------------------------------------
 
-hyper:bind({}, "t", function()
-    local screen = hs.screen.mainScreen()
-    local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
-    local max = screen:frame()
-    local rect = hs.geometry(max.x, max.y, max.w, max.h)
-    hs.window.tiling.tileWindows(wins, rect)
-    hyper.triggered = true
-end)
-
-allwindows = hs.window.filter.new(nil)
-allwindows:subscribe(hs.window.filter.windowCreated, function ()
-    hs.timer.doAfter(1.0, function()
-        local screen = hs.screen.mainScreen()
-        local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
-        local max = screen:frame()
-        local rect = hs.geometry(max.x, max.y, max.w, max.h)
-        hs.window.tiling.tileWindows(wins, rect)
-    end)
-end)
+-- hyper:bind({}, "t", function()
+--     local screen = hs.screen.mainScreen()
+--     local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
+--     local max = screen:frame()
+--     local rect = hs.geometry(max.x, max.y, max.w, max.h)
+--     hs.window.tiling.tileWindows(wins, rect)
+--     hyper.triggered = true
+-- end)
+--
+-- allwindows = hs.window.filter.new(nil)
+-- allwindows:subscribe(hs.window.filter.windowCreated, function ()
+--     hs.timer.doAfter(0.5, function()
+--         local screen = hs.screen.mainScreen()
+--         local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
+--         local max = screen:frame()
+--         local rect = hs.geometry(max.x, max.y, max.w, max.h)
+--         hs.window.tiling.tileWindows(wins, rect)
+--     end)
+-- end)
+-- allwindows:subscribe(hs.window.filter.windowDestroyed, function ()
+--     hs.timer.doAfter(0.5, function()
+--         local screen = hs.screen.mainScreen()
+--         local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
+--         local max = screen:frame()
+--         local rect = hs.geometry(max.x, max.y, max.w, max.h)
+--         hs.window.tiling.tileWindows(wins, rect)
+--     end)
+-- end)
 
 border = nil
 
