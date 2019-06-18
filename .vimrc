@@ -337,8 +337,8 @@ set grepprg=rg\ --vimgrep
 nnoremap Y y$
 
 command! W w
-command! -bang Q quit
-command! -bang Qa quitall
+command! -bang Q q
+command! -bang Qa qa
 
 "" Tabs
 nnoremap <Tab> gt
@@ -822,3 +822,4 @@ cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|Bdelete' : 'wq')<C
 
 autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
+autocmd TermOpen term://* startinsert
