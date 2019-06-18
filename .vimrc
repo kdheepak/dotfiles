@@ -41,7 +41,7 @@ Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
-" Plug 'neomake/neomake'
+Plug 'neomake/neomake'
 " Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
 " Plug 'thaerkh/vim-indentguides'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -337,6 +337,8 @@ set grepprg=rg\ --vimgrep
 nnoremap Y y$
 
 command! W w
+command! -bang Q quit
+command! -bang Qa quitall
 
 "" Tabs
 nnoremap <Tab> gt
@@ -749,6 +751,74 @@ noremap <leader>Bd :bd!<CR>
 noremap <leader>bd :bd<CR>
 noremap <leader>bw :bw<CR>
 
-cabbrev q    <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'bdelete' : 'q')<CR>
-cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|bdelete' : 'wq')<CR>
+set splitright
+set splitbelow
 
+" Display an error message.
+function! s:Warn(msg)
+  echohl ErrorMsg
+  echomsg a:msg
+  echohl NONE
+endfunction
+
+" Command ':Bdelete' executes ':bd' to delete buffer in current window.
+" The window will show the alternate buffer (Ctrl-^) if it exists,
+" or the previous buffer (:bp), or a blank buffer if no previous.
+" Command ':Bdelete!' is the same, but executes ':bd!' (discard changes).
+" An optional argument can specify which buffer to close (name or number).
+function! s:Bdelete(bang, buffer)
+  if empty(a:buffer)
+    let btarget = bufnr('%')
+  elseif a:buffer =~ '^\d\+$'
+    let btarget = bufnr(str2nr(a:buffer))
+  else
+    let btarget = bufnr(a:buffer)
+  endif
+  if btarget < 0
+    call s:Warn('No matching buffer for '.a:buffer)
+    return
+  endif
+  if empty(a:bang) && getbufvar(btarget, '&modified')
+    call s:Warn('No write since last change for buffer '.btarget.' (use :Bdelete!)')
+    return
+  endif
+  " Numbers of windows that view target buffer which we will delete.
+  let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
+  if len(wnums) > 1
+    execute 'close'.a:bang
+    return
+  endif
+  let wcurrent = winnr()
+  for w in wnums
+    execute w.'wincmd w'
+    let prevbuf = bufnr('#')
+    if prevbuf > 0 && buflisted(prevbuf) && prevbuf != w
+      buffer #
+    else
+      bprevious
+    endif
+    if btarget == bufnr('%')
+      " Numbers of listed buffers which are not the target to be deleted.
+      let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
+      " Listed, not target, and not displayed.
+      let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
+      " Take the first buffer, if any (could be more intelligent).
+      let bjump = (bhidden + blisted + [-1])[0]
+      if bjump > 0
+        execute 'buffer '.bjump
+      else
+        execute 'enew'.a:bang
+      endif
+    endif
+  endfor
+  execute 'bdelete'.a:bang.' '.btarget
+  execute wcurrent.'wincmd w'
+endfunction
+command! -bang -complete=buffer -nargs=? Bdelete call <SID>Bdelete('<bang>', '<args>')
+
+" Allows closing windows without closing buffers and remaps q to this action
+cabbrev q    <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Bdelete' : 'q')<CR>
+cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|Bdelete' : 'wq')<CR>
+
+autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
+autocmd BufLeave term://* stopinsert
