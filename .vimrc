@@ -334,8 +334,6 @@ set grepprg=rg\ --vimgrep
 nnoremap Y y$
 
 command! W w
-command! Qa qa
-command! QA qa
 
 "" Tabs
 nnoremap <Tab> gt
@@ -747,4 +745,7 @@ nnoremap <silent> <leader>rg :Denite grep -start-filter<CR>
 noremap <leader>Bd :bd!<CR>
 noremap <leader>bd :bd<CR>
 noremap <leader>bw :bw<CR>
+
+cabbrev q    <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'bdelete' : 'q')<CR>
+cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|bdelete' : 'wq')<CR>
 
