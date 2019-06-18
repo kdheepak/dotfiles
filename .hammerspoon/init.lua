@@ -76,16 +76,6 @@ hyper:bind({}, "a", function ()
     f.w = (max.w / 2)
     f.h = max.h
 
-    hs.alert.show("max.x = " .. max.x)
-    hs.alert.show("max.y = " .. max.y)
-    hs.alert.show("max.w = " .. max.w)
-    hs.alert.show("max.h = " .. max.h)
-
-    hs.alert.show("f.x = " .. f.x)
-    hs.alert.show("f.y = " .. f.y)
-    hs.alert.show("f.w = " .. f.w)
-    hs.alert.show("f.h = " .. f.h)
-
     win:setFrame(f)
     hyper.triggered = true
 end)
@@ -190,16 +180,6 @@ hyper:bind({}, "c", function ()
     f.y = max.y + (max.h / 2)
     f.w = max.w / 2
     f.h = max.h / 2
-
-    hs.alert.show("max.x = " .. max.x)
-    hs.alert.show("max.y = " .. max.y)
-    hs.alert.show("max.w = " .. max.w)
-    hs.alert.show("max.h = " .. max.h)
-
-    hs.alert.show("f.x = " .. f.x)
-    hs.alert.show("f.y = " .. f.y)
-    hs.alert.show("f.w = " .. f.w)
-    hs.alert.show("f.h = " .. f.h)
 
     win:setFrame(f)
     hyper.triggered = true
@@ -347,7 +327,7 @@ hyper:bind({}, "h", function()
     -- local screen = hs.screen.mainScreen()
     local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
     local windows = wins:getWindows()
-    local win = hs.window.frontmostWindow()
+    local win = hs.window.focusedWindow()
     if not win:focusWindowWest(windows, false, true) then
         xshake(win)
     end
@@ -359,7 +339,7 @@ hyper:bind({}, "l", function()
     -- local screen = hs.screen.mainScreen()
     local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
     local windows = wins:getWindows()
-    local win = hs.window.frontmostWindow()
+    local win = hs.window.focusedWindow()
     if not win:focusWindowEast(windows, false, true) then
         xshake(win)
     end
@@ -371,7 +351,7 @@ hyper:bind({}, "k", function()
     -- local screen = hs.screen.mainScreen()
     local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
     local windows = wins:getWindows()
-    local win = hs.window.frontmostWindow()
+    local win = hs.window.focusedWindow()
     if not win:focusWindowNorth(windows, false, true) then
         yshake(win)
     end
@@ -383,7 +363,7 @@ hyper:bind({}, "j", function()
     -- local screen = hs.screen.mainScreen()
     local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}-- :setScreens({screen:id()})
     local windows = wins:getWindows()
-    local win = hs.window.frontmostWindow()
+    local win = hs.window.focusedWindow()
     if not win:focusWindowSouth(windows, false, true) then
         yshake(win)
     end
@@ -467,26 +447,58 @@ hs.hotkey.bind("alt-shift", "`", switcher_previous, nil, switcher_previous) -- M
 
 -------------------------------------------------------------------------------------
 
-function tile_windows(screen)
-    local wins = hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}:setScreens({screen:id()}):getWindows()
+hyper:bind({}, "t", function()
+    local screen = hs.screen.mainScreen()
+    local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
     local max = screen:frame()
     local rect = hs.geometry(max.x, max.y, max.w, max.h)
     hs.window.tiling.tileWindows(wins, rect)
-end
-
--------------------------------------------------------------------------------------
-
-hyper:bind({}, "t", function()
-    local screen = hs.screen.mainScreen()
-    tile_windows(screen)
     hyper.triggered = true
 end)
 
--- allwindows = hs.window.filter.new(nil)
--- allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() end)
--- allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
--- allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
--- allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
+allwindows = hs.window.filter.new(nil)
+allwindows:subscribe(hs.window.filter.windowCreated, function ()
+    hs.timer.doAfter(1.0, function()
+        local screen = hs.screen.mainScreen()
+        local wins = hs.window.filter.new():setScreens({screen:id()}):getWindows()
+        local max = screen:frame()
+        local rect = hs.geometry(max.x, max.y, max.w, max.h)
+        hs.window.tiling.tileWindows(wins, rect)
+    end)
+end)
+
+border = nil
+
+function drawBorder()
+    if border then
+        border:delete()
+    end
+
+    local win = hs.window.focusedWindow()
+    if win == nil then return end
+
+    local f = win:frame()
+    local fx = f.x - 2
+    local fy = f.y - 2
+    local fw = f.w + 4
+    local fh = f.h + 4
+
+    border = hs.drawing.rectangle(hs.geometry.rect(fx, fy, fw, fh))
+    border:setStrokeWidth(3)
+    border:setStrokeColor({["red"]=1,["blue"]=0.4,["green"]=0.12,["alpha"]=1})
+    border:setRoundedRectRadii(5.0, 5.0)
+    border:setStroke(true):setFill(false)
+    border:setLevel("utility")
+    border:show()
+end
+
+drawBorder()
+
+windows = hs.window.filter.new(nil)
+windows:subscribe(hs.window.filter.windowFocused, function () drawBorder() end)
+windows:subscribe(hs.window.filter.windowUnfocused, function () drawBorder() end)
+windows:subscribe(hs.window.filter.windowMoved, function () drawBorder() end)
+
 
 -------------------------------------------------------------------------------------
 
