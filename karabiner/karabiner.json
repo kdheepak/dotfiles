@@ -16,7 +16,7 @@
                 },
                 "rules": [
                     {
-                        "description": "CapsLock to Hyper",
+                        "description": "CapsLock to Hyper/Escape",
                         "manipulators": [
                             {
                                 "from": {
@@ -29,7 +29,17 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "f18"
+                                        "key_code": "right_shift",
+                                        "modifiers": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_option"
+                                        ]
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape"
                                     }
                                 ],
                                 "type": "basic"
