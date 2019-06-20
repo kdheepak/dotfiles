@@ -34,7 +34,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-obsession'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
-" Plug 'dhruvasagar/vim-prosession'
+Plug 'dhruvasagar/vim-prosession'
 Plug 'dhruvasagar/vim-zoom'
 Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
@@ -127,7 +127,8 @@ Plug 'neoclide/coc-denite'
 " Plug 'neoclide/coc-browser'
 " Plug 'neoclide/coc-marketplace'
 
-Plug 'Shougo/denite.nvim'
+Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'chemzqm/denite-extra'
 Plug 'chemzqm/denite-git'
 Plug 'machakann/vim-highlightedyank'
@@ -884,8 +885,7 @@ call denite#custom#var('file/rec', 'command',
 
 " Ripgrep command on grep source
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts',
-        \ ['--vimgrep', '--no-heading', '-PS'])
+call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep', '--no-heading'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
@@ -894,13 +894,13 @@ call denite#custom#var('grep', 'final_opts', [])
 call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
 call denite#custom#option('_', 'input', '')
 call denite#custom#option('default', 'prompt', ' ')
-call denite#custom#option('_', 'start_filter', v:false)
+call denite#custom#option('_', 'start_filter', v:true)
 call denite#custom#option('_', 'auto_resize', v:false)
 call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
 call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
 call denite#custom#option('_', 'highlight_matched_range', 'Tag')
 call denite#custom#option('_', 'highlight_matched_char', 'Tag')
-call denite#custom#option('_', 'split', 'floating')
+call denite#custom#option('_', 'split', 'vertical')
 call denite#custom#option('_', 'winminheight', 1)
 
 let g:session_directory = expand('~').'/.config/nvim/.vim-sessions'
@@ -925,19 +925,21 @@ endfunction
 autocmd FileType denite-filter call s:denite_filter_settings()
 autocmd FileType denite call s:denite_settings()
 
-nnoremap <silent> <localleader>f :<C-u>Denite file/rec buffer<cr>
-nnoremap <silent> <localleader>o :<C-u>DeniteProjectDir file/rec<cr>
-nnoremap <silent> <localleader>t :<C-u>DeniteProjectDir tag<cr>
-nnoremap <silent> <localleader>c :<C-u>Denite change<cr>
-nnoremap <silent> <localleader>s :<C-u>Denite session<cr>
-nnoremap <silent> <localleader>l :<C-u>Denite line<cr>
 nnoremap <silent> <localleader>b :<C-u>Denite buffer<cr>
-nnoremap <silent> <localleader>m :<C-u>Denite mark<cr>
+nnoremap <silent> <localleader>c :<C-u>Denite change<cr>
+nnoremap <silent> <localleader>f :<C-u>Denite file/rec buffer<cr>
+nnoremap <silent> <localleader>h :<C-u>Denite help<cr>
 nnoremap <silent> <localleader>j :<C-u>Denite jump<cr>
+nnoremap <silent> <localleader>l :<C-u>Denite line<cr>
+nnoremap <silent> <localleader>m :<C-u>Denite mark<cr>
+nnoremap <silent> <localleader>o :<C-u>DeniteProjectDir file/rec<cr>
+nnoremap <silent> <localleader>s :<C-u>Denite session<cr>
+nnoremap <silent> <localleader>t :<C-u>DeniteProjectDir tag<cr>
+nnoremap <silent> <localleader>* :Denite grep:::`expand('<cword>')`<CR>
 nnoremap <silent> <localleader>: :<C-u>Denite command<cr>
-nnoremap <silent> <localleader>* :<C-u>Denite grep:::`expand('<cword>')`<cr>
 " interactive grep mode
-nnoremap <silent> <localleader>rg :<C-u>Denite -split=bottom grep:::!<cr>
+nnoremap <silent> <localleader>rg :Denite grep<CR>
+
 
 " delete buffer
 " works nicely in terminal mode as well
