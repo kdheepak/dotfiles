@@ -34,7 +34,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-obsession'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
-Plug 'dhruvasagar/vim-prosession'
+" Plug 'dhruvasagar/vim-prosession'
+Plug 'dhruvasagar/vim-zoom'
 Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
@@ -739,7 +740,8 @@ nnoremap yy V"+y
 vnoremap <leader>y "+y
 noremap <leader>p "+gP<CR>
 
-nnoremap <leader>zz :StripWhitespace<CR>
+nmap <leader>z <Plug>(zoom-toggle)
+nnoremap <leader>ss :StripWhitespace<CR>
 
 " Buffers
 " nnoremap <silent> <leader>bb :Denite buffer<CR>
@@ -938,5 +940,6 @@ nnoremap <silent> <localleader>* :<C-u>Denite grep:::`expand('<cword>')`<cr>
 nnoremap <silent> <localleader>rg :<C-u>Denite -split=bottom grep:::!<cr>
 
 " delete buffer
-nnoremap <silent> <C-d><C-d> :bd<cr>
+" works nicely in terminal mode as well
+nnoremap <silent> <C-d><C-d> :confirm bd<cr>
 
