@@ -817,8 +817,8 @@ endfunction
 
 nnoremap <leader>o :only<CR>
 
-autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
-autocmd BufLeave term://* stopinsert
+" autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
+" autocmd BufLeave term://* stopinsert
 autocmd TermOpen term://* startinsert
 
 augroup BgHighlight
