@@ -32,7 +32,9 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-obsession'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'dhruvasagar/vim-prosession'
 Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
@@ -81,13 +83,15 @@ Plug 'reisub0/hot-reload.vim'
 " assuming your using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'roxma/nvim-yarp'
 
-Plug 'kdheepak/SearchHighlighting.vim'
+" Plug 'kdheepak/SearchHighlighting.vim' " replaced with loupe
 Plug 'kdheepak/gridlabd.vim'
 Plug 'baabelfish/nvim-nim'
 
 Plug 'vim-scripts/DrawIt'
 Plug 'gyim/vim-boxdraw'
 Plug 'airblade/vim-rooter'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
 
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',
@@ -127,6 +131,15 @@ Plug 'chemzqm/denite-extra'
 Plug 'chemzqm/denite-git'
 Plug 'machakann/vim-highlightedyank'
 Plug 'kassio/neoterm'
+Plug 'wincent/loupe'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
+Plug 'chemzqm/unite-location'
+Plug 'yyotti/denite-marks'
+Plug 'hecal3/vim-leader-guide'
+Plug 'rafi/vim-denite-session'
+
 
 " Initialize plugin system
 call plug#end()
@@ -143,7 +156,8 @@ filetype indent on
 " Note, the above line is ignored in Neovim 0.1.5 above, use this line instead.
 set termguicolors
 
-let mapleader = ' ' " Map leader to space
+let mapleader = " " " Map leader to space
+let maplocalleader = "\\" " Map leader to space
 
 set smarttab
 " tabstop:          Width of tab character
@@ -166,17 +180,18 @@ set breakindent
 set linebreak
 set wrap
 
-" Ignore case when searching
-set ignorecase
-" When searching try to be smart about cases
-set smartcase
+" " Ignore case when searching
+" set ignorecase
+" " When searching try to be smart about cases
+" set smartcase
+" set incsearch           " search as characters are entered
+" set hlsearch            " highlight matches
+" Loupe does all this
 
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
 
 " display
 set display+=lastline
@@ -236,6 +251,10 @@ set scrolloff=10
 " Use one space, not two, after punctuation.
 set nojoinspaces
 
+" split windows right and below
+set splitright
+set splitbelow
+
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
@@ -267,47 +286,28 @@ nnoremap k gk
 nnoremap J j
 nnoremap K k
 
-" Denite
+" " Denite
 
-" reset 50% winheight on window resize
-augroup deniteresize
-  autocmd!
-  autocmd VimResized,VimEnter * call denite#custom#option('default',
-        \'winheight', winheight(0) / 2)
-augroup end
+" " reset 50% winheight on window resize
+" augroup deniteresize
+"   autocmd!
+"   autocmd VimResized,VimEnter * call denite#custom#option('default',
+"         \'winheight', winheight(0) / 2)
+" augroup end
 
-call denite#custom#option('default', {
-      \ 'prompt': '❯'
-      \ })
+" call denite#custom#option('default', {
+"       \ 'prompt': '❯'
+"       \ })
 
-call denite#custom#var('files/rec', 'command',
-\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+" call denite#custom#var('file_rec', 'command',
+"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
 
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> <ESC>
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
-
+" call denite#custom#var('grep', 'command', ['ag'])
+" call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep',])
+" call denite#custom#var('grep', 'recursive_opts', [])
+" call denite#custom#var('grep', 'pattern_opt', [''])
+" call denite#custom#var('grep', 'separator', ['--'])
+" call denite#custom#var('grep', 'final_opts', [])
 
 " nnoremap <silent> Q gqap
 " xnoremap <silent> Q gq
@@ -341,9 +341,8 @@ command! -bang Q q
 command! -bang Qa qa
 
 "" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
-nnoremap <silent> <S-t> :tabnew<CR>
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
 
 noremap X V
 noremap gj G
@@ -423,7 +422,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-
 if has("persistent_undo")
     set undodir=~/.local/share/nvim/undo//
     set backupdir=~/.local/share/nvim/backup//
@@ -435,7 +433,7 @@ let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 
-autocmd BufEnter * EnableStripWhitespaceOnSave
+" autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:strip_whitespace_confirm=0
 
 " autocmd! BufWritePost * make
@@ -586,15 +584,15 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" " Use `[c` and `]c` to navigate diagnostics
+" nmap <silent> [c <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -610,12 +608,12 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" " Remap for format selected region
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -625,14 +623,14 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+" " Remap for do codeAction of current line
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" " Fix autofix problem of current line
+" nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -692,19 +690,19 @@ endif
 nnoremap <silent> <leader>q vapkJgqap
 vnoremap <silent> <leader>q Jgqap
 
-" turn off search highlight
-nnoremap <silent> <leader><Space> :nohlsearch<Bar>:echo<CR>
-
 nnoremap <leader>a :Autoformat<CR>
 
 " TODO: Searches for word and always replacing
-:nnoremap <leader>s <Esc>* \| :%s///g<Left><Left>
+" nnoremap <leader>s <Esc>* \| :%s///g<Left><Left> " TODO: doesn't work as expected
 
 " remap Join lines and help
 " nnoremap <leader>J J
 " nnoremap <leader>H K
 
 nnoremap <silent> <leader>sh :terminal<CR>
+nnoremap <silent> <leader><Enter> :terminal<CR>
+nnoremap <silent> <localleader><localleader> <C-^>
+nnoremap <silent> <BS> <C-^>
 
 " toggle gundo
 nnoremap <leader>u :GundoToggle<CR>
@@ -741,18 +739,13 @@ nnoremap yy V"+y
 vnoremap <leader>y "+y
 noremap <leader>p "+gP<CR>
 
+nnoremap <leader>zz :StripWhitespace<CR>
+
 " Buffers
-nnoremap <silent> <leader>bb :Denite buffer<CR>
-nnoremap <silent> <leader>ag :Denite files/rec -start-filter<CR>
-nnoremap <silent> <leader>rg :Denite grep -start-filter<CR>
+" nnoremap <silent> <leader>bb :Denite buffer<CR>
 
 " Close buffer
-noremap <leader>Bd :bd!<CR>
-noremap <leader>bd :bd<CR>
-noremap <leader>bw :bw<CR>
-
-set splitright
-set splitbelow
+noremap <leader>ww :bw<CR>
 
 " Display an error message.
 function! s:Warn(msg)
@@ -761,65 +754,189 @@ function! s:Warn(msg)
   echohl NONE
 endfunction
 
-" Command ':Bdelete' executes ':bd' to delete buffer in current window.
-" The window will show the alternate buffer (Ctrl-^) if it exists,
-" or the previous buffer (:bp), or a blank buffer if no previous.
-" Command ':Bdelete!' is the same, but executes ':bd!' (discard changes).
-" An optional argument can specify which buffer to close (name or number).
-function! s:Bdelete(bang, buffer)
-  if empty(a:buffer)
-    let btarget = bufnr('%')
-  elseif a:buffer =~ '^\d\+$'
-    let btarget = bufnr(str2nr(a:buffer))
-  else
-    let btarget = bufnr(a:buffer)
-  endif
-  if btarget < 0
-    call s:Warn('No matching buffer for '.a:buffer)
-    return
-  endif
-  if empty(a:bang) && getbufvar(btarget, '&modified')
-    call s:Warn('No write since last change for buffer '.btarget.' (use :Bdelete!)')
-    return
-  endif
-  " Numbers of windows that view target buffer which we will delete.
-  let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
-  if len(wnums) > 1
-    execute 'close'.a:bang
-    return
-  endif
-  let wcurrent = winnr()
-  for w in wnums
-    execute w.'wincmd w'
-    let prevbuf = bufnr('#')
-    if prevbuf > 0 && buflisted(prevbuf) && prevbuf != w
-      buffer #
-    else
-      bprevious
-    endif
-    if btarget == bufnr('%')
-      " Numbers of listed buffers which are not the target to be deleted.
-      let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
-      " Listed, not target, and not displayed.
-      let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
-      " Take the first buffer, if any (could be more intelligent).
-      let bjump = (bhidden + blisted + [-1])[0]
-      if bjump > 0
-        execute 'buffer '.bjump
-      else
-        execute 'enew'.a:bang
-      endif
-    endif
-  endfor
-  execute 'bdelete'.a:bang.' '.btarget
-  execute wcurrent.'wincmd w'
-endfunction
-command! -bang -complete=buffer -nargs=? Bdelete call <SID>Bdelete('<bang>', '<args>')
+" " Command ':Bdelete' executes ':bd' to delete buffer in current window.
+" " The window will show the alternate buffer (Ctrl-^) if it exists,
+" " or the previous buffer (:bp), or a blank buffer if no previous.
+" " Command ':Bdelete!' is the same, but executes ':bd!' (discard changes).
+" " An optional argument can specify which buffer to close (name or number).
+" function! s:Bdelete(bang, buffer)
+"   if empty(a:buffer)
+"     let btarget = bufnr('%')
+"   elseif a:buffer =~ '^\d\+$'
+"     let btarget = bufnr(str2nr(a:buffer))
+"   else
+"     let btarget = bufnr(a:buffer)
+"   endif
+"   if btarget < 0
+"     call s:Warn('No matching buffer for '.a:buffer)
+"     return
+"   endif
+"   if empty(a:bang) && getbufvar(btarget, '&modified')
+"     call s:Warn('No write since last change for buffer '.btarget.' (use :Bdelete!)')
+"     return
+"   endif
+"   " Numbers of windows that view target buffer which we will delete.
+"   let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
+"   if len(wnums) > 1
+"     execute 'close'.a:bang
+"     return
+"   endif
+"   let wcurrent = winnr()
+"   for w in wnums
+"     execute w.'wincmd w'
+"     let prevbuf = bufnr('#')
+"     if prevbuf > 0 && buflisted(prevbuf) && prevbuf != w
+"       buffer #
+"     else
+"       bprevious
+"     endif
+"     if btarget == bufnr('%')
+"       " Numbers of listed buffers which are not the target to be deleted.
+"       let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
+"       " Listed, not target, and not displayed.
+"       let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
+"       " Take the first buffer, if any (could be more intelligent).
+"       let bjump = (bhidden + blisted + [-1])[0]
+"       if bjump > 0
+"         execute 'buffer '.bjump
+"       else
+"         execute 'enew'.a:bang
+"       endif
+"     endif
+"   endfor
+"   execute 'bdelete'.a:bang.' '.btarget
+"   execute wcurrent.'wincmd w'
+" endfunction
+" command! -bang -complete=buffer -nargs=? Bdelete call <SID>Bdelete('<bang>', '<args>')
 
-" Allows closing windows without closing buffers and remaps q to this action
-cabbrev q    <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Bdelete' : 'q')<CR>
-cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|Bdelete' : 'wq')<CR>
+" " Allows closing windows without closing buffers and remaps q to this action
+" cabbrev q    <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Bdelete' : 'q')<CR>
+" cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|Bdelete' : 'wq')<CR>
+
+nnoremap <leader>o :only<CR>
 
 autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 autocmd TermOpen term://* startinsert
+
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cul
+    autocmd WinLeave * set nocul
+augroup END
+
+nmap <leader><leader> <Plug>(LoupeClearHighlight)
+
+" The default of 31 is just a little too narrow.
+let g:NERDTreeWinSize=40
+
+" Disable display of '?' text and 'Bookmarks' label.
+let g:NERDTreeMinimalUI=1
+
+" Let <Leader><Leader> (^#) return from NERDTree window.
+let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
+
+" Single-click to toggle directory nodes, double-click to open non-directory
+" nodes.
+let g:NERDTreeMouseMode=2
+
+let g:NERDTreeQuitOnOpen=1
+
+nnoremap <leader>n :NERDTreeToggle<CR>
+let NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
+
+" Repurpose cursor keys
+nnoremap <silent> <Up> :cprevious<CR>
+nnoremap <silent> <Down> :cnext<CR>
+nnoremap <silent> <Left> :cpfile<CR>
+nnoremap <silent> <Right> :cnfile<CR>
+
+nmap <silent> tt :tabnew<CR>
+nmap <silent> [g :tabprevious<CR>
+nmap <silent> ]g :tabnext<CR>
+nmap <silent> [G :tabrewind<CR>
+nmap <silent> ]G :tablast<CR>
+
+
+" " tell denite to use this matcher by default for all sources
+" call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
+" nnoremap <leader>fl :Denite line<cr>
+" nnoremap <leader>fg :Denite grep<cr>
+
+" nnoremap <leader>wl :DeniteCursorWord line<cr>
+" nnoremap <leader>wg :DeniteCursorWord grep<cr>
+
+" nnoremap <leader>pl :DeniteProjectDir line<cr>
+" nnoremap <leader>pg :DeniteProjectDir grep<cr>
+
+" nnoremap <silent> <leader>rg :Denite grep<CR>
+
+hi link deniteMatchedChar Special
+
+" optional - but recommended - see below
+let g:fruzzy#usenative = 1
+
+call denite#custom#var('file/rec', 'command',
+            \ ['rg', '--hidden', '--files', '--glob', '!.git'])
+
+" Ripgrep command on grep source
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts',
+        \ ['--vimgrep', '--no-heading', '-PS'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
+call denite#custom#option('_', 'input', '')
+call denite#custom#option('default', 'prompt', ' ')
+call denite#custom#option('_', 'start_filter', v:false)
+call denite#custom#option('_', 'auto_resize', v:false)
+call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
+call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
+call denite#custom#option('_', 'highlight_matched_range', 'Tag')
+call denite#custom#option('_', 'highlight_matched_char', 'Tag')
+call denite#custom#option('_', 'split', 'floating')
+call denite#custom#option('_', 'winminheight', 1)
+
+let g:session_directory = expand('~').'/.config/nvim/.vim-sessions'
+
+function! s:denite_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <Esc>
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+endfunction
+
+function! s:denite_filter_settings() abort
+  imap <silent><buffer><expr> <Esc> denite#do_map('quit')
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_settings()
+autocmd FileType denite call s:denite_settings()
+
+nnoremap <silent> <localleader>f :<C-u>Denite file/rec buffer<cr>
+nnoremap <silent> <localleader>o :<C-u>DeniteProjectDir file/rec<cr>
+nnoremap <silent> <localleader>t :<C-u>DeniteProjectDir tag<cr>
+nnoremap <silent> <localleader>c :<C-u>Denite change<cr>
+nnoremap <silent> <localleader>s :<C-u>Denite session<cr>
+nnoremap <silent> <localleader>l :<C-u>Denite line<cr>
+nnoremap <silent> <localleader>b :<C-u>Denite buffer<cr>
+nnoremap <silent> <localleader>m :<C-u>Denite mark<cr>
+nnoremap <silent> <localleader>j :<C-u>Denite jump<cr>
+nnoremap <silent> <localleader>: :<C-u>Denite command<cr>
+nnoremap <silent> <localleader>* :<C-u>Denite grep:::`expand('<cword>')`<cr>
+" interactive grep mode
+nnoremap <silent> <localleader>rg :<C-u>Denite -split=bottom grep:::!<cr>
+
+" delete buffer
+nnoremap <silent> <C-d><C-d> :bd<cr>
+
