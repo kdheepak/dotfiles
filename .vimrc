@@ -1,7 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -34,7 +33,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-obsession'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
-Plug 'dhruvasagar/vim-prosession'
+" Plug 'dhruvasagar/vim-prosession'
 Plug 'dhruvasagar/vim-zoom'
 Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
@@ -91,8 +90,6 @@ Plug 'baabelfish/nvim-nim'
 Plug 'vim-scripts/DrawIt'
 Plug 'gyim/vim-boxdraw'
 Plug 'airblade/vim-rooter'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
 
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',
@@ -134,14 +131,14 @@ Plug 'chemzqm/denite-git'
 Plug 'machakann/vim-highlightedyank'
 Plug 'kassio/neoterm'
 Plug 'wincent/loupe'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
 Plug 'chemzqm/unite-location'
 Plug 'yyotti/denite-marks'
 Plug 'hecal3/vim-leader-guide'
-Plug 'rafi/vim-denite-session'
-
+Plug 'Lokaltog/neoranger'
+Plug 'rbgrouleff/bclose.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -194,6 +191,7 @@ set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 
+set bg=light            " Setting light mode
 
 " display
 set display+=lastline
@@ -272,6 +270,8 @@ vnoremap > >gv
 
 " Disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" resize panes when host window is resized
+autocmd VimResized * wincmd =
 
 " move to beginning/end of line
 nnoremap B ^
@@ -394,6 +394,8 @@ let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
+let g:airline#extensions#coc#enabled = 1
+
 " air-line
 " let g:airline_powerline_fonts = 1
 
@@ -465,8 +467,6 @@ let g:neomake_python_flake8_maker = {
             \ '%-G%.%#'
             \ }
 let g:neomake_python_enabled_makers = ['flake8']
-
-nnoremap * *N
 
 " Ensure comments don't go to beginning of line by default
 
@@ -597,7 +597,7 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " nmap <silent> gr <Plug>(coc-references)
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Use K to show documentation in preview window
 nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
@@ -664,7 +664,7 @@ nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
 " jsonc comment syntax highlighting
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " disable indent line plugin for json
-autocmd Filetype json :IndentLinesDisable
+" autocmd Filetype json :IndentLinesDisable
 
 if has('nvim') && executable('nvr')
   " pip install neovim-remote
@@ -674,10 +674,10 @@ if has('nvim')
   tnoremap <Esc> <C-\><C-n>
   " send the escape key to the temrinal
   tnoremap <A-[> <Esc>
-  tnoremap <c-h> <c-\><c-n><c-w>h
-  tnoremap <c-j> <c-\><c-n><c-w>j
-  tnoremap <c-k> <c-\><c-n><c-w>k
-  tnoremap <c-l> <c-\><c-n><c-w>l
+  " tnoremap <c-h> <c-\><c-n><c-w>h
+  " tnoremap <c-j> <c-\><c-n><c-w>j
+  " tnoremap <c-k> <c-\><c-n><c-w>k
+  " tnoremap <c-l> <c-\><c-n><c-w>l
   tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
   hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
 
@@ -712,9 +712,9 @@ nnoremap <leader>u :GundoToggle<CR>
 nnoremap U <C-R>
 
 " edit vimrc/zshrc/tmux and load vimrc bindings
-nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
-nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
+nnoremap <silent> <leader>ez :vsp ~/.zshrc<CR>
 
 "" Git
 noremap <leader>ga :Gwrite<CR>
@@ -820,6 +820,8 @@ nnoremap <leader>o :only<CR>
 
 " autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
 " autocmd BufLeave term://* stopinsert
+autocmd TermOpen * setlocal nonumber
+autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen term://* startinsert
 
 augroup BgHighlight
@@ -831,23 +833,25 @@ augroup END
 nmap <leader><leader> <Plug>(LoupeClearHighlight)
 
 " The default of 31 is just a little too narrow.
-let g:NERDTreeWinSize=40
+" let g:NERDTreeWinSize=40
 
 " Disable display of '?' text and 'Bookmarks' label.
-let g:NERDTreeMinimalUI=1
+" let g:NERDTreeMinimalUI=1
 
 " Let <Leader><Leader> (^#) return from NERDTree window.
-let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
+" let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
 
 " Single-click to toggle directory nodes, double-click to open non-directory
 " nodes.
-let g:NERDTreeMouseMode=2
+" let g:NERDTreeMouseMode=2
 
-let g:NERDTreeQuitOnOpen=1
+" let g:NERDTreeQuitOnOpen=1
 
-nnoremap <leader>n :NERDTreeToggle<CR>
-let NERDTreeHijackNetrw = 0
-let g:ranger_replace_netrw = 1
+" nnoremap <leader>n :NERDTreeToggle<CR>
+" let NERDTreeHijackNetrw = 0
+" let g:ranger_replace_netrw = 1
+
+nnoremap <leader>r :tabe %:p:h<CR>
 
 " Repurpose cursor keys
 nnoremap <silent> <Up> :cprevious<CR>
@@ -914,6 +918,8 @@ function! s:denite_settings() abort
   \ denite#do_map('quit')
   nnoremap <silent><buffer><expr> <Esc>
   \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> dd
+  \ denite#do_map('do_action', 'delete')
   nnoremap <silent><buffer><expr> i
   \ denite#do_map('open_filter_buffer')
 endfunction
@@ -925,23 +931,42 @@ endfunction
 autocmd FileType denite-filter call s:denite_filter_settings()
 autocmd FileType denite call s:denite_settings()
 
-nnoremap <silent> <localleader>b :<C-u>Denite buffer<cr>
+nnoremap <silent> <leader>* :Denite grep:::`expand('<cword>')`<CR>
+nnoremap <silent> <leader>b :<C-u>Denite buffer<cr>
+nnoremap <silent> <leader>f :<C-u>Denite file/rec buffer<cr>
+nnoremap <silent> <leader>o :<C-u>DeniteProjectDir file/rec<cr>
+nnoremap <silent> <leader>rg :Denite grep<CR>
+nnoremap <silent> <localleader>: :<C-u>Denite command<cr>
 nnoremap <silent> <localleader>c :<C-u>Denite change<cr>
-nnoremap <silent> <localleader>f :<C-u>Denite file/rec buffer<cr>
 nnoremap <silent> <localleader>h :<C-u>Denite help<cr>
 nnoremap <silent> <localleader>j :<C-u>Denite jump<cr>
 nnoremap <silent> <localleader>l :<C-u>Denite line<cr>
 nnoremap <silent> <localleader>m :<C-u>Denite mark<cr>
-nnoremap <silent> <localleader>o :<C-u>DeniteProjectDir file/rec<cr>
 nnoremap <silent> <localleader>s :<C-u>Denite session<cr>
 nnoremap <silent> <localleader>t :<C-u>DeniteProjectDir tag<cr>
-nnoremap <silent> <localleader>* :Denite grep:::`expand('<cword>')`<CR>
-nnoremap <silent> <localleader>: :<C-u>Denite command<cr>
 " interactive grep mode
-nnoremap <silent> <localleader>rg :Denite grep<CR>
 
 
 " delete buffer
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bd<cr>
+
+" Open ranger at current file with "-"
+nnoremap <silent> - :RangerCurrentFile<CR>
+
+" Open ranger in current working directory
+nnoremap <silent> <Leader>r :Ranger<CR>
+
+" for setting ranger viewmode values
+let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
+
+" for setting any extra option passed to ranger params
+" let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
+
+nnoremap QQ q:I
+nnoremap Q: <NOP>
+nnoremap q: <NOP>
+" nnoremap : q:I
+
+let g:github_enterprise_urls = ['https://github.nrel.gov']
 

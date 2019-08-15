@@ -33,6 +33,10 @@ POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="$GB_BG1"
 POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="$GB_FG4"
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="$GB_BG1"
 
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="$GB_BG1"
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND="$GB_FG4"
 POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND="$GB_BG1"
@@ -138,3 +142,20 @@ source ~/.config/.exports
 source ~/.profile
 
 clear
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/$USER/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/$USER/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/$USER/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/$USER/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

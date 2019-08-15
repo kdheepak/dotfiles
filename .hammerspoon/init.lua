@@ -28,13 +28,28 @@ end)
 
 -------------------------------------------------------------------------------------
 
+hs.hotkey.bind(hyper, "s", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h
+
+    win:setFrame(f)
+end)
+
+-------------------------------------------------------------------------------------
 
 windows = hs.window.filter.new()
 
 -- make mouse always in the center of focused window
 windows:subscribe(hs.window.filter.windowFocused, function(window, appName)
     local f = window:frame()
-    hs.mouse.setAbsolutePosition({x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))})
+    -- hs.mouse.setAbsolutePosition({x=(f.x + (f.w / 2)), y=(f.y + (f.h / 2))})
 end)
 
 -------------------------------------------------------------------------------------
