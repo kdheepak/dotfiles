@@ -140,6 +140,8 @@ Plug 'hecal3/vim-leader-guide'
 Plug 'Lokaltog/neoranger'
 Plug 'rbgrouleff/bclose.vim'
 
+Plug 'editorconfig/editorconfig-vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -437,7 +439,7 @@ let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 
-" autocmd BufEnter * EnableStripWhitespaceOnSave
+autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:strip_whitespace_confirm=0
 
 " autocmd! BufWritePost * make
