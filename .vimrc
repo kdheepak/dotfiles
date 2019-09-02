@@ -970,5 +970,3 @@ nnoremap Q: <NOP>
 nnoremap q: <NOP>
 " nnoremap : q:I
 
-let g:github_enterprise_urls = ['https://github.nrel.gov']
-
