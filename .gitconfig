@@ -2,6 +2,7 @@
 [user]
 # Please adapt and uncomment the following lines:
 	name = Dheepak Krishnamurthy
+	email = me@kdheepak.com
 
 [help]
 	autocorrect = 2
@@ -17,6 +18,8 @@
   prompt = true
 [mergetool "vimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[mergetool]
+	prompt = false
 [diff]
 	tool = vimdiff
 
@@ -46,6 +49,8 @@
 
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
 	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+    peek = !"t() { git diff $1~ $1; }; t"
 
 	# Pull in remote changes for the current repository and all its submodules
 	p = !"git pull; git submodule foreach git pull origin master"
@@ -131,7 +136,8 @@
 	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
 	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 	precomposeunicode = false
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	editor = nvr --remote-wait-silent
+    # pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
 
@@ -174,4 +180,3 @@
 	newHighlight = green bold 22
 [rerere]
 	enabled = true
-
