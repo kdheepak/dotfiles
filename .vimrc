@@ -193,7 +193,7 @@ set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 
-set bg=light            " Setting light mode
+set bg=dark            " Setting dark mode
 
 " display
 set display+=lastline
