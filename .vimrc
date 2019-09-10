@@ -40,7 +40,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
@@ -143,7 +143,7 @@ Plug 'Lokaltog/neoranger'
 Plug 'rbgrouleff/bclose.vim'
 
 Plug 'editorconfig/editorconfig-vim'
-Plug 'edkolev/promptline.vim'
+" Plug 'edkolev/promptline.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -974,15 +974,15 @@ nnoremap q: <NOP>
 " nnoremap : q:I
 
 " tmuxline
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : '#{prefix_highlight}',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '%R',
-      \'z'    : '#{battery_percentage}'}
+" let g:tmuxline_preset = {
+      " \'a'    : '#S',
+      " \'b'    : '#W',
+      " \'c'    : '#{prefix_highlight}',
+      " \'win'  : '#I #W',
+      " \'cwin' : '#I #W',
+      " \'x'    : '%a',
+      " \'y'    : '%R',
+      " \'z'    : '#{battery_percentage}'}
 
 ":PromptlineSnapshot! ~/GitRepos/dotfiles/promptline.sh airline<CR>
 
