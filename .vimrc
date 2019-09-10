@@ -42,7 +42,7 @@ Plug 'reedes/vim-wordy'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'neomake/neomake'
 " Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
 " Plug 'thaerkh/vim-indentguides'

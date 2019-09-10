@@ -8,8 +8,6 @@
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
-POWERLEVEL9K_MODE='awesome-fontconfig'
-
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs anaconda)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode command_execution_time background_jobs)
 POWERLEVEL9K_TIME_BACKGROUND='none'
@@ -142,20 +140,6 @@ source ~/.config/.exports
 source ~/.profile
 
 clear
-export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/$USER/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/$USER/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/$USER/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/$USER/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
