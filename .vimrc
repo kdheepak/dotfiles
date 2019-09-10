@@ -13,6 +13,7 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
@@ -39,7 +40,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
-" Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
@@ -104,7 +105,7 @@ Plug 'junegunn/fzf'
 Plug 'joom/latex-unicoder.vim'
 
 " Or install latest release tag
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'neoclide/coc-json'
 Plug 'neoclide/coc-rls'
 Plug 'neoclide/coc-python'
@@ -142,6 +143,7 @@ Plug 'Lokaltog/neoranger'
 Plug 'rbgrouleff/bclose.vim'
 
 Plug 'editorconfig/editorconfig-vim'
+Plug 'edkolev/promptline.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -149,7 +151,9 @@ call plug#end()
 filetype plugin indent on    " required
 
 " Call the theme one
-colorscheme gruvbox
+set background=light        " for the light version
+let g:one_allow_italics = 1 " I love italic for comments
+colorscheme one
 
 syntax enable           " enable syntax processing
 
@@ -193,8 +197,6 @@ set wrap
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
-
-set bg=dark            " Setting dark mode
 
 " display
 set display+=lastline
@@ -972,13 +974,15 @@ nnoremap q: <NOP>
 " nnoremap : q:I
 
 " tmuxline
-" let g:tmuxline_preset = {
-      " \'a'    : '#S',
-      " \'b'    : '#W',
-      " \'c'    : '#{prefix_highlight}',
-      " \'win'  : '#I #W',
-      " \'cwin' : '#I #W',
-      " \'x'    : '%a',
-      " \'y'    : '#W %R',
-      " \'z'    : '#{battery_percentage}'}
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#{prefix_highlight}',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '%R',
+      \'z'    : '#{battery_percentage}'}
+
+":PromptlineSnapshot! ~/GitRepos/dotfiles/promptline.sh airline<CR>
 
