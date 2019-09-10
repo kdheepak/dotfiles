@@ -39,7 +39,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
@@ -970,4 +970,15 @@ nnoremap QQ q:I
 nnoremap Q: <NOP>
 nnoremap q: <NOP>
 " nnoremap : q:I
+
+" tmuxline
+" let g:tmuxline_preset = {
+      " \'a'    : '#S',
+      " \'b'    : '#W',
+      " \'c'    : '#{prefix_highlight}',
+      " \'win'  : '#I #W',
+      " \'cwin' : '#I #W',
+      " \'x'    : '%a',
+      " \'y'    : '#W %R',
+      " \'z'    : '#{battery_percentage}'}
 
