@@ -4,6 +4,7 @@ mkdir -p ~/.config;
 mkdir -p ~/.config/yapf;
 mkdir -p ~/.config/nvim;
 mkdir -p ~/.config/kak;
+mkdir -p ~/.config/alacritty;
 mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
 rm ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
@@ -15,6 +16,7 @@ rm ~/.zshenv; ln -s $(pwd)/.zshenv ~/.zshenv
 rm ~/.zshrc; ln -s $(pwd)/.zshrc ~/.zshrc
 rm ~/.condarc; ln -s $(pwd)/.condarc ~/.condarc
 rm ~/.config/yapf/style; ln -s $(pwd)/.yapf-style ~/.config/yapf/style
+rm ~/.config/alacritty/alacritty.yml; ln -s $(pwd)/alacritty ~/.config/alacritty/alacritty.yml
 rm ~/.config/flake8; ln -s $(pwd)/.flake8 ~/.config/flake8
 rm ~/.config/pycodestyle; ln -s $(pwd)/.pycodestyle ~/.config/pycodestyle
 rm ~/.config/.fzf.bash; ln -s $(pwd)/.fzf.bash ~/.config/.fzf.bash
