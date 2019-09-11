@@ -9,6 +9,8 @@ alias lg='exa --git -lahF'
 # List only directories
 alias lsd="exa -lhF | grep --color=never '^d'"
 
+alias cat="bat"
+
 alias tree="exa --tree"
 
 # Get week number

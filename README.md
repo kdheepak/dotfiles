@@ -4,11 +4,13 @@
 ./bootstrap.sh
 ```
 
-Use the Solarized Dark Higher Contrast theme.
-
-https://github.com/mbadolato/iTerm2-Color-Schemes
-
 ```
 brew install zplug
 brew install exa
+brew install bat
+```
+
+```
+tic -x xterm-256color-italic.terminfo
+tic -x tmux-256color.terminfo
 ```

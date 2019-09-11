@@ -29,3 +29,7 @@ rm ~/.hammerspoon/init.lua; ln -s $(pwd)/.hammerspoon/init.lua ~/.hammerspoon/in
 rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
 rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak
+
+echo "Setting up terminfo"
+tic -x xterm-256color-italic.terminfo
+tic -x tmux-256color.terminfo
