@@ -31,7 +31,9 @@ export MANPAGER='less -X';
 export GREP_OPTIONS='--color=auto';
 
 # PATH exports
-export PATH=/Users/$USER/.nimble/bin:$PATH
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.nimble/bin:$PATH"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -48,8 +50,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.nimble/bin:$PATH"
-
+export PATH="/Users/$USER/miniconda3/bin:$PATH"
+export PATH="/Users/$USER/.local/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
