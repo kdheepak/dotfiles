@@ -9,7 +9,7 @@ fi
 # Make neovim the default editor.
 export EDITOR="$VISUAL"
 
-export TERM=xterm-256color-italic
+export TERM=xterm-256color
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768';
