@@ -14,6 +14,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-one'
+Plug 'chriskempson/base16-vim'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
@@ -41,6 +42,7 @@ Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
 " Plug 'edkolev/tmuxline.vim'
+" Plug 'kdheepak/promptline.vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
@@ -143,17 +145,16 @@ Plug 'Lokaltog/neoranger'
 Plug 'rbgrouleff/bclose.vim'
 
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'edkolev/promptline.vim'
 
 " Initialize plugin system
 call plug#end()
 
 filetype plugin indent on    " required
 
-" Call the theme one
-set background=light        " for the light version
-let g:one_allow_italics = 1 " I love italic for comments
+" Change colorscheme
 colorscheme one
+set background=light
+let g:one_allow_italics = 1 " I love italic for comments
 
 syntax enable           " enable syntax processing
 
