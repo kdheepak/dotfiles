@@ -145,9 +145,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-one'
-Plug 'reedes/vim-colors-pencil'
 Plug 'chriskempson/base16-vim'
-Plug 'NLKNguyen/papercolor-theme'
 
 " Initialize plugin system
 call plug#end()
