@@ -12,9 +12,6 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'morhetz/gruvbox'
-Plug 'rakr/vim-one'
-Plug 'chriskempson/base16-vim'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
@@ -146,11 +143,18 @@ Plug 'rbgrouleff/bclose.vim'
 
 Plug 'editorconfig/editorconfig-vim'
 
+Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
+Plug 'reedes/vim-colors-pencil'
+Plug 'chriskempson/base16-vim'
+Plug 'NLKNguyen/papercolor-theme'
+
 " Initialize plugin system
 call plug#end()
 
 filetype plugin indent on    " required
 
+set termguicolors
 " Change colorscheme
 colorscheme one
 set background=light
@@ -160,8 +164,8 @@ syntax enable           " enable syntax processing
 
 filetype indent on
 
-" Note, the above line is ignored in Neovim 0.1.5 above, use this line instead.
-set termguicolors
+" For Neovim 0.1.3 and 0.1.4
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 let mapleader = " " " Map leader to space
 let maplocalleader = "\\" " Map leader to space
@@ -518,7 +522,7 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
 \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
 \       using LanguageServer;
-\       server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false);
+\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false);
 \       server.runlinter = true;
 \       run(server);
 \   '],
