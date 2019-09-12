@@ -3,8 +3,8 @@ alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 # Shortcuts
 alias G="cd ~/GitRepos"
 
-alias ls="exa --git -lFh"
-alias lg='exa --git -lahF'
+alias ls="exa --git -lFha"
+alias lg='exa --git -lhF'
 
 # List only directories
 alias lsd="exa -lhF | grep --color=never '^d'"
