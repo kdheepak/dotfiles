@@ -88,9 +88,11 @@ Plug 'roxma/nvim-yarp'
 Plug 'kdheepak/gridlabd.vim'
 Plug 'baabelfish/nvim-nim'
 
+Plug 'pondrejk/vim-readability'
+
 Plug 'vim-scripts/DrawIt'
 Plug 'gyim/vim-boxdraw'
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',
