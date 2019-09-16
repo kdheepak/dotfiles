@@ -599,6 +599,7 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " nmap <silent> [c <Plug>(coc-diagnostic-prev)
 " nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
+
 " " Remap keys for gotos
 " nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gy <Plug>(coc-type-definition)
@@ -675,28 +676,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " disable indent line plugin for json
 " autocmd Filetype json :IndentLinesDisable
 
-if has('nvim') && executable('nvr')
-  " pip install neovim-remote
-  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-endif
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  " send the escape key to the temrinal
-  tnoremap <A-[> <Esc>
-  " tnoremap <c-h> <c-\><c-n><c-w>h
-  " tnoremap <c-j> <c-\><c-n><c-w>j
-  " tnoremap <c-k> <c-\><c-n><c-w>k
-  " tnoremap <c-l> <c-\><c-n><c-w>l
-  tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
-  hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
-
-  "" Split
-  " noremap <leader>\| :vsp|wincmd l|terminal<CR>
-  " noremap <leader>-  :NvimuxHorizontalSplit<CR>
-  noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
-  noremap <silent> <leader>\| :vsplit\|wincmd l\|terminal<CR>
-endif
-
 " reformat paragraph
 nnoremap <silent> <leader>q vapkJgqap
 vnoremap <silent> <leader>q Jgqap
@@ -771,6 +750,7 @@ endfunction
 " " or the previous buffer (:bp), or a blank buffer if no previous.
 " " Command ':Bdelete!' is the same, but executes ':bd!' (discard changes).
 " " An optional argument can specify which buffer to close (name or number).
+
 " function! s:Bdelete(bang, buffer)
 "   if empty(a:buffer)
 "     let btarget = bufnr('%')
@@ -989,4 +969,26 @@ nnoremap q: <NOP>
       " \'z'    : '#{battery_percentage}'}
 
 ":PromptlineSnapshot! ~/GitRepos/dotfiles/promptline.sh airline<CR>
+
+if has('nvim') && executable('nvr')
+  " pip install neovim-remote
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  " send the escape key to the temrinal
+  tnoremap <A-[> <Esc>
+  " tnoremap <c-h> <c-\><c-n><c-w>h
+  " tnoremap <c-j> <c-\><c-n><c-w>j
+  " tnoremap <c-k> <c-\><c-n><c-w>k
+  " tnoremap <c-l> <c-\><c-n><c-w>l
+  tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
+  hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
+
+  "" Split
+  " noremap <leader>\| :vsp|wincmd l|terminal<CR>
+  " noremap <leader>-  :NvimuxHorizontalSplit<CR>
+  noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
+  noremap <silent> <leader>\| :vsplit\|wincmd l\|terminal<CR>
+endif
 
