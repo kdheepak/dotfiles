@@ -9,7 +9,7 @@ alias lg='exa --git -lhF'
 # List only directories
 alias lsd="exa -lhF | grep --color=never '^d'"
 
-alias cat="bat"
+alias cat="bat --theme=OneHalfLight --color=always"
 
 alias tree="exa --tree"
 

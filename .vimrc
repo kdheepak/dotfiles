@@ -94,10 +94,10 @@ Plug 'vim-scripts/DrawIt'
 Plug 'gyim/vim-boxdraw'
 " Plug 'airblade/vim-rooter'
 
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ }
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
@@ -190,6 +190,10 @@ let &showbreak='↳ '
 set breakindent
 set linebreak
 set wrap
+
+set spelllang=en
+set spell
+set spellfile=$HOME/config/spell/en.utf-8.add
 
 " " Ignore case when searching
 " set ignorecase
@@ -514,24 +518,6 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
-" julia
-let g:default_julia_version = '0.6'
-
-" language server
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-\       using LanguageServer;
-\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false);
-\       server.runlinter = true;
-\       run(server);
-\   '],
-\ }
-
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> <F3> :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <F4> :call LanguageClient_textDocument_definition()<CR>
-
 set virtualedit+=all
 
 set nomodeline
@@ -599,13 +585,26 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " nmap <silent> [c <Plug>(coc-diagnostic-prev)
 " nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
+" language server
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+\       using LanguageServer;
+\       using Pkg;
+\       import StaticLint;
+\       import SymbolServer;
+\       env_path = dirname(Pkg.Types.Context().env.project_file);
+\       debug = false;
+\
+\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
+\       server.runlinter = true;
+\       run(server);
+\   ']
+\ }
 
 " " Remap keys for gotos
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-
+nnoremap <silent> <leader>k :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <leader>gd :call LanguageClient_textDocument_definition()<CR>
 " Highlight symbol under cursor on CursorHold
 " autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -992,3 +991,17 @@ if has('nvim')
   noremap <silent> <leader>\| :vsplit\|wincmd l\|terminal<CR>
 endif
 
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+set grepprg=rg\ --vimgrep
