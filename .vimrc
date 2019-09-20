@@ -51,7 +51,6 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
 Plug 'danro/rename.vim'
 Plug 'Chiel92/vim-autoformat'
-Plug 'davidhalter/jedi-vim'
 Plug 'sjl/gundo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 " Plug 'vim-pandoc/vim-pandoc'
@@ -302,53 +301,7 @@ nnoremap k gk
 nnoremap J j
 nnoremap K k
 
-" " Denite
-
-" " reset 50% winheight on window resize
-" augroup deniteresize
-"   autocmd!
-"   autocmd VimResized,VimEnter * call denite#custom#option('default',
-"         \'winheight', winheight(0) / 2)
-" augroup end
-
-" call denite#custom#option('default', {
-"       \ 'prompt': '❯'
-"       \ })
-
-" call denite#custom#var('file_rec', 'command',
-"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
-
-" call denite#custom#var('grep', 'command', ['ag'])
-" call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep',])
-" call denite#custom#var('grep', 'recursive_opts', [])
-" call denite#custom#var('grep', 'pattern_opt', [''])
-" call denite#custom#var('grep', 'separator', ['--'])
-" call denite#custom#var('grep', 'final_opts', [])
-
-" nnoremap <silent> Q gqap
-" xnoremap <silent> Q gq
-" Use rg for grepprg
 set grepprg=rg\ --vimgrep
-
-" Use deoplete.
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#sources#jedi#show_docstring = 1
-
-" if !exists('g:deoplete#omni#input_patterns')
-    " let g:deoplete#omni#input_patterns = {}
-" endif
-
-" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" autocmd CompleteDone * pclose " To close preview window of deoplete automagically
-
-" deoplete tab-complete
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-" Enable snipMate compatibility feature.
-" let g:neosnippet#enable_snipmate_compatibility = 1
-
-" Tell Neosnippet about the other snippets
-" let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
 
 nnoremap Y y$
 
@@ -588,6 +541,7 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " language server
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
+\   'python': ['pyls'],
 \   'cpp': ['cquery',
 \           '--log-file=/tmp/cq.log',
 \           '--init={"cacheDirectory":"/var/cquery/"}'],
