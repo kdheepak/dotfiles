@@ -588,7 +588,10 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " language server
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
-\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+\   'cpp': ['cquery',
+\           '--log-file=/tmp/cq.log',
+\           '--init={"cacheDirectory":"/var/cquery/"}'],
+\   'julia': [$HOME . '/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia', '--startup-file=no', '--history-file=no', '-e', '
 \       using LanguageServer;
 \       using Pkg;
 \       import StaticLint;
@@ -603,28 +606,8 @@ let g:LanguageClient_serverCommands = {
 \ }
 
 " " Remap keys for gotos
-nnoremap <silent> <leader>k :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <leader>gd :call LanguageClient_textDocument_definition()<CR>
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Use K to show documentation in preview window
-nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" " Remap for rename current word
-" nmap <leader>rn <Plug>(coc-rename)
-
-" " Remap for format selected region
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
 augroup mygroup
   autocmd!
@@ -634,14 +617,6 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" " Remap for do codeAction of current line
-" nmap <leader>ac  <Plug>(coc-codeaction)
-" " Fix autofix problem of current line
-" nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
