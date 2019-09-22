@@ -161,6 +161,7 @@ fi
 alias :q="exit"
 alias :e="vim"
 
+alias julia-bleeding="$HOME/GitRepos/julia/usr/bin/julia"
 alias julia-latest="$HOME/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia"
 alias julia-stable="$HOME/Applications/Julia-1.2.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
