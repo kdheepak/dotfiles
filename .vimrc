@@ -148,6 +148,8 @@ Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-one'
 Plug 'chriskempson/base16-vim'
 
+Plug 'zah/nim.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -343,7 +345,7 @@ let g:syntastic_python_checkers=['python', 'flake8']
 
 " Syntax highlight
 " Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
+let g:polyglot_disabled = ['python', 'nim']
 let python_highlight_all = 1
 
 " vim-airline

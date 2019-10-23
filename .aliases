@@ -165,6 +165,12 @@ alias julia-bleeding="$HOME/GitRepos/julia/usr/bin/julia"
 alias julia-latest="$HOME/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia"
 alias julia-stable="$HOME/Applications/Julia-1.2.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
-alias julia="julia-latest"
+alias julia="julia-latest --color=yes"
 
+alias fast-julia="julia --startup-file=no"
+alias test-julia="fast-julia --project -e 'using Pkg; Pkg.test()'"
 
+movtogif() {
+    ffmpeg -i "$1" -vf scale=800:-1 -r 10 -f image2pipe -vcodec ppm - |\
+    convert -delay 5 -layers Optimize -loop 0 - "${1%.*}.gif"
+}
