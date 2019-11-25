@@ -148,6 +148,8 @@ Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-one'
 Plug 'chriskempson/base16-vim'
 
+Plug 'kdheepak/firenvim', { 'do': function('firenvim#install') }
+
 Plug 'zah/nim.vim'
 
 " Initialize plugin system
