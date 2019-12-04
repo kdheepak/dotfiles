@@ -1,11 +1,9 @@
 
-const USER = ENV["USER"]
+ENV["CONDA_JL_HOME"] = expanduser("~/miniconda3/envs/julia-py3-env")
+ENV["PYTHON"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/python")
+ENV["JUPYTER"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/jupyter")
 
-ENV["CONDA_JL_HOME"] = "/Users/$USER/miniconda3/envs/julia-py3-env"
-ENV["PYTHON"] = "/Users/$USER/miniconda3/envs/julia-py3-env/bin/python"
-ENV["JUPYTER"] = "/Users/$USER/miniconda3/envs/julia-py3-env/bin/jupyter"
-
-push!(LOAD_PATH, "/Users/$USER/GitRepos/Presentation.jl")
+push!(LOAD_PATH, expanduser("~/GitRepos/Presentation.jl"))
 
 using OhMyREPL
 using Revise
