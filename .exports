@@ -52,7 +52,7 @@ unset __conda_setup
 
 export PATH="/Users/$USER/miniconda3/bin:$PATH"
 export PATH="/Users/$USER/.local/bin:$PATH"
-
+export PATH="$PATH:/Users/$USER/gitrepos/flutter/bin"
 
 # --files: List files that would be searched but do not search
 # --no-ignore: Do not respect .gitignore, etc...
