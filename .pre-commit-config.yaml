@@ -1,11 +1,16 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.0.0
+  rev: v2.4.0
   hooks:
       - id: trailing-whitespace
       - id: check-executables-have-shebangs
       - id: check-json
+      - id: check-case-conflict
+      - id: check-toml
       - id: check-merge-conflict
+      - id: check-xml
+      - id: check-yaml
+      - id: end-of-file-fixer
       - id: check-symlinks
       - id: fix-encoding-pragma
       - id: mixed-line-ending
@@ -13,9 +18,8 @@ repos:
       - id: pretty-format-json
         args: [--autofix]
 - repo: https://github.com/ambv/black
-  rev: stable
+  rev: 19.10b0
   hooks:
       - id: black
         args: [--line-length=88, --safe]
         python_version: python3.6
-
