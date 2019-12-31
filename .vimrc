@@ -93,6 +93,9 @@ Plug 'vim-scripts/DrawIt'
 Plug 'gyim/vim-boxdraw'
 " Plug 'airblade/vim-rooter'
 
+Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
+Plug 'norcalli/nvim-colorizer.lua'
+
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -100,32 +103,10 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'joom/latex-unicoder.vim'
 
-" Or install latest release tag
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-Plug 'neoclide/coc-json'
-Plug 'neoclide/coc-rls'
-Plug 'neoclide/coc-python'
-Plug 'neoclide/coc-highlight'
-Plug 'neoclide/coc-git'
-Plug 'neoclide/coc-yank'
-Plug 'neoclide/coc-lists'
-Plug 'neoclide/coc-vimtex'
-Plug 'neoclide/coc-denite'
-" Plug 'neoclide/coc-github'
-" Plug 'neoclide/coc-dictionary'
-" Plug 'neoclide/coc-tag'
-" Plug 'neoclide/coc-emoji'
-" Plug 'neoclide/coc-omni'
-" Plug 'neoclide/coc-syntax'
-" Plug 'neoclide/coc-ultisnips'
-" Plug 'neoclide/coc-neosnippet'
-" Plug 'neoclide/coc-browser'
-" Plug 'neoclide/coc-marketplace'
-
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'chemzqm/denite-extra'
@@ -364,8 +345,6 @@ let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-let g:airline#extensions#coc#enabled = 1
-
 " air-line
 " let g:airline_powerline_fonts = 1
 
@@ -454,6 +433,22 @@ let g:vim_markdown_conceal = 0
 let g:vim_markdown_emphasis_multiline = 0
 let g:vim_markdown_folding_disabled = 1
 
+let g:deoplete#enable_at_startup = 1
+" Pass a dictionary to set multiple options
+call deoplete#custom#option({
+\ 'auto_complete_delay': 200,
+\ 'smart_case': v:true,
+\ })
+
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ deoplete#mappings#manual_complete()
+
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction "}}}
+
 let g:racer_cmd = "~/.cargo/bin/racer"
 if executable('racer')
   let g:deoplete#sources#rust#racer_binary = systemlist('which racer')[0]
@@ -496,112 +491,6 @@ let g:unicoder_no_map = 1
 "
 " 'Yggdroot/indentLine'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
-" coc.nvim
-let g:coc_node_path = expand("~/miniconda3/bin/node")
-" :CocInstall coc-dictionary
-" :CocInstall coc-tag
-" :CocInstall coc-emoji
-" :CocInstall coc-omni
-" :CocInstall coc-syntax
-" :CocInstall coc-ultisnips
-" :CocInstall coc-neosnippet
-" :CocInstall coc-browser
-" :CocInstall coc-json
-" :CocInstall coc-rls
-" :CocInstall coc-python
-" :CocInstall coc-highlight
-" :CocInstall coc-git
-" :CocInstall coc-yank
-" :CocInstall coc-lists
-" :CocInstall coc-marketplace
-" :CocInstall coc-vimtex
-" :CocInstall coc-github
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" " Use `[c` and `]c` to navigate diagnostics
-" nmap <silent> [c <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" language server
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-\   'python': ['pyls'],
-\   'cpp': ['cquery',
-\           '--log-file=/tmp/cq.log',
-\           '--init={"cacheDirectory":"/var/cquery/"}'],
-\   'julia': [$HOME . '/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia', '--startup-file=no', '--history-file=no', '-e', '
-\       using LanguageServer;
-\       using Pkg;
-\       import StaticLint;
-\       import SymbolServer;
-\       env_path = dirname(Pkg.Types.Context().env.project_file);
-\       debug = false;
-\
-\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
-\       server.runlinter = true;
-\       run(server);
-\   ']
-\ }
-
-" " Remap keys for gotos
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <leader>cla  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <leader>cle  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <leader>clc  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <leader>clo  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <leader>cls  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <leader>ccj  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <leader>cck  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
 
 " jsonc comment syntax highlighting
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -938,3 +827,22 @@ endif
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 set grepprg=rg\ --vimgrep
+
+set redrawtime=10000
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'julia': ['~/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia', '--startup-file=no', '--history-file=no', '--project', '-e', '
+    \       using LanguageServer;
+    \       using Pkg;
+    \       env_path = dirname(Pkg.Types.Context().env.project_file);
+    \       debug = false;
+    \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
+    \       server.runlinter = true;
+    \       run(server);
+    \   '],
+    \ 'python': ['~/miniconda3/bin/pyls'],
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
