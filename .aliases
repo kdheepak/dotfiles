@@ -3,7 +3,7 @@ alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 # Shortcuts
 alias G="cd ~/GitRepos"
 
-alias ls="exa --git -lFha"
+alias ls="exa --git -lFha --group-directories-first"
 alias lg='exa --git -lhF'
 
 # List only directories
