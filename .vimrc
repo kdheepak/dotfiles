@@ -107,10 +107,7 @@ Plug 'junegunn/fzf'
 Plug 'joom/latex-unicoder.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'chemzqm/denite-extra'
-Plug 'chemzqm/denite-git'
 Plug 'machakann/vim-highlightedyank'
 Plug 'kassio/neoterm'
 Plug 'wincent/loupe'
@@ -118,7 +115,6 @@ Plug 'wincent/loupe'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
 Plug 'chemzqm/unite-location'
-Plug 'yyotti/denite-marks'
 Plug 'hecal3/vim-leader-guide'
 Plug 'Lokaltog/neoranger'
 Plug 'rbgrouleff/bclose.vim'
@@ -554,7 +550,6 @@ nmap <leader>z <Plug>(zoom-toggle)
 nnoremap <leader>ss :StripWhitespace<CR>
 
 " Buffers
-" nnoremap <silent> <leader>bb :Denite buffer<CR>
 
 " Close buffer
 noremap <leader>ww :bw<CR>
@@ -674,88 +669,6 @@ nmap <silent> [g :tabprevious<CR>
 nmap <silent> ]g :tabnext<CR>
 nmap <silent> [G :tabrewind<CR>
 nmap <silent> ]G :tablast<CR>
-
-
-" " tell denite to use this matcher by default for all sources
-" call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
-" nnoremap <leader>fl :Denite line<cr>
-" nnoremap <leader>fg :Denite grep<cr>
-
-" nnoremap <leader>wl :DeniteCursorWord line<cr>
-" nnoremap <leader>wg :DeniteCursorWord grep<cr>
-
-" nnoremap <leader>pl :DeniteProjectDir line<cr>
-" nnoremap <leader>pg :DeniteProjectDir grep<cr>
-
-" nnoremap <silent> <leader>rg :Denite grep<CR>
-
-hi link deniteMatchedChar Special
-
-" optional - but recommended - see below
-let g:fruzzy#usenative = 1
-
-call denite#custom#var('file/rec', 'command',
-            \ ['rg', '--hidden', '--files', '--glob', '!.git'])
-
-" Ripgrep command on grep source
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep', '--no-heading'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
-call denite#custom#option('_', 'input', '')
-call denite#custom#option('default', 'prompt', ' ')
-call denite#custom#option('_', 'start_filter', v:true)
-call denite#custom#option('_', 'auto_resize', v:false)
-call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
-call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
-call denite#custom#option('_', 'highlight_matched_range', 'Tag')
-call denite#custom#option('_', 'highlight_matched_char', 'Tag')
-call denite#custom#option('_', 'split', 'vertical')
-call denite#custom#option('_', 'winminheight', 1)
-
-let g:session_directory = expand('~').'/.config/nvim/.vim-sessions'
-
-function! s:denite_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> dd
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-endfunction
-
-function! s:denite_filter_settings() abort
-  imap <silent><buffer><expr> <Esc> denite#do_map('quit')
-endfunction
-
-autocmd FileType denite-filter call s:denite_filter_settings()
-autocmd FileType denite call s:denite_settings()
-
-nnoremap <silent> <leader>* :Denite grep:::`expand('<cword>')`<CR>
-nnoremap <silent> <leader>b :<C-u>Denite buffer<cr>
-nnoremap <silent> <leader>f :<C-u>Denite file/rec buffer<cr>
-nnoremap <silent> <leader>o :<C-u>DeniteProjectDir file/rec<cr>
-nnoremap <silent> <leader>rg :Denite grep<CR>
-nnoremap <silent> <localleader>: :<C-u>Denite command<cr>
-nnoremap <silent> <localleader>c :<C-u>Denite change<cr>
-nnoremap <silent> <localleader>h :<C-u>Denite help<cr>
-nnoremap <silent> <localleader>j :<C-u>Denite jump<cr>
-nnoremap <silent> <localleader>l :<C-u>Denite line<cr>
-nnoremap <silent> <localleader>m :<C-u>Denite mark<cr>
-nnoremap <silent> <localleader>s :<C-u>Denite session<cr>
-nnoremap <silent> <localleader>t :<C-u>DeniteProjectDir tag<cr>
-" interactive grep mode
-
 
 " delete buffer
 " works nicely in terminal mode as well
