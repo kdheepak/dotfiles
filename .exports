@@ -36,6 +36,7 @@ export GREP_OPTIONS='--color=auto';
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.nimble/bin:$PATH"
+export PATH="$HOME/local/nvim/bin:$PATH"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

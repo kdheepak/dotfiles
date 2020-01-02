@@ -76,7 +76,6 @@ Plug 'artur-shaik/vim-javacomplete2'
 Plug 'tfnico/vim-gradle'
 " Julia
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'zyedidia/julialint.vim'
 " Dart
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'reisub0/hot-reload.vim'
