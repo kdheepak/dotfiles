@@ -722,6 +722,7 @@ set grepprg=rg\ --vimgrep
 set redrawtime=10000
 
 lua << EOF
+    -- require'nvim_lsp'.julials.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
 EOF
@@ -734,7 +735,7 @@ nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 
-autocmd Filetype c,cpp,python,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 set completeopt+=menuone
 set completeopt+=noselect
