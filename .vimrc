@@ -16,7 +16,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'dracula/vim'
+Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline' " Airline status bar
 Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/vim-cursorword'
