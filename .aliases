@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 
 # Shortcuts

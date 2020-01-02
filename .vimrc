@@ -96,17 +96,18 @@ Plug 'gyim/vim-boxdraw'
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 Plug 'norcalli/nvim-colorizer.lua'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'neovim/nvim-lsp'
+" Plug 'autozimu/LanguageClient-neovim', {
+    " \ 'branch': 'next',
+    " \ 'do': 'bash install.sh',
+    " \ }
 
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
 
 Plug 'joom/latex-unicoder.vim'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'lifepillar/vim-mucomplete'
 Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'machakann/vim-highlightedyank'
 Plug 'kassio/neoterm'
@@ -429,29 +430,6 @@ let g:vim_markdown_conceal = 0
 let g:vim_markdown_emphasis_multiline = 0
 let g:vim_markdown_folding_disabled = 1
 
-let g:deoplete#enable_at_startup = 1
-" Pass a dictionary to set multiple options
-call deoplete#custom#option({
-\ 'auto_complete_delay': 200,
-\ 'smart_case': v:true,
-\ })
-
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-\ <SID>check_back_space() ? "\<TAB>" :
-\ deoplete#mappings#manual_complete()
-
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction "}}}
-
-let g:racer_cmd = "~/.cargo/bin/racer"
-if executable('racer')
-  let g:deoplete#sources#rust#racer_binary = systemlist('which racer')[0]
-endif
-
-let g:deoplete#sources#rust#rust_source_path = expand('~/GitRepos/rust/src')
-
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
   let mapping_pattern = '\V' . escape(a:mapping, '\')
@@ -743,19 +721,24 @@ set grepprg=rg\ --vimgrep
 
 set redrawtime=10000
 
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'julia': ['~/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia', '--startup-file=no', '--history-file=no', '--project', '-e', '
-    \       using LanguageServer;
-    \       using Pkg;
-    \       env_path = dirname(Pkg.Types.Context().env.project_file);
-    \       debug = false;
-    \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
-    \       server.runlinter = true;
-    \       run(server);
-    \   '],
-    \ 'python': ['~/miniconda3/bin/pyls'],
-    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
-    \ }
+lua << EOF
+    require'nvim_lsp'.pyls.setup{}
+    require'nvim_lsp'.vimls.setup{}
+EOF
+
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+
+autocmd Filetype c,cpp,python,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+set completeopt+=menuone
+set completeopt+=noselect
+set shortmess+=c   " Shut off completion messages
+set belloff+=ctrlg " If Vim beeps during completion
+
+let g:mucomplete#enable_auto_at_startup = 1

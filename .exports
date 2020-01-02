@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
