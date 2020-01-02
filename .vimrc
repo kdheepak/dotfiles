@@ -128,6 +128,8 @@ Plug 'kdheepak/firenvim', { 'do': function('firenvim#install') }
 
 Plug 'zah/nim.vim'
 
+Plug 'tyru/open-browser.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -765,3 +767,10 @@ let g:LanguageClient_loggingLevel = 'INFO'
 let g:LanguageClient_virtualTextPrefix = ''
 let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
 let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
+
+let g:peekaboo_window = "vert botright 60new"
+
+" tyru/open-browser.vim
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-open)
+vmap gx <Plug>(openbrowser-open)

@@ -64,4 +64,16 @@ export PATH="$PATH:/Users/$USER/gitrepos/flutter/bin"
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 
 export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --height=100% --preview 'bat --color=always --style=header,grid --line-range :300 {}' --border --reverse"
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
+# this is what matters
+export FZF_COMMON_OPTIONS="
+  --bind='?:toggle-preview'
+  --bind='ctrl-u:preview-page-up'
+  --bind='ctrl-d:preview-page-down'
+  --preview-window 'right:60%:hidden:wrap'
+  --preview '([[ -d {} ]] && tree -C {}) || ([[ -f {} ]] && bat --style=full --color=always {}) || echo {}'"
+
+command -v fd > /dev/null && export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+command -v bat > /dev/null && command -v tree > /dev/null && export FZF_DEFAULT_OPTS="$FZF_COMMON_OPTIONS"
+command -v fd > /dev/null && export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+command -v fd > /dev/null && export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow --exclude .git'

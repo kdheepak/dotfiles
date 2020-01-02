@@ -105,7 +105,7 @@ zplug "junegunn/fzf", use:"shell/{completion.zsh,key-bindings.zsh}"
 zplug "rupa/z", use:z.sh
 zplug "andrewferrier/fzf-z", on:"rupa/z"
 
-zplug "plugins/vi-mode", from:oh-my-zsh
+# zplug "plugins/vi-mode", from:oh-my-zsh
 
 zplug "srijanshetty/zsh-pip-completion"
 zplug "zdharma/fast-syntax-highlighting", defer:2
