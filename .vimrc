@@ -101,6 +101,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 " Plug 'lifepillar/vim-mucomplete'
+Plug 'ncm2/float-preview.nvim'
+
 
 Plug 'joom/latex-unicoder.vim'
 
@@ -768,9 +770,12 @@ let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-open)
 vmap gx <Plug>(openbrowser-open)
 
-set completeopt+=menuone
-set completeopt+=noselect
-set completeopt+=preview
+set completeopt=menuone    " Use the popup menu also when there is only one match.
+set completeopt+=noinsert  " Do not insert any text for a match until the user selects a match from the menu.
+set completeopt+=noselect  " Do not select a match in the menu, force the user to select one from the menu.
+set completeopt-=preview   " Remove extra information about the currently selected completion in the preview window.
+                           " Only works in combination with "menu" or "menuone".
+
 set shortmess+=c   " Shut off completion messages
 set shortmess+=I   " no intro message
 
@@ -788,6 +793,8 @@ function! s:check_back_space() abort "{{{
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction "}}}
+
+let g:float_preview#docked = 0
 
 " let g:mucomplete#enable_auto_at_startup = 1
 " let g:mucomplete#chains = {}
