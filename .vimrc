@@ -16,6 +16,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " If installed using Homebrew
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline' " Airline status bar
 Plug 'vim-airline/vim-airline-themes'
@@ -34,7 +35,7 @@ Plug 'tpope/vim-obsession'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 " Plug 'dhruvasagar/vim-prosession'
 Plug 'dhruvasagar/vim-zoom'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
@@ -95,16 +96,13 @@ Plug 'gyim/vim-boxdraw'
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 Plug 'norcalli/nvim-colorizer.lua'
 
-" Plug 'neovim/nvim-lsp'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
-
-" (Optional) Multi-entry selection UI.
-Plug 'junegunn/fzf'
+Plug 'kdheepak/nvim-lsp', { 'branch': 'kd/add-julials' }
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 
 Plug 'joom/latex-unicoder.vim'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'lifepillar/vim-mucomplete'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'lifepillar/vim-mucomplete'
 
 Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'machakann/vim-highlightedyank'
@@ -172,9 +170,9 @@ set breakindent
 set linebreak
 set wrap
 
-set spelllang=en
-set spell
-set spellfile=$HOME/config/spell/en.utf-8.add
+" set spelllang=en
+" set spell
+" set spellfile=$HOME/config/spell/en.utf-8.add
 
 " " Ignore case when searching
 " set ignorecase
@@ -415,8 +413,7 @@ let g:neomake_python_flake8_maker = {
 let g:neomake_python_enabled_makers = ['flake8']
 
 " Ensure comments don't go to beginning of line by default
-
-au! FileType python setl nosmartindent
+au! FileType vim,python setl nosmartindent
 
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
@@ -721,56 +718,29 @@ set grepprg=rg\ --vimgrep
 
 set redrawtime=10000
 
-" lua << EOF
-"     require'nvim_lsp'.julials.setup{}
-"     require'nvim_lsp'.pyls.setup{}
-"     require'nvim_lsp'.vimls.setup{}
-" EOF
-"
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-"
-" autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+lua << EOF
+    require'nvim_lsp'.julials.setup{}
+    require'nvim_lsp'.pyls.setup{}
+    require'nvim_lsp'.vimls.setup{}
+EOF
 
-" set completeopt+=menuone
-" set completeopt+=noselect
-" set shortmess+=c   " Shut off completion messages
-" set belloff+=ctrlg " If Vim beeps during completion
-"
-" let g:mucomplete#enable_auto_at_startup = 1
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 
-let g:deoplete#enable_at_startup = 1
-
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-\ <SID>check_back_space() ? "\<TAB>" :
-\ deoplete#manual_complete()
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
-let g:LanguageClient_serverCommands = {
-    \ 'julia': ['~/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia', '--startup-file=no', '--history-file=no', '-e', '
-    \   using LanguageServer;
-    \   p = joinpath(dirname(dirname(pathof(LanguageServer))), "contrib", "languageserver.sh");
-    \   run(`$p`);
-    \   '],
-    \ 'python': ['~/miniconda3/bin/pyls'],
-    \ }
-
-let g:LanguageClient_loggingLevel = 'INFO'
-let g:LanguageClient_virtualTextPrefix = ''
-let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
-
-let g:peekaboo_window = "vert botright 60new"
+autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " tyru/open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-open)
 vmap gx <Plug>(openbrowser-open)
+
+set completeopt+=menuone
+set completeopt+=noselect
+set shortmess+=c   " Shut off completion messages
+
+let g:mucomplete#enable_auto_at_startup = 1

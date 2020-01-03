@@ -28,3 +28,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 # bind 'set completion-ignore-case on'
 # bind 'TAB:menu-complete'
 
+export PATH="$PATH:$HOME/Applications/Julia-1.3.app/Contents/Resources/julia/bin/"
