@@ -35,7 +35,7 @@ Plug 'tpope/vim-obsession'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 " Plug 'dhruvasagar/vim-prosession'
 Plug 'dhruvasagar/vim-zoom'
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
@@ -97,12 +97,12 @@ Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 Plug 'norcalli/nvim-colorizer.lua'
 
 Plug 'kdheepak/nvim-lsp', { 'branch': 'kd/add-julials' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+" Plug 'lifepillar/vim-mucomplete'
 
 Plug 'joom/latex-unicoder.vim'
-
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'lifepillar/vim-mucomplete'
 
 Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'machakann/vim-highlightedyank'
@@ -162,7 +162,6 @@ set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
-set complete-=i
 
 " wrap
 let &showbreak='↳ '
@@ -200,6 +199,8 @@ set number relativenumber " line numbers
 set cursorline " highlight current line
 " set cursorcolumn " highlight current column
 set showcmd " show command in bottom bar
+
+set complete-=i
 
 " buffer
 set autoread
@@ -729,10 +730,38 @@ nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 
 autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+" let g:LanguageClient_serverCommands = {
+"     \ 'vim': ['vim-language-server', '--stdio'],
+"     \ 'julia': ['julia', '--project', '--startup-file=no', '--history-file=no', '-e', '
+"     \       using LanguageServer;
+"     \       using Pkg;
+"     \       env_path = dirname(Pkg.Types.Context().env.project_file);
+"     \       debug = false;
+"     \
+"     \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
+"     \       server.runlinter = true;
+"     \       run(server);
+"     \   ']
+"     \ }
+" let g:LanguageClient_loggingLevel = 'INFO'
+" let g:LanguageClient_virtualTextPrefix = ''
+" let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
+" let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
+"
+" function! LC_maps()
+"   if has_key(g:LanguageClient_serverCommands, &ft)
+"     nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
+"     inoremap <buffer> <silent> <c-i> <c-o>:call LanguageClient#textDocument_hover()<cr>
+"     nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+"     nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+"   endif
+" endfunction
+"
+" autocmd BufEnter * call LC_maps()
 
 " tyru/open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
@@ -741,6 +770,28 @@ vmap gx <Plug>(openbrowser-open)
 
 set completeopt+=menuone
 set completeopt+=noselect
+set completeopt+=preview
 set shortmess+=c   " Shut off completion messages
+set shortmess+=I   " no intro message
 
-let g:mucomplete#enable_auto_at_startup = 1
+let g:deoplete#enable_at_startup = 1
+
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ deoplete#manual_complete()
+
+inoremap <silent><expr> <s-TAB> pumvisible() ? "\<C-p>" :
+\ <SID>check_back_space() ? "\<BS>" :
+\ deoplete#manual_complete()
+
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction "}}}
+
+" let g:mucomplete#enable_auto_at_startup = 1
+" let g:mucomplete#chains = {}
+" let g:mucomplete#chains.default = ['omni', 'c-n', 'path', 'tags', 'dict']
+" let s:cpp_cond = { t -> t =~# '\%(->\|::\|\.\)$' }
+" let g:mucomplete#can_complete = {}
+" let g:mucomplete#can_complete.cpp = { 'omni': s:cpp_cond }
