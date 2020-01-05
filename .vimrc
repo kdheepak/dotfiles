@@ -89,8 +89,8 @@ Plug 'baabelfish/nvim-nim'
 
 Plug 'pondrejk/vim-readability'
 
-Plug 'vim-scripts/DrawIt'
-Plug 'gyim/vim-boxdraw'
+" Plug 'vim-scripts/DrawIt'
+" Plug 'gyim/vim-boxdraw'
 " Plug 'airblade/vim-rooter'
 
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
@@ -733,7 +733,6 @@ lua << EOF
 EOF
 
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
