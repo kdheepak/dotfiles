@@ -23,13 +23,12 @@ rm ~/.config/.fzf.bash; ln -s $(pwd)/.fzf.bash ~/.config/.fzf.bash
 rm ~/.config/.fzf.zsh; ln -s $(pwd)/.fzf.zsh ~/.config/.fzf.zsh
 rm ~/.gdbinit; ln -s $(pwd)/.gdbinit ~/.gdbinit
 rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
+rm ~/.gitconfig; ln -s $(pwd)/.gitconfig ~/.gitconfig
 rm ~/.pylintrc; ln -s $(pwd)/.pylintrc ~/.pylintrc
 rm ~/.julia/config/startup.jl; ln -s $(pwd)/.juliarc.jl ~/.julia/config/startup.jl
 rm ~/.hammerspoon/init.lua; ln -s $(pwd)/.hammerspoon/init.lua ~/.hammerspoon/init.lua
 rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
 rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak
-
-echo "Setting up terminfo"
 # tic -x xterm-256color-italic.terminfo
 # tic -x tmux-256color.terminfo

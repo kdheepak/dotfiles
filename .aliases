@@ -167,10 +167,9 @@ alias code="code-insiders -r"
 alias c="code"
 
 alias julia-bleeding="$HOME/GitRepos/julia/usr/bin/julia"
-alias julia-latest="$HOME/Applications/Julia-1.3.app/Contents/Resources/julia/bin/julia"
 alias julia-stable="$HOME/Applications/Julia-1.2.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
-alias julia="julia-latest --color=yes"
+alias julia="julia --color=yes"
 
 alias fast-julia="julia --startup-file=no"
 alias test-julia="fast-julia --project -e 'using Pkg; Pkg.test()'"

@@ -163,12 +163,11 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 disable r
 
-source ~/.config/.exports
-source ~/.profile
+source $HOME/.config/.exports
+source $HOME/.config/.aliases
 
-clear
+# clear
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

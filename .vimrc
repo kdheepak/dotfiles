@@ -130,6 +130,8 @@ Plug 'zah/nim.vim'
 
 Plug 'tyru/open-browser.vim'
 
+Plug expand('~/GitRepos/XXV')
+
 " Initialize plugin system
 call plug#end()
 
@@ -722,6 +724,7 @@ set grepprg=rg\ --vimgrep
 set redrawtime=10000
 
 lua << EOF
+    require'nvim_lsp'.nimls.setup{}
     require'nvim_lsp'.julials.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
@@ -735,7 +738,9 @@ nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 
 autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+@forcpponly
 
+@endforcpponly
 " let g:LanguageClient_serverCommands = {
 "     \ 'vim': ['vim-language-server', '--stdio'],
 "     \ 'julia': ['julia', '--project', '--startup-file=no', '--history-file=no', '-e', '
