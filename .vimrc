@@ -130,6 +130,8 @@ Plug 'zah/nim.vim'
 
 Plug 'tyru/open-browser.vim'
 
+" Plug 'axelf4/vim-strip-trailing-whitespace'
+
 Plug expand('~/GitRepos/XXV')
 
 " Initialize plugin system
