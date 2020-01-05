@@ -738,9 +738,7 @@ nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 
 autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
-@forcpponly
 
-@endforcpponly
 " let g:LanguageClient_serverCommands = {
 "     \ 'vim': ['vim-language-server', '--stdio'],
 "     \ 'julia': ['julia', '--project', '--startup-file=no', '--history-file=no', '-e', '
