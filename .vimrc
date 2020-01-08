@@ -666,10 +666,7 @@ nnoremap <silent> <C-d><C-d> :confirm bd<cr>
 " Open ranger at current file with "-"
 nnoremap <silent> - :RangerCurrentFile<CR>
 nnoremap <Leader>f :ProjectFiles<CR>
-nnoremap <Leader>g :ProjectRg<CR>
-
-" Open ranger in current working directory
-nnoremap <silent> <Leader>r :Ranger<CR>
+nnoremap <Leader>rg :ProjectRg<CR>
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
