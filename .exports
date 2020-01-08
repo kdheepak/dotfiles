@@ -68,7 +68,7 @@ FZF_DEFAULT_OPTS=
 FZF_DEFAULT_OPTS+=" --ansi"
 FZF_DEFAULT_OPTS+=" --preview-window 'right:60%'"
 FZF_DEFAULT_OPTS+=" --bind up:preview-up,down:preview-down"
-FZF_DEFAULT_OPTS+=" --preview 'bat --theme=GitHub --color=always --italic-text=always --style=numbers,changes,header --line-range :300 {} '"
+FZF_DEFAULT_OPTS+=" --preview 'bat --line-range :300 {} '"
 export FZF_DEFAULT_OPTS
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
