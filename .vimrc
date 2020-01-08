@@ -130,6 +130,8 @@ Plug 'zah/nim.vim'
 
 Plug 'tyru/open-browser.vim'
 
+Plug 'ryanoasis/vim-devicons'
+
 " Plug 'axelf4/vim-strip-trailing-whitespace'
 
 Plug expand('~/GitRepos/XXV')
@@ -519,8 +521,12 @@ nnoremap <leader>go :.Gbrowse<CR>
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
-" Opens an edit command with the path of the currently edited file filled in
-noremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+command! ProjectFiles execute 'Files ' . s:find_git_root()
+command! ProjectRg execute 'cd '.system('git rev-parse --show-toplevel') 'Rg'
 
 " Opens a tab edit command with the path of the currently edited file filled
 noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
@@ -658,8 +664,9 @@ nmap <silent> ]G :tablast<CR>
 nnoremap <silent> <C-d><C-d> :confirm bd<cr>
 
 " Open ranger at current file with "-"
-nnoremap <silent> - :Files<CR>
-nnoremap <Leader>f :Find<CR>
+nnoremap <silent> - :RangerCurrentFile<CR>
+nnoremap <Leader>f :ProjectFiles<CR>
+nnoremap <Leader>g :ProjectRg<CR>
 
 " Open ranger in current working directory
 nnoremap <silent> <Leader>r :Ranger<CR>
