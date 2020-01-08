@@ -6,14 +6,14 @@ ENV["JUPYTER"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/jupyter")
 push!(LOAD_PATH, expanduser("~/GitRepos/Presentation.jl"))
 
 # using OhMyREPL
-# using Revise
-#
-# atreplinit() do repl
-#     @async try
-#         sleep(0.1)
-#         @eval using Revise
-#         @async Revise.wait_steal_repl_backend()
-#     catch
-#         @warn("Could not load Revise.")
-#     end
-# end
+using Revise
+
+atreplinit() do repl
+    @async try
+        sleep(0.1)
+        @eval using Revise
+        @async Revise.wait_steal_repl_backend()
+    catch
+        @warn("Could not load Revise.")
+    end
+end

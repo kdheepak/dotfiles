@@ -165,9 +165,12 @@ disable r
 
 source $HOME/.config/.exports
 source $HOME/.config/.aliases
+[ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
 
 # clear
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

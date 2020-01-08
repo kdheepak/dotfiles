@@ -133,6 +133,7 @@ Plug 'tyru/open-browser.vim'
 " Plug 'axelf4/vim-strip-trailing-whitespace'
 
 Plug expand('~/GitRepos/XXV')
+Plug expand('~/GitRepos/JuliaFormatter.vim')
 
 " Initialize plugin system
 call plug#end()
@@ -657,7 +658,8 @@ nmap <silent> ]G :tablast<CR>
 nnoremap <silent> <C-d><C-d> :confirm bd<cr>
 
 " Open ranger at current file with "-"
-nnoremap <silent> - :RangerCurrentFile<CR>
+nnoremap <silent> - :Files<CR>
+nnoremap <Leader>f :Find<CR>
 
 " Open ranger in current working directory
 nnoremap <silent> <Leader>r :Ranger<CR>
@@ -727,7 +729,7 @@ set redrawtime=10000
 
 lua << EOF
     require'nvim_lsp'.nimls.setup{}
-    require'nvim_lsp'.julials.setup{}
+    -- require'nvim_lsp'.julials.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
 EOF
