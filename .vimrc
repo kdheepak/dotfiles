@@ -521,13 +521,6 @@ nnoremap <leader>go :.Gbrowse<CR>
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
-function! s:find_git_root()
-  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-endfunction
-
-command! ProjectFiles execute 'Files ' . s:find_git_root()
-command! ProjectRg execute 'cd '.system('git rev-parse --show-toplevel') 'Rg'
-
 " Opens a tab edit command with the path of the currently edited file filled
 noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
@@ -663,10 +656,36 @@ nmap <silent> ]G :tablast<CR>
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bd<cr>
 
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-g': 'split',
+  \ 'ctrl-v': 'vsplit' }
+let g:fzf_buffers_jump = 1
+let g:fzf_layout = { 'down': '~40%' }
+
+" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
+command! -bang -nargs=* FzfRgPreview
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --no-heading --color=always --smart-case '.shellescape(<q-args>), 2,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%', 'ctrl-l'),
+  \   <bang>0)
+
+" Files command with preview window
+command! -bang -nargs=? -complete=dir FzfFilesPreview
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:50%:hidden', 'ctrl-l'), <bang>0)
+
+function! s:find_git_root()
+  return system('cd '. expand('%:p:h') . ' && git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+command! FzfProjectFilesPreview execute 'FzfFiles ' . s:find_git_root()
+
 " Open ranger at current file with "-"
 nnoremap <silent> - :RangerCurrentFile<CR>
-nnoremap <Leader>f :ProjectFiles<CR>
-nnoremap <Leader>rg :ProjectRg<CR>
+nnoremap <Leader>f :FzfProjectFilesPreview<CR>
+nnoremap <Leader>rg :FzfRgPreview<CR>
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
@@ -724,8 +743,6 @@ endif
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 set grepprg=rg\ --vimgrep
 
