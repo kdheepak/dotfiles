@@ -180,3 +180,5 @@
     newHighlight = green bold 22
 [rerere]
     enabled = true
+[github]
+	user = kdheepak

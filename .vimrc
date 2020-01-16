@@ -221,8 +221,6 @@ set fileencodings=utf-8
 
 set hidden
 
-set fileformats=unix,dos,mac
-
 set nobackup
 set nowritebackup
 set cmdheight=1

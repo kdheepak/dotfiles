@@ -173,7 +173,7 @@ alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/j
 alias julia="julia --color=yes"
 
 alias fast-julia="julia --startup-file=no"
-alias test-julia="fast-julia --project -e 'using Pkg; Pkg.test()'"
+alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
 
 movtogif() {
     ffmpeg -i "$1" -vf scale=800:-1 -r 10 -f image2pipe -vcodec ppm - |\
