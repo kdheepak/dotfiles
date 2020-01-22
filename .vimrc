@@ -136,8 +136,7 @@ Plug 'rhysd/git-messenger.vim'
 
 " Plug 'axelf4/vim-strip-trailing-whitespace'
 
-Plug expand('~/GitRepos/XXV')
-Plug expand('~/GitRepos/JuliaFormatter.vim')
+Plug 'kdheepak/JuliaFormatter.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -831,3 +830,6 @@ let g:float_preview#docked = 0
 " let s:cpp_cond = { t -> t =~# '\%(->\|::\|\.\)$' }
 " let g:mucomplete#can_complete = {}
 " let g:mucomplete#can_complete.cpp = { 'omni': s:cpp_cond }
+
+nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
+vnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(1)<CR>
