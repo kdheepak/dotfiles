@@ -132,6 +132,8 @@ Plug 'tyru/open-browser.vim'
 
 Plug 'ryanoasis/vim-devicons'
 
+Plug 'rhysd/git-messenger.vim'
+
 " Plug 'axelf4/vim-strip-trailing-whitespace'
 
 Plug expand('~/GitRepos/XXV')
@@ -516,6 +518,8 @@ noremap <leader>gr :Gremove<CR>
 " Open current line on GitHub
 nnoremap <leader>go :.Gbrowse<CR>
 
+nnoremap <Leader>gm <Plug>(git-messenger)
+
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
@@ -747,7 +751,7 @@ set grepprg=rg\ --vimgrep
 set redrawtime=10000
 
 lua << EOF
-    require'nvim_lsp'.nimls.setup{}
+    -- require'nvim_lsp'.nimls.setup{}
     -- require'nvim_lsp'.julials.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
