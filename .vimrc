@@ -710,7 +710,7 @@ nnoremap q: <NOP>
       " \'y'    : '%R',
       " \'z'    : '#{battery_percentage}'}
 
-":PromptlineSnapshot! ~/GitRepos/dotfiles/promptline.sh airline<CR>
+":PromptlineSnapshot! ~/gitrepos/dotfiles/promptline.sh airline<CR>
 
 if has('nvim') && executable('nvr')
   " pip install neovim-remote

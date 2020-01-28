@@ -53,7 +53,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 export PATH="$HOME/miniconda3/bin:$PATH"
-export PATH="$HOME/GitRepos/flutter/bin:$PATH"
+export PATH="$HOME/gitrepos/flutter/bin:$PATH"
 export PATH="$PATH:$HOME/Applications/Julia-1.3.app/Contents/Resources/julia/bin"
 export PATH="$HOME/.local/bin:$PATH"
 

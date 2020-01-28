@@ -172,7 +172,7 @@
     sslVerify = false
     postBuffer = 2M
 [init]
-    templatedir = ~/GitRepos/dotfiles/git-templates
+    templatedir = ~/gitrepos/dotfiles/git-templates
 [color "diff-highlight"]
     oldNormal = red bold
     oldHighlight = red bold 52

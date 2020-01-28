@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pre-commit run --config ~/GitRepos/dotfiles/.pre-commit-config.yaml
+pre-commit run --config ~/gitrepos/dotfiles/.pre-commit-config.yaml

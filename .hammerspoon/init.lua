@@ -18,7 +18,7 @@ hs.loadSpoon("SpoonInstall")
 -- http://www.hammerspoon.org/Spoons/ReloadConfiguration.html
 spoon.SpoonInstall:andUse("ReloadConfiguration",
                {
-                    config = { watch_paths = { os.getenv("HOME") .. "/GitRepos/dotfiles/.hammerspoon" } },
+                    config = { watch_paths = { os.getenv("HOME") .. "/gitrepos/dotfiles/.hammerspoon" } },
                     start = true,
                }
 )
