@@ -5,7 +5,7 @@
 # source ~/.fonts/octicons-regular.sh
 # source ~/.fonts/pomicons-regular.sh
 
-export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME=$HOME/.local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 POWERLEVEL9K_MODE='nerdfont-complete'
