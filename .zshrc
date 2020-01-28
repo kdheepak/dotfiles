@@ -5,6 +5,12 @@
 # source ~/.fonts/octicons-regular.sh
 # source ~/.fonts/pomicons-regular.sh
 
+export PATH="$HOME/.local/bin:$PATH"
+
+source $HOME/.config/.exports
+source $HOME/.config/.aliases
+[ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
+
 export ZPLUG_HOME=$HOME/.local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
@@ -162,10 +168,6 @@ zle -N zle-keymap-select
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 disable r
-
-source $HOME/.config/.exports
-source $HOME/.config/.aliases
-[ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
 
 # clear
 
