@@ -28,8 +28,23 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
 fi
 
 source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer
+
+zinit ice svn atpull'zinit creinstall -q .'; zinit snippet PZT::modules/git
+
+zinit snippet PZT::modules/completion/init.zsh
+zinit snippet PZT::modules/directory/init.zsh
+zinit snippet PZT::modules/editor/init.zsh
+zinit snippet PZT::modules/environment/init.zsh
+zinit snippet PZT::modules/history/init.zsh
+zinit snippet PZT::modules/python/init.zsh
+zinit snippet PZT::modules/utility/init.zsh
 
 zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
 zinit light frescoraja/powerlevel10k
 zinit light djui/alias-tips
