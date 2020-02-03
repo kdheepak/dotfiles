@@ -30,8 +30,8 @@ fi
 source "$HOME/.zinit/bin/zinit.zsh"
 
 zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
-zinit light zdharma/history-search-multi-word
+# zinit light zdharma/fast-syntax-highlighting
+# zinit light zdharma/history-search-multi-word
 
 zinit light frescoraja/powerlevel10k
 
@@ -45,3 +45,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d0d0d0"
