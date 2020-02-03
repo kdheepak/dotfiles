@@ -35,8 +35,8 @@ autoload -Uz _zinit
 zinit ice svn atpull'zinit creinstall -q .'; zinit snippet PZT::modules/git
 
 zinit snippet PZT::modules/completion/init.zsh
-zinit snippet PZT::modules/directory/init.zsh
-zinit snippet PZT::modules/editor/init.zsh
+zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
+zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
 zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/python/init.zsh
@@ -46,12 +46,18 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
+
 zinit light frescoraja/powerlevel10k
 zinit light djui/alias-tips
 zinit light wfxr/forgit
 
-zinit ice wait"0" pick"iterm2.plugin.zsh" lucid
-zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
+
+zinit ice has'git' wait'1' lucid fbin"bin/git-dsf"; zinit load zdharma/zsh-diff-so-fancy
+zinit ice has'git' wait'1' lucid; zinit load wfxr/forgit
+zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
+zinit ice wait"0" lucid; zinit load ael-code/zsh-colored-man-pages
+zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -132,3 +138,28 @@ POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND=$A_FG
 POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='#447bef'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d0d0d0"
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+#
+# Key Bindings
+#
+
+if [[ -n "$key_info" ]]; then
+  # Emacs
+  bindkey -M emacs "$key_info[Control]P" history-substring-search-up
+  bindkey -M emacs "$key_info[Control]N" history-substring-search-down
+
+  # Vi
+  bindkey -M vicmd "k" history-substring-search-up
+  bindkey -M vicmd "j" history-substring-search-down
+
+  # Emacs and Vi
+  for keymap in 'emacs' 'viins'; do
+    bindkey -M "$keymap" "$key_info[Up]" history-substring-search-up
+    bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
+  done
+
+  unset keymap
+fi
