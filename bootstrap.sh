@@ -32,5 +32,6 @@ rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
 rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak
 rm -rf ~/.config/bat/config; ln -s $(pwd)/batconfig ~/.config/bat/config
+rm -rf ~/.tmux/plugins/tpm; git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # tic -x xterm-256color-italic.terminfo
 # tic -x tmux-256color.terminfo
