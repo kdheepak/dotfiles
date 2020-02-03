@@ -15,6 +15,7 @@ rm ~/.tmux.conf; ln -s $(pwd)/.tmux.conf ~/.tmux.conf
 rm ~/.bash_profile; ln -s $(pwd)/.bash_profile ~/.bash_profile
 rm ~/.zshenv; ln -s $(pwd)/.zshenv ~/.zshenv
 rm ~/.zshrc; ln -s $(pwd)/.zshrc ~/.zshrc
+rm ~/.p10k.zsh; ln -s $(pwd)/.p10k.zsh ~/.p10k.zsh
 rm ~/.condarc; ln -s $(pwd)/.condarc ~/.condarc
 rm ~/.config/yapf/style; ln -s $(pwd)/.yapf-style ~/.config/yapf/style
 rm ~/.config/alacritty/alacritty.yml; ln -s $(pwd)/alacritty.yml ~/.config/alacritty/alacritty.yml

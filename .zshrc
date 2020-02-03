@@ -35,21 +35,25 @@ autoload -Uz _zinit
 zinit ice svn atpull'zinit creinstall -q .'; zinit snippet PZT::modules/git
 
 zinit snippet PZT::modules/completion/init.zsh
-zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
-zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
 zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/python/init.zsh
+zinit snippet PZT::modules/spectrum/init.zsh
 zinit snippet PZT::modules/utility/init.zsh
+
+zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
+zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
 
-zinit light frescoraja/powerlevel10k
+zinit light bugworm/auto-exa
 zinit light djui/alias-tips
 zinit light wfxr/forgit
+
+zinit light frescoraja/powerlevel10k
 
 zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
 
