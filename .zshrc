@@ -53,6 +53,30 @@ zinit light wfxr/forgit
 
 zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
 
+# sharkdp/bat
+zinit ice wait lucid as'command' from'gh-r' mv'bat* -> bat' pick'bat/bat'
+zinit light sharkdp/bat
+
+# ogham/exa, replacement for ls
+zinit ice wait lucid as'program' from'gh-r' mv'exa* -> exa'
+zinit light ogham/exa
+
+# FZF
+zinit ice wait lucid as'program' pick"$ZPFX/bin/(fzf|fzf-tmux)" \
+    atclone"cp shell/completion.zsh _fzf_completion; \
+      cp bin/(fzf|fzf-tmux) $ZPFX/bin; \
+      PREFIX=$ZPFX ./install" \
+    atload"source $HOME/.fzf.zsh"
+zinit light junegunn/fzf
+
+# diff-so-fancy
+zinit ice wait lucid as'program' pick'bin/git-dsf'
+zinit load zdharma/zsh-diff-so-fancy
+
+# ripgrep
+zinit ice from"gh-r" fbin"rg/rg" as"program" mv"ripgrep* -> rg" pick"rp/rg" bpick"${BPICK}"
+zinit light BurntSushi/ripgrep
+
 zinit ice has'git' wait'1' lucid fbin"bin/git-dsf"; zinit load zdharma/zsh-diff-so-fancy
 zinit ice has'git' wait'1' lucid; zinit load wfxr/forgit
 zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
