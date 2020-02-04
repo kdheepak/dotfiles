@@ -14,8 +14,6 @@ fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
-source $HOME/.config/.exports
-source $HOME/.config/.aliases
 [ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
 
 ### Added by Zinit's installer
@@ -40,6 +38,8 @@ zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/python/init.zsh
 zinit snippet PZT::modules/spectrum/init.zsh
 zinit snippet PZT::modules/utility/init.zsh
+zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.aliases
+zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.exports
 
 zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
 zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
@@ -52,6 +52,8 @@ zinit light zdharma/history-search-multi-word
 zinit light bugworm/auto-exa
 zinit light djui/alias-tips
 zinit light wfxr/forgit
+
+zinit light nim-lang/nimble
 
 zinit light frescoraja/powerlevel10k
 
@@ -191,3 +193,15 @@ if [[ -n "$key_info" ]]; then
 
   unset keymap
 fi
+
+function zle-keymap-select zle-line-init
+{
+    # change cursor shape in iTerm2
+    case $KEYMAP in
+        vicmd)      echo -ne '\e[1 q';; # block cursor
+        viins|main) echo -ne '\e[5 q';;
+    esac
+
+    zle reset-prompt
+    zle -R
+}
