@@ -49,7 +49,7 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
 
-zinit light bugworm/auto-exa
+zinit ice wait'0' lucid; zinit load desyncr/auto-ls
 zinit light djui/alias-tips
 zinit light wfxr/forgit
 
