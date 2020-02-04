@@ -39,7 +39,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kana/vim-niceblock'
 Plug 'mbbill/undotree'
 Plug 'reedes/vim-wordy'
-" Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/tmuxline.vim'
 " Plug 'kdheepak/promptline.vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'farmergreg/vim-lastplace'
@@ -102,7 +102,6 @@ Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 " Plug 'lifepillar/vim-mucomplete'
 Plug 'ncm2/float-preview.nvim'
-
 
 Plug 'joom/latex-unicoder.vim'
 
@@ -700,15 +699,16 @@ nnoremap q: <NOP>
 " nnoremap : q:I
 
 " tmuxline
-" let g:tmuxline_preset = {
-      " \'a'    : '#S',
-      " \'b'    : '#W',
-      " \'c'    : '#{prefix_highlight}',
-      " \'win'  : '#I #W',
-      " \'cwin' : '#I #W',
-      " \'x'    : '%a',
-      " \'y'    : '%R',
-      " \'z'    : '#{battery_percentage}'}
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '%Y-%m-%d  %R',
+      \'z'    : '#(~/.tmux/plugins/tmux-battery/scripts/battery_percentage.sh)'
+\ }
+
+let g:tmuxline_status_justify = 'left'
 
 ":PromptlineSnapshot! ~/gitrepos/dotfiles/promptline.sh airline<CR>
 

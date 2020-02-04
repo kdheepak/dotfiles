@@ -12,6 +12,7 @@ rm ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
 rm ~/.tmux.conf; ln -s $(pwd)/.tmux.conf ~/.tmux.conf
+rm ~/.tmux/status.conf; ln -s $(pwd)/status.conf ~/.tmux/status.conf
 rm ~/.bash_profile; ln -s $(pwd)/.bash_profile ~/.bash_profile
 rm ~/.zshenv; ln -s $(pwd)/.zshenv ~/.zshenv
 rm ~/.zshrc; ln -s $(pwd)/.zshrc ~/.zshrc
