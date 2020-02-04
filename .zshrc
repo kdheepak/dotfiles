@@ -64,8 +64,8 @@ zinit ice wait lucid as'command' from'gh-r' mv'bat* -> bat' pick'bat/bat'
 zinit light sharkdp/bat
 
 # ogham/exa, replacement for ls
-zinit ice wait lucid as'program' from'gh-r' mv'exa* -> exa'
-zinit light ogham/exa
+# zinit ice wait lucid as'program' from'gh-r' mv'exa* -> exa'
+# zinit light ogham/exa
 
 # FZF
 zinit ice wait lucid as'program' pick"$ZPFX/bin/(fzf|fzf-tmux)" \

@@ -5,11 +5,11 @@ alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 # Shortcuts
 alias G="cd ~/gitrepos"
 
-alias ls="exa --git -lFha --group-directories-first"
-alias lg='exa --git -lhF'
+alias ls="exa --git -lFha --group-directories-first --no-user"
+alias lg='exa --git -lhF --no-user'
 
 # List only directories
-alias lsd="exa -lhF | grep --color=never '^d'"
+alias lsd="exa -lhF --no-user | grep --color=never '^d'"
 
 alias cat="bat --theme=OneHalfLight --color=always"
 

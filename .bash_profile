@@ -30,3 +30,5 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 source $HOME/.config/.exports
 source $HOME/.config/.aliases
+
+export PATH="$HOME/.cargo/bin:$PATH"
