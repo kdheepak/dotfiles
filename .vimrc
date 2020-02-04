@@ -51,7 +51,6 @@ Plug 'neomake/neomake'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Raimondi/delimitMate'
 Plug 'danro/rename.vim'
-Plug 'Chiel92/vim-autoformat'
 Plug 'sjl/gundo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 " Plug 'vim-pandoc/vim-pandoc'
@@ -136,6 +135,23 @@ Plug 'rhysd/git-messenger.vim'
 " Plug 'axelf4/vim-strip-trailing-whitespace'
 
 Plug 'kdheepak/JuliaFormatter.vim'
+
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript',
+    \ 'typescript',
+    \ 'css',
+    \ 'less',
+    \ 'scss',
+    \ 'json',
+    \ 'graphql',
+    \ 'markdown',
+    \ 'vue',
+    \ 'lua',
+    \ 'python',
+    \ 'html', ] }
 
 " Initialize plugin system
 call plug#end()
@@ -833,3 +849,5 @@ let g:float_preview#docked = 0
 
 nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
 vnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(1)<CR>
+
+let g:prettier#config#prose_wrap = 'always'
