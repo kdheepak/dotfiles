@@ -176,8 +176,7 @@ alias fast-julia="julia --startup-file=no"
 alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
 
 movtogif() {
-    ffmpeg -i "$1" -vf scale=800:-1 -r 10 -f image2pipe -vcodec ppm - |\
-    convert -delay 5 -layers Optimize -loop 0 - "${1%.*}.gif"
+    ffmpeg -i "$1"  -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > "${1%.*}.gif"
 }
 
 alias gfap="gfa --prune"
