@@ -767,7 +767,7 @@ set redrawtime=10000
 
 lua << EOF
     -- require'nvim_lsp'.nimls.setup{}
-    -- require'nvim_lsp'.julials.setup{}
+    require'nvim_lsp'.julials.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
 EOF
