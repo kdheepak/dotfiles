@@ -136,6 +136,8 @@ Plug 'rhysd/git-messenger.vim'
 
 Plug 'kdheepak/JuliaFormatter.vim'
 
+Plug 'tmux-plugins/vim-tmux-focus-events'
+
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
