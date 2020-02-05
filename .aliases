@@ -180,3 +180,5 @@ movtogif() {
 }
 
 alias gfap="gfa --prune"
+alias gsb='git status -sb'
+alias gst 'git status -s'

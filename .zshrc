@@ -37,14 +37,11 @@ zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/python/init.zsh
 zinit snippet PZT::modules/spectrum/init.zsh
-zinit snippet PZT::modules/utility/init.zsh
-zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.aliases
-zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.exports
 
 zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
 zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
 
-zinit light zsh-users/zsh-autosuggestions
+# zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
@@ -63,7 +60,7 @@ zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
 zinit ice wait lucid as'command' from'gh-r' mv'bat* -> bat' pick'bat/bat'
 zinit light sharkdp/bat
 
-# ogham/exa, replacement for ls
+# # ogham/exa, replacement for ls
 # zinit ice wait lucid as'program' from'gh-r' mv'exa* -> exa'
 # zinit light ogham/exa
 
@@ -86,15 +83,14 @@ zinit light BurntSushi/ripgrep
 zinit ice has'git' wait'1' lucid fbin"bin/git-dsf"; zinit load zdharma/zsh-diff-so-fancy
 zinit ice has'git' wait'1' lucid; zinit load wfxr/forgit
 zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
-zinit ice wait"0" lucid; zinit load ael-code/zsh-colored-man-pages
+# zinit ice wait"0" lucid; zinit load ael-code/zsh-colored-man-pages
 zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 
-zinit light zdharma/fast-syntax-highlighting
+zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.aliases
+zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.exports
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-### End of Zinit installer's chunk
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -207,3 +203,6 @@ function zle-keymap-select zle-line-init
     zle reset-prompt
     zle -R
 }
+
+zinit light zsh-users/zsh-syntax-highlighting
+
