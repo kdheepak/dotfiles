@@ -41,7 +41,7 @@ zinit snippet PZT::modules/spectrum/init.zsh
 zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
 zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
 
-# zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
