@@ -204,5 +204,7 @@ function zle-keymap-select zle-line-init
     zle -R
 }
 
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+
 zinit light zsh-users/zsh-syntax-highlighting
 
