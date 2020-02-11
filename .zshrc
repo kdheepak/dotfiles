@@ -86,8 +86,8 @@ zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
 # zinit ice wait"0" lucid; zinit load ael-code/zsh-colored-man-pages
 zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 
-zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.aliases
-zinit snippet https://github.com/kdheepak/dotfiles/blob/master/.exports
+zinit snippet ~/gitrepos/dotfiles/.aliases
+zinit snippet ~/gitrepos/dotfiles/.exports
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

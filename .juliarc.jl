@@ -17,5 +17,7 @@ end
 
 using OhMyREPL
 
+enable_autocomplete_brackets(false)
+
 using Debugger
 
