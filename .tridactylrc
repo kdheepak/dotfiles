@@ -17,7 +17,6 @@ set storageloc local
 " Binds
 "
 
-" bind <Escape> composite mode normal; unfocus; hidecmdline
 bind J tabNext
 bind K tabPrev
 
@@ -33,5 +32,4 @@ bind <C-<> tabmove ^
 set theme dark
 
 set smoothscroll true
-
-bind <S-i> mode ignore
+set allowautofocus false
