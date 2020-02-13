@@ -704,6 +704,7 @@ command! FzfProjectFilesPreview execute 'FzfFiles ' . s:find_git_root()
 nnoremap <silent> - :RangerCurrentFile<CR>
 nnoremap <Leader>f :FzfProjectFilesPreview<CR>
 nnoremap <Leader>rg :FzfRgPreview<CR>
+nnoremap <Leader>b :FzfBuffers<CR>
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']

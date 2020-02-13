@@ -24,6 +24,7 @@ rm ~/.config/flake8; ln -s $(pwd)/.flake8 ~/.config/flake8
 rm ~/.config/pycodestyle; ln -s $(pwd)/.pycodestyle ~/.config/pycodestyle
 rm ~/.config/.fzf.bash; ln -s $(pwd)/.fzf.bash ~/.config/.fzf.bash
 rm ~/.config/.fzf.zsh; ln -s $(pwd)/.fzf.zsh ~/.config/.fzf.zsh
+rm -rf ~/.config/.tridactylrc; ln -s $(pwd)/..tridactylrc ~/.config/.tridactylrc
 rm ~/.gdbinit; ln -s $(pwd)/.gdbinit ~/.gdbinit
 rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
 rm ~/.gitconfig; ln -s $(pwd)/.gitconfig ~/.gitconfig

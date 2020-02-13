@@ -1,0 +1,37 @@
+" bovine3dom's dogfood
+
+" May require the latest beta builds.
+
+" Move this to $XDG_CONFIG_DIR/tridactyl/tridactylrc (that's
+" ~/.config/tridactyl/tridactylrc to mere mortals) or ~/.tridactylrc and
+" install the native messenger (:installnative in Tridactyl). Run :source to
+" get it in the browser, or just restart.
+
+" NB: If you want "vim-like" behaviour where removing a line from
+" here makes the setting disappear, uncomment the line below.
+
+sanitise tridactyllocal tridactylsync
+set storageloc local
+
+"
+" Binds
+"
+
+" bind <Escape> composite mode normal; unfocus; hidecmdline
+bind J tabNext
+bind K tabPrev
+
+bind D undo tab
+
+bind j scrollline 5
+bind k scrollline -5
+
+bind <BS> buffer #
+bind <C->> tabmove
+bind <C-<> tabmove ^
+
+set theme dark
+
+set smoothscroll true
+
+bind <S-i> mode ignore
