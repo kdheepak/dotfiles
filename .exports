@@ -73,3 +73,5 @@ export FZF_DEFAULT_OPTS
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=~/Library/Fonts"
+
+export XPRESSDIR="$HOME/Applications/fico-xpress/xpressmp"

@@ -175,8 +175,8 @@ alias julia="julia --color=yes"
 alias fast-julia="julia --startup-file=no"
 alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
 
-movtogif() {
-    ffmpeg -i "$1"  -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > "${1%.*}.gif"
+mov2gif() {
+    ffmpeg -i "$1" -pix_fmt rgb24 -r 15 -f gif - | gifsicle --converse-memory --delay=5 --optimize=3 > "${1%.*}.gif"
 }
 
 alias gfap="gfa --prune"

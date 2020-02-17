@@ -95,7 +95,7 @@ Plug 'pondrejk/vim-readability'
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 Plug 'norcalli/nvim-colorizer.lua'
 
-Plug 'kdheepak/nvim-lsp', { 'branch': 'kd/add-julials' }
+Plug 'neovim/nvim-lsp'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
