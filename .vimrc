@@ -107,7 +107,7 @@ Plug 'joom/latex-unicoder.vim'
 Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'machakann/vim-highlightedyank'
 Plug 'kassio/neoterm'
-Plug 'wincent/loupe'
+" Plug 'wincent/loupe'
 " Plug 'scrooloose/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
@@ -123,6 +123,9 @@ Plug 'rakr/vim-one'
 Plug 'chriskempson/base16-vim'
 
 Plug 'kdheepak/firenvim', { 'do': function('firenvim#install') }
+
+Plug 'haya14busa/vim-asterisk'
+Plug 'google/vim-searchindex'
 
 Plug 'zah/nim.vim'
 
@@ -635,7 +638,8 @@ augroup BgHighlight
     autocmd WinLeave * set nocul
 augroup END
 
-nmap <leader><leader> <Plug>(LoupeClearHighlight)
+" Clear highlighting
+nnoremap <leader><leader> :noh<return><esc>
 
 " The default of 31 is just a little too narrow.
 " let g:NERDTreeWinSize=40
@@ -854,3 +858,11 @@ nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
 vnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(1)<CR>
 
 let g:prettier#config#prose_wrap = 'always'
+
+" vim-asterisk
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)
+
+let g:asterisk#keeppos = 1
