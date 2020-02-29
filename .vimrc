@@ -140,6 +140,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'kdheepak/JuliaFormatter.vim'
 
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'segeljakt/vim-isotope'
 
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
