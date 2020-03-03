@@ -141,6 +141,7 @@ Plug 'kdheepak/JuliaFormatter.vim'
 
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'segeljakt/vim-isotope'
+Plug 'pbrisbin/vim-mkdir'
 
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
