@@ -143,6 +143,8 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'segeljakt/vim-isotope'
 Plug 'pbrisbin/vim-mkdir'
 
+Plug 'jceb/vim-orgmode'
+
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
@@ -205,13 +207,12 @@ set wrap
 " set spell
 " set spellfile=$HOME/config/spell/en.utf-8.add
 
-" " Ignore case when searching
-" set ignorecase
-" " When searching try to be smart about cases
-" set smartcase
-" set incsearch           " search as characters are entered
-" set hlsearch            " highlight matches
-" Loupe does all this
+" Ignore case when searching
+set ignorecase
+" When searching try to be smart about cases
+set smartcase
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
 
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
