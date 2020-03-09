@@ -143,6 +143,8 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'segeljakt/vim-isotope'
 Plug 'pbrisbin/vim-mkdir'
 
+Plug 'kshenoy/vim-signature'
+
 Plug 'jceb/vim-orgmode'
 
 Plug 'prettier/vim-prettier', {
