@@ -88,6 +88,7 @@ Plug 'baabelfish/nvim-nim'
 
 Plug 'pondrejk/vim-readability'
 
+Plug 'jpalardy/vim-slime'
 " Plug 'vim-scripts/DrawIt'
 " Plug 'gyim/vim-boxdraw'
 " Plug 'airblade/vim-rooter'
@@ -146,6 +147,8 @@ Plug 'pbrisbin/vim-mkdir'
 Plug 'kshenoy/vim-signature'
 
 Plug 'jceb/vim-orgmode'
+
+Plug 'gpanders/vim-medieval'
 
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
@@ -871,3 +874,6 @@ map g* <Plug>(asterisk-gz*)
 map g# <Plug>(asterisk-gz#)
 
 let g:asterisk#keeppos = 1
+
+let g:medieval_langs = ['python=python3', 'julia', 'sh', 'console=bash']
+nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
