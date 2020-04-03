@@ -180,6 +180,8 @@ set splitbelow                           | " split windows below
 set viminfo+=n~/.config/nvim/viminfo     | " viminfo file
 set virtualedit+=all                     | " allow virtual editing in all modes
 set nomodeline                           | " no lines are checked for set commands
+set grepprg=rg\ --vimgrep                | " use ripgrep
+set redrawtime=10000                     | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
 " set noswapfile                         | " Don't write .swp files
 
 if has("persistent_undo")
@@ -310,14 +312,9 @@ let maplocalleader = "\\" | " Map localleader to \
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Don't use Ex mode, use Q for formatting.
-" Revert with ":unmap Q".
-map Q gq
-
 " Better command history
 command! CmdHist call fzf#vim#command_history({'right': '100'})
 nnoremap <leader>: :CmdHist<CR>
-nnoremap q: <nop>
 
 " visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -346,10 +343,14 @@ nnoremap L $
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-set grepprg=rg\ --vimgrep
-
 " copy to the end of line
 nnoremap Y y$
+" copy full line
+nnoremap yy V"+y
+" copy to clipboard
+vnoremap <leader>y "+y
+" paste from clipboard
+noremap <leader>p "+gP<CR>
 
 " allow W, Q to be used instead of w and q
 command! W w
@@ -367,8 +368,9 @@ noremap gh ^
 noremap gl $
 
 " Macros
-nnoremap M @q
-vnoremap M :norm @q<CR>
+nnoremap Q @@
+vnoremap Q :norm @@<CR>
+nnoremap q: :q
 
 " Select last paste
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
@@ -409,12 +411,12 @@ noremap <leader>gb :Gblame<CR>
 noremap <leader>gd :Gvdiff<CR>
 noremap <leader>gr :Gremove<CR>
 " Open current line in the browser
-nnoremap <Leader>go :.Gbrowse<CR>
+nnoremap <leader>go :.Gbrowse<CR>
 " Open visual selection in the browser
-vnoremap <Leader>go :Gbrowse<CR>
+vnoremap <leader>go :Gbrowse<CR>
 
 " git messenger
-nnoremap <Leader>gm <Plug>(git-messenger)
+nnoremap <leader>gm <Plug>(git-messenger)
 
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
@@ -422,10 +424,6 @@ nnoremap <leader>. :lcd %:p:h<CR>
 " Run last tabularize command
 nnoremap <leader>t :Tabularize<CR>
 vnoremap <leader>t :Tabularize<CR>
-
-nnoremap yy V"+y
-vnoremap <leader>y "+y
-noremap <leader>p "+gP<CR>
 
 nnoremap <leader>z <Plug>(zoom-toggle)
 nnoremap <leader>ss :StripWhitespace<CR>
@@ -492,20 +490,15 @@ command! FzfProjectFilesPreview execute 'FzfFiles ' . s:find_git_root()
 
 " Open ranger at current file with "-"
 nnoremap <silent> - :RangerCurrentFile<CR>
-nnoremap <Leader>f :FzfProjectFilesPreview<CR>
-nnoremap <Leader>rg :FzfRgPreview<CR>
-nnoremap <Leader>b :FzfBuffers<CR>
+nnoremap <leader>f :FzfProjectFilesPreview<CR>
+nnoremap <leader>rg :FzfRgPreview<CR>
+nnoremap <leader>b :FzfBuffers<CR>
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 
 " for setting any extra option passed to ranger params
 let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
-
-nnoremap QQ q:I
-nnoremap Q: <NOP>
-nnoremap q: <NOP>
-" nnoremap : q:I
 
 " tmuxline
 let g:tmuxline_preset = {
@@ -553,10 +546,6 @@ endif
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-
-set grepprg=rg\ --vimgrep
-
-set redrawtime=10000
 
 lua << EOF
     require'nvim_lsp'.nimls.setup{}
