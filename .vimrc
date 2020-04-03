@@ -12,7 +12,7 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 
-" vim integration with external tools
+""""                                                              | " vim integration with external tools
 Plug 'junegunn/fzf'                                               | " main fzf plugin
 Plug 'junegunn/fzf.vim'                                           | " fuzzy finding plugin
 Plug 'itchyny/calendar.vim'                                       | " calendar application
@@ -20,28 +20,28 @@ Plug 'glacambre/firenvim', { 'do': function('firenvim#install') } | " turn your 
 Plug 'Lokaltog/neoranger'                                         | " Neoranger is a simple ranger wrapper script for neovim.
 Plug 'kassio/neoterm'                                             | " Use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
 Plug 'wincent/terminus'                                           | " Terminal integration improvements
-" git
+""""                                                              | " git
 Plug 'tyru/open-browser.vim'                                      | " Opens url in browser
 Plug 'tyru/open-browser-unicode.vim'                              | " Opens current character or unicode in browser
 Plug 'tyru/open-browser-github.vim'                               | " Opens github repo or github issue in browser
 Plug 'rhysd/git-messenger.vim'                                    | " reveal a hidden message from git under the cursor quickly
 Plug 'tpope/vim-fugitive'                                         | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                          | " vim plugin for github
-" tmux
+""""                                                              | " tmux
 Plug 'edkolev/tmuxline.vim'                                       | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
 Plug 'wellle/tmux-complete.vim'                                   | " insert mode completion of words in adjacent tmux panes
 Plug 'tmux-plugins/vim-tmux'                                      | " vim plugin for editing .tmux.conf files
 Plug 'christoomey/vim-tmux-navigator'                             | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
 Plug 'tmux-plugins/vim-tmux-focus-events'                         | " FocusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
 Plug 'jpalardy/vim-slime'                                         | " You can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
-" vim themes
+""""                                                              | " vim themes
 Plug 'airblade/vim-gitgutter'                                     | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                    | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                             | " official theme repository
 Plug 'rakr/vim-one'                                               | " Light and dark vim colorscheme
-" Plug 'morhetz/gruvbox'
-" Plug 'chriskempson/base16-vim'
-" vim extensions features
+" Plug 'morhetz/gruvbox'                                          |
+" Plug 'chriskempson/base16-vim'                                  |
+""""                                                              | " vim extensions features
 Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
 Plug 'machakann/vim-highlightedyank'                              | " Make the yanked region apparent!
 Plug 'junegunn/vim-peekaboo'                                      | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
@@ -72,7 +72,7 @@ Plug 'ryanoasis/vim-devicons'                                     | " Adds icons
 Plug 'segeljakt/vim-isotope'                                      | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                         | " automatically create any non-existent directories before writing the buffer
 Plug 'kshenoy/vim-signature'                                      | " toggle display and navigate marks
-" vim programming language features
+""""                                                              | " vim programming language features
 Plug 'roxma/nvim-yarp'                                            | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}     | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                              | " A nicer Python indentation style for vim
