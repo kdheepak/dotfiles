@@ -65,7 +65,7 @@ Plug 'mbbill/undotree'                                            | " visualizes
 Plug 'reedes/vim-wordy'                                           | " uncover usage problems in your writing
 Plug 'farmergreg/vim-lastplace'                                   | " intelligently reopen files at your last edit position
 Plug 'ntpeters/vim-better-whitespace'                             | " causes all trailing whitespace characters to be highlighted
-Plug 'Yggdroot/indentLine'                                        | " displaying thin vertical lines at each indentation level for code indented with spaces
+Plug 'nathanaelkane/vim-indent-guides'                            | " displaying thin vertical lines at each indentation level for code indented with spaces
 Plug 'jeffkreeftmeijer/vim-numbertoggle'                          | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
 Plug 'dhruvasagar/vim-table-mode'                                 | " automatic table creator & formatter allowing one to create neat tables as you type
 Plug 'airblade/vim-rooter'                                        | " rooter changes the working directory to the project root when you open a file or directory
@@ -307,6 +307,26 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let mapleader = " "       | " Map leader to space
 let maplocalleader = "\\" | " Map localleader to \
 
+" Markdown Preview
+" Don't start markdown preview automatically, use :MarkdownPreview
+let g:mkdp_auto_start = 0
+
+" Merge Tool
+" 3-way merge
+let g:mergetool_layout = 'bmr'
+let g:mergetool_prefer_revision = 'local'
+
+" Camelcase Motion
+" Sets up within word motions to use ,
+let g:camelcasemotion_key = ','
+
+" Indent Guides {{{
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_color_change_percent = 1
+let g:indent_guides_exclude_filetypes = ['help', 'fzf', 'openterm', 'neoterm', 'calendar']
+
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
@@ -499,6 +519,10 @@ let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 
 " for setting any extra option passed to ranger params
 let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
+
+" lazygit
+
+nnoremap <silent> <Leader>gs :call openterm#horizontal('lazygit', 0.8)<CR>
 
 " tmuxline
 let g:tmuxline_preset = {
