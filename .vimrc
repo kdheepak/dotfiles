@@ -28,6 +28,7 @@ Plug 'rhysd/git-messenger.vim'                                    | " reveal a h
 Plug 'tpope/vim-fugitive'                                         | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                          | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                    | " Merge tool for git
+Plug 'kdheepak/lazygit.vim'                                       | " lazygit
 """"                                                              | " tmux
 Plug 'edkolev/tmuxline.vim'                                       | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
 Plug 'wellle/tmux-complete.vim'                                   | " insert mode completion of words in adjacent tmux panes
@@ -521,8 +522,7 @@ let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
 
 " lazygit
-
-nnoremap <silent> <Leader>gs :call openterm#horizontal('lazygit', 0.8)<CR>
+nnoremap <silent> <leader>gs :<C-u>call lazygit#ToggleLazyGit()<CR>
 
 " tmuxline
 let g:tmuxline_preset = {
