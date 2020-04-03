@@ -1,9 +1,9 @@
 
-ENV["CONDA_JL_HOME"] = expanduser("~/miniconda3/envs/julia-py3-env")
-ENV["PYTHON"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/python")
-ENV["JUPYTER"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/jupyter")
+# ENV["CONDA_JL_HOME"] = expanduser("~/miniconda3/envs/julia-py3-env")
+# ENV["PYTHON"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/python")
+# ENV["JUPYTER"] = expanduser("~/miniconda3/envs/julia-py3-env/bin/jupyter")
 
-push!(LOAD_PATH, expanduser("~/GitRepos/Presentation.jl"))
+# push!(LOAD_PATH, expanduser("~/GitRepos/Presentation.jl"))
 
 atreplinit() do repl
     @async try
@@ -20,4 +20,3 @@ using OhMyREPL
 enable_autocomplete_brackets(false)
 
 using Debugger
-

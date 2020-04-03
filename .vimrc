@@ -12,144 +12,79 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" If installed using Homebrew
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf'
-Plug 'junegunn/vim-peekaboo'
-Plug 'vim-airline/vim-airline' " Airline status bar
-Plug 'vim-airline/vim-airline-themes'
-Plug 'itchyny/vim-cursorword'
-Plug 'ap/vim-css-color'
-Plug 'godlygeek/tabular'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-jdaddy'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-obsession'
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
-" Plug 'dhruvasagar/vim-prosession'
-Plug 'dhruvasagar/vim-zoom'
-Plug 'airblade/vim-gitgutter'
-Plug 'kana/vim-niceblock'
-Plug 'mbbill/undotree'
-Plug 'reedes/vim-wordy'
-Plug 'edkolev/tmuxline.vim'
-" Plug 'kdheepak/promptline.vim'
-Plug 'wellle/tmux-complete.vim'
-Plug 'farmergreg/vim-lastplace'
-Plug 'ntpeters/vim-better-whitespace'
-"Plug 'w0rp/ale'
-Plug 'neomake/neomake'
-" Plug 'Yggdroot/indentLine' " Enables LaTeX formatting for some reason
-" Plug 'thaerkh/vim-indentguides'
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-Plug 'Raimondi/delimitMate'
-Plug 'danro/rename.vim'
-Plug 'sjl/gundo.vim'
-Plug 'dhruvasagar/vim-table-mode'
-" Plug 'vim-pandoc/vim-pandoc'
-" Plug 'vim-pandoc/vim-pandoc-syntax'
-" Plug 'vim-pandoc/vim-pandoc-after'
-" Tmux
-Plug 'tmux-plugins/vim-tmux'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'christoomey/vim-tmux-runner'
-Plug 'tmux-plugins/vim-tmux-focus-events'
-" Markdown
-" Plug 'rhysd/vim-gfm-syntax'
-" Python
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-Plug 'vim-python/python-syntax'
-Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'vim-scripts/python_match.vim'
-" Plug 'ambv/black'
-" Rust
-Plug 'rust-lang/rust.vim'
-" Java
-Plug 'artur-shaik/vim-javacomplete2'
-Plug 'tfnico/vim-gradle'
-" Julia
-Plug 'JuliaEditorSupport/julia-vim'
-" Dart
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'reisub0/hot-reload.vim'
-" assuming your using vim-plug: https://github.com/junegunn/vim-plug
-Plug 'roxma/nvim-yarp'
+Plug 'junegunn/fzf'                                               | " main fzf plugin
+Plug 'junegunn/fzf.vim'                                           | " fuzzy finding plugin
 
-" Plug 'kdheepak/SearchHighlighting.vim' " replaced with loupe
-Plug 'kdheepak/gridlabd.vim'
-Plug 'baabelfish/nvim-nim'
+Plug 'itchyny/calendar.vim'                                       | " calendar application
+Plug 'glacambre/firenvim', { 'do': function('firenvim#install') } | " turn your browser into a Neovim client.
+Plug 'Lokaltog/neoranger'                                         | " Neoranger is a simple ranger wrapper script for neovim.
+Plug 'kassio/neoterm'                                             | " Use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
 
-Plug 'pondrejk/vim-readability'
+Plug 'airblade/vim-gitgutter'                                     | " shows a git diff in the 'gutter' (sign column)
+Plug 'vim-airline/vim-airline'                                    | " airline status bar
+Plug 'vim-airline/vim-airline-themes'                             | " official theme repository
+Plug 'rakr/vim-one'                                               | " Light and dark vim colorscheme
+" Plug 'morhetz/gruvbox'                                          | "
+" Plug 'chriskempson/base16-vim'                                  | "
 
-Plug 'jpalardy/vim-slime'
-" Plug 'vim-scripts/DrawIt'
-" Plug 'gyim/vim-boxdraw'
-" Plug 'airblade/vim-rooter'
+Plug 'tyru/open-browser.vim'                                      | " Opens url in browser
+Plug 'tyru/open-browser-unicode.vim'                              | " Opens current character or unicode in browser
+Plug 'tyru/open-browser-github.vim'                               | " Opens github repo or github issue in browser
+Plug 'rhysd/git-messenger.vim'                                    | " reveal a hidden message from git under the cursor quickly
+Plug 'tpope/vim-fugitive'                                         | " vim plugin for Git that is so awesome, it should be illegal
+Plug 'tpope/vim-rhubarb'                                          | " vim plugin for github
 
-Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
+Plug 'machakann/vim-highlightedyank'                              | " Make the yanked region apparent!
 
-Plug 'neovim/nvim-lsp'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
-" Plug 'lifepillar/vim-mucomplete'
-Plug 'ncm2/float-preview.nvim'
+Plug 'junegunn/vim-peekaboo'                                      | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
+Plug 'itchyny/vim-cursorword'                                     | " underlines the word under the cursor
+Plug 'godlygeek/tabular'                                          | " line up text
+Plug 'tpope/vim-commentary'                                       | " comment and uncomment stuff
+Plug 'tpope/vim-unimpaired'                                       | " complementary pairs of mappings
+Plug 'tpope/vim-surround'                                         | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
+Plug 'tpope/vim-repeat'                                           | " Repeat.vim remaps . in a way that plugins can tap into it.
+Plug 'tpope/vim-tbone'                                            | " Basic tmux support for vim
+Plug 'tpope/vim-jdaddy'                                           | " mappings for working with json in vim
+Plug 'tpope/vim-obsession'                                        | " no hassle vim sessions
+Plug 'dhruvasagar/vim-zoom'                                       | " toggle zoom of current window within the current tab
+Plug 'kana/vim-niceblock'                                         | " makes blockwise Visual mode more useful and intuitive
+Plug 'mbbill/undotree'                                            | " visualizes undo history and makes it easier to browse and switch between different undo branches
+Plug 'reedes/vim-wordy'                                           | " uncover usage problems in your writing
+Plug 'farmergreg/vim-lastplace'                                   | " intelligently reopen files at your last edit position
+Plug 'ntpeters/vim-better-whitespace'                             | " causes all trailing whitespace characters to be highlighted
+Plug 'Yggdroot/indentLine'                                        | " displaying thin vertical lines at each indentation level for code indented with spaces
+Plug 'jeffkreeftmeijer/vim-numbertoggle'                          | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
+Plug 'dhruvasagar/vim-table-mode'                                 | " automatic table creator & formatter allowing one to create neat tables as you type
+Plug 'airblade/vim-rooter'                                        | " rooter changes the working directory to the project root when you open a file or directory
+Plug 'joom/latex-unicoder.vim'                                    | " A plugin to type Unicode chars in Vim, using their LaTeX names
+Plug 'editorconfig/editorconfig-vim'                              | " editorconfig plugin for vim
+Plug 'haya14busa/vim-asterisk'                                    | " asterisk.vim provides improved * motions.
+Plug 'google/vim-searchindex'                                     | " This plugin shows how many times a search pattern occurs in the current buffer.
+Plug 'ryanoasis/vim-devicons'                                     | " Adds icons to plugins
+Plug 'segeljakt/vim-isotope'                                      | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
+Plug 'pbrisbin/vim-mkdir'                                         | " automatically create any non-existent directories before writing the buffer
+Plug 'kshenoy/vim-signature'                                      | " toggle display and navigate marks
 
-Plug 'joom/latex-unicoder.vim'
+Plug 'edkolev/tmuxline.vim'                                       | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
+Plug 'wellle/tmux-complete.vim'                                   | " insert mode completion of words in adjacent tmux panes
+Plug 'tmux-plugins/vim-tmux'                                      | " vim plugin for editing .tmux.conf files
+Plug 'christoomey/vim-tmux-navigator'                             | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
+Plug 'tmux-plugins/vim-tmux-focus-events'                         | " FocusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
+Plug 'jpalardy/vim-slime'                                         | " You can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
 
-Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'machakann/vim-highlightedyank'
-Plug 'kassio/neoterm'
-" Plug 'wincent/loupe'
-" Plug 'scrooloose/nerdtree'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
-Plug 'chemzqm/unite-location'
-Plug 'hecal3/vim-leader-guide'
-Plug 'Lokaltog/neoranger'
-Plug 'rbgrouleff/bclose.vim'
-
-Plug 'editorconfig/editorconfig-vim'
-
-Plug 'morhetz/gruvbox'
-Plug 'rakr/vim-one'
-Plug 'chriskempson/base16-vim'
-
-Plug 'kdheepak/firenvim', { 'do': function('firenvim#install') }
-
-Plug 'haya14busa/vim-asterisk'
-Plug 'google/vim-searchindex'
-
-Plug 'zah/nim.vim'
-
-Plug 'tyru/open-browser.vim'
-
-Plug 'ryanoasis/vim-devicons'
-
-Plug 'rhysd/git-messenger.vim'
-
-" Plug 'axelf4/vim-strip-trailing-whitespace'
-
-Plug 'kdheepak/JuliaFormatter.vim'
-
-Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'segeljakt/vim-isotope'
-Plug 'pbrisbin/vim-mkdir'
-
-Plug 'kshenoy/vim-signature'
-
-Plug 'jceb/vim-orgmode'
-
-Plug 'gpanders/vim-medieval'
-
+Plug 'roxma/nvim-yarp'                                            | " yet another remote plugin framework for neovim
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}     | " vim-plug with on-demand support for the Requirements File Format syntax for vim
+Plug 'Vimjas/vim-python-pep8-indent'                              | " A nicer Python indentation style for vim
+Plug 'rust-lang/rust.vim'                                         | " Rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+Plug 'JuliaEditorSupport/julia-vim'                               | " Julia support for vim
+Plug 'kdheepak/gridlabd.vim'                                      | " gridlabd syntax support
+Plug 'zah/nim.vim'                                                | " syntax highlighting auto indent for nim in vim
+Plug 'neovim/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     | " dark powered asynchronous completion framework for neovim/Vim8
+Plug 'ncm2/float-preview.nvim'                                    | " Completion preview window based on neovim's floating window
+Plug 'gpanders/vim-medieval'                                      | " Evaluate markdown code blocks within vim
+Plug 'kdheepak/JuliaFormatter.vim'                                | " Formatter for Julia
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
@@ -276,7 +211,7 @@ set whichwrap+=h,l
 
 set viminfo+=n~/.config/nvim/viminfo
 
-set scrolloff=10
+set scrolloff=20
 
 " Use one space, not two, after punctuation.
 set nojoinspaces
@@ -303,10 +238,6 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " resize panes when host window is resized
 autocmd VimResized * wincmd =
 
-" move to beginning/end of line
-nnoremap B ^
-nnoremap E $
-
 " highlight last inserted text
 nnoremap gV `[v`]
 
@@ -317,6 +248,8 @@ nnoremap k gk
 " move vertically by actual line
 nnoremap J j
 nnoremap K k
+nnoremap H ^
+nnoremap L $
 
 set grepprg=rg\ --vimgrep
 
@@ -333,6 +266,8 @@ nnoremap <S-Tab> :bp<CR>
 noremap X V
 noremap gj G
 noremap gk gg
+noremap gh ^
+noremap gl $
 
 if has('macunix')
   " pbcopy for OSX copy/paste
@@ -482,9 +417,15 @@ set virtualedit+=all
 
 set nomodeline
 
-let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_override_sign_column_highlight = 1
+highlight SignColumn guibg=bg
+highlight SignColumn ctermbg=bg
 
-highlight clear SignColumn
+let g:gitgutter_sign_added = '▎'
+let g:gitgutter_sign_modified = '▎'
+let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_modified_removed = '▋'
 
 let g:latex_to_unicode_auto = 1
 let g:latex_to_unicode_tab = 0
@@ -538,32 +479,36 @@ noremap <leader>ga :Gwrite<CR>
 noremap <leader>gc :Gcommit<CR>
 noremap <leader>gsh :Gpush<CR>
 noremap <leader>gll :Gpull<CR>
-noremap <leader>gs :Gstatus<CR>
+noremap <leader>gs :Magit<CR>
 noremap <leader>gb :Gblame<CR>
 noremap <leader>gd :Gvdiff<CR>
 noremap <leader>gr :Gremove<CR>
-" Open current line on GitHub
-nnoremap <leader>go :.Gbrowse<CR>
+" Open current line in the browser
+nnoremap <Leader>go :.Gbrowse<CR>
+" Open visual selection in the browser
+vnoremap <Leader>go :Gbrowse<CR>
+
 
 nnoremap <Leader>gm <Plug>(git-messenger)
 
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
-" Opens a tab edit command with the path of the currently edited file filled
-noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+" Run last tabularize command
+nnoremap <leader>t :Tabularize<CR>
+vnoremap <leader>t :Tabularize<CR>
 
 nnoremap yy V"+y
 vnoremap <leader>y "+y
 noremap <leader>p "+gP<CR>
 
-nmap <leader>z <Plug>(zoom-toggle)
+nnoremap <leader>z <Plug>(zoom-toggle)
 nnoremap <leader>ss :StripWhitespace<CR>
 
 " Buffers
 
 " Close buffer
-noremap <leader>ww :bw<CR>
+nnoremap <leader>ww :bw<CR>
 
 " Display an error message.
 function! s:Warn(msg)
@@ -668,8 +613,6 @@ nnoremap <leader><leader> :noh<return><esc>
 " let NERDTreeHijackNetrw = 0
 " let g:ranger_replace_netrw = 1
 
-nnoremap <leader>r :tabe %:p:h<CR>
-
 " Repurpose cursor keys
 nnoremap <silent> <Up> :cprevious<CR>
 nnoremap <silent> <Down> :cnext<CR>
@@ -685,6 +628,7 @@ nmap <silent> ]G :tablast<CR>
 " delete buffer
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bd<cr>
+nnoremap <silent> <leader>d :confirm bd<cr>
 
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_action = {
@@ -722,7 +666,7 @@ nnoremap <Leader>b :FzfBuffers<CR>
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 
 " for setting any extra option passed to ranger params
-" let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
+let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
 
 nnoremap QQ q:I
 nnoremap Q: <NOP>
@@ -787,11 +731,11 @@ lua << EOF
     require'nvim_lsp'.vimls.setup{}
 EOF
 
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <leader>ld    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <leader>lh    <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>ld    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>lk    <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>lr    <cmd>lua vim.lsp.buf.references()<CR>
 
 autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
