@@ -17,43 +17,49 @@ Plug 'junegunn/fzf'                                               | " main fzf p
 Plug 'junegunn/fzf.vim'                                           | " fuzzy finding plugin
 Plug 'itchyny/calendar.vim'                                       | " calendar application
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') } | " turn your browser into a Neovim client.
-Plug 'Lokaltog/neoranger'                                         | " Neoranger is a simple ranger wrapper script for neovim.
-Plug 'kassio/neoterm'                                             | " Use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
-Plug 'wincent/terminus'                                           | " Terminal integration improvements
+Plug 'Lokaltog/neoranger'                                         | " neoranger is a simple ranger wrapper script for neovim.
+Plug 'kassio/neoterm'                                             | " use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
+Plug 'wincent/terminus'                                           | " terminal integration improvements
 """"                                                              | " git
-Plug 'tyru/open-browser.vim'                                      | " Opens url in browser
-Plug 'tyru/open-browser-unicode.vim'                              | " Opens current character or unicode in browser
-Plug 'tyru/open-browser-github.vim'                               | " Opens github repo or github issue in browser
+Plug 'tyru/open-browser.vim'                                      | " opens url in browser
+Plug 'tyru/open-browser-unicode.vim'                              | " opens current character or unicode in browser
+Plug 'tyru/open-browser-github.vim'                               | " opens github repo or github issue in browser
 Plug 'rhysd/git-messenger.vim'                                    | " reveal a hidden message from git under the cursor quickly
 Plug 'tpope/vim-fugitive'                                         | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                          | " vim plugin for github
+Plug 'samoshkin/vim-mergetool'                                    | " Merge tool for git
 """"                                                              | " tmux
 Plug 'edkolev/tmuxline.vim'                                       | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
 Plug 'wellle/tmux-complete.vim'                                   | " insert mode completion of words in adjacent tmux panes
 Plug 'tmux-plugins/vim-tmux'                                      | " vim plugin for editing .tmux.conf files
 Plug 'christoomey/vim-tmux-navigator'                             | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
-Plug 'tmux-plugins/vim-tmux-focus-events'                         | " FocusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
-Plug 'jpalardy/vim-slime'                                         | " You can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
+Plug 'tmux-plugins/vim-tmux-focus-events'                         | " focusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
+Plug 'jpalardy/vim-slime'                                         | " you can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
 """"                                                              | " vim themes
 Plug 'airblade/vim-gitgutter'                                     | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                    | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                             | " official theme repository
-Plug 'rakr/vim-one'                                               | " Light and dark vim colorscheme
+Plug 'rakr/vim-one'                                               | " light and dark vim colorscheme
 " Plug 'morhetz/gruvbox'                                          |
 " Plug 'chriskempson/base16-vim'                                  |
 """"                                                              | " vim extensions features
+Plug 'bkad/CamelCaseMotion'                                       | " motions for inside camel case
+Plug 'blueyed/vim-diminactive'                                    | " helps identifying active window
+Plug 'ap/vim-buftabline'                                          | " minimal plugin for displaying buffers
 Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
-Plug 'machakann/vim-highlightedyank'                              | " Make the yanked region apparent!
+Plug 'machakann/vim-highlightedyank'                              | " make the yanked region apparent!
 Plug 'junegunn/vim-peekaboo'                                      | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
 Plug 'itchyny/vim-cursorword'                                     | " underlines the word under the cursor
+Plug 'junegunn/vim-easy-align'                                    | " helps alignment
 Plug 'godlygeek/tabular'                                          | " line up text
 Plug 'tpope/vim-commentary'                                       | " comment and uncomment stuff
 Plug 'tpope/vim-unimpaired'                                       | " complementary pairs of mappings
 Plug 'tpope/vim-surround'                                         | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
-Plug 'tpope/vim-repeat'                                           | " Repeat.vim remaps . in a way that plugins can tap into it.
-Plug 'tpope/vim-tbone'                                            | " Basic tmux support for vim
+Plug 'tpope/vim-repeat'                                           | " repeat.vim remaps . in a way that plugins can tap into it.
+Plug 'tpope/vim-tbone'                                            | " basic tmux support for vim
 Plug 'tpope/vim-jdaddy'                                           | " mappings for working with json in vim
 Plug 'tpope/vim-obsession'                                        | " no hassle vim sessions
+Plug 'tpope/vim-speeddating'                                      | " Tools for working with dates
 Plug 'dhruvasagar/vim-zoom'                                       | " toggle zoom of current window within the current tab
 Plug 'kana/vim-niceblock'                                         | " makes blockwise Visual mode more useful and intuitive
 Plug 'mbbill/undotree'                                            | " visualizes undo history and makes it easier to browse and switch between different undo branches
@@ -64,27 +70,33 @@ Plug 'Yggdroot/indentLine'                                        | " displaying
 Plug 'jeffkreeftmeijer/vim-numbertoggle'                          | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
 Plug 'dhruvasagar/vim-table-mode'                                 | " automatic table creator & formatter allowing one to create neat tables as you type
 Plug 'airblade/vim-rooter'                                        | " rooter changes the working directory to the project root when you open a file or directory
-Plug 'joom/latex-unicoder.vim'                                    | " A plugin to type Unicode chars in Vim, using their LaTeX names
+Plug 'joom/latex-unicoder.vim'                                    | " a plugin to type Unicode chars in Vim, using their LaTeX names
 Plug 'editorconfig/editorconfig-vim'                              | " editorconfig plugin for vim
 Plug 'haya14busa/vim-asterisk'                                    | " asterisk.vim provides improved * motions.
-Plug 'google/vim-searchindex'                                     | " This plugin shows how many times a search pattern occurs in the current buffer.
-Plug 'ryanoasis/vim-devicons'                                     | " Adds icons to plugins
+Plug 'google/vim-searchindex'                                     | " this plugin shows how many times a search pattern occurs in the current buffer.
+Plug 'ryanoasis/vim-devicons'                                     | " adds icons to plugins
 Plug 'segeljakt/vim-isotope'                                      | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                         | " automatically create any non-existent directories before writing the buffer
 Plug 'kshenoy/vim-signature'                                      | " toggle display and navigate marks
+Plug 'wellle/targets.vim'                                         | " Move text objects
+Plug 'sedm0784/vim-you-autocorrect'                               | " Automatic autocorrect
 """"                                                              | " vim programming language features
+Plug 'vim-vdebug/vdebug'                                          | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                            | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}     | " vim-plug with on-demand support for the Requirements File Format syntax for vim
-Plug 'Vimjas/vim-python-pep8-indent'                              | " A nicer Python indentation style for vim
-Plug 'rust-lang/rust.vim'                                         | " Rust file detection, syntax highlighting, formatting, Syntastic integration, and more
-Plug 'JuliaEditorSupport/julia-vim'                               | " Julia support for vim
+Plug 'Vimjas/vim-python-pep8-indent'                              | " a nicer Python indentation style for vim
+Plug 'rust-lang/rust.vim'                                         | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+Plug 'JuliaEditorSupport/julia-vim'                               | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                      | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                | " syntax highlighting auto indent for nim in vim
 Plug 'neovim/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     | " dark powered asynchronous completion framework for neovim/Vim8
-Plug 'ncm2/float-preview.nvim'                                    | " Completion preview window based on neovim's floating window
-Plug 'gpanders/vim-medieval'                                      | " Evaluate markdown code blocks within vim
-Plug 'kdheepak/JuliaFormatter.vim'                                | " Formatter for Julia
+Plug 'ncm2/float-preview.nvim'                                    | " completion preview window based on neovim's floating window
+Plug 'gpanders/vim-medieval'                                      | " evaluate markdown code blocks within vim
+Plug 'kdheepak/JuliaFormatter.vim'                                | " formatter for Julia
+Plug 'iamcco/markdown-preview.nvim'                               | " Markdown preview
+Plug 'inkarkat/vim-ingo-library'                                  | " Spellcheck dependency
+Plug 'inkarkat/vim-spellcheck'                                    | " Spelling errors to quickfix list
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
@@ -107,199 +119,111 @@ call plug#end()
 
 filetype plugin indent on    " required
 
-set termguicolors
-" Change colorscheme
-colorscheme one
-set background=light
-let g:one_allow_italics = 1 " I love italic for comments
+syntax enable | " enable syntax processing
 
-syntax enable           " enable syntax processing
+set encoding=utf-8      | " Default file encoding
+set fileencoding=utf-8  | " Default file encoding
+set fileencodings=utf-8 | " Default file encoding
+set noautochdir         | " Don't change dirs automatically
+set noerrorbells        | " No sound
+set hidden              | " Make buffers hidden then abandoned
 
-filetype indent on
+set tabstop=4                    | " Number of spaces a <Tab> is
+set softtabstop=4                | " Fine tunes the amount of white space to be added
+set shiftwidth=4                 | " Number of spaces for indentation
+set expandtab                    | " Expand tab to spaces
+set spelllang=en                 | " Spell checking
+set timeoutlen=500               | " Wait less time for mapped sequences
+set smarttab                     | " <Tab> in front of line inserts blanks according to shiftwidth
+set autoindent                   | " copy indent from current line
+set smartindent                  | " do smart indenting when starting a new line
+" set backspace=indent,eol,start | "allow backspacing over autoindent, line breaks, the start of insert
 
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let &showbreak='↳ ' | " string to put at the start of lines that have been wrapped
+set breakindent     | " every wrapped line will continue visually indented
+set linebreak       | " wrap long lines at a character in breakat
+set wrap            | " lines longer than the width of the window will wrap
 
-let mapleader = " " " Map leader to space
-let maplocalleader = "\\" " Map leader to space
+colorscheme one                          | " sets theme to one
+set background=light                     | " use light mode
+let g:one_allow_italics = 1              | " I love italic for comments
+set termguicolors                        | " enables 24bit colors
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1        | " enables true colors for Neovim 0.1.3 and 0.1.4
+set novisualbell                         | " don't display visual bell
+set noshowmode                           | " don't show mode changes
+let &colorcolumn=121                     | " add indicator for 120
+set display+=lastline                    | " as much as possible of the last line in a window will be displayed
+set diffopt+=vertical                    | " Always use vertical diffs
+set laststatus=2                         | " show status at the bottom
+set number relativenumber                | " use line numbers and relative line numn
+set cursorline                           | " highlight current line
+set showcmd                              | " show command in bottom bar
+set showmatch                            | " highlight matching [{()}]
+set lazyredraw                           | " redraw only when we need to.
+set ignorecase                           | " Ignore case when searching
+set smartcase                            | " When searching try to be smart about cases
+set incsearch                            | " search as characters are entered
+set hlsearch                             | " highlight matches
+set inccommand=split                     | " live search and replace
+set wildmenu                             | " visual autocomplete for command menu
+set autoread                             | " automatically read files that have been changed outside of vim
+set nobackup                             | " no backup before overwriting a file
+set nowritebackup                        | " no backups when writing a file
+set autowrite                            | " Automatically :write before running commands
+set list listchars=tab:»·,trail:·,nbsp:· | " Display extra whitespace
+set mouse=a                              | " Enables mouse support
+set nofoldenable                         | " disable folding
+set signcolumn=yes                       | " Always show git gutter / sign column
+set scrolloff=20                         | " Minimal number of lines to keep above and below the cursor
+set nojoinspaces                         | " Use one space, not two, after punctuation
+set splitright                           | " split windows right
+set splitbelow                           | " split windows below
+set viminfo+=n~/.config/nvim/viminfo     | " viminfo file
+set virtualedit+=all                     | " allow virtual editing in all modes
+set nomodeline                           | " no lines are checked for set commands
+" set noswapfile                         | " Don't write .swp files
 
-set smarttab
-" tabstop:          Width of tab character
-" softtabstop:      Fine tunes the amount of white space to be added
-" shiftwidth        Determines the amount of whitespace to add in normal mode
-" expandtab:        When on uses space instead of tabs
-set tabstop     =4
-set softtabstop =4
-set shiftwidth  =4
-set expandtab
+if has("persistent_undo")
+    set undodir=~/.local/share/nvim/undo//
+    set backupdir=~/.local/share/nvim/backup//
+    set directory=~/.local/share/nvim/swap//
+    set undofile
+endif
 
-set autoindent
-set smartindent
-set backspace=indent,eol,start
-
-" wrap
-let &showbreak='↳ '
-set breakindent
-set linebreak
-set wrap
-
-" set spelllang=en
-" set spell
-" set spellfile=$HOME/config/spell/en.utf-8.add
-
-" Ignore case when searching
-set ignorecase
-" When searching try to be smart about cases
-set smartcase
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
-
-set wildmenu            " visual autocomplete for command menu
-set lazyredraw          " redraw only when we need to.
-set showmatch           " highlight matching [{()}]
-
-" display
-set display+=lastline
-
-" Always use vertical diffs
-set diffopt+=vertical
-
-" show status at the bottom
-set laststatus=2
-set showmode
-
-set number relativenumber " line numbers
-set cursorline " highlight current line
-" set cursorcolumn " highlight current column
-set showcmd " show command in bottom bar
-
-set complete-=i
-
-" buffer
-set autoread
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8
-" set bomb
-" set binary
-
-set hidden
-
-set nobackup
-set nowritebackup
-set cmdheight=1
-" set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-set autowrite     " Automatically :write before running commands
-
-set updatetime=300
-set shortmess+=c
-
-" Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
-
-set mouse=a
-
-set nofoldenable    " disable folding
-
-" Always show git gutter / sign column
-set signcolumn=yes
-
-set inccommand=split
-
-" wrap around line
-set whichwrap+=h,l
-
-set viminfo+=n~/.config/nvim/viminfo
-
-set scrolloff=20
-
-" Use one space, not two, after punctuation.
-set nojoinspaces
-
-" split windows right and below
-set splitright
-set splitbelow
-
-" Search mappings: These will make it so that going to the next one in a
-" search will center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" Don't use Ex mode, use Q for formatting.
-" Revert with ":unmap Q".
-map Q gq
-
- " visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-
+" Ensure comments don't go to beginning of line by default
+autocmd! FileType vim,python setl nosmartindent
 " Disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " resize panes when host window is resized
 autocmd VimResized * wincmd =
 
-" highlight last inserted text
-nnoremap gV `[v`]
+" jsonc comment syntax highlighting
+autocmd FileType json syntax match Comment +\/\/.\+$+
+" disable indent line plugin for json
+" autocmd Filetype json :IndentLinesDisable
 
-" move vertically by visual line
-nnoremap j gj
-nnoremap k gk
+" autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
+" autocmd BufLeave term://* stopinsert
+autocmd TermOpen * setlocal nonumber
+autocmd TermOpen * setlocal norelativenumber
+autocmd TermOpen term://* startinsert
 
-" move vertically by actual line
-nnoremap J j
-nnoremap K k
-nnoremap H ^
-nnoremap L $
-
-set grepprg=rg\ --vimgrep
-
-nnoremap Y y$
-
-command! W w
-command! -bang Q q
-command! -bang Qa qa
-
-"" Tabs
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
-
-noremap X V
-noremap gj G
-noremap gk gg
-noremap gh ^
-noremap gl $
-
-if has('macunix')
-  " pbcopy for OSX copy/paste
-  vmap <C-x> :!pbcopy<CR>
-  vmap <C-c> :w !pbcopy<CR><CR>
-endif
-
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-
-"" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-
-" python
-" vim-python
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+" remove highlight on the cursorline when moving out of the window
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
 augroup END
 
-" syntastic
-let g:syntastic_python_checkers=['python', 'flake8']
+" use built in neovim lsp for autocomplete
+autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python', 'nim']
-let python_highlight_all = 1
+autocmd BufEnter * EnableStripWhitespaceOnSave
+let g:strip_whitespace_confirm=0
+
+" autocmd! BufWritePost * make
 
 " vim-airline
-
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -342,81 +266,20 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-if has("persistent_undo")
-    set undodir=~/.local/share/nvim/undo//
-    set backupdir=~/.local/share/nvim/backup//
-    set directory=~/.local/share/nvim/swap//
-    set undofile
-endif
-
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 
-autocmd BufEnter * EnableStripWhitespaceOnSave
-let g:strip_whitespace_confirm=0
-
-" autocmd! BufWritePost * make
-
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
-
-" Use tab for indenting in visual mode
-vnoremap <Tab> >gv|
-vnoremap <S-Tab> <gv
-nnoremap > >>_
-nnoremap < <<_
-
-" Select last paste
-nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
-
-" Macros
-nnoremap M @q
-vnoremap M :norm @q<CR>
-
-let g:neomake_python_flake8_maker = {
-            \ 'errorformat':
-            \ '%E%f:%l: could not compile,%-Z%p^,' .
-            \ '%A%f:%l:%c: %t%n %m,' .
-            \ '%A%f:%l: %t%n %m,' .
-            \ '%-G%.%#'
-            \ }
-let g:neomake_python_enabled_makers = ['flake8']
-
-" Ensure comments don't go to beginning of line by default
-au! FileType vim,python setl nosmartindent
-
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
 
 " vim-markdown
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_emphasis_multiline = 0
 let g:vim_markdown_folding_disabled = 1
 
-function! s:isAtStartOfLine(mapping)
-  let text_before_cursor = getline('.')[0 : col('.')-1]
-  let mapping_pattern = '\V' . escape(a:mapping, '\')
-  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-endfunction
-
-inoreabbrev <expr> <bar><bar>
-          \ <SID>isAtStartOfLine('\|\|') ?
-          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-inoreabbrev <expr> __
-          \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-set virtualedit+=all
-
-set nomodeline
-
+" vim gitgutter
 let g:gitgutter_override_sign_column_highlight = 1
 highlight SignColumn guibg=bg
 highlight SignColumn ctermbg=bg
@@ -437,35 +300,98 @@ let g:unicoder_cancel_insert = 1
 let g:unicoder_cancel_visual = 1
 let g:unicoder_no_map = 1
 
-"
 " 'Yggdroot/indentLine'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
-" jsonc comment syntax highlighting
-autocmd FileType json syntax match Comment +\/\/.\+$+
-" disable indent line plugin for json
-" autocmd Filetype json :IndentLinesDisable
+let mapleader = " "       | " Map leader to space
+let maplocalleader = "\\" | " Map localleader to \
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Don't use Ex mode, use Q for formatting.
+" Revert with ":unmap Q".
+map Q gq
+
+" Better command history
+command! CmdHist call fzf#vim#command_history({'right': '100'})
+nnoremap <leader>: :CmdHist<CR>
+nnoremap q: <nop>
+
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+nnoremap > >>_
+nnoremap < <<_
+
+" Use tab for indenting in visual mode
+vnoremap <Tab> >gv|
+vnoremap <S-Tab> <gv
+
+" highlight last inserted text
+nnoremap gV `[v`]
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" move vertically by actual line
+nnoremap J j
+nnoremap K k
+nnoremap H ^
+nnoremap L $
+
+"" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+set grepprg=rg\ --vimgrep
+
+" copy to the end of line
+nnoremap Y y$
+
+" allow W, Q to be used instead of w and q
+command! W w
+command! -bang Q q
+command! -bang Qa qa
+
+" Tabs
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
+
+" kakoune like mapping
+noremap gj G
+noremap gk gg
+noremap gh ^
+noremap gl $
+
+" Macros
+nnoremap M @q
+vnoremap M :norm @q<CR>
+
+" Select last paste
+nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
 
 " reformat paragraph
 nnoremap <silent> <leader>q vapkJgqap
 vnoremap <silent> <leader>q Jgqap
-
-nnoremap <leader>a :Autoformat<CR>
-
-" TODO: Searches for word and always replacing
-" nnoremap <leader>s <Esc>* \| :%s///g<Left><Left> " TODO: doesn't work as expected
-
-" remap Join lines and help
-" nnoremap <leader>J J
-" nnoremap <leader>H K
 
 nnoremap <silent> <leader>sh :terminal<CR>
 nnoremap <silent> <leader><Enter> :terminal<CR>
 nnoremap <silent> <localleader><localleader> <C-^>
 nnoremap <silent> <BS> <C-^>
 
-" toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
+" toggle undo tree
+nnoremap <leader>u :UndotreeToggle<CR>
 " redo
 nnoremap U <C-R>
 
@@ -488,7 +414,7 @@ nnoremap <Leader>go :.Gbrowse<CR>
 " Open visual selection in the browser
 vnoremap <Leader>go :Gbrowse<CR>
 
-
+" git messenger
 nnoremap <Leader>gm <Plug>(git-messenger)
 
 " Set working directory
@@ -517,101 +443,10 @@ function! s:Warn(msg)
   echohl NONE
 endfunction
 
-" " Command ':Bdelete' executes ':bd' to delete buffer in current window.
-" " The window will show the alternate buffer (Ctrl-^) if it exists,
-" " or the previous buffer (:bp), or a blank buffer if no previous.
-" " Command ':Bdelete!' is the same, but executes ':bd!' (discard changes).
-" " An optional argument can specify which buffer to close (name or number).
-
-" function! s:Bdelete(bang, buffer)
-"   if empty(a:buffer)
-"     let btarget = bufnr('%')
-"   elseif a:buffer =~ '^\d\+$'
-"     let btarget = bufnr(str2nr(a:buffer))
-"   else
-"     let btarget = bufnr(a:buffer)
-"   endif
-"   if btarget < 0
-"     call s:Warn('No matching buffer for '.a:buffer)
-"     return
-"   endif
-"   if empty(a:bang) && getbufvar(btarget, '&modified')
-"     call s:Warn('No write since last change for buffer '.btarget.' (use :Bdelete!)')
-"     return
-"   endif
-"   " Numbers of windows that view target buffer which we will delete.
-"   let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
-"   if len(wnums) > 1
-"     execute 'close'.a:bang
-"     return
-"   endif
-"   let wcurrent = winnr()
-"   for w in wnums
-"     execute w.'wincmd w'
-"     let prevbuf = bufnr('#')
-"     if prevbuf > 0 && buflisted(prevbuf) && prevbuf != w
-"       buffer #
-"     else
-"       bprevious
-"     endif
-"     if btarget == bufnr('%')
-"       " Numbers of listed buffers which are not the target to be deleted.
-"       let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
-"       " Listed, not target, and not displayed.
-"       let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
-"       " Take the first buffer, if any (could be more intelligent).
-"       let bjump = (bhidden + blisted + [-1])[0]
-"       if bjump > 0
-"         execute 'buffer '.bjump
-"       else
-"         execute 'enew'.a:bang
-"       endif
-"     endif
-"   endfor
-"   execute 'bdelete'.a:bang.' '.btarget
-"   execute wcurrent.'wincmd w'
-" endfunction
-" command! -bang -complete=buffer -nargs=? Bdelete call <SID>Bdelete('<bang>', '<args>')
-
-" " Allows closing windows without closing buffers and remaps q to this action
-" cabbrev q    <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Bdelete' : 'q')<CR>
-" cabbrev wq   <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|Bdelete' : 'wq')<CR>
-
 nnoremap <leader>o :only<CR>
-
-" autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
-" autocmd BufLeave term://* stopinsert
-autocmd TermOpen * setlocal nonumber
-autocmd TermOpen * setlocal norelativenumber
-autocmd TermOpen term://* startinsert
-
-augroup BgHighlight
-    autocmd!
-    autocmd WinEnter * set cul
-    autocmd WinLeave * set nocul
-augroup END
 
 " Clear highlighting
 nnoremap <leader><leader> :noh<return><esc>
-
-" The default of 31 is just a little too narrow.
-" let g:NERDTreeWinSize=40
-
-" Disable display of '?' text and 'Bookmarks' label.
-" let g:NERDTreeMinimalUI=1
-
-" Let <Leader><Leader> (^#) return from NERDTree window.
-" let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
-
-" Single-click to toggle directory nodes, double-click to open non-directory
-" nodes.
-" let g:NERDTreeMouseMode=2
-
-" let g:NERDTreeQuitOnOpen=1
-
-" nnoremap <leader>n :NERDTreeToggle<CR>
-" let NERDTreeHijackNetrw = 0
-" let g:ranger_replace_netrw = 1
 
 " Repurpose cursor keys
 nnoremap <silent> <Up> :cprevious<CR>
@@ -725,7 +560,7 @@ set grepprg=rg\ --vimgrep
 set redrawtime=10000
 
 lua << EOF
-    -- require'nvim_lsp'.nimls.setup{}
+    require'nvim_lsp'.nimls.setup{}
     require'nvim_lsp'.julials.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
@@ -736,8 +571,6 @@ nnoremap <silent> <leader>lh    <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <leader>ld    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
 nnoremap <silent> <leader>lk    <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <leader>lr    <cmd>lua vim.lsp.buf.references()<CR>
-
-autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " let g:LanguageClient_serverCommands = {
 "     \ 'vim': ['vim-language-server', '--stdio'],
@@ -799,13 +632,6 @@ endfunction "}}}
 
 let g:float_preview#docked = 0
 
-" let g:mucomplete#enable_auto_at_startup = 1
-" let g:mucomplete#chains = {}
-" let g:mucomplete#chains.default = ['omni', 'c-n', 'path', 'tags', 'dict']
-" let s:cpp_cond = { t -> t =~# '\%(->\|::\|\.\)$' }
-" let g:mucomplete#can_complete = {}
-" let g:mucomplete#can_complete.cpp = { 'omni': s:cpp_cond }
-
 nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
 vnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(1)<CR>
 
@@ -821,5 +647,19 @@ let g:asterisk#keeppos = 1
 
 let g:medieval_langs = ['python=python3', 'julia', 'sh', 'console=bash']
 nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
-
 let g:slime_target = "tmux"
+
+" automatically enable table mode when using || or __
+function! s:isAtStartOfLine(mapping)
+    let text_before_cursor = getline('.')[0 : col('.')-1]
+    let mapping_pattern = '\V' . escape(a:mapping, '\')
+    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+            \ <SID>isAtStartOfLine('\|\|') ?
+            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+            \ <SID>isAtStartOfLine('__') ?
+            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
