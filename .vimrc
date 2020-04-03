@@ -522,7 +522,7 @@ let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
 
 " lazygit
-nnoremap <silent> <leader>gs :<C-u>call lazygit#ToggleLazyGit()<CR>
+nnoremap <silent> <leader>gs :<C-u>call lazygit#Toggle()<CR>
 
 " tmuxline
 let g:tmuxline_preset = {
