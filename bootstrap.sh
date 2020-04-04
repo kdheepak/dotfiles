@@ -8,10 +8,10 @@ mkdir -p ~/.config/bat;
 mkdir -p ~/.config/alacritty;
 mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
-rm ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
 rm ~/.config/yabai/yabairc; ln -s $(pwd)/yabairc ~/.config/yabai/yabairc
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
+rm ~/Library/ApplicationSupport/jesseduffield/lazygit/config.yml; ln -s $(pwd)/lazygit.yml ~/Library/ApplicationSupport/jesseduffield/lazygit/config.yml
 rm ~/.tmux.conf; ln -s $(pwd)/.tmux.conf ~/.tmux.conf
 rm ~/.tmux/status.conf; ln -s $(pwd)/status.conf ~/.tmux/status.conf
 rm ~/.bash_profile; ln -s $(pwd)/.bash_profile ~/.bash_profile

@@ -1,0 +1,5 @@
+reporting: "off"
+startuppopupversion: 1
+gui:
+  theme:
+    lightTheme: true

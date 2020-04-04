@@ -6,7 +6,7 @@ alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 alias G="cd ~/gitrepos"
 
 alias ls="exa --git -lFha --group-directories-first --no-user"
-alias lg='exa --git -lhF --no-user'
+alias lg=lazygit
 
 # List only directories
 alias lsd="exa -lhF --no-user | grep --color=never '^d'"
