@@ -45,7 +45,6 @@ Plug 'rakr/vim-one'                                               | " light and 
 " Plug 'chriskempson/base16-vim'                                  |
 """"                                                              | " vim extensions features
 Plug 'bkad/CamelCaseMotion'                                       | " motions for inside camel case
-Plug 'blueyed/vim-diminactive'                                    | " helps identifying active window
 Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
 Plug 'machakann/vim-highlightedyank'                              | " make the yanked region apparent!
 Plug 'junegunn/vim-peekaboo'                                      | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
