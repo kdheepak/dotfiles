@@ -13,8 +13,9 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 """"                                                              | " vim integration with external tools
-Plug 'junegunn/fzf'                                               | " main fzf plugin
+Plug 'junegunn/fzf'                                               | " main fzf
 Plug 'junegunn/fzf.vim'                                           | " fuzzy finding plugin
+Plug 'yuki-ycino/fzf-preview.vim'                                 | " add floating window support for fzf
 Plug 'itchyny/calendar.vim'                                       | " calendar application
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') } | " turn your browser into a Neovim client.
 Plug 'Lokaltog/neoranger'                                         | " neoranger is a simple ranger wrapper script for neovim.
@@ -28,7 +29,7 @@ Plug 'rhysd/git-messenger.vim'                                    | " reveal a h
 Plug 'tpope/vim-fugitive'                                         | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                          | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                    | " Merge tool for git
-Plug 'kdheepak/lazygit.vim'                                       | " lazygit
+Plug '~/gitrepos/lazygit.vim'                                     | " lazygit
 """"                                                              | " tmux
 Plug 'edkolev/tmuxline.vim'                                       | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
 Plug 'wellle/tmux-complete.vim'                                   | " insert mode completion of words in adjacent tmux panes
@@ -143,9 +144,9 @@ set breakindent     | " every wrapped line will continue visually indented
 set linebreak       | " wrap long lines at a character in breakat
 set wrap            | " lines longer than the width of the window will wrap
 
+let g:one_allow_italics = 1              | " I love italic for comments
 colorscheme one                          | " sets theme to one
 set background=light                     | " use light mode
-let g:one_allow_italics = 1              | " I love italic for comments
 set termguicolors                        | " enables 24bit colors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1        | " enables true colors for Neovim 0.1.3 and 0.1.4
 set novisualbell                         | " don't display visual bell
@@ -332,10 +333,6 @@ let g:indent_guides_exclude_filetypes = ['help', 'fzf', 'openterm', 'neoterm', '
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Better command history
-command! CmdHist call fzf#vim#command_history({'right': '100'})
-nnoremap <leader>: :CmdHist<CR>
-
 " visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
@@ -419,6 +416,7 @@ nnoremap U <C-R>
 " edit vimrc/zshrc/tmux and load vimrc bindings
 nnoremap <silent> <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+nnoremap <silent> <leader>sl :luafile %<CR>
 nnoremap <silent> <leader>ez :vsp ~/.zshrc<CR>
 
 "" Git
@@ -480,39 +478,23 @@ nmap <silent> ]G :tablast<CR>
 " delete buffer
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bd<cr>
-nnoremap <silent> <leader>d :confirm bd<cr>
-
-let g:fzf_command_prefix = 'Fzf'
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-g': 'split',
-  \ 'ctrl-v': 'vsplit' }
-let g:fzf_buffers_jump = 1
-let g:fzf_layout = { 'down': '~40%' }
-
-" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
-command! -bang -nargs=* FzfRgPreview
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --hidden --no-heading --color=always --smart-case '.shellescape(<q-args>), 2,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%', 'ctrl-l'),
-  \   <bang>0)
-
-" Files command with preview window
-command! -bang -nargs=? -complete=dir FzfFilesPreview
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:50%:hidden', 'ctrl-l'), <bang>0)
-
-function! s:find_git_root()
-  return system('cd '. expand('%:p:h') . ' && git rev-parse --show-toplevel 2> /dev/null')[:-2]
-endfunction
-
-command! FzfProjectFilesPreview execute 'FzfFiles ' . s:find_git_root()
+nnoremap <silent> <leader>dd :confirm bd<cr>
 
 " Open ranger at current file with "-"
-nnoremap <silent> - :RangerCurrentFile<CR>
-nnoremap <leader>f :FzfProjectFilesPreview<CR>
-nnoremap <leader>rg :FzfRgPreview<CR>
-nnoremap <leader>b :FzfBuffers<CR>
+nnoremap <silent> <leader>- :RangerCurrentFile<CR>
+
+nnoremap <silent> <leader>ff :<c-u>FzfPreviewProjectFiles<CR>
+nnoremap <silent> <leader>f/ :<c-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'"<CR>
+nnoremap <silent> <leader>f* :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>fb :<c-u>FzfPreviewAllBuffers<CR>
+nnoremap <silent> <leader>fm :<c-u>FzfPreviewMarks<CR>
+nnoremap <silent> <leader>fj :<c-u>FzfPreviewJumps<CR>
+nnoremap <silent> <leader>fc :<c-u>FzfPreviewChanges<CR>
+nnoremap <silent> <leader>ft :<c-u>FzfPreviewTags<CR>
+nnoremap <silent> <leader>fg :<c-u>FzfPreviewGitStatus<CR>
+
+let g:fzf_preview_floating_window_winblend = 5
+let g:fzf_preview_command = 'bat --color=always --style=grid {-1}' " Installed bat
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
@@ -521,7 +503,7 @@ let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
 
 " lazygit
-nnoremap <silent> <leader>gs :<C-u>call lazygit#Toggle()<CR>
+nnoremap <silent> <leader>gs :LazyGit<CR>
 
 " tmuxline
 let g:tmuxline_preset = {
@@ -542,16 +524,6 @@ if has('nvim') && executable('nvr')
   let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 endif
 if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  " send the escape key to the temrinal
-  tnoremap <A-[> <Esc>
-  " tnoremap <c-h> <c-\><c-n><c-w>h
-  " tnoremap <c-j> <c-\><c-n><c-w>j
-  " tnoremap <c-k> <c-\><c-n><c-w>k
-  " tnoremap <c-l> <c-\><c-n><c-w>l
-  tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
-  hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#f00000 cterm=NONE gui=NONE
-
   "" Split
   " noremap <leader>\| :vsp|wincmd l|terminal<CR>
   " noremap <leader>-  :NvimuxHorizontalSplit<CR>
