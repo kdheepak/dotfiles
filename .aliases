@@ -152,10 +152,12 @@ alias tns='tmux new-session -s'
 # }
 
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    alias v=nvr
     alias vi=nvr
     alias vim=nvr
     alias nvim=nvr
 else
+    alias v=nvim
     alias vi=nvim
     alias vim=nvim
 fi
@@ -175,16 +177,18 @@ alias julia="julia --color=yes"
 alias fast-julia="julia --startup-file=no"
 alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
 
-mov2gif() {
-    (
-        set -eux
-        local tmpdir="/tmp/mov2fig"
-        mkdir -p $tmpdir
-        ffmpeg -i "$1" -an -sn -r 10 $tmpdir/%04d.png
-        gifski -o $tmpdir/tmp.gif --fps 10 $tmpdir/*.png
-        gifsicle -i $tmpdir/tmp.gif -O3 --lossy=100 --scale=0.8 --colors 256 -o "${1%.*}.gif"
-        rm -r "$tmpdir"
-    )
+gifify() {
+    if [[ -n "$1" ]]; then
+        if [[ $2 == '--good' ]]; then
+            ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
+            time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+            rm out-static*.png
+        else
+            ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+        fi
+    else
+        echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
+    fi
 }
 
 alias gfap="gfa --prune"

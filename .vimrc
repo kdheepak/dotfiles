@@ -1,3 +1,5 @@
+lua package.loaded['lazygit'] = nil
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -209,6 +211,9 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen term://* startinsert
+
+" Use :wq or :x instead of :w | bd for git commit messages when using nvr
+autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
 " remove highlight on the cursorline when moving out of the window
 augroup BgHighlight
