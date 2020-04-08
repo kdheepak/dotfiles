@@ -145,6 +145,7 @@ let &showbreak='↳ ' | " string to put at the start of lines that have been wra
 set breakindent     | " every wrapped line will continue visually indented
 set linebreak       | " wrap long lines at a character in breakat
 set wrap            | " lines longer than the width of the window will wrap
+set showcmd         | " display an incomplete command in the lower right of the vim window
 
 let g:one_allow_italics = 1              | " I love italic for comments
 colorscheme one                          | " sets theme to one
@@ -333,6 +334,10 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_color_change_percent = 1
 let g:indent_guides_exclude_filetypes = ['help', 'fzf', 'openterm', 'neoterm', 'calendar']
 
+" Use virtual replace mode all the time
+nnoremap r gr
+nnoremap R gR
+
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
@@ -367,8 +372,6 @@ vnoremap K :m '<-2<CR>gv=gv
 
 " copy to the end of line
 nnoremap Y y$
-" copy full line
-nnoremap yy V"+y
 " copy to clipboard
 vnoremap <leader>y "+y
 " paste from clipboard
@@ -466,7 +469,7 @@ endfunction
 nnoremap <leader>o :only<CR>
 
 " Clear highlighting
-nnoremap <leader><leader> :noh<return><esc>
+nnoremap <silent> <leader><leader> :nohlsearch<return><esc>
 
 " Repurpose cursor keys
 nnoremap <silent> <Up> :cprevious<CR>
@@ -486,12 +489,12 @@ nnoremap <silent> <C-d><C-d> :confirm bd<cr>
 nnoremap <silent> <leader>dd :confirm bd<cr>
 
 " Open ranger at current file with "-"
-nnoremap <silent> <leader>- :RangerCurrentFile<CR>
+nnoremap <silent> - :RangerCurrentFile<CR>
 
 nnoremap <silent> <leader>ff :<c-u>FzfPreviewProjectFiles<CR>
-nnoremap          <leader>fs :<C-u>FzfPreviewProjectGrep<Space>
+nnoremap          <leader>fs :<c-u>FzfPreviewProjectGrep<Space>
 xnoremap          <leader>fs "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-nnoremap <silent> <leader>f* :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>f* :<c-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
 nnoremap <silent> <leader>fb :<c-u>FzfPreviewAllBuffers<CR>
 nnoremap <silent> <leader>fm :<c-u>FzfPreviewMarks<CR>
 nnoremap <silent> <leader>fj :<c-u>FzfPreviewJumps<CR>
