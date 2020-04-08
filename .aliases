@@ -11,7 +11,7 @@ alias lg=lazygit
 # List only directories
 alias lsd="exa -lhF --no-user | grep --color=never '^d'"
 
-alias cat="bat --theme=OneHalfLight --color=always"
+alias cat="bat --color=always"
 
 alias tree="exa --tree"
 

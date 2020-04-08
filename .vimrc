@@ -503,7 +503,9 @@ nnoremap <silent> <leader>ft :<c-u>FzfPreviewTags<CR>
 nnoremap <silent> <leader>fg :<c-u>FzfPreviewGitStatus<CR>
 
 let g:fzf_preview_floating_window_winblend = 5
-let g:fzf_preview_command = 'bat --color=always --style=grid {-1}' " Installed bat
+let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
+let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=OneHalfLight'
+let g:fzf_preview_grep_preview_cmd = expand('~/.config/bat/bin/preview_fzf_grep')
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']

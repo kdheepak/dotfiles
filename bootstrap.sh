@@ -4,7 +4,7 @@ mkdir -p ~/.config;
 mkdir -p ~/.config/yapf;
 mkdir -p ~/.config/nvim;
 mkdir -p ~/.config/kak;
-mkdir -p ~/.config/bat;
+mkdir -p ~/.config/bat/bin;
 mkdir -p ~/.config/alacritty;
 mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
@@ -36,6 +36,7 @@ rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
 rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak
 rm -rf ~/.config/bat/config; ln -s $(pwd)/batconfig ~/.config/bat/config
+rm -rf ~/.config/bat/bin/preview_fzf_grep; ln -s $(pwd)/preview_fzf_grep ~/.config/bat/bin/preview_fzf_grep
 rm -rf ~/.tmux/plugins/tpm; git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # tic -x xterm-256color-italic.terminfo
 # tic -x tmux-256color.terminfo
