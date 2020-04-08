@@ -492,7 +492,7 @@ nnoremap <silent> <leader>dd :confirm bd<cr>
 nnoremap <silent> - :RangerCurrentFile<CR>
 
 nnoremap <silent> <leader>ff :<c-u>FzfPreviewProjectFiles<CR>
-nnoremap          <leader>fs :<c-u>FzfPreviewProjectGrep<Space>
+nnoremap          <leader>fs :<c-u>FzfPreviewProjectGrep ""<CR>
 xnoremap          <leader>fs "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
 nnoremap <silent> <leader>f* :<c-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
 nnoremap <silent> <leader>fb :<c-u>FzfPreviewAllBuffers<CR>
