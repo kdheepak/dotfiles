@@ -43,7 +43,7 @@ Plug 'jpalardy/vim-slime'                                         | " you can ty
 Plug 'airblade/vim-gitgutter'                                     | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                    | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                             | " official theme repository
-Plug 'rakr/vim-one'                                               | " light and dark vim colorscheme
+Plug '~/gitrepos/vim-one'                                               | " light and dark vim colorscheme
 """"                                                              | " vim extensions features
 Plug 'bkad/CamelCaseMotion'                                       | " motions for inside camel case
 Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
@@ -229,6 +229,8 @@ let g:strip_whitespace_confirm=0
 " autocmd! BufWritePost * make
 
 " vim-airline
+let g:airline_theme = 'one'
+
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
