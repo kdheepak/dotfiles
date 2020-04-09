@@ -428,7 +428,6 @@ noremap <leader>ga :Gwrite<CR>
 noremap <leader>gc :Gcommit<CR>
 noremap <leader>gsh :Gpush<CR>
 noremap <leader>gll :Gpull<CR>
-noremap <leader>gs :Magit<CR>
 noremap <leader>gb :Gblame<CR>
 noremap <leader>gd :Gvdiff<CR>
 noremap <leader>gr :Gremove<CR>
@@ -436,6 +435,9 @@ noremap <leader>gr :Gremove<CR>
 nnoremap <leader>go :.Gbrowse<CR>
 " Open visual selection in the browser
 vnoremap <leader>go :Gbrowse<CR>
+" lazygit
+nnoremap <silent> <leader>gs :LazyGit<CR>
+
 
 " git messenger
 nnoremap <leader>gm <Plug>(git-messenger)
@@ -451,9 +453,6 @@ nnoremap <leader>z <Plug>(zoom-toggle)
 nnoremap <leader>ss :StripWhitespace<CR>
 
 " Buffers
-
-" Close buffer
-nnoremap <leader>ww :bw<CR>
 
 " Display an error message.
 function! s:Warn(msg)
@@ -481,8 +480,9 @@ nmap <silent> ]G :tablast<CR>
 
 " delete buffer
 " works nicely in terminal mode as well
-nnoremap <silent> <C-d><C-d> :confirm bd<cr>
-nnoremap <silent> <leader>dd :confirm bd<cr>
+nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
+nnoremap <silent> <leader>dd :confirm bdelete<CR>
+nnoremap <silent> <leader>ww :confirm bwipeout<CR>
 
 " Open ranger at current file with "-"
 nnoremap <silent> - :RangerCurrentFile<CR>
@@ -508,10 +508,6 @@ let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
 
 " for setting any extra option passed to ranger params
 let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
-
-" lazygit
-nnoremap <silent> <leader>gs :LazyGit<CR>
-
 " tmuxline
 let g:tmuxline_preset = {
       \'a'    : '#S',
@@ -582,7 +578,7 @@ nnoremap <silent> <leader>lr    <cmd>lua vim.lsp.buf.references()<CR>
 "
 " function! LC_maps()
 "   if has_key(g:LanguageClient_serverCommands, &ft)
-"     nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
+"     nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
 "     inoremap <buffer> <silent> <c-i> <c-o>:call LanguageClient#textDocument_hover()<cr>
 "     nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
 "     nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
@@ -649,7 +645,7 @@ endfunction
 
 inoreabbrev <expr> <bar><bar>
             \ <SID>isAtStartOfLine('\|\|') ?
-            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+            \ '<c-o>:TableModeEnable<CR><bar><space><bar><left><left>' : '<bar><bar>'
 inoreabbrev <expr> __
             \ <SID>isAtStartOfLine('__') ?
-            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+            \ '<c-o>:silent! TableModeDisable<CR>' : '__'
