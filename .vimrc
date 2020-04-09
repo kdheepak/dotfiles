@@ -422,10 +422,10 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap U <C-R>
 
 " edit vimrc/zshrc/tmux and load vimrc bindings
-nnoremap <silent> <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 nnoremap <silent> <leader>sl :luafile %<CR>
-nnoremap <silent> <leader>ez :vsp ~/.zshrc<CR>
+nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
 
 "" Git
 noremap <leader>ga :Gwrite<CR>
