@@ -44,8 +44,6 @@ Plug 'airblade/vim-gitgutter'                                     | " shows a gi
 Plug 'vim-airline/vim-airline'                                    | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                             | " official theme repository
 Plug 'rakr/vim-one'                                               | " light and dark vim colorscheme
-" Plug 'morhetz/gruvbox'                                          |
-" Plug 'chriskempson/base16-vim'                                  |
 """"                                                              | " vim extensions features
 Plug 'bkad/CamelCaseMotion'                                       | " motions for inside camel case
 Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
@@ -148,10 +146,9 @@ set wrap            | " lines longer than the width of the window will wrap
 set showcmd         | " display an incomplete command in the lower right of the vim window
 
 let g:one_allow_italics = 1              | " I love italic for comments
-colorscheme one                          | " sets theme to one
-set background=light                     | " use light mode
 set termguicolors                        | " enables 24bit colors
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1        | " enables true colors for Neovim 0.1.3 and 0.1.4
+set background=light                     | " for the light version
+colorscheme one                          | " sets theme to one
 set novisualbell                         | " don't display visual bell
 set noshowmode                           | " don't show mode changes
 let &colorcolumn=121                     | " add indicator for 120
@@ -289,8 +286,6 @@ let g:vim_markdown_folding_disabled = 1
 
 " vim gitgutter
 let g:gitgutter_override_sign_column_highlight = 1
-highlight SignColumn guibg=bg
-highlight SignColumn ctermbg=bg
 
 let g:gitgutter_sign_added = '▎'
 let g:gitgutter_sign_modified = '▎'
@@ -350,7 +345,7 @@ nnoremap > >>_
 nnoremap < <<_
 
 " Use tab for indenting in visual mode
-vnoremap <Tab> >gv|
+vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " highlight last inserted text
@@ -395,7 +390,6 @@ noremap gl $
 " Macros
 nnoremap Q @@
 vnoremap Q :norm @@<CR>
-nnoremap q: :q
 
 " Select last paste
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
@@ -528,7 +522,7 @@ let g:tmuxline_preset = {
 
 let g:tmuxline_status_justify = 'left'
 
-":PromptlineSnapshot! ~/gitrepos/dotfiles/promptline.sh airline<CR>
+" PromptlineSnapshot! ~/config/.promptline.sh airline<CR>
 
 if has('nvim') && executable('nvr')
   " pip install neovim-remote
@@ -539,7 +533,7 @@ if has('nvim')
   " noremap <leader>\| :vsp|wincmd l|terminal<CR>
   " noremap <leader>-  :NvimuxHorizontalSplit<CR>
   noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
-  noremap <silent> <leader>\| :vsplit\|wincmd l\|terminal<CR>
+  noremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
 endif
 
 " --column: Show column number
