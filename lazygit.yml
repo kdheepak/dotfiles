@@ -112,8 +112,8 @@ keybinding:
     prevpage: ','
     prevscreenmode: _
     prevtab: '['
-    pullfiles: P
-    pushfiles: p
+    pullfiles: p
+    pushfiles: P
     quit: q
     quit-alt1: <c-c>
     quitwithoutchangingdirectory: Q
