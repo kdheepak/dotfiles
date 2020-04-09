@@ -93,7 +93,7 @@ Plug 'neovim/nvim-lsp'                                            | " collection
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'ncm2/float-preview.nvim'                                    | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                      | " evaluate markdown code blocks within vim
-Plug 'kdheepak/JuliaFormatter.vim'                                | " formatter for Julia
+Plug '~/gitrepos/JuliaFormatter.vim'                                | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim'                               | " Markdown preview
 Plug 'inkarkat/vim-ingo-library'                                  | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                    | " Spelling errors to quickfix list
@@ -541,13 +541,15 @@ lua << EOF
     require'nvim_lsp'.vimls.setup{}
 EOF
 
-nnoremap <silent> <leader>ld    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <leader>lh    <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gD            <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <leader>lk    <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <leader>ld    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
-nnoremap <silent> <leader>lk    <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <leader>lr    <cmd>lua vim.lsp.buf.references()<CR>
-
-" let g:LanguageClient_serverCommands = {
+nnoremap <silent> <leader>ls    <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 " tyru/open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
