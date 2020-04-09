@@ -534,17 +534,6 @@ if has('nvim')
   noremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
 endif
 
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-
 lua << EOF
     require'nvim_lsp'.nimls.setup{}
     require'nvim_lsp'.julials.setup{}
@@ -559,33 +548,6 @@ nnoremap <silent> <leader>lk    <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <leader>lr    <cmd>lua vim.lsp.buf.references()<CR>
 
 " let g:LanguageClient_serverCommands = {
-"     \ 'vim': ['vim-language-server', '--stdio'],
-"     \ 'julia': ['julia', '--project', '--startup-file=no', '--history-file=no', '-e', '
-"     \       using LanguageServer;
-"     \       using Pkg;
-"     \       env_path = dirname(Pkg.Types.Context().env.project_file);
-"     \       debug = false;
-"     \
-"     \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
-"     \       server.runlinter = true;
-"     \       run(server);
-"     \   ']
-"     \ }
-" let g:LanguageClient_loggingLevel = 'INFO'
-" let g:LanguageClient_virtualTextPrefix = ''
-" let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
-" let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
-"
-" function! LC_maps()
-"   if has_key(g:LanguageClient_serverCommands, &ft)
-"     nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
-"     inoremap <buffer> <silent> <c-i> <c-o>:call LanguageClient#textDocument_hover()<cr>
-"     nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-"     nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-"   endif
-" endfunction
-"
-" autocmd BufEnter * call LC_maps()
 
 " tyru/open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
