@@ -89,7 +89,7 @@ Plug 'rust-lang/rust.vim'                                         | " rust file 
 Plug 'JuliaEditorSupport/julia-vim'                               | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                      | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                | " syntax highlighting auto indent for nim in vim
-Plug 'neovim/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
+Plug '~/gitrepos/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'ncm2/float-preview.nvim'                                    | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                      | " evaluate markdown code blocks within vim
@@ -526,13 +526,12 @@ if has('nvim') && executable('nvr')
   " pip install neovim-remote
   let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 endif
-if has('nvim')
-  "" Split
-  " noremap <leader>\| :vsp|wincmd l|terminal<CR>
-  " noremap <leader>-  :NvimuxHorizontalSplit<CR>
-  noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
-  noremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
-endif
+
+"" Split
+" noremap <leader>\| :vsp|wincmd l|terminal<CR>
+" noremap <leader>-  :NvimuxHorizontalSplit<CR>
+noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
+noremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
 
 lua << EOF
     require'nvim_lsp'.nimls.setup{}
