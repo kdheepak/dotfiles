@@ -39,6 +39,7 @@ Plug 'tmux-plugins/vim-tmux'                                      | " vim plugin
 Plug 'christoomey/vim-tmux-navigator'                             | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
 Plug 'tmux-plugins/vim-tmux-focus-events'                         | " focusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
 Plug 'jpalardy/vim-slime'                                         | " you can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
+Plug 'Vigemus/nvimux'                                             | " allows neovim to work as a tmux replacement
 """"                                                              | " vim themes
 Plug 'airblade/vim-gitgutter'                                     | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                    | " airline status bar
@@ -89,11 +90,11 @@ Plug 'rust-lang/rust.vim'                                         | " rust file 
 Plug 'JuliaEditorSupport/julia-vim'                               | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                      | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                | " syntax highlighting auto indent for nim in vim
-Plug '~/gitrepos/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
+Plug '~/gitrepos/nvim-lsp'                                        | " collection of common configurations for the Nvim LSP client.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'ncm2/float-preview.nvim'                                    | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                      | " evaluate markdown code blocks within vim
-Plug '~/gitrepos/JuliaFormatter.vim'                                | " formatter for Julia
+Plug '~/gitrepos/JuliaFormatter.vim'                              | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim'                               | " Markdown preview
 Plug 'inkarkat/vim-ingo-library'                                  | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                    | " Spelling errors to quickfix list
@@ -221,7 +222,7 @@ augroup BgHighlight
 augroup END
 
 " use built in neovim lsp for autocomplete
-autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:strip_whitespace_confirm=0
@@ -308,8 +309,8 @@ let g:unicoder_no_map = 1
 " 'Yggdroot/indentLine'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
-let mapleader = " "       | " Map leader to space
-let maplocalleader = "\\" | " Map localleader to \
+let mapleader = " "      | " Map leader to space
+let maplocalleader = " " | " Map localleader to space
 
 " Markdown Preview
 " Don't start markdown preview automatically, use :MarkdownPreview
@@ -564,21 +565,6 @@ set completeopt-=preview   " Remove extra information about the currently select
 set shortmess+=c   " Shut off completion messages
 set shortmess+=I   " no intro message
 
-let g:deoplete#enable_at_startup = 1
-
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-\ <SID>check_back_space() ? "\<TAB>" :
-\ deoplete#manual_complete()
-
-inoremap <silent><expr> <s-TAB> pumvisible() ? "\<C-p>" :
-\ <SID>check_back_space() ? "\<BS>" :
-\ deoplete#manual_complete()
-
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction "}}}
-
 let g:float_preview#docked = 0
 
 nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
@@ -596,7 +582,7 @@ let g:asterisk#keeppos = 1
 
 let g:medieval_langs = ['python=python3', 'julia', 'sh', 'console=bash']
 nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
-let g:slime_target = "tmux"
+let g:slime_target = "neovim"
 
 " automatically enable table mode when using || or __
 function! s:isAtStartOfLine(mapping)
