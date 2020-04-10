@@ -531,8 +531,10 @@ endif
 "" Split
 " noremap <leader>\| :vsp|wincmd l|terminal<CR>
 " noremap <leader>-  :NvimuxHorizontalSplit<CR>
-noremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
-noremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
+nnoremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
+nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
+nnoremap <silent> <leader>h :split<CR>
+nnoremap <silent> <leader>v :vsplit<CR>
 
 lua << EOF
     require'nvim_lsp'.nimls.setup{}
