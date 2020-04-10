@@ -9,6 +9,7 @@ mkdir -p ~/.config/alacritty;
 mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
 rm ~/.config/yabai/yabairc; ln -s $(pwd)/yabairc ~/.config/yabai/yabairc
+rm ~/.config/skhd/skhdrc; ln -s $(pwd)/skhdrc ~/.config/skhd/skhdrc
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
 rm ~/Library/ApplicationSupport/jesseduffield/lazygit/config.yml; ln -s $(pwd)/lazygit.yml ~/Library/ApplicationSupport/jesseduffield/lazygit/config.yml

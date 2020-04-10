@@ -17,7 +17,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 """"                                                              | " vim integration with external tools
 Plug 'junegunn/fzf'                                               | " main fzf
 Plug 'junegunn/fzf.vim'                                           | " fuzzy finding plugin
-Plug 'yuki-ycino/fzf-preview.vim'                                 | " add floating window support for fzf
+Plug 'kdheepak/fzf-preview.vim'                                   | " add floating window support for fzf
 Plug 'itchyny/calendar.vim'                                       | " calendar application
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') } | " turn your browser into a Neovim client.
 Plug 'Lokaltog/neoranger'                                         | " neoranger is a simple ranger wrapper script for neovim.
@@ -207,9 +207,28 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
 " autocmd BufLeave term://* stopinsert
+
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen term://* startinsert
+autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
+autocmd BufWinEnter term://* startinsert | IndentGuidesDisable
+
+function s:AddTerminalNavigation()
+
+    if &filetype ==# ''
+        tnoremap <buffer> <silent> <c-h> <c-\><c-n>:TmuxNavigateLeft<cr>
+        tnoremap <buffer> <silent> <c-j> <c-\><c-n>:TmuxNavigateDown<cr>
+        tnoremap <buffer> <silent> <c-k> <c-\><c-n>:TmuxNavigateUp<cr>
+        tnoremap <buffer> <silent> <c-l> <c-\><c-n>:TmuxNavigateRight<cr>
+    endif
+
+endfunction
+
+augroup TerminalNavigation
+    autocmd!
+    autocmd TermOpen * call s:AddTerminalNavigation()
+augroup END
 
 " Use :wq or :x instead of :w | bd for git commit messages when using nvr
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
@@ -487,6 +506,8 @@ nnoremap <silent> <leader>ww :confirm bwipeout<CR>
 
 " Open ranger at current file with "-"
 nnoremap <silent> - :RangerCurrentFile<CR>
+" Open terminal in current buffer with "="
+nnoremap <silent> = :terminal<CR>
 
 nnoremap <silent> <leader>ff :<c-u>FzfPreviewProjectFiles<CR>
 nnoremap          <leader>fs :<c-u>FzfPreviewProjectGrep ""<CR>
