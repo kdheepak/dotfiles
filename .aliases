@@ -152,17 +152,15 @@ alias tns='tmux new-session -s'
 # }
 
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    alias vi=nvr
-    alias vim=nvr
-    alias nvim=nvr
+    alias vi=nvr -cc split --remote-wait +'set bufhidden=wipe'
 else
     alias vi=nvim
-    alias vim=nvim
 fi
 
+alias e=vi
+alias vim=vi
 alias :q="exit"
 alias :e="vim"
-alias e=vim
 
 export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --smart-case --hidden --fixed-strings --max-columns-preview --max-columns=\$(tput cols) --glob='!.git' --glob='!.DS_Store'"
 alias rg="rg $RG_FLAGS"
