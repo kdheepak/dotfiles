@@ -391,8 +391,12 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap Y y$
 " copy to clipboard
 vnoremap <leader>y "+y
+" cut to clipboard
+vnoremap <leader>d "+ygvd
 " paste from clipboard
-noremap <leader>p "+gP<CR>
+noremap <leader>p "+gp<CR>
+" paste from clipboard
+noremap <leader>P "+gP<CR>
 
 " allow W, Q to be used instead of w and q
 command! W w
@@ -621,3 +625,24 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
             \ <SID>isAtStartOfLine('__') ?
             \ '<c-o>:silent! TableModeDisable<CR>' : '__'
+
+
+" Help: Open a `help` page in a new tab, or replace the current buffer if it
+" is unnamed and empty.
+function! Help( query )
+  " Is the current buffer empty?
+  let l:empty = line( '$' ) ==# 1 && getline( 1 ) ==# ''
+  " Store the current tab number so we can close it later if need be.
+  let l:tabnr = tabpagenr()
+  let l:bufname = bufname( winbufnr( 0 ) )
+  try
+    " Open the help page in a new tab. (or bail if it's not found)
+    execute "tab help " . a:query
+    " The help page opened successfully. Close the original tab if it's empty.
+    if l:bufname ==# '' && l:empty
+      execute "tabclose " . l:tabnr
+    endif
+  endtry
+endfunction
+
+command! -nargs=1 Help call Help( <f-args> )
