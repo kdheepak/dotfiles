@@ -177,7 +177,7 @@ alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test
 gifify() {
     if [[ -n "$1" ]]; then
         if [[ $2 == '--good' ]]; then
-            ffmpeg -i $1 -r 30 -vcodec png out-static-%05d.png
+            ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
             time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
             rm out-static*.png
         else

@@ -17,7 +17,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 """"                                                                  | " vim integration with external tools
 Plug 'junegunn/fzf'                                                   | " main fzf
 Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
-Plug 'kdheepak/fzf-preview.vim'                                       | " add floating window support for fzf
 Plug 'itchyny/calendar.vim'                                           | " calendar application
 Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }     | " turn your browser into a Neovim client.
 Plug 'Lokaltog/neoranger'                                             | " neoranger is a simple ranger wrapper script for neovim.
@@ -83,6 +82,7 @@ Plug 'wellle/targets.vim'                                             | " Move t
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 """"                                                                  | " vim programming language features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'antoinemadec/coc-fzf'                                           | " use fzf instead of coc.nvim built-in fuzzy finder
 Plug 'vim-vdebug/vdebug'                                              | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
@@ -223,22 +223,6 @@ autocmd TermOpen term://* startinsert
 autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
 autocmd BufWinEnter term://* startinsert | IndentGuidesDisable
 
-function s:AddTerminalNavigation()
-
-    if &filetype ==# ''
-        tnoremap <buffer> <silent> <c-h> <c-\><c-n>:TmuxNavigateLeft<cr>
-        tnoremap <buffer> <silent> <c-j> <c-\><c-n>:TmuxNavigateDown<cr>
-        tnoremap <buffer> <silent> <c-k> <c-\><c-n>:TmuxNavigateUp<cr>
-        tnoremap <buffer> <silent> <c-l> <c-\><c-n>:TmuxNavigateRight<cr>
-    endif
-
-endfunction
-
-augroup TerminalNavigation
-    autocmd!
-    autocmd TermOpen * call s:AddTerminalNavigation()
-augroup END
-
 " Use :wq or :x instead of :w | bd for git commit messages when using nvr
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
@@ -256,14 +240,13 @@ let g:strip_whitespace_confirm=0
 
 " vim-airline
 let g:airline_theme = 'one'
-
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
 " let g:airline_skip_empty_sections = 1 " causes json to crash
-let g:airline_section_c = '%t'
+let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -519,16 +502,20 @@ nnoremap <silent> - :RangerCurrentFile<CR>
 " Open terminal in current buffer with "="
 nnoremap <silent> = :terminal<CR>
 
-nnoremap <silent> <leader>ff :<c-u>FzfPreviewProjectFiles<CR>
-nnoremap          <leader>fs :<c-u>FzfPreviewProjectGrep ""<CR>
-xnoremap          <leader>fs "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-nnoremap <silent> <leader>f* :<c-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap <silent> <leader>fb :<c-u>FzfPreviewAllBuffers<CR>
-nnoremap <silent> <leader>fm :<c-u>FzfPreviewMarks<CR>
-nnoremap <silent> <leader>fj :<c-u>FzfPreviewJumps<CR>
-nnoremap <silent> <leader>fc :<c-u>FzfPreviewChanges<CR>
-nnoremap <silent> <leader>ft :<c-u>FzfPreviewTags<CR>
-nnoremap <silent> <leader>fg :<c-u>FzfPreviewGitStatus<CR>
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
+let g:fzf_buffers_jump = 1
+let g:fzf_command_prefix = 'Fzf'
+
+nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
+nnoremap          <leader>fs :<c-u>FzfRg<CR>
+xnoremap          <leader>fs "sy:FzfRg<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
+nnoremap <silent> <leader>f* :<c-u>FzfLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
+nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
+nnoremap <silent> <leader>fw :<c-u>FzfWindows<CR>
+nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
+nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
+nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
 
 let g:fzf_preview_floating_window_winblend = 5
 let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
@@ -676,14 +663,14 @@ else
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> gy <Plug>(coc-type-definition)
-nnoremap <silent> gi <Plug>(coc-implementation)
-nnoremap <silent> gr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
 
@@ -704,6 +691,15 @@ augroup mygroup
     autocmd FileType json syntax match Comment +\/\/.\+$+
 augroup end
 
+nnoremap <silent> <space>a  :<C-u>CocFzfList diagnostics<CR>
+nnoremap <silent> <space>b  :<C-u>CocFzfList diagnostics --current-buf<CR>
+nnoremap <silent> <space>c  :<C-u>CocFzfList commands<CR>
+nnoremap <silent> <space>e  :<C-u>CocFzfList extensions<CR>
+nnoremap <silent> <space>l  :<C-u>CocFzfList location<CR>
+nnoremap <silent> <space>o  :<C-u>CocFzfList outline<CR>
+nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<CR>
+nnoremap <silent> <space>S  :<C-u>CocFzfList services<CR>
+nnoremap <silent> <space>p  :<C-u>CocFzfListResume<CR>
 
 nnoremap <silent> xl :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
 nnoremap <silent> xk :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>

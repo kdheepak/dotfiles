@@ -21,6 +21,18 @@
         ".ccls-root",
         "compile_commands.json"
       ]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": [
+        "lua"
+      ]
+    },
+    "nim": {
+      "command": "nimlsp",
+      "filetypes": [
+        "nim"
+      ]
     }
   }
 }
