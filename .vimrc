@@ -82,6 +82,7 @@ Plug 'kshenoy/vim-signature'                                          | " toggle
 Plug 'wellle/targets.vim'                                             | " Move text objects
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 """"                                                                  | " vim programming language features
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-vdebug/vdebug'                                              | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
@@ -90,7 +91,6 @@ Plug 'rust-lang/rust.vim'                                             | " rust f
 Plug 'JuliaEditorSupport/julia-vim'                                   | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
-Plug '~/gitrepos/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
@@ -185,6 +185,14 @@ set nomodeline                           | " no lines are checked for set comman
 set grepprg=rg\ --vimgrep                | " use ripgrep
 set redrawtime=10000                     | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
 set updatetime=100                       | " set lower updatetime so that vim git gutter updates sooner
+set cmdheight=1                          | " default space for displaying messages
+set completeopt=menuone    " Use the popup menu also when there is only one match.
+set completeopt+=noinsert  " Do not insert any text for a match until the user selects a match from the menu.
+set completeopt+=noselect  " Do not select a match in the menu, force the user to select one from the menu.
+set completeopt-=preview   " Remove extra information about the currently selected completion in the preview window.
+                           " Only works in combination with "menu" or "menuone".
+set shortmess+=c   " Shut off completion messages
+set shortmess+=I   " no intro message
 " set noswapfile                         | " Don't write .swp files
 
 if has("persistent_undo")
@@ -240,9 +248,6 @@ augroup BgHighlight
     autocmd WinEnter * set cursorline
     autocmd WinLeave * set nocursorline
 augroup END
-
-" use built in neovim lsp for autocomplete
-autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:strip_whitespace_confirm=0
@@ -559,42 +564,11 @@ endif
 " noremap <leader>-  :NvimuxHorizontalSplit<CR>
 nnoremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
 nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
-nnoremap <silent> <leader>h :split<CR>
-nnoremap <silent> <leader>v :vsplit<CR>
-
-lua << EOF
-    require'nvim_lsp'.ccls.setup{}
-    require'nvim_lsp'.julials.setup{}
-    require'nvim_lsp'.nimls.setup{}
-    require'nvim_lsp'.pyls.setup{}
-    require'nvim_lsp'.vimls.setup{}
-EOF
-
-nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gD            <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <leader>lk    <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <leader>ld    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
-nnoremap <silent> <leader>ls    <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 " tyru/open-browser.vim
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-open)
 vmap gx <Plug>(openbrowser-open)
-
-set completeopt=menuone    " Use the popup menu also when there is only one match.
-set completeopt+=noinsert  " Do not insert any text for a match until the user selects a match from the menu.
-set completeopt+=noselect  " Do not select a match in the menu, force the user to select one from the menu.
-set completeopt-=preview   " Remove extra information about the currently selected completion in the preview window.
-                           " Only works in combination with "menu" or "menuone".
-
-set shortmess+=c   " Shut off completion messages
-set shortmess+=I   " no intro message
-
-let g:float_preview#docked = 0
 
 nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
 vnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(1)<CR>
@@ -628,23 +602,138 @@ inoreabbrev <expr> __
             \ <SID>isAtStartOfLine('__') ?
             \ '<c-o>:silent! TableModeDisable<CR>' : '__'
 
+let g:float_preview#docked = 0
 
 " Help: Open a `help` page in a new tab, or replace the current buffer if it
 " is unnamed and empty.
 function! Help( query )
-  " Is the current buffer empty?
-  let l:empty = line( '$' ) ==# 1 && getline( 1 ) ==# ''
-  " Store the current tab number so we can close it later if need be.
-  let l:tabnr = tabpagenr()
-  let l:bufname = bufname( winbufnr( 0 ) )
-  try
-    " Open the help page in a new tab. (or bail if it's not found)
-    execute "tab help " . a:query
-    " The help page opened successfully. Close the original tab if it's empty.
-    if l:bufname ==# '' && l:empty
-      execute "tabclose " . l:tabnr
-    endif
-  endtry
+    " Is the current buffer empty?
+    let l:empty = line( '$' ) ==# 1 && getline( 1 ) ==# ''
+    " Store the current tab number so we can close it later if need be.
+    let l:tabnr = tabpagenr()
+    let l:bufname = bufname( winbufnr( 0 ) )
+    try
+        " Open the help page in a new tab. (or bail if it's not found)
+        execute "tab help " . a:query
+        " The help page opened successfully. Close the original tab if it's empty.
+        if l:bufname ==# '' && l:empty
+            execute "tabclose " . l:tabnr
+        endif
+    endtry
 endfunction
 
 command! -nargs=1 Help call Help( <f-args> )
+
+"""""""""""""""""""""""""""""""""""""""" lsp
+
+call coc#config('coc.preferences', {
+            \ "autoTrigger": "always",
+            \ "maxCompleteItemCount": 10,
+            \ "codeLens.enable": 1,
+            \ "diagnostic.virtualText": 1,
+            \})
+
+let s:coc_extensions = [
+        \ 'coc-python',
+        \ 'coc-json',
+        \ 'coc-word',
+        \ 'coc-dictionary',
+        \ 'coc-rls',
+        \ 'coc-snippets',
+        \ 'coc-pairs',
+        \ 'coc-prettier',
+        \ 'coc-syntax',
+        \ 'coc-emoji',
+        \]
+
+for extension in s:coc_extensions
+    call coc#add_extension(extension)
+endfor
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+augroup mygroup
+    autocmd!
+    " Update signature help on jump placeholder.
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    " Highlight the symbol and its references when holding the cursor.
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup end
+
+
+nnoremap <silent> xl :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
+nnoremap <silent> xk :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
+nnoremap <silent> xj :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
+nnoremap <silent> xh :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
+
+noremap x <Nop>
+nnoremap <silent> xb :call CocLocations('ccls','$ccls/inheritance')<cr>
+" bases of up to 3 levels
+noremap <silent> xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
+" derived
+nnoremap <silent> xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
+" derived of up to 3 levels
+nnoremap <silent> xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
+
+" caller
+nnoremap <silent> xc :call CocLocations('ccls','$ccls/call')<cr>
+" callee
+nnoremap <silent> xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
+
+" $ccls/member
+" member variables / variables in a namespace
+nnoremap <silent> xm :call CocLocations('ccls','$ccls/member')<cr>
+" member functions / functions in a namespace
+nnoremap <silent> xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
+" nested classes / types in a namespace
+nnoremap <silent> xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
+
+nnoremap <silent> xt <Plug>(coc-type-definition)<cr>
+nnoremap <silent> xv :call CocLocations('ccls','$ccls/vars')<cr>
+nnoremap <silent> xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
+
+nnoremap xx x

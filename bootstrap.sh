@@ -8,8 +8,9 @@ mkdir -p ~/.config/bat/bin;
 mkdir -p ~/.config/alacritty;
 mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
+mkdir -p ~/.config/yabai;
+
 rm ~/.config/yabai/yabairc; ln -s $(pwd)/yabairc ~/.config/yabai/yabairc
-rm ~/.config/skhd/skhdrc; ln -s $(pwd)/skhdrc ~/.config/skhd/skhdrc
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
 rm ~/Library/ApplicationSupport/jesseduffield/lazygit/config.yml; ln -s $(pwd)/lazygit.yml ~/Library/ApplicationSupport/jesseduffield/lazygit/config.yml
@@ -36,6 +37,8 @@ rm ~/.hammerspoon/init.lua; ln -s $(pwd)/.hammerspoon/init.lua ~/.hammerspoon/in
 rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
 rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak
+rm -rf ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
+rm -rf ~/.config/nvim/coc-settings.json; ln -s $(pwd)/coc-settings.json ~/.config/nvim/coc-settings.json
 rm -rf ~/.config/bat/config; ln -s $(pwd)/batconfig ~/.config/bat/config
 rm -rf ~/.config/bat/bin/preview_fzf_grep; ln -s $(pwd)/preview_fzf_grep ~/.config/bat/bin/preview_fzf_grep
 rm -rf ~/.tmux/plugins/tpm; git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
