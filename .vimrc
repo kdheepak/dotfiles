@@ -14,90 +14,90 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 
-""""                                                              | " vim integration with external tools
-Plug 'junegunn/fzf'                                               | " main fzf
-Plug 'junegunn/fzf.vim'                                           | " fuzzy finding plugin
-Plug 'kdheepak/fzf-preview.vim'                                   | " add floating window support for fzf
-Plug 'itchyny/calendar.vim'                                       | " calendar application
-Plug 'glacambre/firenvim', { 'do': function('firenvim#install') } | " turn your browser into a Neovim client.
-Plug 'Lokaltog/neoranger'                                         | " neoranger is a simple ranger wrapper script for neovim.
-Plug 'kassio/neoterm'                                             | " use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
-Plug 'wincent/terminus'                                           | " terminal integration improvements
-""""                                                              | " git
-Plug 'tyru/open-browser.vim'                                      | " opens url in browser
-Plug 'tyru/open-browser-unicode.vim'                              | " opens current character or unicode in browser
-Plug 'tyru/open-browser-github.vim'                               | " opens github repo or github issue in browser
-Plug 'rhysd/git-messenger.vim'                                    | " reveal a hidden message from git under the cursor quickly
-Plug 'tpope/vim-fugitive'                                         | " vim plugin for Git that is so awesome, it should be illegal
-Plug 'tpope/vim-rhubarb'                                          | " vim plugin for github
-Plug 'samoshkin/vim-mergetool'                                    | " Merge tool for git
-Plug '~/gitrepos/lazygit.vim'                                     | " lazygit
-""""                                                              | " tmux
-Plug 'edkolev/tmuxline.vim'                                       | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
-Plug 'wellle/tmux-complete.vim'                                   | " insert mode completion of words in adjacent tmux panes
-Plug 'tmux-plugins/vim-tmux'                                      | " vim plugin for editing .tmux.conf files
-Plug 'christoomey/vim-tmux-navigator'                             | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
-Plug 'tmux-plugins/vim-tmux-focus-events'                         | " focusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
-Plug 'jpalardy/vim-slime'                                         | " you can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
-Plug 'Vigemus/nvimux'                                             | " allows neovim to work as a tmux replacement
-""""                                                              | " vim themes
-Plug 'airblade/vim-gitgutter'                                     | " shows a git diff in the 'gutter' (sign column)
-Plug 'vim-airline/vim-airline'                                    | " airline status bar
-Plug 'vim-airline/vim-airline-themes'                             | " official theme repository
-Plug '~/gitrepos/vim-one'                                         | " light and dark vim colorscheme
-""""                                                              | " vim extensions features
-Plug 'bkad/CamelCaseMotion'                                       | " motions for inside camel case
-Plug 'norcalli/nvim-colorizer.lua'                                | " a high-performance color highlighter for Neovim which has no external dependencies
-Plug 'machakann/vim-highlightedyank'                              | " make the yanked region apparent!
-Plug 'junegunn/vim-peekaboo'                                      | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
-Plug 'itchyny/vim-cursorword'                                     | " underlines the word under the cursor
-Plug 'junegunn/vim-easy-align'                                    | " helps alignment
-Plug 'godlygeek/tabular'                                          | " line up text
-Plug 'tpope/vim-commentary'                                       | " comment and uncomment stuff
-Plug 'tpope/vim-unimpaired'                                       | " complementary pairs of mappings
-Plug 'tpope/vim-surround'                                         | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
-Plug 'tpope/vim-repeat'                                           | " repeat.vim remaps . in a way that plugins can tap into it.
-Plug 'tpope/vim-tbone'                                            | " basic tmux support for vim
-Plug 'tpope/vim-jdaddy'                                           | " mappings for working with json in vim
-Plug 'tpope/vim-obsession'                                        | " no hassle vim sessions
-Plug 'tpope/vim-speeddating'                                      | " Tools for working with dates
-Plug 'dhruvasagar/vim-zoom'                                       | " toggle zoom of current window within the current tab
-Plug 'kana/vim-niceblock'                                         | " makes blockwise Visual mode more useful and intuitive
-Plug 'mbbill/undotree'                                            | " visualizes undo history and makes it easier to browse and switch between different undo branches
-Plug 'reedes/vim-wordy'                                           | " uncover usage problems in your writing
-Plug 'farmergreg/vim-lastplace'                                   | " intelligently reopen files at your last edit position
-Plug 'ntpeters/vim-better-whitespace'                             | " causes all trailing whitespace characters to be highlighted
-Plug 'nathanaelkane/vim-indent-guides'                            | " displaying thin vertical lines at each indentation level for code indented with spaces
-Plug 'jeffkreeftmeijer/vim-numbertoggle'                          | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
-Plug 'dhruvasagar/vim-table-mode'                                 | " automatic table creator & formatter allowing one to create neat tables as you type
-Plug 'airblade/vim-rooter'                                        | " rooter changes the working directory to the project root when you open a file or directory
-Plug 'joom/latex-unicoder.vim'                                    | " a plugin to type Unicode chars in Vim, using their LaTeX names
-Plug 'editorconfig/editorconfig-vim'                              | " editorconfig plugin for vim
-Plug 'haya14busa/vim-asterisk'                                    | " asterisk.vim provides improved * motions.
-Plug 'google/vim-searchindex'                                     | " this plugin shows how many times a search pattern occurs in the current buffer.
-Plug 'ryanoasis/vim-devicons'                                     | " adds icons to plugins
-Plug 'segeljakt/vim-isotope'                                      | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
-Plug 'pbrisbin/vim-mkdir'                                         | " automatically create any non-existent directories before writing the buffer
-Plug 'kshenoy/vim-signature'                                      | " toggle display and navigate marks
-Plug 'wellle/targets.vim'                                         | " Move text objects
-Plug 'sedm0784/vim-you-autocorrect'                               | " Automatic autocorrect
-""""                                                              | " vim programming language features
-Plug 'vim-vdebug/vdebug'                                          | " Debugging, loaded manually
-Plug 'roxma/nvim-yarp'                                            | " yet another remote plugin framework for neovim
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}     | " vim-plug with on-demand support for the Requirements File Format syntax for vim
-Plug 'Vimjas/vim-python-pep8-indent'                              | " a nicer Python indentation style for vim
-Plug 'rust-lang/rust.vim'                                         | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
-Plug 'JuliaEditorSupport/julia-vim'                               | " julia support for vim
-Plug 'kdheepak/gridlabd.vim'                                      | " gridlabd syntax support
-Plug 'zah/nim.vim'                                                | " syntax highlighting auto indent for nim in vim
-Plug '~/gitrepos/nvim-lsp'                                        | " collection of common configurations for the Nvim LSP client.
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     | " dark powered asynchronous completion framework for neovim/Vim8
-Plug 'ncm2/float-preview.nvim'                                    | " completion preview window based on neovim's floating window
-Plug 'gpanders/vim-medieval'                                      | " evaluate markdown code blocks within vim
-Plug '~/gitrepos/JuliaFormatter.vim'                              | " formatter for Julia
-Plug 'iamcco/markdown-preview.nvim'                               | " Markdown preview
-Plug 'inkarkat/vim-ingo-library'                                  | " Spellcheck dependency
-Plug 'inkarkat/vim-spellcheck'                                    | " Spelling errors to quickfix list
+""""                                                                  | " vim integration with external tools
+Plug 'junegunn/fzf'                                                   | " main fzf
+Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
+Plug 'kdheepak/fzf-preview.vim'                                       | " add floating window support for fzf
+Plug 'itchyny/calendar.vim'                                           | " calendar application
+Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }     | " turn your browser into a Neovim client.
+Plug 'Lokaltog/neoranger'                                             | " neoranger is a simple ranger wrapper script for neovim.
+Plug 'kassio/neoterm'                                                 | " use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
+Plug 'wincent/terminus'                                               | " terminal integration improvements
+""""                                                                  | " git
+Plug 'tyru/open-browser.vim'                                          | " opens url in browser
+Plug 'tyru/open-browser-unicode.vim'                                  | " opens current character or unicode in browser
+Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
+Plug 'rhysd/git-messenger.vim'                                        | " reveal a hidden message from git under the cursor quickly
+Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
+Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
+Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
+Plug '~/gitrepos/lazygit.vim'                                         | " lazygit
+""""                                                                  | " tmux
+Plug 'edkolev/tmuxline.vim'                                           | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
+Plug 'wellle/tmux-complete.vim'                                       | " insert mode completion of words in adjacent tmux panes
+Plug 'tmux-plugins/vim-tmux'                                          | " vim plugin for editing .tmux.conf files
+Plug 'christoomey/vim-tmux-navigator'                                 | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
+Plug 'tmux-plugins/vim-tmux-focus-events'                             | " focusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux
+Plug 'jpalardy/vim-slime'                                             | " you can type text in a file, send it to a live REPL, and avoid having to reload all your code every time you make a change
+Plug 'Vigemus/nvimux'                                                 | " allows neovim to work as a tmux replacement
+""""                                                                  | " vim themes
+Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
+Plug 'vim-airline/vim-airline'                                        | " airline status bar
+Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
+Plug '~/gitrepos/vim-one'                                             | " light and dark vim colorscheme
+""""                                                                  | " vim extensions features
+Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
+Plug 'norcalli/nvim-colorizer.lua'                                    | " a high-performance color highlighter for Neovim which has no external dependencies
+Plug 'machakann/vim-highlightedyank'                                  | " make the yanked region apparent!
+Plug 'junegunn/vim-peekaboo'                                          | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
+Plug 'itchyny/vim-cursorword'                                         | " underlines the word under the cursor
+Plug 'junegunn/vim-easy-align'                                        | " helps alignment
+Plug 'godlygeek/tabular'                                              | " line up text
+Plug 'tpope/vim-commentary'                                           | " comment and uncomment stuff
+Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
+Plug 'tpope/vim-surround'                                             | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
+Plug 'tpope/vim-repeat'                                               | " repeat.vim remaps . in a way that plugins can tap into it.
+Plug 'tpope/vim-tbone'                                                | " basic tmux support for vim
+Plug 'tpope/vim-jdaddy'                                               | " mappings for working with json in vim
+Plug 'tpope/vim-obsession'                                            | " no hassle vim sessions
+Plug 'tpope/vim-speeddating'                                          | " Tools for working with dates
+Plug 'dhruvasagar/vim-zoom'                                           | " toggle zoom of current window within the current tab
+Plug 'kana/vim-niceblock'                                             | " makes blockwise Visual mode more useful and intuitive
+Plug 'mbbill/undotree'                                                | " visualizes undo history and makes it easier to browse and switch between different undo branches
+Plug 'reedes/vim-wordy'                                               | " uncover usage problems in your writing
+Plug 'farmergreg/vim-lastplace'                                       | " intelligently reopen files at your last edit position
+Plug 'ntpeters/vim-better-whitespace'                                 | " causes all trailing whitespace characters to be highlighted
+Plug 'nathanaelkane/vim-indent-guides'                                | " displaying thin vertical lines at each indentation level for code indented with spaces
+Plug 'jeffkreeftmeijer/vim-numbertoggle'                              | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
+Plug 'dhruvasagar/vim-table-mode'                                     | " automatic table creator & formatter allowing one to create neat tables as you type
+Plug 'airblade/vim-rooter'                                            | " rooter changes the working directory to the project root when you open a file or directory
+Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
+Plug 'editorconfig/editorconfig-vim'                                  | " editorconfig plugin for vim
+Plug 'haya14busa/vim-asterisk'                                        | " asterisk.vim provides improved * motions.
+Plug 'google/vim-searchindex'                                         | " this plugin shows how many times a search pattern occurs in the current buffer.
+Plug 'ryanoasis/vim-devicons'                                         | " adds icons to plugins
+Plug 'segeljakt/vim-isotope'                                          | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
+Plug 'pbrisbin/vim-mkdir'                                             | " automatically create any non-existent directories before writing the buffer
+Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
+Plug 'wellle/targets.vim'                                             | " Move text objects
+Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
+""""                                                                  | " vim programming language features
+Plug 'vim-vdebug/vdebug'                                              | " Debugging, loaded manually
+Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
+Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
+Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+Plug 'JuliaEditorSupport/julia-vim'                                   | " julia support for vim
+Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
+Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
+Plug '~/gitrepos/nvim-lsp'                                            | " collection of common configurations for the Nvim LSP client.
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
+Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
+Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
+Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
+Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
+Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
@@ -184,6 +184,7 @@ set virtualedit+=all                     | " allow virtual editing in all modes
 set nomodeline                           | " no lines are checked for set commands
 set grepprg=rg\ --vimgrep                | " use ripgrep
 set redrawtime=10000                     | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
+set updatetime=100                       | " set lower updatetime so that vim git gutter updates sooner
 " set noswapfile                         | " Don't write .swp files
 
 if has("persistent_undo")
@@ -241,7 +242,7 @@ augroup BgHighlight
 augroup END
 
 " use built in neovim lsp for autocomplete
-autocmd Filetype python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype c,cpp,python,julia,vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:strip_whitespace_confirm=0
@@ -562,8 +563,9 @@ nnoremap <silent> <leader>h :split<CR>
 nnoremap <silent> <leader>v :vsplit<CR>
 
 lua << EOF
-    require'nvim_lsp'.nimls.setup{}
+    require'nvim_lsp'.ccls.setup{}
     require'nvim_lsp'.julials.setup{}
+    require'nvim_lsp'.nimls.setup{}
     require'nvim_lsp'.pyls.setup{}
     require'nvim_lsp'.vimls.setup{}
 EOF
