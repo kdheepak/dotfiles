@@ -33,6 +33,23 @@
       "filetypes": [
         "nim"
       ]
+    },
+    "vimls": {
+      "args": [
+        "--stdio"
+      ],
+      "command": "vim-language-server",
+      "filetypes": [
+        "vim"
+      ],
+      "initializationOptions": {
+        "diagnostic": {
+          "enable": true
+        },
+        "iskeyword": "vim iskeyword option",
+        "runtimepath": "vim/runtime/path",
+        "vimruntime": "path/to/$VIMRUNTIME"
+      }
     }
   }
 }

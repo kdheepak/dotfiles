@@ -246,7 +246,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
 " let g:airline_skip_empty_sections = 1 " causes json to crash
-let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#' " display the full filename for all files
 
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -383,9 +383,9 @@ vnoremap <leader>y "+y
 " cut to clipboard
 vnoremap <leader>d "+ygvd
 " paste from clipboard
-noremap <leader>p "+gp<CR>
+noremap <leader>p "+p<CR>
 " paste from clipboard
-noremap <leader>P "+gP<CR>
+noremap <leader>P "+P<CR>
 
 " allow W, Q to be used instead of w and q
 command! W w
@@ -501,6 +501,23 @@ nnoremap <silent> <leader>ww :confirm bwipeout<CR>
 nnoremap <silent> - :RangerCurrentFile<CR>
 " Open terminal in current buffer with "="
 nnoremap <silent> = :terminal<CR>
+
+function s:AddTerminalNavigation()
+
+    echom &filetype
+    if &filetype ==# ''
+        tnoremap <buffer> <silent> <c-h> <c-\><c-n>:TmuxNavigateLeft<cr>
+        tnoremap <buffer> <silent> <c-j> <c-\><c-n>:TmuxNavigateDown<cr>
+        tnoremap <buffer> <silent> <c-k> <c-\><c-n>:TmuxNavigateUp<cr>
+        tnoremap <buffer> <silent> <c-l> <c-\><c-n>:TmuxNavigateRight<cr>
+    endif
+
+endfunction
+
+augroup TerminalNavigation
+    autocmd!
+    autocmd TermEnter * call s:AddTerminalNavigation()
+augroup END
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 let g:fzf_buffers_jump = 1
