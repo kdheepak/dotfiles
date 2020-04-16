@@ -717,36 +717,3 @@ nnoremap <silent> <space>o  :<C-u>CocFzfList outline<CR>
 nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<CR>
 nnoremap <silent> <space>S  :<C-u>CocFzfList services<CR>
 nnoremap <silent> <space>p  :<C-u>CocFzfListResume<CR>
-
-nnoremap <silent> xl :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
-nnoremap <silent> xk :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
-nnoremap <silent> xj :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
-nnoremap <silent> xh :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
-
-noremap x <Nop>
-nnoremap <silent> xb :call CocLocations('ccls','$ccls/inheritance')<cr>
-" bases of up to 3 levels
-noremap <silent> xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
-" derived
-nnoremap <silent> xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
-" derived of up to 3 levels
-nnoremap <silent> xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
-
-" caller
-nnoremap <silent> xc :call CocLocations('ccls','$ccls/call')<cr>
-" callee
-nnoremap <silent> xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
-
-" $ccls/member
-" member variables / variables in a namespace
-nnoremap <silent> xm :call CocLocations('ccls','$ccls/member')<cr>
-" member functions / functions in a namespace
-nnoremap <silent> xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
-" nested classes / types in a namespace
-nnoremap <silent> xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
-
-nnoremap <silent> xt <Plug>(coc-type-definition)<cr>
-nnoremap <silent> xv :call CocLocations('ccls','$ccls/vars')<cr>
-nnoremap <silent> xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
-
-nnoremap xx x

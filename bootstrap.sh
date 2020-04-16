@@ -9,7 +9,9 @@ mkdir -p ~/.config/alacritty;
 mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
 mkdir -p ~/.config/yabai;
+mkdir -p ~/.config/skhd;
 
+rm ~/.config/skhd/skhdrc; ln -s $(pwd)/skhdrc ~/.config/skhd/skhdrc
 rm ~/.config/yabai/yabairc; ln -s $(pwd)/yabairc ~/.config/yabai/yabairc
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports
 rm ~/.config/.aliases; ln -s $(pwd)/.aliases ~/.config/.aliases
