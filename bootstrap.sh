@@ -10,7 +10,10 @@ mkdir -p ~/.julia/config;
 mkdir -p ~/.hammerspoon;
 mkdir -p ~/.config/yabai;
 mkdir -p ~/.config/skhd;
+mkdir -p ~/.config/kitty;
 
+rm ~/.config/kitty/AtomOneLight.conf; ln -s $(pwd)/kitty ~/.config/kitty/AtomOneLight.conf
+rm ~/.config/kitty/kitty.conf; ln -s $(pwd)/kitty ~/.config/kitty/kitty.conf
 rm ~/.config/skhd/skhdrc; ln -s $(pwd)/skhdrc ~/.config/skhd/skhdrc
 rm ~/.config/yabai/yabairc; ln -s $(pwd)/yabairc ~/.config/yabai/yabairc
 rm ~/.config/.exports; ln -s $(pwd)/.exports ~/.config/.exports

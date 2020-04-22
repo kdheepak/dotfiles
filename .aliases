@@ -169,9 +169,9 @@ alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
 alias julia-bleeding="$HOME/gitrepos/julia/usr/bin/julia"
 alias julia-stable="$HOME/Applications/Julia-1.2.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
-alias julia="julia --color=yes"
+alias julia="julia --color=yes -J $HOME/.julia/config/sysimage.dylib"
 
-alias fast-julia="julia --startup-file=no"
+alias fast-julia="command julia --color=yes --startup-file=no"
 alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
 
 gifify() {
