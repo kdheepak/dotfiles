@@ -566,7 +566,7 @@ endif
 "" Split
 " noremap <leader>\| :vsp|wincmd l|terminal<CR>
 " noremap <leader>-  :NvimuxHorizontalSplit<CR>
-nnoremap <silent> <leader>- :split\|wincmd j\|terminal<CR>
+nnoremap <silent> <leader>/ :split\|wincmd j\|terminal<CR>
 nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
 
 " tyru/open-browser.vim
