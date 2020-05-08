@@ -719,19 +719,3 @@ nnoremap <silent> <space>S  :<C-u>CocFzfList services<CR>
 nnoremap <silent> <space>p  :<C-u>CocFzfListResume<CR>
 
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-
-
-" Set the title of the Terminal to the currently open file
-function! SetTerminalTitle()
-    let titleString = expand('%:t')
-    if len(titleString) > 0
-        let &titlestring = expand('%:t')
-        " this is the format iTerm2 expects when setting the window title
-        let args = "\033];".&titlestring."\007"
-        let cmd = 'silent !echo -e "'.args.'"'
-        execute cmd
-        redraw!
-    endif
-endfunction
-
-autocmd BufEnter * call SetTerminalTitle()
