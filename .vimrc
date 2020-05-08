@@ -717,3 +717,5 @@ nnoremap <silent> <space>o  :<C-u>CocFzfList outline<CR>
 nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<CR>
 nnoremap <silent> <space>S  :<C-u>CocFzfList services<CR>
 nnoremap <silent> <space>p  :<C-u>CocFzfListResume<CR>
+
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
