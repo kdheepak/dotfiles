@@ -340,7 +340,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 let g:indent_guides_color_change_percent = 1
-let g:indent_guides_exclude_filetypes = ['help', 'fzf', 'openterm', 'neoterm', 'calendar']
+let g:indent_guides_exclude_filetypes = ['help', 'ranger', 'fzf', 'openterm', 'neoterm', 'calendar']
 
 " Use virtual replace mode all the time
 nnoremap r gr
@@ -430,10 +430,6 @@ nnoremap <silent> <Right> :cnfile<CR>
 
 " Use brackets for navigation
 nmap <silent> tt :tabnew<CR>
-nmap <silent> [g :tabprevious<CR>
-nmap <silent> ]g :tabnext<CR>
-nmap <silent> [G :tabrewind<CR>
-nmap <silent> ]G :tablast<CR>
 
 " backtick goes to the exact mark location, single quote just the line; swap 'em
 " nnoremap ` '
@@ -459,11 +455,6 @@ augroup TerminalNavigation
     autocmd!
     autocmd TermEnter * call s:AddTerminalNavigation()
 augroup END
-
-let g:fzf_preview_floating_window_winblend = 5
-let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
-let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=OneHalfLight'
-let g:fzf_preview_grep_preview_cmd = expand('~/.config/bat/bin/preview_fzf_grep')
 
 " for setting ranger viewmode values
 let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
@@ -545,7 +536,15 @@ command! -nargs=1 Help call Help( <f-args> )
 let g:deoplete#enable_at_startup = 1
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
+    nvim_lsp.bashls.setup({})
+    nvim_lsp.ccls.setup({})
+    nvim_lsp.cssls.setup({})
+    nvim_lsp.html.setup({})
+    nvim_lsp.tsserver.setup({})
     nvim_lsp.jsonls.setup({})
+    nvim_lsp.nimls.setup({})
+    nvim_lsp.pyls_ms.setup({})
+    nvim_lsp.vimls.setup({})
 EOF
 
 augroup MyLSP
@@ -554,11 +553,18 @@ augroup MyLSP
     autocmd FileType vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType nim setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType json setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    " autocmd FileType javascript,javascriptreact,javascript.jsx,typescript,typescriptreact,typescript.tsx setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    " autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType javascript,javascriptreact,javascript.jsx,typescript,typescriptreact,typescript.tsx setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
 augroup END
 
 """""""""""""""""""""""""""""""""""""""" fzf
+
+let g:fzf_preview_floating_window_winblend = 5
+let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
+let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=OneHalfLight'
+let g:fzf_preview_grep_preview_cmd = expand('~/.config/bat/bin/preview_fzf_grep')
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Todo', 'border': 'sharp' } }
 let g:fzf_buffers_jump = 1
