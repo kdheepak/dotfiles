@@ -93,6 +93,7 @@ Plug 'JuliaEditorSupport/julia-vim'                                   | " julia 
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
+Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
 Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
@@ -427,11 +428,16 @@ nnoremap <silent> <Down> :cnext<CR>
 nnoremap <silent> <Left> :cpfile<CR>
 nnoremap <silent> <Right> :cnfile<CR>
 
+" Use brackets for navigation
 nmap <silent> tt :tabnew<CR>
 nmap <silent> [g :tabprevious<CR>
 nmap <silent> ]g :tabnext<CR>
 nmap <silent> [G :tabrewind<CR>
 nmap <silent> ]G :tablast<CR>
+
+" backtick goes to the exact mark location, single quote just the line; swap 'em
+" nnoremap ` '
+" nnoremap ' `
 
 " delete buffer
 " works nicely in terminal mode as well
@@ -535,6 +541,22 @@ endfunction
 command! -nargs=1 Help call Help( <f-args> )
 
 """""""""""""""""""""""""""""""""""""""" lsp
+
+let g:deoplete#enable_at_startup = 1
+lua <<EOF
+    local nvim_lsp = require'nvim_lsp'
+    nvim_lsp.jsonls.setup({})
+EOF
+
+augroup MyLSP
+    autocmd!
+    autocmd FileType python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType nim setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType json setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    " autocmd FileType javascript,javascriptreact,javascript.jsx,typescript,typescriptreact,typescript.tsx setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    " autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
+augroup END
 
 """""""""""""""""""""""""""""""""""""""" fzf
 
