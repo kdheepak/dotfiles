@@ -79,6 +79,7 @@ Plug 'ryanoasis/vim-devicons'                                         | " adds i
 Plug 'segeljakt/vim-isotope'                                          | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                             | " automatically create any non-existent directories before writing the buffer
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
+Plug 'Yilin-Yang/vim-markbar'                                         | " sidebar that shows every mark
 Plug 'wellle/targets.vim'                                             | " Move text objects
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 """"                                                                  | " ### vim programming language features
@@ -172,6 +173,7 @@ set nobackup                             | " no backup before overwriting a file
 set nowritebackup                        | " no backups when writing a file
 set autowrite                            | " Automatically :write before running commands
 set list listchars=tab:»·,trail:·,nbsp:· | " Display extra whitespace
+set mouse=a                              | " Enables mouse support
 set nofoldenable                         | " disable folding
 set signcolumn=yes                       | " Always show git gutter / sign column
 set scrolloff=20                         | " Minimal number of lines to keep above and below the cursor
@@ -534,14 +536,23 @@ command! -nargs=1 Help call Help( <f-args> )
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
+"""""""""""""""""""""""""""""""""""""""" fzf
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Todo', 'border': 'sharp' } }
+let g:fzf_buffers_jump = 1
+let g:fzf_command_prefix = 'Fzf'
+
+" Path completion with custom source command
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+" Word completion with custom spec with popup layout option
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
+
+" Insert mode completion
+imap <c-x><c-k> <Plug>(fzf-complete-word)
+imap <c-x><c-f> <Plug>(fzf-complete-path)
+imap <c-x><c-l> <Plug>(fzf-complete-line)
 
 """""""""""""""""""""""""""""""""""""""" which key
-
-" Not a fan of floating windows for this
-let g:which_key_use_floating_win = 0
-
-" Define a separator
-let g:which_key_sep = '→'
 
 if !exists('g:which_key_map') | let g:which_key_map = {} | endif
 
@@ -549,169 +560,244 @@ if !exists('g:which_key_map') | let g:which_key_map = {} | endif
 
 call which_key#register("<space>", "g:which_key_map")
 
-call which_key#register('<Space>', "g:which_key_map")
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-
-let g:which_key_map = {
-            \ 'x' : ['x'      , 'save and quit'     ] ,
-            \ ' ' : ['nohl' , 'Remove highlighting' ] ,
-            \ 'y' : ['"+y' , 'Copy to clipboard' ] ,
-            \ 'd' : ['"+ygvd' , 'Cut to clipboard' ] ,
-            \ 'p' : ['"+p' , 'Paste from clipboard' ] ,
-            \ 'P' : ['"+P' , 'Paste from clipboard' ] ,
-            \ }
-
-let g:which_key_map.b = {
-            \ 'name' : '+buffer' ,
-            \ 'd' : ['bd'        , 'delete-buffer'   ] ,
-            \ 'b' : ['Buffers'   , 'fzf-buffer'      ] ,
-            \ 'n' : ['bnext'     , 'next-buffer'     ] ,
-            \ 'p' : ['bprevious' , 'previous-buffer' ] ,
-            \ 'l' : ['bnext'     , 'next-buffer'     ] ,
-            \ 'h' : ['bprevious' , 'previous-buffer' ] ,
-            \ }
-
-let g:which_key_map.c = {
-            \ 'name' : '+cmenu'     ,
-            \ 'n'    : ['cnext'     , 'cnext'     ] ,
-            \ 'p'    : ['cprevious' , 'cprevious' ] ,
-            \ 'l'    : ['cnext'     , 'cnext'     ] ,
-            \ 'h'    : ['cprevious' , 'cprevious' ] ,
-            \ }
-
-let g:which_key_map.f = {
-            \ 'name' : '+find',
-            \ 's': ['w'      , 'save-file'     ] ,
-            \ 'f': ['Files'  , 'fzf-files'     ] ,
-            \ 'g': ['GFiles' , 'fzf-git-files' ] ,
-            \ 't': ['Tags'   , 'fzf-tags'      ] ,
-            \ }
-
-let g:which_key_map.g = {
-            \ 'name' : '+git'            ,
-            \ 's'    : ['LazyGit'        , 'git status' ] ,
-            \ '?'    : ['FzfCommits'           , 'git log'    ] ,
-            \ 'p'    : ['Gpush'          , 'git push'   ] ,
-            \ 'P'    : {
-            \    'l' : ['Gpull'          , 'git checkout'      ] ,
-            \    'r' : ['Gpull --rebase' , 'git pull --rebase' ] ,
-            \ }                          ,
-            \ 'b'    : ['Gblame'         , 'git blame' ] ,
-            \ 'd'    : ['Gvdiffsplit'    , 'git blame' ] ,
-            \ 'w'    : ['Gwrite'    , 'git write' ] ,
-            \ 'c'    : ['Gcommit'    , 'git commit' ] ,
-            \ 'h'    : ['[c'    , 'git previous hunk' ] ,
-            \ 'l'    : [']c'    , 'git next hunk' ] ,
-            \ }
-
-let g:which_key_map.h = {
-            \ 'name' : '+help'     ,
-            \ 'm'    : ['Maps'     , 'fzf-maps'     ] ,
-            \ 'c'    : ['Commands' , 'fzf-commands' ] ,
-            \ }
-
-let g:which_key_map.w = {
-            \ 'name' : '+windows' ,
-            \ 'w' : ['<C-W>w'     , 'other-window'       ] ,
-            \ 'c' : ['<C-W>c'     , 'delete-window'      ] ,
-            \ '/' : ['<C-W>s'     , 'split-window-below' ] ,
-            \ '\' : ['<C-W>v'     , 'split-window-right' ] ,
-            \ 'h' : ['<C-W>h'     , 'window-left'        ] ,
-            \ 'j' : ['<C-W>j'     , 'window-below'       ] ,
-            \ 'l' : ['<C-W>l'     , 'window-right'       ] ,
-            \ 'k' : ['<C-W>k'     , 'window-up'          ] ,
-            \ 'H' : ['<C-W>H'     , 'move-window-left'   ] ,
-            \ 'J' : ['<C-W>J'     , 'move-window-bottom' ] ,
-            \ 'L' : ['<C-W>L'     , 'move-window-right'  ] ,
-            \ 'K' : ['<C-W>K'     , 'move-window-top'    ] ,
-            \ 'o' : ['<C-W>o'     , 'maximize-window'    ] ,
-            \ '=' : ['<C-W>='     , 'balance-window'     ] ,
-            \ 's' : ['<C-W>s'     , 'split-window-below' ] ,
-            \ 'v' : ['<C-W>v'     , 'split-window-right' ] ,
-            \ 'p' : ['wincmd P'   , 'preview-window'     ] ,
-            \ 'z' : ['wincmd z'   , 'quickfix-window'     ] ,
-            \ '?' : ['FzfWindows' , 'fzf-window'         ] ,
-            \ }
-
-let g:which_key_map.q = {
-            \ 'name': '+format',
-            \ 't' : ['Tabularize'     , 'tabularize'       ] ,
-            \ 'j' : [':<C-u>call JuliaFormatter#Format(0)'     , 'julia-formatter'       ] ,
-            \ }
-
-let g:which_key_map.v = {
-            \ 'name': '+vim',
-            \ 'e' : [':e $MYVIMRC' , 'edit-vimrc'                        ] ,
-            \ 's' : [':source $MYVIMRC' , 'source-vimrc'                 ] ,
-            \ 'l' : [':luafile %' , 'source-luafile'                     ] ,
-            \ 'z' : [':e ~/.zshrc' , 'edit-zshrc'                        ] ,
-            \ '-' : [':RangerCurrentFile' , 'ranger-at-current-file'     ] ,
-            \ '=' : [':terminal' , 'terminal-in-current-buffer'          ] ,
-            \ 'c' : [':cd %:p:h<CR>:pwd' , 'change-directory'            ] ,
-            \ 'x' : ['<Plug>(openbrowser-open)' , 'open-link-in-browser' ] ,
-            \ 'u' : ['UndotreeToggle' , 'undo-tree-toggle'               ] ,
-            \ }
-
 " Map leader to which_key
 nnoremap <silent> <leader> :silent WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
 
-" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-nnoremap <leader>z <Plug>(zoom-toggle)
-nnoremap <leader>ss :StripWhitespace<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Clear highlighting
-nnoremap <leader>no :noh<CR>
+nnoremap <leader><leader> :nohl<CR>:delmarks! \| delmarks a-zA-Z0-9<CR><ESC>
 
-let g:which_key_map.b = { 'name': '+buffer' }
-" delete buffer
-" works nicely in terminal mode as well
-nnoremap <silent> <leader>bd :confirm bdelete<CR>
-nnoremap <silent> <leader>bw :confirm bwipeout<CR>
-nnoremap <silent> <leader>bl :bnext<CR>
-nnoremap <silent> <leader>bh :bprev<CR>
-nnoremap <silent> <leader>bq :copen<CR>
-nnoremap <silent> <leader>bQ :cclose<CR>
-nnoremap <silent> <leader>bw :w<CR>
-nnoremap <silent> <leader>b? :FzfBuffers<CR>
+command! -nargs=0 Fzf call Help( <f-args> )
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Todo', 'border': 'sharp' } }
-let g:fzf_buffers_jump = 1
-let g:fzf_command_prefix = 'Fzf'
+" fzf selecting mappings
+nmap <leader>? :FzfMaps<CR>
+let g:which_key_map['?'] = 'fzf-find-mappings'
 
-let g:which_key_map.f = { 'name': '+find' }
-
-nnoremap          <leader>fs :<c-u>FzfRg<CR>
-nnoremap <silent> <leader>fw :<c-u>FzfRg <C-r>=expand("<cword>")<CR><CR>
-nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
-nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
-nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
-nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
-nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
-nnoremap <silent> <leader>fl :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
-nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
-nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
-xnoremap          <leader>fs "sy:FzfRg<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
-
-" Path completion with custom source command
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
-" Word completion with custom spec with popup layout option
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
-
-" Mapping selecting mappings
-nmap <leader>? <plug>(fzf-maps-n)
-xmap <leader>? <plug>(fzf-maps-x)
-omap <leader>? <plug>(fzf-maps-o)
-imap <leader>? <plug>(fzf-maps-i)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-l> <plug>(fzf-complete-line)
+nmap <Leader>m <Plug>ToggleMarkbar
+let g:which_key_map.m = 'toggle-markbar'
 
 " Split terminal
 nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
+let g:which_key_map['\'] = 'split-horizontal-terminal'
+
 nnoremap <silent> <leader>/ :split\|wincmd l\|terminal<CR>
+let g:which_key_map['/' ]= 'split-vertical-terminal'
+
+vnoremap <leader>y "+y
+let g:which_key_map.y = 'copy-to-clipboard'
+
+vnoremap <leader>d "+ygvd
+let g:which_key_map.d = 'cut-to-clipboard'
+
+nnoremap <leader>p "+p<CR>
+vnoremap <leader>p "+p<CR>
+let g:which_key_map.p = 'paste-from-clipboard'
+
+nnoremap <leader>P "+P<CR>
+vnoremap <leader>P "+P<CR>
+let g:which_key_map.P = 'paste-from-clipboard'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.w = { 'name': '+windows' }
+
+nnoremap <silent> <leader>ww <C-W>w<CR>
+let g:which_key_map.w.w = 'other-window'
+
+nnoremap <silent> <leader>wc :close<CR>
+let g:which_key_map.w.c = 'delete-window'
+
+nnoremap <silent> <leader>w/ :split<CR>
+let g:which_key_map.w['/'] = 'split-window-below'
+
+nnoremap <silent> <leader>w\ :vsplit<CR>
+let g:which_key_map.w['\'] = 'split-window-right'
+
+nnoremap <silent> <leader>wh <C-w>h
+let g:which_key_map.w.h = 'window-left'
+
+nnoremap <silent> <leader>wj <C-w>j
+let g:which_key_map.w.j = 'window-below'
+
+nnoremap <silent> <leader>wl <C-w>l
+let g:which_key_map.w.l = 'window-right'
+
+nnoremap <silent> <leader>wk <C-w>k
+let g:which_key_map.w.k = 'window-up'
+
+nnoremap <silent> <leader>wH <C-w>H
+let g:which_key_map.w.H = 'move-window-left'
+
+nnoremap <silent> <leader>wJ <C-w>J
+let g:which_key_map.w.J = 'move-window-bottom'
+
+nnoremap <silent> <leader>wL <C-w>L
+let g:which_key_map.w.L = 'move-window-right'
+
+nnoremap <silent> <leader>wK <C-w>K
+let g:which_key_map.w.K = 'move-window-top'
+
+nnoremap <silent> <leader>wo :only<CR>
+let g:which_key_map.w.o = 'maximize-window'
+
+nnoremap <silent> <leader>w= <C-w>=
+let g:which_key_map.w['='] = 'balance-window'
+
+nnoremap <silent> <leader>wp :wincmd P<CR>
+let g:which_key_map.w.p = 'preview-window'
+
+nnoremap <silent> <leader>wz :wincmd z<CR>
+let g:which_key_map.w.z = 'quickfix-window'
+
+nnoremap <silent> <leader>w? :FzfWindows<CR>
+let g:which_key_map.w['?'] = 'fzf-window'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.o = { 'name': '+open' }
+
+nnoremap <silent> <leader>oq  :copen<CR>
+let g:which_key_map.o.q = 'open-quickfix'
+
+nnoremap <silent> <leader>ol  :lopen<CR>
+let g:which_key_map.o.l = 'open-locationlist'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" reformat paragraph
+
+let g:which_key_map.q = { 'name': '+format' }
+nnoremap <leader>qt :Tabularize<CR>
+nnoremap <leader>qt :Tabularize<CR>
+nnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(0)<CR>
+vnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(1)<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.v = { 'name': '+vim' }
+
+nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
+let g:which_key_map.v.e = 'edit-vimrc'
+
+nnoremap <silent> <leader>vs :source $MYVIMRC<CR>
+let g:which_key_map.v.s = 'source-vimrc'
+
+nnoremap <silent> <leader>vl :luafile %<CR>
+let g:which_key_map.v.l = 'source-luafile'
+
+nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
+let g:which_key_map.v.z = 'open-zshrc'
+
+nnoremap <silent> <leader>v- :RangerCurrentFile<CR>
+let g:which_key_map.v['-'] = 'ranger-current-file'
+
+nnoremap <silent> <leader>v= :terminal<CR>
+let g:which_key_map.v['='] = 'terminal-current-buffer'
+
+nnoremap          <leader>v. :cd %:p:h<CR>:pwd<CR>
+let g:which_key_map.v['.'] = 'set-current-working-directory'
+
+nnoremap <leader>vx <Plug>(openbrowser-open)
+vnoremap <leader>vx <Plug>(openbrowser-open)
+let g:which_key_map.v.x = 'open-link-in-browser'
+
+nnoremap <leader>vu :UndotreeToggle<CR>
+let g:which_key_map.v.u = 'open-undo-tree'
+
+nnoremap <leader>vz <Plug>(zoom-toggle)
+let g:which_key_map.v.z = 'zoom-toggle'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.g = { 'name': '+git' }
+
+"" Git
+noremap <leader>gw :Gwrite<CR>
+let g:which_key_map.g.w = 'git-write'
+
+noremap <leader>gs :LazyGit<CR>
+let g:which_key_map.g.s = 'git-status'
+
+noremap <leader>gc :Gcommit<CR>
+let g:which_key_map.g.c = 'git-commit'
+
+noremap <leader>gp :Gpush<CR>
+let g:which_key_map.g.p = 'git-push'
+
+noremap <leader>gP :Gpull<CR>
+let g:which_key_map.g.P = 'git-pull'
+
+noremap <leader>gb :Gblame<CR>
+let g:which_key_map.g.b = 'git-blame'
+
+noremap <leader>gd :Gvdiff<CR>
+let g:which_key_map.g.d = 'git-diff'
+
+noremap <leader>gr :Gremove<CR>
+let g:which_key_map.g.r = 'git-remove'
+
+noremap <leader>gl ]c
+let g:which_key_map.g.l = 'git-next-hunk'
+
+noremap <leader>gh [c
+let g:which_key_map.g.h = 'git-prev-hunk'
+
+noremap <leader>g? :FzfCommits<CR>
+let g:which_key_map.g['?'] = 'fzf-git-commit-log'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.b = { 'name': '+buffer' }
+
+nnoremap <silent> <leader>bd :confirm bdelete<CR>
+let g:which_key_map.b.d = 'buffer-delete'
+
+nnoremap <silent> <leader>bw :write<CR>
+let g:which_key_map.b.w = 'buffer-write'
+
+nnoremap <silent> <leader>bl :bnext<CR>
+let g:which_key_map.b.l = 'buffer-next'
+
+nnoremap <silent> <leader>bh :bprev<CR>
+let g:which_key_map.b.h = 'buffer-previous'
+
+nnoremap <silent> <leader>bq :copen<CR>
+let g:which_key_map.b.q = 'buffer-quickfix-open'
+
+nnoremap <silent> <leader>bQ :cclose<CR>
+let g:which_key_map.b.q = 'buffer-quickfix-close'
+
+nnoremap <silent> <leader>b? :FzfBuffers<CR>
+let g:which_key_map.b['?'] = 'fzf-buffer-all'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.f = { 'name': '+find' }
+
+nnoremap <silent> <leader>fs :<c-u>FzfRg <C-r>=expand("<cword>")<CR><CR>
+xnoremap          <leader>fs "sy:FzfRg<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
+let g:which_key_map.f.s = 'find-in-files'
+
+nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
+let g:which_key_map.f['*'] = 'find-in-current-file'
+
+nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
+let g:which_key_map.f.b = 'find-buffers'
+
+nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
+let g:which_key_map.f.c = 'find-commits'
+
+nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
+let g:which_key_map.f.f = 'find-files'
+
+nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
+let g:which_key_map.f.h = 'find-history'
+
+nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
+let g:which_key_map.f.m = 'find-marks'
+
+nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
+let g:which_key_map.f.t = 'find-marks'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
