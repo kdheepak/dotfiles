@@ -14,7 +14,7 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 
-""""                                                                  | " vim integration with external tools
+""""                                                                  | " ### vim integration with external tools
 Plug 'junegunn/fzf'                                                   | " main fzf
 Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
 Plug 'itchyny/calendar.vim'                                           | " calendar application
@@ -22,7 +22,7 @@ Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }     | " turn y
 Plug 'Lokaltog/neoranger'                                             | " neoranger is a simple ranger wrapper script for neovim.
 Plug 'kassio/neoterm'                                                 | " use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
 Plug 'wincent/terminus'                                               | " terminal integration improvements
-""""                                                                  | " git
+""""                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
 Plug 'tyru/open-browser-unicode.vim'                                  | " opens current character or unicode in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
@@ -31,7 +31,7 @@ Plug 'tpope/vim-fugitive'                                             | " vim pl
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
 Plug '~/gitrepos/lazygit.vim'                                         | " lazygit
-""""                                                                  | " tmux
+""""                                                                  | " ### tmux
 Plug 'edkolev/tmuxline.vim'                                           | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
 Plug 'wellle/tmux-complete.vim'                                       | " insert mode completion of words in adjacent tmux panes
 Plug 'tmux-plugins/vim-tmux'                                          | " vim plugin for editing .tmux.conf files
@@ -44,7 +44,8 @@ Plug 'airblade/vim-gitgutter'                                         | " shows 
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
 Plug '~/gitrepos/vim-one'                                             | " light and dark vim colorscheme
-""""                                                                  | " vim extensions features
+""""                                                                  | " ### vim extensions features
+Plug 'liuchengxu/vim-which-key'                                       | " remember which key does what
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
 Plug 'norcalli/nvim-colorizer.lua'                                    | " a high-performance color highlighter for Neovim which has no external dependencies
 Plug 'machakann/vim-highlightedyank'                                  | " make the yanked region apparent!
@@ -80,9 +81,8 @@ Plug 'pbrisbin/vim-mkdir'                                             | " automa
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
 Plug 'wellle/targets.vim'                                             | " Move text objects
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
-""""                                                                  | " vim programming language features
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'antoinemadec/coc-fzf'                                           | " use fzf instead of coc.nvim built-in fuzzy finder
+""""                                                                  | " ### vim programming language features
+Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'vim-vdebug/vdebug'                                              | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
@@ -172,7 +172,6 @@ set nobackup                             | " no backup before overwriting a file
 set nowritebackup                        | " no backups when writing a file
 set autowrite                            | " Automatically :write before running commands
 set list listchars=tab:»·,trail:·,nbsp:· | " Display extra whitespace
-set mouse=a                              | " Enables mouse support
 set nofoldenable                         | " disable folding
 set signcolumn=yes                       | " Always show git gutter / sign column
 set scrolloff=20                         | " Minimal number of lines to keep above and below the cursor
@@ -378,23 +377,15 @@ vnoremap K :m '<-2<CR>gv=gv
 
 " copy to the end of line
 nnoremap Y y$
-" copy to clipboard
-vnoremap <leader>y "+y
-" cut to clipboard
-vnoremap <leader>d "+ygvd
-" paste from clipboard
-noremap <leader>p "+p<CR>
-" paste from clipboard
-noremap <leader>P "+P<CR>
 
 " allow W, Q to be used instead of w and q
 command! W w
 command! -bang Q q
 command! -bang Qa qa
 
-" Tabs
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+" " Tabs
+" nnoremap <Tab> :bn<CR>
+" nnoremap <S-Tab> :bp<CR>
 
 " kakoune like mapping
 noremap gj G
@@ -409,61 +400,15 @@ vnoremap Q :norm @@<CR>
 " Select last paste
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-" reformat paragraph
-nnoremap <silent> <leader>q vapkJgqap
-vnoremap <silent> <leader>q Jgqap
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
-nnoremap <silent> <leader>sh :terminal<CR>
-nnoremap <silent> <leader><Enter> :terminal<CR>
-nnoremap <silent> <localleader><localleader> <C-^>
-nnoremap <silent> <BS> <C-^>
-
-" toggle undo tree
-nnoremap <leader>u :UndotreeToggle<CR>
 " redo
 nnoremap U <C-R>
-
-" edit vimrc/zshrc/tmux and load vimrc bindings
-nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
-nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
-nnoremap <silent> <leader>sl :luafile %<CR>
-nnoremap <silent> <leader>ez :e ~/.zshrc<CR>
-
-"" Git
-noremap <leader>ga :Gwrite<CR>
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gsh :Gpush<CR>
-noremap <leader>gll :Gpull<CR>
-noremap <leader>gb :Gblame<CR>
-noremap <leader>gd :Gvdiff<CR>
-noremap <leader>gr :Gremove<CR>
-" Open current line in the browser
-nnoremap <leader>go :.Gbrowse<CR>
-" Open visual selection in the browser
-vnoremap <leader>go :Gbrowse<CR>
-" lazygit
-nnoremap <silent> <leader>gs :LazyGit<CR>
-
-
-" git messenger
-nnoremap <leader>gm <Plug>(git-messenger)
-
-" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-" Run last tabularize command
-nnoremap <leader>t :Tabularize<CR>
-vnoremap <leader>t :Tabularize<CR>
-
-nnoremap <leader>z <Plug>(zoom-toggle)
-nnoremap <leader>ss :StripWhitespace<CR>
 
 " Buffers
 
@@ -473,11 +418,6 @@ function! s:Warn(msg)
   echomsg a:msg
   echohl NONE
 endfunction
-
-nnoremap <leader>o :only<CR>
-
-" Clear highlighting
-nnoremap <silent> <leader><leader> :nohlsearch<return><esc>
 
 " Repurpose cursor keys
 nnoremap <silent> <Up> :cprevious<CR>
@@ -494,13 +434,6 @@ nmap <silent> ]G :tablast<CR>
 " delete buffer
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
-nnoremap <silent> <leader>dd :confirm bdelete<CR>
-nnoremap <silent> <leader>ww :confirm bwipeout<CR>
-
-" Open ranger at current file with "-"
-nnoremap <silent> - :RangerCurrentFile<CR>
-" Open terminal in current buffer with "="
-nnoremap <silent> = :terminal<CR>
 
 function s:AddTerminalNavigation()
 
@@ -518,21 +451,6 @@ augroup TerminalNavigation
     autocmd!
     autocmd TermEnter * call s:AddTerminalNavigation()
 augroup END
-
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
-let g:fzf_buffers_jump = 1
-let g:fzf_command_prefix = 'Fzf'
-
-nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
-nnoremap          <leader>fs :<c-u>FzfRg<CR>
-xnoremap          <leader>fs "sy:FzfRg<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
-nnoremap <silent> <leader>f* :<c-u>FzfLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
-nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
-nnoremap <silent> <leader>fw :<c-u>FzfWindows<CR>
-nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
-nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
-nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
 
 let g:fzf_preview_floating_window_winblend = 5
 let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
@@ -562,20 +480,6 @@ if has('nvim') && executable('nvr')
   " pip install neovim-remote
   let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 endif
-
-"" Split
-" noremap <leader>\| :vsp|wincmd l|terminal<CR>
-" noremap <leader>-  :NvimuxHorizontalSplit<CR>
-nnoremap <silent> <leader>/ :split\|wincmd j\|terminal<CR>
-nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
-
-" tyru/open-browser.vim
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-open)
-vmap gx <Plug>(openbrowser-open)
-
-nnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(0)<CR>
-vnoremap <localleader>jf :<C-u>call JuliaFormatter#Format(1)<CR>
 
 let g:prettier#config#prose_wrap = 'always'
 
@@ -630,92 +534,184 @@ command! -nargs=1 Help call Help( <f-args> )
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
-call coc#config('coc.preferences', {
-            \ "autoTrigger": "always",
-            \ "maxCompleteItemCount": 10,
-            \ "codeLens.enable": 1,
-            \ "diagnostic.virtualText": 1,
-            \})
 
-let s:coc_extensions = [
-        \ 'coc-python',
-        \ 'coc-json',
-        \ 'coc-word',
-        \ 'coc-dictionary',
-        \ 'coc-rls',
-        \ 'coc-snippets',
-        \ 'coc-pairs',
-        \ 'coc-prettier',
-        \ 'coc-syntax',
-        \ 'coc-emoji',
-        \]
+"""""""""""""""""""""""""""""""""""""""" which key
 
-for extension in s:coc_extensions
-    call coc#add_extension(extension)
-endfor
+" Not a fan of floating windows for this
+let g:which_key_use_floating_win = 0
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Define a separator
+let g:which_key_sep = '→'
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+if !exists('g:which_key_map') | let g:which_key_map = {} | endif
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+"""""""""""""""""""""""""""""""""""""""" leader mappings
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+call which_key#register("<space>", "g:which_key_map")
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+let g:which_key_map = {
+            \ 'x' : ['x'      , 'save and quit'     ] ,
+            \ ' ' : ['nohl' , 'Remove highlighting' ] ,
+            \ 'y' : ['"+y' , 'Copy to clipboard' ] ,
+            \ 'd' : ['"+ygvd' , 'Cut to clipboard' ] ,
+            \ 'p' : ['"+p' , 'Paste from clipboard' ] ,
+            \ 'P' : ['"+P' , 'Paste from clipboard' ] ,
+            \ }
 
-nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+let g:which_key_map.b = {
+            \ 'name' : '+buffer' ,
+            \ 'd' : ['bd'        , 'delete-buffer'   ] ,
+            \ 'b' : ['Buffers'   , 'fzf-buffer'      ] ,
+            \ 'n' : ['bnext'     , 'next-buffer'     ] ,
+            \ 'p' : ['bprevious' , 'previous-buffer' ] ,
+            \ 'l' : ['bnext'     , 'next-buffer'     ] ,
+            \ 'h' : ['bprevious' , 'previous-buffer' ] ,
+            \ }
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+let g:which_key_map.c = {
+            \ 'name' : '+cmenu'     ,
+            \ 'n'    : ['cnext'     , 'cnext'     ] ,
+            \ 'p'    : ['cprevious' , 'cprevious' ] ,
+            \ 'l'    : ['cnext'     , 'cnext'     ] ,
+            \ 'h'    : ['cprevious' , 'cprevious' ] ,
+            \ }
 
-augroup mygroup
-    autocmd!
-    " Update signature help on jump placeholder.
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    " Highlight the symbol and its references when holding the cursor.
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-    autocmd FileType json syntax match Comment +\/\/.\+$+
-augroup end
+let g:which_key_map.f = {
+            \ 'name' : '+find',
+            \ 's': ['w'      , 'save-file'     ] ,
+            \ 'f': ['Files'  , 'fzf-files'     ] ,
+            \ 'g': ['GFiles' , 'fzf-git-files' ] ,
+            \ 't': ['Tags'   , 'fzf-tags'      ] ,
+            \ }
 
-nnoremap <silent> <space>a  :<C-u>CocFzfList diagnostics<CR>
-nnoremap <silent> <space>b  :<C-u>CocFzfList diagnostics --current-buf<CR>
-nnoremap <silent> <space>c  :<C-u>CocFzfList commands<CR>
-nnoremap <silent> <space>e  :<C-u>CocFzfList extensions<CR>
-nnoremap <silent> <space>l  :<C-u>CocFzfList location<CR>
-nnoremap <silent> <space>o  :<C-u>CocFzfList outline<CR>
-nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<CR>
-nnoremap <silent> <space>S  :<C-u>CocFzfList services<CR>
-nnoremap <silent> <space>p  :<C-u>CocFzfListResume<CR>
+let g:which_key_map.g = {
+            \ 'name' : '+git'            ,
+            \ 's'    : ['LazyGit'        , 'git status' ] ,
+            \ '?'    : ['FzfCommits'           , 'git log'    ] ,
+            \ 'p'    : ['Gpush'          , 'git push'   ] ,
+            \ 'P'    : {
+            \    'l' : ['Gpull'          , 'git checkout'      ] ,
+            \    'r' : ['Gpull --rebase' , 'git pull --rebase' ] ,
+            \ }                          ,
+            \ 'b'    : ['Gblame'         , 'git blame' ] ,
+            \ 'd'    : ['Gvdiffsplit'    , 'git blame' ] ,
+            \ 'w'    : ['Gwrite'    , 'git write' ] ,
+            \ 'c'    : ['Gcommit'    , 'git commit' ] ,
+            \ 'h'    : ['[c'    , 'git previous hunk' ] ,
+            \ 'l'    : [']c'    , 'git next hunk' ] ,
+            \ }
 
-nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+let g:which_key_map.h = {
+            \ 'name' : '+help'     ,
+            \ 'm'    : ['Maps'     , 'fzf-maps'     ] ,
+            \ 'c'    : ['Commands' , 'fzf-commands' ] ,
+            \ }
+
+let g:which_key_map.w = {
+            \ 'name' : '+windows' ,
+            \ 'w' : ['<C-W>w'     , 'other-window'       ] ,
+            \ 'c' : ['<C-W>c'     , 'delete-window'      ] ,
+            \ '/' : ['<C-W>s'     , 'split-window-below' ] ,
+            \ '\' : ['<C-W>v'     , 'split-window-right' ] ,
+            \ 'h' : ['<C-W>h'     , 'window-left'        ] ,
+            \ 'j' : ['<C-W>j'     , 'window-below'       ] ,
+            \ 'l' : ['<C-W>l'     , 'window-right'       ] ,
+            \ 'k' : ['<C-W>k'     , 'window-up'          ] ,
+            \ 'H' : ['<C-W>H'     , 'move-window-left'   ] ,
+            \ 'J' : ['<C-W>J'     , 'move-window-bottom' ] ,
+            \ 'L' : ['<C-W>L'     , 'move-window-right'  ] ,
+            \ 'K' : ['<C-W>K'     , 'move-window-top'    ] ,
+            \ 'o' : ['<C-W>o'     , 'maximize-window'    ] ,
+            \ '=' : ['<C-W>='     , 'balance-window'     ] ,
+            \ 's' : ['<C-W>s'     , 'split-window-below' ] ,
+            \ 'v' : ['<C-W>v'     , 'split-window-right' ] ,
+            \ 'p' : ['wincmd P'   , 'preview-window'     ] ,
+            \ 'z' : ['wincmd z'   , 'quickfix-window'     ] ,
+            \ '?' : ['FzfWindows' , 'fzf-window'         ] ,
+            \ }
+
+let g:which_key_map.q = {
+            \ 'name': '+format',
+            \ 't' : ['Tabularize'     , 'tabularize'       ] ,
+            \ 'j' : [':<C-u>call JuliaFormatter#Format(0)'     , 'julia-formatter'       ] ,
+            \ }
+
+let g:which_key_map.v = {
+            \ 'name': '+vim',
+            \ 'e' : [':e $MYVIMRC' , 'edit-vimrc'                        ] ,
+            \ 's' : [':source $MYVIMRC' , 'source-vimrc'                 ] ,
+            \ 'l' : [':luafile %' , 'source-luafile'                     ] ,
+            \ 'z' : [':e ~/.zshrc' , 'edit-zshrc'                        ] ,
+            \ '-' : [':RangerCurrentFile' , 'ranger-at-current-file'     ] ,
+            \ '=' : [':terminal' , 'terminal-in-current-buffer'          ] ,
+            \ 'c' : [':cd %:p:h<CR>:pwd' , 'change-directory'            ] ,
+            \ 'x' : ['<Plug>(openbrowser-open)' , 'open-link-in-browser' ] ,
+            \ 'u' : ['UndotreeToggle' , 'undo-tree-toggle'               ] ,
+            \ }
+
+" Map leader to which_key
+nnoremap <silent> <leader> :silent WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
+
+" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
+
+nnoremap <leader>z <Plug>(zoom-toggle)
+nnoremap <leader>ss :StripWhitespace<CR>
+
+" Clear highlighting
+nnoremap <leader>no :noh<CR>
+
+let g:which_key_map.b = { 'name': '+buffer' }
+" delete buffer
+" works nicely in terminal mode as well
+nnoremap <silent> <leader>bd :confirm bdelete<CR>
+nnoremap <silent> <leader>bw :confirm bwipeout<CR>
+nnoremap <silent> <leader>bl :bnext<CR>
+nnoremap <silent> <leader>bh :bprev<CR>
+nnoremap <silent> <leader>bq :copen<CR>
+nnoremap <silent> <leader>bQ :cclose<CR>
+nnoremap <silent> <leader>bw :w<CR>
+nnoremap <silent> <leader>b? :FzfBuffers<CR>
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Todo', 'border': 'sharp' } }
+let g:fzf_buffers_jump = 1
+let g:fzf_command_prefix = 'Fzf'
+
+let g:which_key_map.f = { 'name': '+find' }
+
+nnoremap          <leader>fs :<c-u>FzfRg<CR>
+nnoremap <silent> <leader>fw :<c-u>FzfRg <C-r>=expand("<cword>")<CR><CR>
+nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
+nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
+nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
+nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
+nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
+nnoremap <silent> <leader>fl :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
+nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
+nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
+xnoremap          <leader>fs "sy:FzfRg<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
+
+" Path completion with custom source command
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+" Word completion with custom spec with popup layout option
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
+
+" Mapping selecting mappings
+nmap <leader>? <plug>(fzf-maps-n)
+xmap <leader>? <plug>(fzf-maps-x)
+omap <leader>? <plug>(fzf-maps-o)
+imap <leader>? <plug>(fzf-maps-i)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Split terminal
+nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
+nnoremap <silent> <leader>/ :split\|wincmd l\|terminal<CR>
