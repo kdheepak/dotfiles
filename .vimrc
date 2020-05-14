@@ -129,7 +129,6 @@ set fileencoding=utf-8  | " Default file encoding
 set fileencodings=utf-8 | " Default file encoding
 set noautochdir         | " Don't change dirs automatically
 set noerrorbells        | " No sound
-set hidden              | " Make buffers hidden then abandoned
 
 set tabstop=4                    | " Number of spaces a <Tab> is
 set softtabstop=4                | " Fine tunes the amount of white space to be added
@@ -203,6 +202,11 @@ if has("persistent_undo")
     set directory=~/.local/share/nvim/swap//
     set undofile
 endif
+
+augroup TermBuffer
+    autocmd!
+    autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
+augroup END
 
 " Ensure comments don't go to beginning of line by default
 autocmd! FileType vim,python setl nosmartindent
@@ -543,7 +547,31 @@ lua <<EOF
     nvim_lsp.tsserver.setup({})
     nvim_lsp.jsonls.setup({})
     nvim_lsp.nimls.setup({})
-    nvim_lsp.pyls_ms.setup({})
+    nvim_lsp.pyls.setup{
+        settings = {
+            pyls = {
+                configurationSources = {
+                    pycodestyle,
+                    flake8
+                },
+                plugins = {
+                    mccabe = { enabled = false },
+                    preload = { enabled = true },
+                    pycodestyle = {
+                        enabled = true,
+                        ignore = { "E501" },
+                    },
+                    pydocstyle = {
+                        enabled = false,
+                    },
+                    pyflakes = { enabled = true },
+                    pylint = { enabled = false },
+                    rope_completion = { enabled = true },
+                    black = { enabled = false },
+                }
+            }
+        }
+    }
     nvim_lsp.vimls.setup({})
 EOF
 
@@ -827,5 +855,27 @@ let g:which_key_map.f.m = 'find-marks'
 
 nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
 let g:which_key_map.f.t = 'find-marks'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.l = { 'name': '+lsp' }
+
+nnoremap <silent> <leader>lc :lua vim.lsp.buf.declaration()<CR>
+let g:which_key_map.l.c = 'lsp-declaration'
+
+nnoremap <silent> <leader>lf :lua vim.lsp.buf.definition()<CR>
+let g:which_key_map.l.f = 'lsp-definition'
+
+nnoremap <silent> <leader>lh  :lua vim.lsp.buf.hover()<CR>
+let g:which_key_map.l.h = 'lsp-hover'
+
+nnoremap <silent> <leader>li  :lua vim.lsp.buf.implementation()<CR>
+let g:which_key_map.l.i = 'lsp-implementation'
+
+nnoremap <silent> <leader>ls  :lua vim.lsp.buf.signature_help()<CR>
+let g:which_key_map.l.s = 'lsp-signature-help'
+
+nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
+let g:which_key_map.l.t = 'lsp-type-definition'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
