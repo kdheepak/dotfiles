@@ -225,9 +225,9 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
-autocmd TermOpen term://* startinsert
+" autocmd TermOpen term://* startinsert
 autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
-autocmd BufWinEnter term://* startinsert | IndentGuidesDisable
+autocmd BufWinEnter term://* IndentGuidesDisable
 
 " Use :wq or :x instead of :w | bd for git commit messages when using nvr
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
@@ -391,8 +391,8 @@ command! -bang Q q
 command! -bang Qa qa
 
 " " Tabs
-" nnoremap <Tab> :bn<CR>
-" nnoremap <S-Tab> :bp<CR>
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
 
 " kakoune like mapping
 noremap gj G
@@ -537,7 +537,6 @@ command! -nargs=1 Help call Help( <f-args> )
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
-let g:deoplete#enable_at_startup = 1
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
     nvim_lsp.bashls.setup({})
@@ -587,6 +586,35 @@ augroup MyLSP
     autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
 augroup END
 
+let g:deoplete#enable_at_startup = 1
+
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+inoremap <expr><C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
+
+" <Tab> completion:
+" 1. If popup menu is visible, select and insert next item
+" 2. Otherwise, if within a snippet, jump to next input
+" 3. Otherwise, if preceding chars are whitespace, insert tab char
+" 4. Otherwise, start manual autocomplete
+imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+    \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
+    \ : (<SID>is_whitespace() ? "\<Tab>"
+    \ : deoplete#manual_complete()))
+
+smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+    \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
+    \ : (<SID>is_whitespace() ? "\<Tab>"
+    \ : deoplete#manual_complete()))
+
+inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:is_whitespace()
+    let col = col('.') - 1
+    return ! col || getline('.')[col - 1] =~? '\s'
+endfunction
+
 """""""""""""""""""""""""""""""""""""""" fzf
 
 let g:fzf_preview_floating_window_winblend = 5
@@ -623,7 +651,7 @@ vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Clear highlighting
-nnoremap <leader><leader> :nohl<CR>:delmarks! \| delmarks a-zA-Z0-9<CR><ESC>
+nnoremap <silent> <leader><leader> :nohl<CR>:delmarks! \| delmarks a-zA-Z0-9<CR><ESC>
 
 command! -nargs=0 Fzf call Help( <f-args> )
 
