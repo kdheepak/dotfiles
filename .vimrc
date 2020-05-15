@@ -599,14 +599,12 @@ inoremap <expr><C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
 " 3. Otherwise, if preceding chars are whitespace, insert tab char
 " 4. Otherwise, start manual autocomplete
 imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-    \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
     \ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#manual_complete()))
+    \ : deoplete#mappings#manual_complete())
 
 smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-    \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
     \ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#manual_complete()))
+    \ : deoplete#mappings#manual_complete())
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
