@@ -447,10 +447,10 @@ function s:AddTerminalNavigation()
 
     echom &filetype
     if &filetype ==# ''
-        tnoremap <buffer> <silent> <c-h> <c-\><c-n>:TmuxNavigateLeft<cr>
-        tnoremap <buffer> <silent> <c-j> <c-\><c-n>:TmuxNavigateDown<cr>
-        tnoremap <buffer> <silent> <c-k> <c-\><c-n>:TmuxNavigateUp<cr>
-        tnoremap <buffer> <silent> <c-l> <c-\><c-n>:TmuxNavigateRight<cr>
+        tnoremap <buffer> <silent> <C-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+        tnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+        tnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+        tnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
     endif
 
 endfunction
@@ -588,25 +588,11 @@ augroup END
 
 let g:deoplete#enable_at_startup = 1
 
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-
 inoremap <expr><C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
-
-" <Tab> completion:
-" 1. If popup menu is visible, select and insert next item
-" 2. Otherwise, if within a snippet, jump to next input
-" 3. Otherwise, if preceding chars are whitespace, insert tab char
-" 4. Otherwise, start manual autocomplete
-imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-    \ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#mappings#manual_complete())
-
-smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-    \ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#mappings#manual_complete())
-
-inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+snoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <silent><expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:is_whitespace()
     let col = col('.') - 1
