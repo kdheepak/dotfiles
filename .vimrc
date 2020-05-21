@@ -368,18 +368,23 @@ nnoremap < <<_
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
+" use tab to jump between buffers
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+" Navigate jump list
+nnoremap [j <C-o>
+nnoremap ]j <C-i>
+
 " highlight last inserted text
 nnoremap gV `[v`]
 
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
-
 " move vertically by actual line
 nnoremap J j
 nnoremap K k
-nnoremap H ^
-nnoremap L $
 
 "" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
@@ -392,12 +397,6 @@ nnoremap Y y$
 command! W w
 command! -bang Q q
 command! -bang Qa qa
-
-"" " Tabs
-" nnoremap <Tab> :bn<CR>      " does not play well with jump lists
-" nnoremap <S-Tab> :bp<CR>    " does not play well with jump lists
-" nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
-" nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
 " kakoune like mapping
 noremap gj G
