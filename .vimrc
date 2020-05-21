@@ -394,11 +394,10 @@ command! -bang Q q
 command! -bang Qa qa
 
 "" " Tabs
-" nnoremap <Tab> :bn<CR>
-" nnoremap <S-Tab> :bp<CR>
+" nnoremap <Tab> :bn<CR>      " does not play well with jump lists
+" nnoremap <S-Tab> :bp<CR>    " does not play well with jump lists
 " nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 " nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-
 
 " kakoune like mapping
 noremap gj G
