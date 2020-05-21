@@ -189,6 +189,7 @@ set nomodeline                           | " no lines are checked for set comman
 set grepprg=rg\ --vimgrep                | " use ripgrep
 set redrawtime=10000                     | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
 set updatetime=100                       | " set lower updatetime so that vim git gutter updates sooner
+set switchbuf+=usetab,useopen            | " open buffers in tab
 set cmdheight=1                          | " default space for displaying messages
 set completeopt=menuone    " Use the popup menu also when there is only one match.
 set completeopt+=noinsert  " Do not insert any text for a match until the user selects a match from the menu.
