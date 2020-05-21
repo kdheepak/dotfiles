@@ -375,6 +375,9 @@ nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 " Navigate jump list
 nnoremap [j <C-o>
 nnoremap ]j <C-i>
+" Navigate jump list
+nnoremap g, <C-o>
+nnoremap g. <C-i>
 
 " highlight last inserted text
 nnoremap gV `[v`]
