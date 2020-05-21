@@ -61,6 +61,8 @@ Plug 'tpope/vim-tbone'                                                | " basic 
 Plug 'tpope/vim-jdaddy'                                               | " mappings for working with json in vim
 Plug 'tpope/vim-obsession'                                            | " no hassle vim sessions
 Plug 'tpope/vim-speeddating'                                          | " Tools for working with dates
+Plug 'inkarkat/vim-visualrepeat'                                      | " repetition of vim built-in normal mode commands via . for visual mode
+Plug 'Konfekt/vim-CtrlXA'                                             | " Increment and decrement and toggle keywords
 Plug 'dhruvasagar/vim-zoom'                                           | " toggle zoom of current window within the current tab
 Plug 'kana/vim-niceblock'                                             | " makes blockwise Visual mode more useful and intuitive
 Plug 'mbbill/undotree'                                                | " visualizes undo history and makes it easier to browse and switch between different undo branches
@@ -79,7 +81,6 @@ Plug 'ryanoasis/vim-devicons'                                         | " adds i
 Plug 'segeljakt/vim-isotope'                                          | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                             | " automatically create any non-existent directories before writing the buffer
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
-Plug 'Yilin-Yang/vim-markbar'                                         | " sidebar that shows every mark
 Plug 'wellle/targets.vim'                                             | " Move text objects
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 """"                                                                  | " ### vim programming language features
@@ -173,6 +174,8 @@ set nobackup                             | " no backup before overwriting a file
 set nowritebackup                        | " no backups when writing a file
 set autowrite                            | " Automatically :write before running commands
 set list listchars=tab:»·,trail:·,nbsp:· | " Display extra whitespace
+set nrformats+=alpha                     | " increment or decrement alpha
+set nrformats-=octal                     | " don't increment or decrement octals
 set mouse=a                              | " Enables mouse support
 set nofoldenable                         | " disable folding
 set signcolumn=yes                       | " Always show git gutter / sign column
@@ -390,9 +393,12 @@ command! W w
 command! -bang Q q
 command! -bang Qa qa
 
-" " Tabs
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+"" " Tabs
+" nnoremap <Tab> :bn<CR>
+" nnoremap <S-Tab> :bp<CR>
+" nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+" nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
 
 " kakoune like mapping
 noremap gj G
@@ -432,12 +438,21 @@ nnoremap <silent> <Down> :cnext<CR>
 nnoremap <silent> <Left> :cpfile<CR>
 nnoremap <silent> <Right> :cnfile<CR>
 
-" Use brackets for navigation
+nnoremap <kPlus> <C-a>
+nnoremap <kMinus> <C-x>
+nnoremap + <C-a>
+nnoremap - <C-x>
+vnoremap + g<C-a>gv
+vnoremap - g<C-x>gv
+
+nmap <Plug>SpeedDatingFallbackUp   <Plug>(CtrlXA-CtrlA)
+nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
+
 nmap <silent> tt :tabnew<CR>
 
 " backtick goes to the exact mark location, single quote just the line; swap 'em
-" nnoremap ` '
-" nnoremap ' `
+nnoremap ` '
+nnoremap ' `
 
 " delete buffer
 " works nicely in terminal mode as well
@@ -451,6 +466,8 @@ function s:AddTerminalNavigation()
         tnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
         tnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
         tnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
+        tnoremap <Esc> <C-\><C-n>
+        tnoremap <C-v><Esc> <Esc>
     endif
 
 endfunction
