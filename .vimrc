@@ -100,6 +100,7 @@ Plug '~/gitrepos/JuliaFormatter.vim'                                  | " format
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
+Plug 'henrik/vim-indexed-search'                                      | " show number of matches
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
