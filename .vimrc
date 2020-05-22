@@ -170,6 +170,7 @@ set hlsearch                             | " highlight matches
 set inccommand=split                     | " live search and replace
 set wildmenu                             | " visual autocomplete for command menu
 set autoread                             | " automatically read files that have been changed outside of vim
+set noemoji                              | " emoji characters are not considered full width
 set nobackup                             | " no backup before overwriting a file
 set nowritebackup                        | " no backups when writing a file
 set autowrite                            | " Automatically :write before running commands
