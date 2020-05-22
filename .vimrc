@@ -201,6 +201,8 @@ set shortmess+=c   " Shut off completion messages
 set shortmess+=I   " no intro message
 " set noswapfile                         | " Don't write .swp files
 
+au CursorHold * checktime
+
 if has("persistent_undo")
     set undodir=~/.local/share/nvim/undo//
     set backupdir=~/.local/share/nvim/backup//
@@ -479,8 +481,8 @@ function s:AddTerminalNavigation()
         tnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
         tnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
         tnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
-        tnoremap <Esc> <C-\><C-n>
-        tnoremap <C-v><Esc> <Esc>
+        tnoremap <buffer> <silent> <Esc> <C-\><C-n>
+        tnoremap <buffer> <silent> <C-v><Esc> <Esc>
     endif
 
 endfunction
