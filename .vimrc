@@ -215,7 +215,7 @@ augroup TermBuffer
     autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
 augroup END
 
-autocmd TextYankPost * silent! lua require'highlight'.on_yank("IncSearch", 500, vim.v.event)
+au TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 1000, vim.v.event)
 
 " Ensure comments don't go to beginning of line by default
 autocmd! FileType vim,python setl nosmartindent
