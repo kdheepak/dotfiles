@@ -48,7 +48,6 @@ Plug '~/gitrepos/vim-one'                                             | " light 
 Plug 'liuchengxu/vim-which-key'                                       | " remember which key does what
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
 Plug 'norcalli/nvim-colorizer.lua'                                    | " a high-performance color highlighter for Neovim which has no external dependencies
-Plug 'machakann/vim-highlightedyank'                                  | " make the yanked region apparent!
 Plug 'junegunn/vim-peekaboo'                                          | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
 Plug 'itchyny/vim-cursorword'                                         | " underlines the word under the cursor
 Plug 'junegunn/vim-easy-align'                                        | " helps alignment
@@ -211,6 +210,8 @@ augroup TermBuffer
     autocmd!
     autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
 augroup END
+
+autocmd TextYankPost * silent! lua require'highlight'.on_yank("IncSearch", 500, vim.v.event)
 
 " Ensure comments don't go to beginning of line by default
 autocmd! FileType vim,python setl nosmartindent
