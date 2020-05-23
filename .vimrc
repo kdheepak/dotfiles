@@ -84,6 +84,7 @@ Plug 'wellle/targets.vim'                                             | " Move t
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
+Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
 Plug 'vim-vdebug/vdebug'                                              | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
@@ -571,15 +572,16 @@ command! -nargs=1 Help call Help( <f-args> )
 
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
-    nvim_lsp.bashls.setup({})
-    nvim_lsp.ccls.setup({})
-    nvim_lsp.cssls.setup({})
-    nvim_lsp.html.setup({})
-    nvim_lsp.tsserver.setup({})
-    nvim_lsp.jsonls.setup({})
-    nvim_lsp.nimls.setup({})
+    nvim_lsp.bashls.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.ccls.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.tsserver.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.jsonls.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.nimls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.pyls.setup{
         settings = {
+            on_attach=require'diagnostic'.on_attach,
             pyls = {
                 configurationSources = {
                     pycodestyle,
@@ -603,7 +605,7 @@ lua <<EOF
             }
         }
     }
-    nvim_lsp.vimls.setup({})
+    nvim_lsp.vimls.setup({on_attach=require'diagnostic'.on_attach})
 EOF
 
 augroup MyLSP
