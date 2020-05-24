@@ -570,6 +570,13 @@ endfunction
 
 command! -nargs=1 Help call Help( <f-args> )
 
+"""""""""""""""""""""""""""""""""""""""" 
+
+inoremap <buffer> <silent> <C-h> :TmuxNavigateLeft<cr>
+inoremap <buffer> <silent> <C-j> :TmuxNavigateDown<cr>
+inoremap <buffer> <silent> <C-k> :TmuxNavigateUp<cr>
+inoremap <buffer> <silent> <C-l> :TmuxNavigateRight<cr>
+
 """""""""""""""""""""""""""""""""""""""" lsp
 
 lua <<EOF
@@ -623,12 +630,17 @@ augroup MyLSP
 augroup END
 
 let g:deoplete#enable_at_startup = 1
+let g:neosnippet#enable_completed_snippet = 1
 
-inoremap <expr><C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr><C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-snoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \ : pumvisible() ? "\<C-n>" : "\<TAB>"
+snoremap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \ : pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+noremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup()."\<Plug>(neosnippet_expand_or_jump)" : "\<CR>"
 
 function! s:is_whitespace()
     let col = col('.') - 1
