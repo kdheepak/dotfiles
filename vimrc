@@ -100,6 +100,7 @@ Plug 'Shougo/neosnippet-snippets'                                     | " snippe
 Plug 'dstein64/vim-startuptime'                                       | " vim startup time profiler
 Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
+Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
