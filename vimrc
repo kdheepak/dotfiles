@@ -3,11 +3,11 @@ lua package.loaded['lazygit'] = nil
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+" if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+"   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
 "
 " Specify a directory for plugins
 " - For Neovim:
@@ -85,7 +85,7 @@ Plug 'sedm0784/vim-you-autocorrect'                                   | " Automa
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
-Plug 'vim-vdebug/vdebug'                                              | " Debugging, loaded manually
+Plug 'vim-vdebug/vdebug' , { 'on': [] }                               | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
@@ -97,6 +97,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark p
 Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
 Plug 'Shougo/neosnippet.vim'                                          | " dark powered snippet
 Plug 'Shougo/neosnippet-snippets'                                     | " snippet collection
+Plug 'dstein64/vim-startuptime'                                       | " vim startup time profiler
 Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
@@ -570,7 +571,7 @@ endfunction
 
 command! -nargs=1 Help call Help( <f-args> )
 
-"""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""
 
 inoremap <buffer> <silent> <C-h> :TmuxNavigateLeft<cr>
 inoremap <buffer> <silent> <C-j> :TmuxNavigateDown<cr>
