@@ -392,9 +392,6 @@ nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
 " Navigate jump list
-nnoremap [j <C-o>
-nnoremap ]j <C-i>
-" Navigate jump list
 nnoremap g, <C-o>
 nnoremap g. <C-i>
 
