@@ -28,7 +28,7 @@ rm ~/.p10k.zsh; ln -s $(pwd)/p10k.zsh ~/.p10k.zsh
 rm ~/.condarc; ln -s $(pwd)/condarc ~/.condarc
 rm ~/.config/yapf/style; ln -s $(pwd)/yapf-style ~/.config/yapf/style
 rm ~/.config/alacritty/alacritty.yml; ln -s $(pwd)/alacritty.yml ~/.config/alacritty/alacritty.yml
-rm ~/.config/flake8; ln -s $(pwd)/.flake8 ~/config/flake8
+rm ~/.config/flake8; ln -s $(pwd)/flake8 ~/config/flake8
 rm ~/.config/pycodestyle; ln -s $(pwd)/pycodestyle ~/.config/pycodestyle
 rm ~/.config/.fzf.bash; ln -s $(pwd)/fzf.bash ~/.config/.fzf.bash
 rm ~/.config/.fzf.zsh; ln -s $(pwd)/fzf.zsh ~/.config/.fzf.zsh
@@ -42,7 +42,7 @@ rm ~/.hammerspoon/init.lua; ln -s $(pwd)/init.lua ~/.hammerspoon/init.lua
 rm -rf ~/.config/karabiner; ln -s $(pwd)/karabiner ~/.config/karabiner
 rm -rf ~/.config/zathura; ln -s $(pwd)/zathura ~/.config/zathura
 rm -rf ~/.config/kak; ln -s $(pwd)/kak ~/.config/kak
-rm -rf ~/.config/nvim/init.vim; ln -s $(pwd)/.vimrc ~/.config/nvim/init.vim
+rm -rf ~/.config/nvim/init.vim; ln -s $(pwd)/vimrc ~/.config/nvim/init.vim
 rm -rf ~/.config/nvim/coc-settings.json; ln -s $(pwd)/coc-settings.json ~/.config/nvim/coc-settings.json
 rm -rf ~/.config/bat/config; ln -s $(pwd)/batconfig ~/.config/bat/config
 rm -rf ~/.config/bat/bin/preview_fzf_grep; ln -s $(pwd)/preview_fzf_grep ~/.config/bat/bin/preview_fzf_grep
