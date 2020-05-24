@@ -422,9 +422,18 @@ command! -bang Qa qa
 
 " kakoune like mapping
 noremap gj G
+noremap ge G$
 noremap gk gg
+noremap gi 0
 noremap gh ^
 noremap gl $
+noremap gt H20k
+noremap gb L20j
+noremap gc M
+noremap ga <C-^>
+
+noremap zj <C-e>
+noremap zk <C-y>
 
 " Macros
 nnoremap Q @@
