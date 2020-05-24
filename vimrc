@@ -95,6 +95,8 @@ Plug 'kdheepak/gridlabd.vim'                                          | " gridla
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
+Plug 'Shougo/neosnippet.vim'                                          | " dark powered snippet
+Plug 'Shougo/neosnippet-snippets'                                     | " snippet collection
 Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
