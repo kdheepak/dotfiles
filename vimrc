@@ -637,16 +637,22 @@ augroup MyLSP
     autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
 augroup END
 
+let g:diagnostic_auto_popup_while_jump = 1
+let g:diagnostic_enable_virtual_text = 0
+
 let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
 
-inoremap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \ : pumvisible() ? "\<C-n>" : "\<TAB>"
-snoremap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \ : pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <silent><expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+" Plugin key-mappings.
+imap <c-k>     <Plug>(neosnippet_expand_or_jump)
+smap <c-k>     <Plug>(neosnippet_expand_or_jump)
+
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+imap <silent><expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
 noremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup()."\<Plug>(neosnippet_expand_or_jump)" : "\<CR>"
 
@@ -939,5 +945,8 @@ let g:which_key_map.l.s = 'lsp-signature-help'
 
 nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
 let g:which_key_map.l.t = 'lsp-type-definition'
+
+nnoremap <silent> <leader>ld <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+let g:which_key_map.l.d = 'lsp-diagnostics-show'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
