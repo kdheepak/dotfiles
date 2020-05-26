@@ -699,9 +699,6 @@ command! -nargs=0 Fzf call Help( <f-args> )
 nmap <leader>? :FzfMaps<CR>
 let g:which_key_map['?'] = 'fzf-find-mappings'
 
-nmap <Leader>m <Plug>ToggleMarkbar
-let g:which_key_map.m = 'toggle-markbar'
-
 " Split terminal
 nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
 let g:which_key_map['\'] = 'split-horizontal-terminal'
@@ -822,14 +819,11 @@ let g:which_key_map.v['='] = 'terminal-current-buffer'
 nnoremap          <leader>v. :cd %:p:h<CR>:pwd<CR>
 let g:which_key_map.v['.'] = 'set-current-working-directory'
 
-nnoremap <leader>vx <Plug>(openbrowser-open)
-vnoremap <leader>vx <Plug>(openbrowser-open)
-let g:which_key_map.v.x = 'open-link-in-browser'
-
 nnoremap <leader>vu :UndotreeToggle<CR>
 let g:which_key_map.v.u = 'open-undo-tree'
 
-nnoremap <leader>vz <Plug>(zoom-toggle)
+command! ZoomToggle :call zoom#toggle()
+nnoremap <leader>vz :ZoomToggle<CR>
 let g:which_key_map.v.z = 'zoom-toggle'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
