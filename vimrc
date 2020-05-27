@@ -216,7 +216,25 @@ endif
 augroup TermBuffer
     autocmd!
     autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
+    autocmd VimEnter * if !empty($NVIM_LISTEN_ADDRESS) && $NVIM_LISTEN_ADDRESS !=# v:servername
+        \ |let g:r=jobstart(['nc', '-U', $NVIM_LISTEN_ADDRESS],{'rpc':v:true})
+        \ |let g:f=fnameescape(expand('%:p'))
+        \ |noau bwipe
+        \ |call rpcrequest(g:r, "nvim_command", "edit ".g:f)
+        \ |call rpcrequest(g:r, "nvim_command", "call lib#SetNumberDisplay()")
+        \ |qa
+        \ |endif
 augroup END
+
+autocmd TermOpen * setlocal nonumber
+autocmd TermOpen * setlocal norelativenumber
+" autocmd TermOpen term://* startinsert
+autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
+autocmd TermOpen iunmap <buffer> <C-h>
+autocmd TermOpen iunmap <buffer> <C-j>
+autocmd TermOpen iunmap <buffer> <C-k>
+autocmd TermOpen iunmap <buffer> <C-l>
+autocmd BufWinEnter term://* IndentGuidesDisable
 
 au TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 1000, vim.v.event)
 
@@ -234,12 +252,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
 " autocmd BufLeave term://* stopinsert
-
-autocmd TermOpen * setlocal nonumber
-autocmd TermOpen * setlocal norelativenumber
-" autocmd TermOpen term://* startinsert
-autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
-autocmd BufWinEnter term://* IndentGuidesDisable
 
 " Use :wq or :x instead of :w | bd for git commit messages when using nvr
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
@@ -332,7 +344,7 @@ let g:gitgutter_sign_modified_removed = '▋'
 
 let g:latex_to_unicode_auto = 1
 let g:latex_to_unicode_tab = 0
-let g:latex_to_unicode_cmd_mapping = ['<C-J>']
+let g:latex_to_unicode_cmd_mapping = ['<C-j>']
 
 " TODO: add shortcut to transform string
 let g:unicoder_cancel_normal = 1
@@ -485,10 +497,10 @@ function s:AddTerminalNavigation()
 
     echom &filetype
     if &filetype ==# ''
-        tnoremap <buffer> <silent> <C-h> <C-\><C-n>:TmuxNavigateLeft<cr>
-        tnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
-        tnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
-        tnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
+        nnoremap <buffer> <silent> <C-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+        nnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+        nnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+        nnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
         tnoremap <buffer> <silent> <Esc> <C-\><C-n>
         tnoremap <buffer> <silent> <C-v><Esc> <Esc>
     endif
@@ -577,10 +589,10 @@ command! -nargs=1 Help call Help( <f-args> )
 
 """"""""""""""""""""""""""""""""""""""""
 
-inoremap <buffer> <silent> <C-h> :TmuxNavigateLeft<cr>
-inoremap <buffer> <silent> <C-j> :TmuxNavigateDown<cr>
-inoremap <buffer> <silent> <C-k> :TmuxNavigateUp<cr>
-inoremap <buffer> <silent> <C-l> :TmuxNavigateRight<cr>
+inoremap <silent> <C-h> <C-o>:TmuxNavigateLeft<CR>
+inoremap <silent> <C-j> <C-o>:TmuxNavigateDown<CR>
+inoremap <silent> <C-k> <C-o>:TmuxNavigateUp<CR>
+inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
@@ -643,9 +655,8 @@ let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
 
 " Plugin key-mappings.
-imap <c-k>     <Plug>(neosnippet_expand_or_jump)
-smap <c-k>     <Plug>(neosnippet_expand_or_jump)
-
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
