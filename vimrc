@@ -699,7 +699,7 @@ function! RipgrepFzf(query, fullscreen)
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+command! -nargs=* -bang FzfRG call RipgrepFzf(<q-args>, <bang>0)
 
 " Insert mode completion
 imap <c-x><c-k> <Plug>(fzf-complete-word)
@@ -927,8 +927,8 @@ let g:which_key_map.b['?'] = 'fzf-buffer-all'
 
 let g:which_key_map.f = { 'name': '+find' }
 
-nnoremap <silent> <leader>fs :<c-u>FzfRg <C-r>=expand("<cword>")<CR><CR>
-xnoremap          <leader>fs "sy:FzfRg<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
+nnoremap <silent> <leader>fs :<c-u>FzfRG <C-r>=expand("<cword>")<CR><CR>
+xnoremap          <leader>fs "sy:FzfRG<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
 let g:which_key_map.f.s = 'find-in-files'
 
 nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
