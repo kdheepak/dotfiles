@@ -74,7 +74,7 @@ Plug 'dhruvasagar/vim-table-mode'                                     | " automa
 Plug 'airblade/vim-rooter'                                            | " rooter changes the working directory to the project root when you open a file or directory
 Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
 Plug 'editorconfig/editorconfig-vim'                                  | " editorconfig plugin for vim
-Plug 'haya14busa/vim-asterisk'                                        | " asterisk.vim provides improved * motions.
+Plug 'haya14busa/vim-asterisk'                                        | " asterisk.vim provides improved search * motions
 Plug 'ryanoasis/vim-devicons'                                         | " adds icons to plugins
 Plug 'segeljakt/vim-isotope'                                          | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                             | " automatically create any non-existent directories before writing the buffer
@@ -526,7 +526,7 @@ endif
 
 let g:prettier#config#prose_wrap = 'always'
 
-" vim-asterisk
+" make searching with * use vim-asterisk
 map *  <Plug>(asterisk-z*)
 map #  <Plug>(asterisk-z#)
 map g* <Plug>(asterisk-gz*)
