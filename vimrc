@@ -75,13 +75,15 @@ Plug 'airblade/vim-rooter'                                            | " rooter
 Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
 Plug 'editorconfig/editorconfig-vim'                                  | " editorconfig plugin for vim
 Plug 'haya14busa/vim-asterisk'                                        | " asterisk.vim provides improved * motions.
-Plug 'google/vim-searchindex'                                         | " this plugin shows how many times a search pattern occurs in the current buffer.
 Plug 'ryanoasis/vim-devicons'                                         | " adds icons to plugins
 Plug 'segeljakt/vim-isotope'                                          | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                             | " automatically create any non-existent directories before writing the buffer
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
 Plug 'wellle/targets.vim'                                             | " Move text objects
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
+Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
+Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
+Plug 'takac/vim-hardtime'                                             | " vim hardtime
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
@@ -100,12 +102,8 @@ Plug 'Shougo/neosnippet-snippets'                                     | " snippe
 Plug 'dstein64/vim-startuptime'                                       | " vim startup time profiler
 Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
-Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
-Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
-Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
-Plug 'henrik/vim-indexed-search'                                      | " show number of matches
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/1.x',
@@ -426,7 +424,6 @@ noremap gh ^
 noremap gl $
 noremap gt H20k
 noremap gb L20j
-noremap gc M
 noremap ga <C-^>
 
 noremap zj <C-e>
@@ -597,8 +594,8 @@ lua <<EOF
     nvim_lsp.jsonls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.nimls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.pyls.setup{
+        on_attach=require'diagnostic'.on_attach,
         settings = {
-            on_attach=require'diagnostic'.on_attach,
             pyls = {
                 configurationSources = {
                     pycodestyle,
@@ -635,6 +632,8 @@ augroup MyLSP
     autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+    autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 augroup END
 
 let g:diagnostic_auto_popup_while_jump = 1
@@ -681,6 +680,10 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'hei
 imap <c-x><c-k> <Plug>(fzf-complete-word)
 imap <c-x><c-f> <Plug>(fzf-complete-path)
 imap <c-x><c-l> <Plug>(fzf-complete-line)
+
+"""""""""""""""""""""""""""""""""""""""" commentary.vim
+
+autocmd FileType julia setlocal commentstring=#\ %s
 
 """""""""""""""""""""""""""""""""""""""" which key
 
@@ -928,25 +931,33 @@ let g:which_key_map.f.t = 'find-marks'
 
 let g:which_key_map.l = { 'name': '+lsp' }
 
-nnoremap <silent> <leader>lc :lua vim.lsp.buf.declaration()<CR>
-let g:which_key_map.l.c = 'lsp-declaration'
+nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
+let g:which_key_map.l.l = 'lsp-declaration'
 
 nnoremap <silent> <leader>lf :lua vim.lsp.buf.definition()<CR>
 let g:which_key_map.l.f = 'lsp-definition'
 
-nnoremap <silent> <leader>lh  :lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>lh :lua vim.lsp.buf.hover()<CR>
 let g:which_key_map.l.h = 'lsp-hover'
 
-nnoremap <silent> <leader>li  :lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <leader>li :lua vim.lsp.buf.implementation()<CR>
 let g:which_key_map.l.i = 'lsp-implementation'
 
-nnoremap <silent> <leader>ls  :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>ls :lua vim.lsp.buf.signature_help()<CR>
 let g:which_key_map.l.s = 'lsp-signature-help'
 
 nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
 let g:which_key_map.l.t = 'lsp-type-definition'
 
-nnoremap <silent> <leader>ld <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>lg :lua vim.lsp.util.show_line_diagnostics()<CR>
 let g:which_key_map.l.d = 'lsp-diagnostics-show'
+
+nmap     <silent> <leader>lc :Commentary<CR>
+omap     <silent> <leader>lc :Commentary<CR>
+xmap     <silent> <leader>lc :Commentary<CR>
+let g:which_key_map.l.c = 'lsp-comment'
+
+" nnoremap <silent> <leader>lq :<CR>
+" let g:which_key_map.l.q = 'lsp-format'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
