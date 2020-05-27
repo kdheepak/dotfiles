@@ -1,8 +1,3 @@
-# primarily for yabi
-# based around hyper (shift + ctrl + alt + cmd) as a mod key
-# have to use karabiner tricks for mod + shift (double shift confuses skhd)
-# don't use floating windows
-
 # open terminal
 hyper - return: open -a iTerm --new
 
@@ -13,16 +8,14 @@ hyper - f : open ~
 # hyper - v : bash -c 'launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"'
 
 # focus window
-ctrl + alt - h : yabai -m window --focus west
-ctrl + alt - j : yabai -m window --focus south
-ctrl + alt - k : yabai -m window --focus north
-ctrl + alt - l : yabai -m window --focus east
+hyper - h : yabai -m window --focus west
+hyper - j : yabai -m window --focus south
+hyper - k : yabai -m window --focus north
+hyper - l : yabai -m window --focus east
 
-ctrl + alt - 1 : yabai -m window --display 1
-ctrl + alt - 2 : yabai -m window --display 2
-ctrl + alt - 3 : yabai -m window --display 3
-ctrl + alt - n : yabai -m window --display next
-ctrl + alt - p : yabai -m window --display prev
+hyper - u : yabai -m window --display 2
+hyper - i : yabai -m window --display 3
+hyper - o : yabai -m window --display 1
 
 # focus monitor
 hyper - 1  : yabai -m display --focus 1
@@ -35,23 +28,10 @@ hyper - z : yabai -m window --toggle zoom-fullscreen
 
 # balance size of windows
 # use equals
-hyper - b : yabai -m space --balance
+hyper - 0x18 : yabai -m space --balance
 
 # rotate tree
 hyper - r : yabai -m space --rotate 90
 
-# mirror tree y-axis
-hyper - y : yabai -m space --mirror y-axis
-
-# mirror tree x-axis
-hyper - x : yabai -m space --mirror x-axis
-
-# toggle desktop offset
-hyper - o : yabai -m space --toggle padding; yabai -m space --toggle gap
-
 # toggle window border
 hyper - b : yabai -m window --toggle border
-
-# float / unfloat window and center on screen
-hyper - u : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:1:2:2
