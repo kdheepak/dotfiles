@@ -85,6 +85,7 @@ Plug 'sedm0784/vim-you-autocorrect'                                   | " Automa
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
+Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
