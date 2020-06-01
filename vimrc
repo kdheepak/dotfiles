@@ -606,6 +606,7 @@ inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
+    nvim_lsp.julials.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.bashls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.ccls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
@@ -644,6 +645,7 @@ EOF
 
 augroup MyLSP
     autocmd!
+    autocmd FileType julia setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType python setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType nim setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -977,6 +979,15 @@ let g:which_key_map.l.s = 'lsp-signature-help'
 
 nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
 let g:which_key_map.l.t = 'lsp-type-definition'
+
+nnoremap <silent> <leader>lr :lua vim.lsp.buf.references()<CR>
+let g:which_key_map.l.r = 'lsp-references'
+
+nnoremap <silent> <leader>l0 :lua vim.lsp.buf.document_symbol()<CR>
+let g:which_key_map.l['0'] = 'lsp-document-symbol'
+
+nnoremap <silent> <leader>lw :lua vim.lsp.buf.workspace_symbol()<CR>
+let g:which_key_map.l.w = 'lsp-workspace-symbol'
 
 nnoremap <silent> <leader>lg :lua vim.lsp.util.show_line_diagnostics()<CR>
 let g:which_key_map.l.d = 'lsp-diagnostics-show'

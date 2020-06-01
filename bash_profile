@@ -28,7 +28,7 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 # bind 'set completion-ignore-case on'
 # bind 'TAB:menu-complete'
 
-source $HOME/.config/.exports
-source $HOME/.config/.aliases
+source ~/gitrepos/dotfiles/aliases
+source ~/gitrepos/dotfiles/exports
 
 export PATH="$HOME/.cargo/bin:$PATH"
