@@ -71,7 +71,7 @@ Plug 'ntpeters/vim-better-whitespace'                                 | " causes
 Plug 'nathanaelkane/vim-indent-guides'                                | " displaying thin vertical lines at each indentation level for code indented with spaces
 Plug 'jeffkreeftmeijer/vim-numbertoggle'                              | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
 Plug 'dhruvasagar/vim-table-mode'                                     | " automatic table creator & formatter allowing one to create neat tables as you type
-Plug 'airblade/vim-rooter'                                            | " rooter changes the working directory to the project root when you open a file or directory
+" Plug 'airblade/vim-rooter'                                          | " rooter changes the working directory to the project root when you open a file or directory
 Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
 Plug 'editorconfig/editorconfig-vim'                                  | " editorconfig plugin for vim
 Plug 'osyo-manga/vim-anzu'                                            | " show total number of matches and current match number
@@ -207,6 +207,9 @@ set shortmess+=I   " no intro message
 " set noswapfile                         | " Don't write .swp files
 
 au CursorHold * checktime
+
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd FileType gitcommit setlocal spell
 
 if has("persistent_undo")
     set undodir=~/.local/share/nvim/undo//
@@ -609,8 +612,8 @@ lua <<EOF
     nvim_lsp.julials.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.bashls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.ccls.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
+    -- nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
+    -- nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.tsserver.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.jsonls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.nimls.setup({on_attach=require'diagnostic'.on_attach})
@@ -652,8 +655,8 @@ augroup MyLSP
     autocmd FileType json setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType javascript,javascriptreact,javascript.jsx,typescript,typescriptreact,typescript.tsx setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    " autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    " autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
     autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 augroup END
@@ -908,7 +911,13 @@ let g:which_key_map.g['?'] = 'fzf-git-commit-log'
 
 let g:which_key_map.b = { 'name': '+buffer' }
 
-nnoremap <silent> <leader>bd :confirm bdelete<CR>
+function! DeleteCurrentBuffer()
+  let l:buffernumber = bufnr('%')
+  execute ":bn" | execute ":bd " . l:buffernumber
+endfunction
+command! BufferDelete :call DeleteCurrentBuffer()
+
+nnoremap <silent> <leader>bd :BufferDelete<CR>
 let g:which_key_map.b.d = 'buffer-delete'
 
 nnoremap <silent> <leader>bw :write<CR>
