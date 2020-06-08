@@ -87,7 +87,7 @@ Plug 'inkarkat/vim-spellcheck'                                        | " Spelli
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 """"                                                                  | " ### vim programming language features
-Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
+Plug '~/gitrepos/nvim-lsp'                                            | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
 Plug 'vim-vdebug/vdebug' , { 'on': [] }                               | " Debugging, loaded manually
 Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
@@ -185,7 +185,6 @@ set nrformats-=octal                     | " don't increment or decrement octals
 set mouse=a                              | " Enables mouse support
 set nofoldenable                         | " disable folding
 set signcolumn=yes                       | " Always show git gutter / sign column
-set scrolloff=20                         | " Minimal number of lines to keep above and below the cursor
 set nojoinspaces                         | " Use one space, not two, after punctuation
 set splitright                           | " split windows right
 set splitbelow                           | " split windows below
@@ -267,6 +266,31 @@ augroup BgHighlight
     autocmd WinEnter * set cursorline
     autocmd WinLeave * set nocursorline
 augroup END
+
+function! MathAndLiquid()
+    "" Define certain regions
+    " Block math. Look for "$$[anything]$$"
+    syn region math start=/\$\$/ end=/\$\$/
+    " inline math. Look for "$[not $][anything]$"
+    syn match math_block '\$[^$].\{-}\$'
+
+    " Liquid single line. Look for "{%[anything]%}"
+    syn match liquid '{%.*%}'
+    " Liquid multiline. Look for "{%[anything]%}[anything]{%[anything]%}"
+    syn region highlight_block start='{% highlight .*%}' end='{%.*%}'
+    " Fenced code blocks, used in GitHub Flavored Markdown (GFM)
+    syn region highlight_block start='```' end='```'
+
+    "" Actually highlight those regions.
+    hi link math Statement
+    hi link liquid Statement
+    hi link highlight_block Function
+    hi link math_block Function
+    hi! link markdownItalic Italic
+endfunction
+
+" Call everytime we open a Markdown file
+autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:strip_whitespace_confirm=0
@@ -648,6 +672,7 @@ EOF
 
 augroup MyLSP
     autocmd!
+    set omnifunc=syntaxcomplete#Complete
     autocmd FileType julia setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType python setlocal omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -677,7 +702,7 @@ smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : 
 
 imap <silent><expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-noremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup()."\<Plug>(neosnippet_expand_or_jump)" : "\<CR>"
+inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup()."\<Plug>(neosnippet_expand_or_jump)" : "\<CR>"
 
 function! s:is_whitespace()
     let col = col('.') - 1
