@@ -18,7 +18,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf'                                                   | " main fzf
 Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
 Plug 'itchyny/calendar.vim'                                           | " calendar application
-Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }     | " turn your browser into a Neovim client.
+" Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }   | " turn your browser into a Neovim client.
 Plug 'Lokaltog/neoranger'                                             | " neoranger is a simple ranger wrapper script for neovim.
 Plug 'kassio/neoterm'                                                 | " use the same terminal for everything. The main reason for this plugin is to reuse the terminal easily.
 Plug 'wincent/terminus'                                               | " terminal integration improvements
