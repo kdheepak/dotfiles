@@ -89,8 +89,6 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 """"                                                                  | " ### vim programming language features
 Plug '~/gitrepos/nvim-lsp'                                            | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
-Plug 'vim-vdebug/vdebug' , { 'on': [] }                               | " Debugging, loaded manually
-Plug 'roxma/nvim-yarp'                                                | " yet another remote plugin framework for neovim
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
@@ -102,7 +100,6 @@ Plug 'Shougo/deoplete-lsp'                                            | " lsp co
 Plug 'Shougo/neosnippet.vim'                                          | " dark powered snippet
 Plug 'Shougo/neosnippet-snippets'                                     | " snippet collection
 Plug 'dstein64/vim-startuptime'                                       | " vim startup time profiler
-Plug 'ncm2/float-preview.nvim'                                        | " completion preview window based on neovim's floating window
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
@@ -411,11 +408,6 @@ let g:indent_guides_exclude_filetypes = ['help', 'ranger', 'fzf', 'openterm', 'n
 nnoremap r gr
 nnoremap R gR
 
-" Search mappings: These will make it so that going to the next one in a
-" search will center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
 " visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
@@ -572,12 +564,12 @@ endif
 let g:prettier#config#prose_wrap = 'always'
 
 " make searching with * use vim-asterisk
-map *  <Plug>(asterisk-z*)
-map #  <Plug>(asterisk-z#)
-map g* <Plug>(asterisk-gz*)
-map g# <Plug>(asterisk-gz#)
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
+map *  <Plug>(asterisk-z*)zzzv
+map #  <Plug>(asterisk-z#)zzzv
+map g* <Plug>(asterisk-gz*)zzzv
+map g# <Plug>(asterisk-gz#)zzzv
+nmap n <Plug>(anzu-n-with-echo)zzzv
+nmap N <Plug>(anzu-N-with-echo)zzzv
 
 let g:asterisk#keeppos = 1
 
