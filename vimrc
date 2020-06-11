@@ -99,7 +99,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark p
 Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
 Plug 'Shougo/neosnippet.vim'                                          | " dark powered snippet
 Plug 'Shougo/neosnippet-snippets'                                     | " snippet collection
-Plug 'dstein64/vim-startuptime'                                       | " vim startup time profiler
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
