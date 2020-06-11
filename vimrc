@@ -87,8 +87,8 @@ Plug 'inkarkat/vim-spellcheck'                                        | " Spelli
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 """"                                                                  | " ### vim programming language features
-Plug '~/gitrepos/nvim-lsp'                                            | " neovim built in lsp
-Plug 'haorenW1025/diagnostic-nvim'                                    | " neovim built in lsp diagnostics
+Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
+Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
