@@ -87,7 +87,7 @@ Plug 'inkarkat/vim-spellcheck'                                        | " Spelli
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 """"                                                                  | " ### vim programming language features
-Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
+Plug '~/gitrepos/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
@@ -627,8 +627,6 @@ lua <<EOF
     nvim_lsp.julials.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.bashls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.ccls.setup({on_attach=require'diagnostic'.on_attach})
-    -- nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
-    -- nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.tsserver.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.jsonls.setup({on_attach=require'diagnostic'.on_attach})
     nvim_lsp.nimls.setup({on_attach=require'diagnostic'.on_attach})
@@ -659,6 +657,8 @@ lua <<EOF
         }
     }
     nvim_lsp.vimls.setup({on_attach=require'diagnostic'.on_attach})
+    -- nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
+    -- nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
 EOF
 
 augroup MyLSP

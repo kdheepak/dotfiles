@@ -1,0 +1,20 @@
+set nocompatible
+filetype off
+
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'neovim/nvim-lsp'
+
+call plug#end()
+
+lua << EOF
+    require'nvim_lsp'.julials.setup{}
+EOF
+
+autocmd Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
