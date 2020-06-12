@@ -684,14 +684,14 @@ let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-imap <silent><expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+imap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup()."\<Plug>(neosnippet_expand_or_jump)" : "\<CR>"
 
