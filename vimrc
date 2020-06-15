@@ -237,7 +237,7 @@ autocmd TermOpen iunmap <buffer> <C-k>
 autocmd TermOpen iunmap <buffer> <C-l>
 autocmd BufWinEnter term://* IndentGuidesDisable
 
-au TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 1000, vim.v.event)
+autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 1000, vim.v.event)
 
 " Ensure comments don't go to beginning of line by default
 autocmd! FileType vim,python setl nosmartindent
