@@ -100,6 +100,7 @@ Plug 'Shougo/deoplete-lsp'                                            | " lsp co
 Plug 'Shougo/neosnippet.vim'                                          | " dark powered snippet
 Plug 'Shougo/neosnippet-snippets'                                     | " snippet collection
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
+Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 Plug 'prettier/vim-prettier', {
@@ -354,9 +355,13 @@ let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 
 " vim-markdown
-let g:vim_markdown_conceal = 0
 let g:vim_markdown_emphasis_multiline = 0
 let g:vim_markdown_folding_disabled = 1
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_fenced_languages = ['julia=jl', 'python=py']
 
 " vim gitgutter
 let g:gitgutter_override_sign_column_highlight = 1
