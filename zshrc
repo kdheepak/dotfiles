@@ -41,10 +41,20 @@ zinit snippet PZT::modules/spectrum/init.zsh
 zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
 zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
 
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 zinit light zdharma/history-search-multi-word
+
+#--------------------------------#
+# completion
+#--------------------------------#
+zinit ice wait'!0a' lucid atload"source $ZHOMEDIR/rc/pluginconfig/zsh-autosuggestions_atload.zsh"
+zinit light zsh-users/zsh-autosuggestions
+zinit ice wait'!0b' lucid atload"source $ZHOMEDIR/rc/pluginconfig/zsh-autocomplete_atload.zsh"
+zinit light marlonrichert/zsh-autocomplete
+
+zinit ice wait'!0' lucid as"completion" atload"source $ZHOMEDIR/rc/pluginconfig/zsh-completions_atload.zsh"
+zinit light zsh-users/zsh-completions
+
 
 zinit ice wait'0' lucid; zinit load desyncr/auto-ls
 zinit light djui/alias-tips
