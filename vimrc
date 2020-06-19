@@ -408,6 +408,9 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_color_change_percent = 1
 let g:indent_guides_exclude_filetypes = ['help', 'ranger', 'fzf', 'openterm', 'neoterm', 'calendar']
 
+cnoremap <expr> <C-j>  pumvisible() ? "<C-n>"  : "<Down>"
+cnoremap <expr> <C-k>  pumvisible() ? "<C-p>"  : "<Up>"
+
 " Use virtual replace mode all the time
 nnoremap r gr
 nnoremap R gR
@@ -697,8 +700,6 @@ imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : 
 smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 imap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup()."\<Plug>(neosnippet_expand_or_jump)" : "\<CR>"
 
 function! s:is_whitespace()
     let col = col('.') - 1

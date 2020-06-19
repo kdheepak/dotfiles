@@ -12,6 +12,9 @@ fi
 # source ~/.fonts/octicons-regular.sh
 # source ~/.fonts/pomicons-regular.sh
 
+source ~/gitrepos/dotfiles/aliases
+source ~/gitrepos/dotfiles/exports
+
 export PATH="$HOME/.local/bin:$PATH"
 
 [ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
@@ -30,77 +33,7 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer
 
-zinit ice svn atpull'zinit creinstall -q .'; zinit snippet PZT::modules/git
-
-zinit snippet PZT::modules/completion/init.zsh
-zinit snippet PZT::modules/environment/init.zsh
-zinit snippet PZT::modules/history/init.zsh
-zinit snippet PZT::modules/python/init.zsh
-zinit snippet PZT::modules/spectrum/init.zsh
-
-zinit ice svn; zinit snippet PZT::modules/directory/init.zsh
-zinit ice svn; zinit snippet PZT::modules/editor/init.zsh
-
-zinit light zsh-users/zsh-history-substring-search
-zinit light zdharma/history-search-multi-word
-
-#--------------------------------#
-# completion
-#--------------------------------#
-zinit ice wait'!0a' lucid atload"source $ZHOMEDIR/rc/pluginconfig/zsh-autosuggestions_atload.zsh"
-zinit light zsh-users/zsh-autosuggestions
-zinit ice wait'!0b' lucid atload"source $ZHOMEDIR/rc/pluginconfig/zsh-autocomplete_atload.zsh"
-zinit light marlonrichert/zsh-autocomplete
-
-zinit ice wait'!0' lucid as"completion" atload"source $ZHOMEDIR/rc/pluginconfig/zsh-completions_atload.zsh"
-zinit light zsh-users/zsh-completions
-
-
-zinit ice wait'0' lucid; zinit load desyncr/auto-ls
-zinit light djui/alias-tips
-zinit light wfxr/forgit
-
-zinit light nim-lang/nimble
-
-zinit light frescoraja/powerlevel10k
-
-zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
-
-# sharkdp/bat
-zinit ice wait lucid as'command' from'gh-r' mv'bat* -> bat' pick'bat/bat'
-zinit light sharkdp/bat
-
-# # ogham/exa, replacement for ls
-# zinit ice wait lucid as'program' from'gh-r' mv'exa* -> exa'
-# zinit light ogham/exa
-
-# FZF
-zinit ice wait lucid as'program' pick"$ZPFX/bin/(fzf|fzf-tmux)" \
-    atclone"cp shell/completion.zsh _fzf_completion; \
-      cp bin/(fzf|fzf-tmux) $ZPFX/bin; \
-      PREFIX=$ZPFX ./install" \
-    atload"source $HOME/.fzf.zsh"
-zinit light junegunn/fzf
-
-# diff-so-fancy
-zinit ice wait lucid as'program' pick'bin/git-dsf'
-zinit load zdharma/zsh-diff-so-fancy
-
-# ripgrep
-zinit ice from"gh-r" fbin"rg/rg" as"program" mv"ripgrep* -> rg" pick"rp/rg" bpick"${BPICK}"
-zinit light BurntSushi/ripgrep
-
-zinit ice has'git' wait'1' lucid fbin"bin/git-dsf"; zinit load zdharma/zsh-diff-so-fancy
-zinit ice has'git' wait'1' lucid; zinit load wfxr/forgit
-zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
-# zinit ice wait"0" lucid; zinit load ael-code/zsh-colored-man-pages
-zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-
-source ~/gitrepos/dotfiles/aliases
-source ~/gitrepos/dotfiles/exports
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+zinit ice depth=1; zinit load romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -175,45 +108,93 @@ POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND=$A_BG
 POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND=$A_FG
 POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='#447bef'
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d0d0d0"
-
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-#
-# Key Bindings
-#
-
-if [[ -n "$key_info" ]]; then
-  # Emacs
-  bindkey -M emacs "$key_info[Control]P" history-substring-search-up
-  bindkey -M emacs "$key_info[Control]N" history-substring-search-down
-
-  # Vi
-  bindkey -M vicmd "k" history-substring-search-up
-  bindkey -M vicmd "j" history-substring-search-down
-
-  # Emacs and Vi
-  for keymap in 'emacs' 'viins'; do
-    bindkey -M "$keymap" "$key_info[Up]" history-substring-search-up
-    bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
-  done
-
-  unset keymap
-fi
-
-function zle-keymap-select zle-line-init
-{
-    # change cursor shape in iTerm2
-    case $KEYMAP in
-        vicmd)      echo -ne '\e[1 q';; # block cursor
-        viins|main) echo -ne '\e[5 q';;
-    esac
-
-    zle reset-prompt
-    zle -R
-}
-
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
-zinit light zsh-users/zsh-syntax-highlighting
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d0d0d0"
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+zinit ice blockf atpull'zinit creinstall -q .'
+zinit load zsh-users/zsh-completions
+
+zinit load zsh-users/zsh-autosuggestions
+zinit load zdharma/history-search-multi-word
+
+zinit ice wait"0b" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
+zinit load zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+zinit ice lucid wait \
+        as:"program" \
+        atclone:"./install --bin" \
+        atpull:"%atclone" \
+        pick:"bin/fzf" \
+        multisrc:"shell/{key-bindings,completion}.zsh"
+zinit load "junegunn/fzf"
+
+zinit load Aloxaf/fzf-tab
+
+zstyle ':fzf-tab:*' show-group full
+zstyle ':fzf-tab:*' single-group full
+zstyle ':fzf-tab:*' prefix ''
+zstyle ':fzf-tab:*' continuous-trigger 'alt-enter'
+# Previews for some commands
+local extract="
+in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+"
+local sanitized_in='${~ctxt[hpre]}"${${in//\\ / }/#\~/$HOME}"'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
+zstyle ':fzf-tab:complete:*' extra-opts
+zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+
+zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
+zinit load zdharma/zsh-diff-so-fancy
+
+zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat='bat'"
+zinit load sharkdp/bat
+
+# zinit ice lucid wait from"gh-r" as"program" pick"./*/*/nvim"
+# zinit load neovim/neovim
+
+zinit ice lucid wait"0" as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
+zinit load 'jesseduffield/lazygit'
+
+zinit ice lucid wait"0" as"program" from"gh-r" mv"lazydocker* -> lazydocker" atload"alias lg='lazydocker'"
+zinit load 'jesseduffield/lazydocker'
+
+zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
+zinit load BurntSushi/ripgrep
+
+zinit ice depth'1' as"program" pick"ranger.py" atload"alias r='ranger.py'"
+zinit load ranger/ranger
+
+zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
+zinit load sharkdp/fd
+
+zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
+zinit load "cli/cli"
+
+zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
+zinit load ogham/exa
+zinit load DarrinTisdale/zsh-aliases-exa
+
+zinit load "b4b4r07/emoji-cli"
+
+zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+zinit snippet PZT::modules/completion/init.zsh
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+zinit ice wait'!0' lucid; zinit load "hlissner/zsh-autopair"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+### End of Zinit's installer chunk
