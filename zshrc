@@ -119,16 +119,6 @@ export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 zinit ice blockf atpull'zinit creinstall -q .'
 zinit load zsh-users/zsh-completions
 
-zinit load zsh-users/zsh-autosuggestions
-zinit load zdharma/history-search-multi-word
-
-zinit ice wait"0b" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
-zinit load zsh-users/zsh-history-substring-search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
 zinit ice lucid wait \
         as:"program" \
         atclone:"./install --bin" \
@@ -195,6 +185,19 @@ zinit snippet PZT::modules/completion/init.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit ice wait'!0' lucid; zinit load "hlissner/zsh-autopair"
+
+zinit light zdharma/fast-syntax-highlighting
+
+zinit load zsh-users/zsh-autosuggestions
+zinit load zdharma/history-search-multi-word
+
+zinit ice wait"0b" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
+zinit load zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 ### End of Zinit's installer chunk
