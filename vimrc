@@ -24,7 +24,6 @@ Plug 'kassio/neoterm'                                                 | " use th
 Plug 'wincent/terminus'                                               | " terminal integration improvements
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
-Plug 'tyru/open-browser-unicode.vim'                                  | " opens current character or unicode in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
 Plug 'rhysd/git-messenger.vim'                                        | " reveal a hidden message from git under the cursor quickly
 Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
@@ -296,12 +295,12 @@ let g:strip_whitespace_confirm=0
 
 " vim-airline
 let g:airline_theme = 'one'
-let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#syntastic#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#virtualenv#enabled = 1
 " let g:airline_skip_empty_sections = 1 " causes json to crash
 let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#' " display the full filename for all files
@@ -323,6 +322,9 @@ let g:airline#extensions#tabline#buffers_label  = ''
 let g:airline#extensions#tabline#tabs_label     = ''
 let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 let g:airline#extensions#quickfix#location_text = 'Location'
+
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#denite#enabled = 1
 
 " air-line
 " let g:airline_powerline_fonts = 1
