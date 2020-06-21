@@ -38,11 +38,36 @@ zinit ice depth=1; zinit load romkatv/powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=anaconda
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time vi_mode background_jobs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    dir                     # current directory
+    vcs                     # git status
+    # =========================[ Line #2 ]=========================
+    newline                 # \n
+)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    time                    # current time
+    command_execution_time  # duration of the last command
+    status                  # exit code of the last command
+    background_jobs         # presence of background jobs
+    direnv                  # direnv status (https://direnv.net/)
+    asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
+    virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
+    anaconda                # conda environment (https://conda.io/)
+    todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
+    timewarrior             # timewarrior tracking status (https://timewarrior.net/)
+    taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
+    # =========================[ Line #2 ]=========================
+    newline
+    # ip                    # ip address and bandwidth usage for a specified network interface
+    # public_ip             # public IP address
+    # proxy                 # system-wide http/https/ftp proxy
+    # battery               # internal battery
+    # wifi                  # wifi speed
+    # example               # example user-defined segment (see prompt_example function below)
+)
 
 POWERLEVEL9K_TIME_BACKGROUND='none'
-POWERLEVEL9K_COLOR_SCHEME='dark'
+POWERLEVEL9K_COLOR_SCHEME='light'
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
@@ -62,6 +87,9 @@ C_BG='#f0f0f0'
 # General Directory Settings
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=$A_FG
 POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=$A_BG
+
+POWERLEVEL9K_OS_ICON_DEFAULT_FOREGROUND=$A_FG
+POWERLEVEL9K_OS_ICON_DEFAULT_BACKGROUND=$A_BG
 
 # Home Folder Settings
 POWERLEVEL9K_DIR_HOME_FOREGROUND=$A_FG
@@ -90,8 +118,8 @@ POWERLEVEL9K_ANACONDA_FOREGROUND=$C_FG
 POWERLEVEL9K_ANACONDA_BACKGROUND=$C_BG
 
 # Status
-POWERLEVEL9K_STATUS_OK_FOREGROUND=$C_FG
-POWERLEVEL9K_STATUS_OK_BACKGROUND=$C_BG
+POWERLEVEL9K_STATUS_OK_FOREGROUND=$A_FG
+POWERLEVEL9K_STATUS_OK_BACKGROUND=$A_BG
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$A_FG
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND='#dd5f1c'
 
@@ -99,14 +127,9 @@ POWERLEVEL9K_STATUS_ERROR_BACKGROUND='#dd5f1c'
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$B_FG
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$B_BG
 
-# Vi mode
-# VI Mode Normal
-POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND=$A_FG
-POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND=$A_BG
-
-# VI Mode Insert
-POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND=$A_FG
-POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='#447bef'
+# Time
+POWERLEVEL9K_TIME_FOREGROUND=$C_FG
+POWERLEVEL9K_TIME_BACKGROUND=$C_BG
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
@@ -146,6 +169,8 @@ zstyle ':fzf-tab:complete:*' extra-opts
 zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
 zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
 zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
 zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
 
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
