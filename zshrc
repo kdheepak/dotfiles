@@ -160,7 +160,7 @@ zinit load sharkdp/bat
 zinit ice lucid wait"0" as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
 zinit load 'jesseduffield/lazygit'
 
-zinit ice lucid wait"0" as"program" from"gh-r" mv"lazydocker* -> lazydocker" atload"alias lg='lazydocker'"
+zinit ice lucid wait"0" as"program" from"gh-r" mv"lazydocker* -> lazydocker"
 zinit load 'jesseduffield/lazydocker'
 
 zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
