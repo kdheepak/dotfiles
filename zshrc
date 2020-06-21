@@ -130,7 +130,8 @@ zinit load "junegunn/fzf"
 zinit load Aloxaf/fzf-tab
 
 zstyle ':fzf-tab:*' show-group full
-zstyle ':fzf-tab:*' single-group full
+zstyle ':fzf-tab:*' single-group ''
+zstyle ':fzf-tab:*' single-group color $'\033[30m'
 zstyle ':fzf-tab:*' prefix ''
 zstyle ':fzf-tab:*' continuous-trigger 'alt-enter'
 # Previews for some commands

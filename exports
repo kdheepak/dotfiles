@@ -58,7 +58,7 @@ unset __conda_setup
 export PATH="$HOME/miniconda3/bin:$PATH"
 export PATH="$HOME/gitrepos/flutter/bin:$PATH"
 export PATH="$HOME/gitrepos/ccls/Release/:$PATH"
-export PATH="$PATH:$HOME/Applications/Julia-1.4.app/Contents/Resources/julia/bin"
+export PATH="$PATH:$HOME/Applications/Julia-1.5.app/Contents/Resources/julia/bin"
 
 # --files: List files that would be searched but do not search
 # --no-ignore: Do not respect .gitignore, etc...
