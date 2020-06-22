@@ -96,7 +96,7 @@ Plug 'kdheepak/gridlabd.vim'                                          | " gridla
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
-Plug 'SirVer/ultisnips'                                               | " The ultimate snippet solution for Vim. 
+Plug 'SirVer/ultisnips'                                               | " The ultimate snippet solution for Vim.
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
@@ -684,10 +684,10 @@ let g:diagnostic_enable_virtual_text = 0
 
 " Use tab for triggering autocompletion.
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#enable_refresh_always = 1
 let g:echodoc#enable_at_startup = 1
 " let g:deoplete#disable_auto_complete = 1
+call deoplete#custom#option('smart_case', v:true)
+call deoplete#custom#option('refresh_always', v:true)
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"

@@ -1,4 +1,4 @@
-# Dheepak's dotfiles
+# dotfiles
 
 ```
 ./bootstrap.sh
