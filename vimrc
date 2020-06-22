@@ -690,9 +690,9 @@ let g:echodoc#enable_at_startup = 1
 call deoplete#custom#option('smart_case', v:true)
 call deoplete#custom#option('refresh_always', v:true)
 
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-inoremap <expr><BS> deoplete#smart_close_popup()."\<BS>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+inoremap <expr> <BS> deoplete#smart_close_popup()."\<BS>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 
 " inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
