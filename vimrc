@@ -950,11 +950,11 @@ let g:which_key_map.b.d = 'buffer-delete'
 nnoremap <silent> <leader>bw :write<CR>
 let g:which_key_map.b.w = 'buffer-write'
 
-nnoremap <silent> <leader>bl :bnext<CR>
-let g:which_key_map.b.l = 'buffer-next'
+nnoremap <silent> <leader>bj :bnext<CR>
+let g:which_key_map.b.j = 'buffer-next'
 
-nnoremap <silent> <leader>bh :bprev<CR>
-let g:which_key_map.b.h = 'buffer-previous'
+nnoremap <silent> <leader>bk :bprev<CR>
+let g:which_key_map.b.k = 'buffer-previous'
 
 nnoremap <silent> <leader>bq :copen<CR>
 let g:which_key_map.b.q = 'buffer-quickfix-open'
