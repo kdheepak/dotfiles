@@ -925,11 +925,11 @@ let g:which_key_map.g.d = 'git-diff'
 noremap <leader>gr :Gremove<CR>
 let g:which_key_map.g.r = 'git-remove'
 
-noremap <leader>gl ]c
-let g:which_key_map.g.l = 'git-next-hunk'
+noremap <leader>gj :GitGutterNextHunk<CR>
+let g:which_key_map.g.j = 'git-next-hunk'
 
-noremap <leader>gh [c
-let g:which_key_map.g.h = 'git-prev-hunk'
+noremap <leader>gk :GitGutterPrevHunk<CR>
+let g:which_key_map.g.k = 'git-prev-hunk'
 
 noremap <leader>g? :FzfCommits<CR>
 let g:which_key_map.g['?'] = 'fzf-git-commit-log'

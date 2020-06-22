@@ -65,6 +65,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
 )
+POWERLEVEL9K_DIR_HYPERLINK=true
+POWERLEVEL9K_TRANSIENT_PROMPT=same-dir
 
 POWERLEVEL9K_TIME_BACKGROUND='none'
 POWERLEVEL9K_COLOR_SCHEME='light'
