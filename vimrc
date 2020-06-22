@@ -97,6 +97,7 @@ Plug 'zah/nim.vim'                                                    | " syntax
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
 Plug 'SirVer/ultisnips'                                               | " The ultimate snippet solution for Vim.
+Plug 'honza/vim-snippets'                                             | " vim-snipmate default snippets
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
