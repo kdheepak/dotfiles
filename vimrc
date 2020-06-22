@@ -96,8 +96,7 @@ Plug 'kdheepak/gridlabd.vim'                                          | " gridla
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
-Plug 'Shougo/neosnippet.vim'                                          | " dark powered snippet
-Plug 'Shougo/neosnippet-snippets'                                     | " snippet collection
+Plug 'SirVer/ultisnips'                                               | " The ultimate snippet solution for Vim. 
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
@@ -682,23 +681,34 @@ augroup END
 let g:diagnostic_auto_popup_while_jump = 1
 let g:diagnostic_enable_virtual_text = 0
 
+
+" Use tab for triggering autocompletion.
 let g:deoplete#enable_at_startup = 1
-let g:neosnippet#enable_completed_snippet = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:echodoc#enable_at_startup = 1
+" let g:deoplete#disable_auto_complete = 1
 
-" Plugin key-mappings.
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+inoremap <expr><BS> deoplete#smart_close_popup()."\<BS>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-imap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
+" inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
 
 function! s:is_whitespace()
     let col = col('.') - 1
     return ! col || getline('.')[col - 1] =~? '\s'
 endfunction
+
+call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+
+let g:UltiSnipsEditSplit           = "vertical"
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsExpandTrigger       = "<TAB>"
+let g:UltiSnipsJumpForwardTrigger  = "<TAB>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-TAB>"
 
 """""""""""""""""""""""""""""""""""""""" fzf
 
