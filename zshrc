@@ -79,7 +79,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # example               # example user-defined segment (see prompt_example function below)
 )
 POWERLEVEL9K_DIR_HYPERLINK=true
-POWERLEVEL9K_TRANSIENT_PROMPT=same-dir
+POWERLEVEL9K_TRANSIENT_PROMPT=off
 
 POWERLEVEL9K_TIME_BACKGROUND='none'
 POWERLEVEL9K_COLOR_SCHEME='light'
@@ -185,24 +185,6 @@ zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'bat --pager=neve
 zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
 zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
 zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-
-export FZF_TAB_COMMAND=(
-    fzf
-    --ansi
-    --expect='$continuous_trigger'
-    '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
-    --nth=2,3
-    --delimiter='\x00'
-    --layout=reverse
-    --height='${FZF_TMUX_HEIGHT:=75%}'
-    --tiebreak=begin
-    --multi
-    --bind=btab:up+toggle
-    --cycle
-    '--query=$query'
-    '--header-lines=$#headers'
-)
-zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
 
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma/zsh-diff-so-fancy

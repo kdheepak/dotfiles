@@ -527,8 +527,16 @@ function s:AddTerminalNavigation()
 
     echom &filetype
     if &filetype ==# ''
+        tnoremap <buffer> <silent> <C-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+        tnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+        tnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+        tnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
         tnoremap <buffer> <silent> <Esc> <C-\><C-n>
         tnoremap <buffer> <silent> <C-\><Esc> <Esc>
+        tnoremap <buffer> <silent> <C-\><C-h> <C-h>
+        tnoremap <buffer> <silent> <C-\><C-j> <C-j>
+        tnoremap <buffer> <silent> <C-\><C-k> <C-k>
+        tnoremap <buffer> <silent> <C-\><C-l> <C-l>
     endif
 
 endfunction
@@ -679,12 +687,12 @@ augroup MyLSP
     autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 augroup END
 
-let g:diagnostic_auto_popup_while_jump = 1
+let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 
 
 " Use tab for triggering autocompletion.
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 let g:echodoc#enable_at_startup = 1
 " let g:deoplete#disable_auto_complete = 1
 call deoplete#custom#option('smart_case', v:true)
