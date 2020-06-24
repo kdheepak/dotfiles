@@ -192,13 +192,12 @@ set redrawtime=10000                     | " set higher redrawtime so that vim d
 set updatetime=100                       | " set lower updatetime so that vim git gutter updates sooner
 set switchbuf+=usetab,useopen            | " open buffers in tab
 set cmdheight=1                          | " default space for displaying messages
-set completeopt=menuone    " Use the popup menu also when there is only one match.
-set completeopt+=noinsert  " Do not insert any text for a match until the user selects a match from the menu.
-set completeopt+=noselect  " Do not select a match in the menu, force the user to select one from the menu.
-set completeopt-=preview   " Remove extra information about the currently selected completion in the preview window.
-                           " Only works in combination with "menu" or "menuone".
-set shortmess+=c   " Shut off completion messages
-set shortmess+=I   " no intro message
+set completeopt=menuone                  | " Use the popup menu also when there is only one match.
+set completeopt+=noinsert                | " Do not insert any text for a match until the user selects a match from the menu.
+set completeopt+=noselect                | " Do not select a match in the menu, force the user to select one from the menu.
+set shortmess+=c                         | " Shut off completion messages
+set shortmess+=I                         | " no intro message
+set scrolloff=999                        | " make cursor always in the center
 " set noswapfile                         | " Don't write .swp files
 
 au CursorHold * checktime
@@ -683,33 +682,32 @@ augroup MyLSP
     autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=v:lua.vim.lsp.omnifunc
     " autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
     " autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-    autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 augroup END
 
 let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
-
+let g:diagnostic_enable_underline = 0
 
 " Use tab for triggering autocompletion.
-" let g:deoplete#enable_at_startup = 1
 let g:echodoc#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 " let g:deoplete#disable_auto_complete = 1
-call deoplete#custom#option('smart_case', v:true)
-call deoplete#custom#option('refresh_always', v:true)
 
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-inoremap <expr> <BS> deoplete#smart_close_popup()."\<BS>"
-inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
+inoremap <silent> <expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#manual_complete()
+inoremap <silent> <expr> <S-TAB>
+      \ pumvisible() ? "\<C-p>" :
+      \ <SID>check_back_space() ? "\<S-TAB>" :
+      \ deoplete#manual_complete()
 
-" inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
-" inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
-
-function! s:is_whitespace()
-    let col = col('.') - 1
-    return ! col || getline('.')[col - 1] =~? '\s'
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1] =~# '\s'
 endfunction
+
+inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 
 call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
@@ -744,11 +742,6 @@ function! RipgrepFzf(query, fullscreen)
 endfunction
 
 command! -nargs=* -bang FzfRG call RipgrepFzf(<q-args>, <bang>0)
-
-" Insert mode completion
-imap <c-x><c-k> <Plug>(fzf-complete-word)
-imap <c-x><c-f> <Plug>(fzf-complete-path)
-imap <c-x><c-l> <Plug>(fzf-complete-line)
 
 """""""""""""""""""""""""""""""""""""""" commentary.vim
 
@@ -1001,6 +994,11 @@ let g:which_key_map.f.m = 'find-marks'
 
 nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
 let g:which_key_map.f.t = 'find-marks'
+
+" Insert mode completion
+" imap <c-x><c-k> <Plug>(fzf-complete-word)
+" imap <c-x><c-f> <Plug>(fzf-complete-path)
+" imap <c-x><c-l> <Plug>(fzf-complete-line)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
