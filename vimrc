@@ -633,7 +633,6 @@ inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
     local on_attach_vim = function()
-        require'completion'.on_attach()
         require'diagnostic'.on_attach()
     end
     nvim_lsp.julials.setup({on_attach=on_attach_vim})
@@ -673,25 +672,9 @@ lua <<EOF
     -- nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
 EOF
 
-augroup MyLSP
-    autocmd!
-    set omnifunc=syntaxcomplete#Complete
-    autocmd FileType julia setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType vim setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType nim setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType json setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType javascript,javascriptreact,javascript.jsx,typescript,typescriptreact,typescript.tsx setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    " autocmd FileType css,scss,less setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    " autocmd FileType html setlocal omnifunc=v:lua.vim.lsp.omnifunc
-augroup END
-
 let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_enable_underline = 0
-
-let g:completion_enable_snippet = 'UltiSnips'
 
 " Use tab for triggering autocompletion.
 
@@ -705,12 +688,7 @@ inoremap <silent><expr> <TAB>
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
 
-inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-
-let g:UltiSnipsUsePythonVersion = 3
-" let g:UltiSnipsExpandTrigger       = "<TAB>"
-" let g:UltiSnipsJumpForwardTrigger  = "<TAB>"
-" let g:UltiSnipsJumpBackwardTrigger = "<S-TAB>"
+autocmd BufEnter * lua require'completion'.on_attach()
 
 """""""""""""""""""""""""""""""""""""""" fzf
 
