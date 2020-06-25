@@ -630,6 +630,8 @@ inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
+autocmd BufEnter * lua require'completion'.on_attach()
+
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
     local on_attach_vim = function()
@@ -667,16 +669,33 @@ lua <<EOF
             }
         }
     }
-    nvim_lsp.vimls.setup({on_attach=require'diagnostic'.on_attach})
-    -- nvim_lsp.cssls.setup({on_attach=require'diagnostic'.on_attach})
-    -- nvim_lsp.html.setup({on_attach=require'diagnostic'.on_attach})
+    nvim_lsp.vimls.setup({on_attach=on_attach_vim})
+    nvim_lsp.cssls.setup({on_attach=on_attach_vim})
+    nvim_lsp.html.setup({on_attach=on_attach_vim})
 EOF
 
+let g:UltiSnipsExpandTrigger='<c-u>'
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+
 let g:diagnostic_auto_popup_while_jump = 0
-let g:diagnostic_enable_virtual_text = 0
+let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_enable_underline = 0
+let g:completion_enable_snippet = 'UltiSnips'
+" Change the completion source automatically if no completion availabe
+let g:completion_auto_change_source = 1
+" Delete on completion
+let g:completion_trigger_on_delete = 1
+" Chain Completion
+let g:completion_chain_complete_list = [
+    \{'complete_items': ['lsp', 'snippet']},
+    \{'mode': '<c-p>'},
+    \{'mode': '<c-n>'}
+\]
 
 " Use tab for triggering autocompletion.
+inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 function! s:check_back_space() abort
     let col = col('.') - 1
@@ -687,8 +706,6 @@ inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
-
-autocmd BufEnter * lua require'completion'.on_attach()
 
 """""""""""""""""""""""""""""""""""""""" fzf
 
