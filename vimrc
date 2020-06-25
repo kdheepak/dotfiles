@@ -88,14 +88,13 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 """"                                                                  | " ### vim programming language features
 Plug '~/gitrepos/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
+Plug 'haorenW1025/completion-nvim'                                    | " better neovim built in lsp completion
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 Plug 'JuliaEditorSupport/julia-vim'                                   | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }         | " dark powered asynchronous completion framework for neovim/Vim8
-Plug 'Shougo/deoplete-lsp'                                            | " lsp completion source for deoplete
 Plug 'SirVer/ultisnips'                                               | " The ultimate snippet solution for Vim.
 Plug 'honza/vim-snippets'                                             | " vim-snipmate default snippets
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
@@ -633,14 +632,18 @@ inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 
 lua <<EOF
     local nvim_lsp = require'nvim_lsp'
-    nvim_lsp.julials.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.bashls.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.ccls.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.tsserver.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.jsonls.setup({on_attach=require'diagnostic'.on_attach})
-    nvim_lsp.nimls.setup({on_attach=require'diagnostic'.on_attach})
+    local on_attach_vim = function()
+        require'completion'.on_attach()
+        require'diagnostic'.on_attach()
+    end
+    nvim_lsp.julials.setup({on_attach=on_attach_vim})
+    nvim_lsp.bashls.setup({on_attach=on_attach_vim})
+    nvim_lsp.ccls.setup({on_attach=on_attach_vim})
+    nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
+    nvim_lsp.jsonls.setup({on_attach=on_attach_vim})
+    nvim_lsp.nimls.setup({on_attach=on_attach_vim})
     nvim_lsp.pyls.setup{
-        on_attach=require'diagnostic'.on_attach,
+        on_attach=on_attach_vim,
         settings = {
             pyls = {
                 configurationSources = {
@@ -688,34 +691,26 @@ let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_enable_underline = 0
 
-" Use tab for triggering autocompletion.
-let g:echodoc#enable_at_startup = 1
-let g:deoplete#enable_at_startup = 1
-" let g:deoplete#disable_auto_complete = 1
+let g:completion_enable_snippet = 'UltiSnips'
 
-inoremap <silent> <expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
-inoremap <silent> <expr> <S-TAB>
-      \ pumvisible() ? "\<C-p>" :
-      \ <SID>check_back_space() ? "\<S-TAB>" :
-      \ deoplete#manual_complete()
+" Use tab for triggering autocompletion.
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1] =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
 
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 
-call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-
-let g:UltiSnipsEditSplit           = "vertical"
 let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsExpandTrigger       = "<TAB>"
-let g:UltiSnipsJumpForwardTrigger  = "<TAB>"
-let g:UltiSnipsJumpBackwardTrigger = "<S-TAB>"
+" let g:UltiSnipsExpandTrigger       = "<TAB>"
+" let g:UltiSnipsJumpForwardTrigger  = "<TAB>"
+" let g:UltiSnipsJumpBackwardTrigger = "<S-TAB>"
 
 """""""""""""""""""""""""""""""""""""""" fzf
 
