@@ -25,6 +25,7 @@ Plug 'wincent/terminus'                                               | " termin
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
+Plug 'rhysd/committia.vim'                                            | " more pleasant editing on commit messages
 Plug 'rhysd/git-messenger.vim'                                        | " reveal a hidden message from git under the cursor quickly
 Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
