@@ -905,6 +905,9 @@ let g:which_key_map.g.s = 'git-status'
 noremap <leader>gc :Gcommit<CR>
 let g:which_key_map.g.c = 'git-commit'
 
+noremap <leader>go :.Gbrowse<CR>
+vnoremap <leader>go :Gbrowse<CR>
+
 noremap <leader>gp :Gpush<CR>
 let g:which_key_map.g.p = 'git-push'
 
