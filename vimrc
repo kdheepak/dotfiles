@@ -398,6 +398,10 @@ let maplocalleader = " " | " Map localleader to space
 " Don't start markdown preview automatically, use :MarkdownPreview
 let g:mkdp_auto_start = 0
 
+
+let g:python_host_prog = expand('~/miniconda3/bin/python')
+let g:python3_host_prog = expand('~/miniconda3/bin/python3')
+
 " Merge Tool
 " 3-way merge
 let g:mergetool_layout = 'bmr'
