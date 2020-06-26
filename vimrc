@@ -43,7 +43,7 @@ Plug 'Vigemus/nvimux'                                                 | " allows
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
-Plug '~/gitrepos/vim-one'                                             | " light and dark vim colorscheme
+Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
 Plug 'liuchengxu/vim-which-key'                                       | " remember which key does what
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
