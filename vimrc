@@ -240,7 +240,7 @@ autocmd BufWinEnter term://* IndentGuidesDisable
 
 augroup LuaHighlight
   autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  autocmd TextYankPost * silent! lua if vim.fn.reg_executing() == '' then require'vim.highlight'.on_yank() end
 augroup END
 
 " Ensure comments don't go to beginning of line by default
