@@ -30,7 +30,7 @@ Plug 'rhysd/git-messenger.vim'                                        | " reveal
 Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
-Plug '~/gitrepos/lazygit.vim'                                         | " lazygit
+Plug 'kdheepak/lazygit.vim'                                           | " lazygit
 """"                                                                  | " ### tmux
 Plug 'edkolev/tmuxline.vim'                                           | " tmux statusline generator with support for powerline symbols and vim/airline/lightline statusline integration
 Plug 'wellle/tmux-complete.vim'                                       | " insert mode completion of words in adjacent tmux panes
