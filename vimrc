@@ -89,7 +89,7 @@ Plug 'takac/vim-hardtime'                                             | " vim ha
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 """"                                                                  | " ### vim programming language features
-Plug '~/gitrepos/nvim-lsp'                                                | " neovim built in lsp
+Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
 Plug 'haorenW1025/completion-nvim'                                    | " better neovim built in lsp completion
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
@@ -102,7 +102,7 @@ Plug 'SirVer/ultisnips'                                               | " The ul
 Plug 'honza/vim-snippets'                                             | " vim-snipmate default snippets
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
-Plug '~/gitrepos/JuliaFormatter.vim'                                  | " formatter for Julia
+Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
