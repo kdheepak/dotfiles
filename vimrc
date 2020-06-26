@@ -60,6 +60,7 @@ Plug 'tpope/vim-tbone'                                                | " basic 
 Plug 'tpope/vim-jdaddy'                                               | " mappings for working with json in vim
 Plug 'tpope/vim-obsession'                                            | " no hassle vim sessions
 Plug 'tpope/vim-speeddating'                                          | " Tools for working with dates
+Plug 'tpope/vim-scriptease'                                           | " a Vim plugin for making Vim plugins.
 Plug 'inkarkat/vim-visualrepeat'                                      | " repetition of vim built-in normal mode commands via . for visual mode
 Plug 'Konfekt/vim-CtrlXA'                                             | " Increment and decrement and toggle keywords
 Plug 'dhruvasagar/vim-zoom'                                           | " toggle zoom of current window within the current tab
@@ -85,6 +86,7 @@ Plug 'sedm0784/vim-you-autocorrect'                                   | " Automa
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
+Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 """"                                                                  | " ### vim programming language features
 Plug '~/gitrepos/nvim-lsp'                                                | " neovim built in lsp
