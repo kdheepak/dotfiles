@@ -151,56 +151,57 @@ set linebreak       | " wrap long lines at a character in breakat
 set wrap            | " lines longer than the width of the window will wrap
 set showcmd         | " display an incomplete command in the lower right of the vim window
 
-let g:one_allow_italics = 1              | " I love italic for comments
-set termguicolors                        | " enables 24bit colors
-set background=light                     | " for the light version
-colorscheme one                          | " sets theme to one
-set novisualbell                         | " don't display visual bell
-set noshowmode                           | " don't show mode changes
-let &colorcolumn=121                     | " add indicator for 120
-set display+=lastline                    | " as much as possible of the last line in a window will be displayed
-set diffopt+=vertical                    | " Always use vertical diffs
-set laststatus=2                         | " show status at the bottom
-set number relativenumber                | " use line numbers and relative line numn
-set cursorline                           | " highlight current line
-set showcmd                              | " show command in bottom bar
-set showmatch                            | " highlight matching [{()}]
-set lazyredraw                           | " redraw only when we need to.
-set ignorecase                           | " Ignore case when searching
-set smartcase                            | " When searching try to be smart about cases
-set incsearch                            | " search as characters are entered
-set hlsearch                             | " highlight matches
-set inccommand=split                     | " live search and replace
-set wildmenu                             | " visual autocomplete for command menu
-set autoread                             | " automatically read files that have been changed outside of vim
-set noemoji                              | " emoji characters are not considered full width
-set nobackup                             | " no backup before overwriting a file
-set nowritebackup                        | " no backups when writing a file
-set autowrite                            | " Automatically :write before running commands
-set list listchars=tab:»·,trail:·,nbsp:· | " Display extra whitespace
-set nrformats+=alpha                     | " increment or decrement alpha
-set nrformats-=octal                     | " don't increment or decrement octals
-set mouse=a                              | " Enables mouse support
-set nofoldenable                         | " disable folding
-set signcolumn=yes                       | " Always show git gutter / sign column
-set nojoinspaces                         | " Use one space, not two, after punctuation
-set splitright                           | " split windows right
-set splitbelow                           | " split windows below
-set viminfo+=n~/.config/nvim/viminfo     | " viminfo file
-set virtualedit+=all                     | " allow virtual editing in all modes
-set nomodeline                           | " no lines are checked for set commands
-set grepprg=rg\ --vimgrep                | " use ripgrep
-set redrawtime=10000                     | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
-set updatetime=100                       | " set lower updatetime so that vim git gutter updates sooner
-set switchbuf+=usetab,useopen            | " open buffers in tab
-set cmdheight=1                          | " default space for displaying messages
-set completeopt=menuone                  | " Use the popup menu also when there is only one match.
-set completeopt+=noinsert                | " Do not insert any text for a match until the user selects a match from the menu.
-set completeopt+=noselect                | " Do not select a match in the menu, force the user to select one from the menu.
-set shortmess+=c                         | " Shut off completion messages
-set shortmess+=I                         | " no intro message
-set scrolloff=999                        | " make cursor always in the center
-" set noswapfile                         | " Don't write .swp files
+let g:one_allow_italics = 1                  | " I love italic for comments
+set termguicolors                            | " enables 24bit colors
+set background=light                         | " for the light version
+colorscheme one                              | " sets theme to one
+set novisualbell                             | " don't display visual bell
+set noshowmode                               | " don't show mode changes
+let &colorcolumn=121                         | " add indicator for 120
+set display+=lastline                        | " as much as possible of the last line in a window will be displayed
+set diffopt+=vertical                        | " Always use vertical diffs
+set laststatus=2                             | " show status at the bottom
+set number relativenumber                    | " use line numbers and relative line numn
+set cursorline                               | " highlight current line
+set showcmd                                  | " show command in bottom bar
+set showmatch                                | " highlight matching [{()}]
+set lazyredraw                               | " redraw only when we need to.
+set ignorecase                               | " Ignore case when searching
+set smartcase                                | " When searching try to be smart about cases
+set incsearch                                | " search as characters are entered
+set hlsearch                                 | " highlight matches
+set inccommand=split                         | " live search and replace
+set wildmenu                                 | " visual autocomplete for command menu
+set autoread                                 | " automatically read files that have been changed outside of vim
+set noemoji                                  | " emoji characters are not considered full width
+set nobackup                                 | " no backup before overwriting a file
+set nowritebackup                            | " no backups when writing a file
+set autowrite                                | " Automatically :write before running commands
+set list                                     |
+set listchars=tab:»·,trail:·,conceal┊,nbsp:· | " Display extra whitespace
+set nrformats+=alpha                         | " increment or decrement alpha
+set nrformats-=octal                         | " don't increment or decrement octals
+set mouse=a                                  | " Enables mouse support
+set nofoldenable                             | " disable folding
+set signcolumn=yes                           | " Always show git gutter / sign column
+set nojoinspaces                             | " Use one space, not two, after punctuation
+set splitright                               | " split windows right
+set splitbelow                               | " split windows below
+set viminfo+=n~/.config/nvim/viminfo         | " viminfo file
+set virtualedit+=all                         | " allow virtual editing in all modes
+set nomodeline                               | " no lines are checked for set commands
+set grepprg=rg\ --vimgrep                    | " use ripgrep
+set redrawtime=10000                         | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
+set updatetime=100                           | " set lower updatetime so that vim git gutter updates sooner
+set switchbuf+=usetab,useopen                | " open buffers in tab
+set cmdheight=1                              | " default space for displaying messages
+set completeopt=menuone                      | " Use the popup menu also when there is only one match.
+set completeopt+=noinsert                    | " Do not insert any text for a match until the user selects a match from the menu.
+set completeopt+=noselect                    | " Do not select a match in the menu, force the user to select one from the menu.
+set shortmess+=c                             | " Shut off completion messages
+set shortmess+=I                             | " no intro message
+set scrolloff=999                            | " make cursor always in the center
+" set noswapfile                             | " Don't write .swp files
 
 au CursorHold * checktime
 
@@ -418,8 +419,8 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_color_change_percent = 1
 let g:indent_guides_exclude_filetypes = ['help', 'ranger', 'fzf', 'openterm', 'neoterm', 'calendar']
 
-cnoremap <expr> <C-j>  pumvisible() ? "<C-n>"  : "<Down>"
 cnoremap <expr> <C-k>  pumvisible() ? "<C-p>"  : "<Up>"
+cnoremap <expr> <C-j>  pumvisible() ? "<C-n>"  : "<Down>"
 
 " Use virtual replace mode all the time
 nnoremap r gr
