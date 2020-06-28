@@ -80,14 +80,14 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
 Plug 'haorenW1025/completion-nvim'                                    | " better neovim built in lsp completion
+Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
+Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 Plug 'JuliaEditorSupport/julia-vim'                                   | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
-Plug 'SirVer/ultisnips'                                               | " The ultimate snippet solution for Vim.
-Plug 'honza/vim-snippets'                                             | " vim-snipmate default snippets
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
@@ -657,24 +657,13 @@ lua <<EOF
     }
 EOF
 
-let g:UltiSnipsExpandTrigger='<c-u>'
-let g:UltiSnipsJumpForwardTrigger='<c-j>'
-let g:UltiSnipsJumpBackwardTrigger='<c-k>'
-
 let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_enable_underline = 0
-let g:completion_enable_snippet = 'UltiSnips'
 " Change the completion source automatically if no completion availabe
 let g:completion_auto_change_source = 1
 " Delete on completion
 let g:completion_trigger_on_delete = 1
-" Chain Completion
-let g:completion_chain_complete_list = [
-    \{'complete_items': ['lsp', 'snippet']},
-    \{'mode': '<c-p>'},
-    \{'mode': '<c-n>'}
-\]
 
 " Use tab for triggering autocompletion.
 inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
