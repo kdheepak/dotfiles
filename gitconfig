@@ -111,7 +111,7 @@
             git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
         fi \
     }; f"
-    root = rev-parse --show-toplevel
+	root = rev-parse --show-toplevel
 
     patch = !git --no-pager diff --no-color
 

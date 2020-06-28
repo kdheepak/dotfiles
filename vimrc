@@ -628,6 +628,7 @@ lua <<EOF
     nvim_lsp.nimls.setup({on_attach=on_attach_vim})
     nvim_lsp.vimls.setup({on_attach=on_attach_vim})
     nvim_lsp.cssls.setup({on_attach=on_attach_vim})
+    nvim_lsp.sumneko_lua.setup({on_attach=on_attach_vim})
     nvim_lsp.html.setup({on_attach=on_attach_vim})
     nvim_lsp.pyls.setup{
         on_attach=on_attach_vim,
