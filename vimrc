@@ -28,6 +28,8 @@ Plug 'tpope/vim-fugitive'                                             | " vim pl
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
 Plug 'kdheepak/lazygit.vim'                                           | " lazygit
+""""
+Plug 'christoomey/vim-tmux-navigator'                                 | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
 """"                                                                  | " vim themes
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar

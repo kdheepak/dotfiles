@@ -188,6 +188,14 @@ gifify() {
     fi
 }
 
+update-nvim() {
+  curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
+  tar xzvf nvim-macos.tar.gz
+  rm nvim-macos.tar.gz
+  rm -rf ~/local/nvim
+  mv nvim-osx64 ~/local/nvim/
+}
+
 alias gfap="gfa --prune"
 alias gsb='git status -sb'
 alias gst='git status -s'
