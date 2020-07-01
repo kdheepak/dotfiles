@@ -682,6 +682,10 @@ inoremap <silent><expr> <TAB>
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
 
+"""""""""""""""""""""""""""""""""""""""" colorizer setup
+
+lua require'colorizer'.setup()
+
 """""""""""""""""""""""""""""""""""""""" fzf
 
 let g:fzf_preview_floating_window_winblend = 5

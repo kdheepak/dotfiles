@@ -3,15 +3,15 @@
 # Base16 Shell template by Chris Kempson (http://chriskempson.com)
 # Github scheme by Defman21
 
-color00="ff/ff/ff" # Base 00 - Black
-color01="ed/6a/43" # Base 08 - Red
-color02="50/a1/4f" # Base 0B - Green
-color03="79/5d/a3" # Base 0A - Yellow
-color04="38/6a/f0" # Base 0D - Blue
-color05="a7/1d/5d" # Base 0E - Magenta
-color06="18/36/91" # Base 0C - Cyan
-color07="33/33/33" # Base 05 - White
-color08="96/98/96" # Base 03 - Bright Black
+color00="ff/ff/ff" # Base 00 - Black        "#ffffff"
+color01="ed/6a/43" # Base 08 - Red          "#ed6a43"
+color02="50/a1/4f" # Base 0B - Green        "#50a14f"
+color03="79/5d/a3" # Base 0A - Yellow       "#795da3"
+color04="18/36/91" # Base 0D - Blue         "#386af0"
+color05="a7/1d/5d" # Base 0E - Magenta      "#a71d5d"
+color06="38/6a/f0" # Base 0C - Cyan         "#183691"
+color07="33/33/33" # Base 05 - White        "#333333"
+color08="96/98/96" # Base 03 - Bright Black "#969896"
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow
