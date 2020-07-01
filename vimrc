@@ -34,8 +34,6 @@ Plug 'christoomey/vim-tmux-navigator'                                 | " naviga
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
-Plug 'dawikur/base16-vim-airline-themes'
-Plug 'chriskempson/base16-vim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
 Plug 'liuchengxu/vim-which-key'                                       | " remember which key does what
@@ -127,13 +125,11 @@ set linebreak       | " wrap long lines at a character in breakat
 set wrap            | " lines longer than the width of the window will wrap
 set showcmd         | " display an incomplete command in the lower right of the vim window
 
-let g:one_allow_italics = 1                   | " I love italic for comments
+
 set termguicolors                             | " enables 24bit colors
+let g:one_allow_italics = 1                   | " I love italic for comments
 set background=light
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  colorscheme one
-endif
+colorscheme one
 set novisualbell                              | " don't display visual bell
 set noshowmode                                | " don't show mode changes
 let &colorcolumn=121                          | " add indicator for 120
