@@ -101,7 +101,6 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 zinit ice blockf atpull'zinit creinstall -q .'
-zinit load zsh-users/zsh-completions
 
 zinit ice lucid wait \
         as:"program" \
@@ -110,27 +109,6 @@ zinit ice lucid wait \
         pick:"bin/fzf" \
         multisrc:"shell/{key-bindings,completion}.zsh"
 zinit load "junegunn/fzf"
-
-zinit load Aloxaf/fzf-tab
-
-# zstyle ':fzf-tab:*' show-group full
-# zstyle ':fzf-tab:*' single-group ''
-# zstyle ':fzf-tab:*' single-group color $'\033[30m'
-# zstyle ':fzf-tab:*' prefix ''
-# zstyle ':fzf-tab:*' continuous-trigger 'alt-enter'
-# Previews for some commands
-local extract="
-in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
-local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
-"
-local sanitized_in='${~ctxt[hpre]}"${${in//\\ / }/#\~/$HOME}"'
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
-zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
-zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
 
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma/zsh-diff-so-fancy
@@ -159,16 +137,18 @@ zinit load sharkdp/fd
 zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 
-# zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
-# zinit load ogham/exa
-# zinit load DarrinTisdale/zsh-aliases-exa
+zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
+zinit load ogham/exa
+zinit load DarrinTisdale/zsh-aliases-exa
 
 zinit load "b4b4r07/emoji-cli"
 
 zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-zinit snippet PZT::modules/completion/init.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/completion.zsh
+zinit snippet OMZ::lib/git.zsh
+# zinit snippet PZT::modules/completion/init.zsh
 
 zinit ice wait'!0' lucid; zinit load "hlissner/zsh-autopair"
 
@@ -181,4 +161,31 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+zinit ice depth=1 # optional, but avoids downloading the full history
+zinit light 3v1n0/zsh-bash-completions-fallback
+zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
+    zsh-users/zsh-completions
+
+zinit load Aloxaf/fzf-tab
+
+# zstyle ':fzf-tab:*' show-group full
+# zstyle ':fzf-tab:*' single-group ''
+# zstyle ':fzf-tab:*' single-group color $'\033[30m'
+# zstyle ':fzf-tab:*' prefix ''
+# zstyle ':fzf-tab:*' continuous-trigger 'alt-enter'
+# Previews for some commands
+local extract="
+in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+"
+local sanitized_in='${~ctxt[hpre]}"${${in//\\ / }/#\~/$HOME}"'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+
 ### End of Zinit's installer chunk
