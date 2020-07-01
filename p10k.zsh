@@ -334,10 +334,10 @@
 
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#386af0'
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#386af0'
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#386af0'
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND='#386af0'
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='69'
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='69'
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='69'
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND='69'
   typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
@@ -508,7 +508,7 @@
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=0
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='#386af0'
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='69'
   # Show duration of the last command if takes longer than this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   # Show this many fractional digits. Zero means round to seconds.
