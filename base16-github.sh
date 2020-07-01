@@ -4,7 +4,7 @@
 # Github scheme by Defman21
 
 color00="ff/ff/ff" # Base 00 - Black        "#ffffff"
-color01="ed/6a/43" # Base 08 - Red          "#ed6a43"
+color01="f8/66/0d" # Base 08 - Red          "#f8660d"
 color02="50/a1/4f" # Base 0B - Green        "#50a14f"
 color03="79/5d/a3" # Base 0A - Yellow       "#795da3"
 color04="18/36/91" # Base 0D - Blue         "#386af0"
