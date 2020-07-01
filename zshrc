@@ -11,6 +11,8 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
+source ~/gitrepos/dotfiles/base16-github.fzf.config
+
 # practically unlimited history
 
 export HISTFILE=$HOME/.zsh_history
