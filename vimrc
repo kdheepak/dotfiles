@@ -34,6 +34,7 @@ Plug 'christoomey/vim-tmux-navigator'                                 | " naviga
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
+Plug 'dawikur/base16-vim-airline-themes'
 Plug 'chriskempson/base16-vim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
@@ -128,9 +129,10 @@ set showcmd         | " display an incomplete command in the lower right of the 
 
 let g:one_allow_italics = 1                   | " I love italic for comments
 set termguicolors                             | " enables 24bit colors
+set background=light
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
-  source ~/.vimrc_background
+  colorscheme one
 endif
 set novisualbell                              | " don't display visual bell
 set noshowmode                                | " don't show mode changes
