@@ -267,8 +267,8 @@ endfunction
 " Call everytime we open a Markdown file
 autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
 
-autocmd BufEnter * EnableStripWhitespaceOnSave
-let g:strip_whitespace_confirm=0
+" autocmd BufEnter * EnableStripWhitespaceOnSave
+" let g:strip_whitespace_confirm=0
 
 " autocmd! BufWritePost * make
 
