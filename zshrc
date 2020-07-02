@@ -139,7 +139,6 @@ zinit load "cli/cli"
 
 zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
 zinit load ogham/exa
-zinit load DarrinTisdale/zsh-aliases-exa
 
 zinit load "b4b4r07/emoji-cli"
 
