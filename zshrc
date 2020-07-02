@@ -137,8 +137,8 @@ zinit load sharkdp/fd
 zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 
-zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
-zinit load ogham/exa
+# zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
+# zinit load ogham/exa
 
 zinit load "b4b4r07/emoji-cli"
 

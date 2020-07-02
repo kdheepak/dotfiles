@@ -52,6 +52,7 @@ Plug 'tpope/vim-jdaddy'                                               | " mappin
 Plug 'tpope/vim-obsession'                                            | " no hassle vim sessions
 Plug 'tpope/vim-speeddating'                                          | " Tools for working with dates
 Plug 'tpope/vim-scriptease'                                           | " a Vim plugin for making Vim plugins.
+Plug 'tpope/vim-eunuch'                                               | " vim sugar for UNIX shell commands like :Rename
 Plug 'inkarkat/vim-visualrepeat'                                      | " repetition of vim built-in normal mode commands via . for visual mode
 Plug 'Konfekt/vim-CtrlXA'                                             | " Increment and decrement and toggle keywords
 Plug 'dhruvasagar/vim-zoom'                                           | " toggle zoom of current window within the current tab
