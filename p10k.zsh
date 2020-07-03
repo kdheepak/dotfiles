@@ -208,6 +208,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND='#ffffff'
   typeset -g POWERLEVEL9K_DIR_BACKGROUND='#50a14f'
   # Default current directory foreground color.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=0
@@ -335,10 +336,15 @@
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
   typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='33'
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='33'
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='33'
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND='33'
-  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_FOREGROUND='white'
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND='8'
+  typeset -g POWERLEVEL9K_VCS_LOADING_FOREGROUND='white'
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
