@@ -146,6 +146,9 @@ set incsearch                                 | " search as characters are enter
 set hlsearch                                  | " highlight matches
 set inccommand=split                          | " live search and replace
 set wildmenu                                  | " visual autocomplete for command menu
+set wildoptions+=pum
+set pumblend=15
+hi PmenuSel blend=0
 set autoread                                  | " automatically read files that have been changed outside of vim
 set noemoji                                   | " emoji characters are not considered full width
 set nobackup                                  | " no backup before overwriting a file
