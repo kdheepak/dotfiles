@@ -472,7 +472,7 @@
   # it will signify success by turning green.
   typeset -g POWERLEVEL9K_STATUS_OK=true
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=0
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND='#ffffff'
   typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND='#50a14f'
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
