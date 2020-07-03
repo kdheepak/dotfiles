@@ -233,7 +233,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " autocmd BufLeave term://* stopinsert
 
 " Use :wq or :x instead of :w | bd for git commit messages when using nvr
-autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+autocmd FileType gitcommit,gitrebase,gitconfig setl bufhidden=delete
 
 " remove highlight on the cursorline when moving out of the window
 augroup BgHighlight
