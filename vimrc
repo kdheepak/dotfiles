@@ -29,8 +29,6 @@ Plug 'tpope/vim-rhubarb'                                              | " vim pl
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
 Plug 'kdheepak/lazygit.vim'                                           | " lazygit
 """"
-Plug 'christoomey/vim-tmux-navigator'                                 | " navigate seamlessly between vim and tmux splits using a consistent set of hotkeys
-""""                                                                  | " vim themes
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
@@ -52,7 +50,7 @@ Plug 'tpope/vim-jdaddy'                                               | " mappin
 Plug 'tpope/vim-obsession'                                            | " no hassle vim sessions
 Plug 'tpope/vim-speeddating'                                          | " Tools for working with dates
 Plug 'tpope/vim-scriptease'                                           | " a Vim plugin for making Vim plugins.
-Plug 'tpope/vim-eunuch'                                               | " vim sugar for UNIX shell commands like :Rename
+Plug 'tpope/vim-eunuch'                                              | " vim sugar for UNIX shell commands like :Rename
 Plug 'inkarkat/vim-visualrepeat'                                      | " repetition of vim built-in normal mode commands via . for visual mode
 Plug 'Konfekt/vim-CtrlXA'                                             | " Increment and decrement and toggle keywords
 Plug 'dhruvasagar/vim-zoom'                                           | " toggle zoom of current window within the current tab
@@ -176,7 +174,8 @@ set completeopt+=noinsert                     | " Do not insert any text for a m
 set completeopt+=noselect                     | " Do not select a match in the menu, force the user to select one from the menu.
 set shortmess+=c                              | " Shut off completion messages
 set shortmess+=I                              | " no intro message
-set scrolloff=999                             | " make cursor always in the center
+set scrolloff=10                              | " show 10 lines above and below
+set clipboard+=unnamedplus                    | " Always have the clipboard be the same as my regular clipboard
 " set noswapfile                              | " Don't write .swp files
 
 au CursorHold * checktime
@@ -407,14 +406,6 @@ vnoremap > >gv
 nnoremap > >>_
 nnoremap < <<_
 
-" Use tab for indenting in visual mode
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
-
-" use tab to jump between buffers
-nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
-nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-
 " Navigate jump list
 nnoremap g, <C-o>
 nnoremap g. <C-i>
@@ -507,22 +498,38 @@ nnoremap ' `
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
 
-function s:AddTerminalNavigation()
+" Easy moving between the buffers
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
+nnoremap          <Up>     <C-y>
+nnoremap          <Down>   <C-e>
+nnoremap <silent> <Right> :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap <silent> <Left>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+" Opens line below or above the current line
+inoremap <S-CR> <C-O>o
+inoremap <C-CR> <C-O>O
+
+" Set kj to be escape in insert mode
+inoremap kj <ESC>
+
+" Sizing window horizontally
+nnoremap <c-,> <C-W><
+nnoremap <c-.> <C-W>>
+
+function s:AddTerminalNavigation()
     echom &filetype
     if &filetype ==# ''
-        " tnoremap <buffer> <silent> <C-h> <C-\><C-n>:TmuxNavigateLeft<cr>
-        " tnoremap <buffer> <silent> <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
-        " tnoremap <buffer> <silent> <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
-        " tnoremap <buffer> <silent> <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
         tnoremap <buffer> <silent> <Esc> <C-\><C-n>
         tnoremap <buffer> <silent> <C-\><Esc> <Esc>
-        " tnoremap <buffer> <silent> <C-\><C-h> <C-h>
-        " tnoremap <buffer> <silent> <C-\><C-j> <C-j>
-        " tnoremap <buffer> <silent> <C-\><C-k> <C-k>
-        " tnoremap <buffer> <silent> <C-\><C-l> <C-l>
     endif
-
 endfunction
 
 augroup TerminalNavigation
@@ -669,20 +676,6 @@ let g:completion_auto_change_source = 1
 " Delete on completion
 let g:completion_trigger_on_delete = 1
 
-" Use tab for triggering autocompletion.
-inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
 lua require'colorizer'.setup()
@@ -733,6 +726,9 @@ vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
 
 " Clear highlighting
 nnoremap <silent> <leader><leader> :nohl<CR>:delmarks! \| delmarks a-zA-Z0-9<CR><ESC>
+
+" Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
+nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
 command! -nargs=0 Fzf call Help( <f-args> )
 
@@ -807,6 +803,18 @@ let g:which_key_map.w.o = 'maximize-window'
 nnoremap <silent> <leader>w= <C-w>=
 let g:which_key_map.w['='] = 'balance-window'
 
+nnoremap <silent> <leader>w+ 20<C-w>+
+let g:which_key_map.w['+'] = 'increase-window-height'
+
+nnoremap <silent> <leader>w- 20<C-w>-
+let g:which_key_map.w['-'] = 'decrease-window-height'
+
+nnoremap <silent> <leader>w< 20<C-w><
+let g:which_key_map.w['<'] = 'decrease-window-width'
+
+nnoremap <silent> <leader>w> 20<C-w>>
+let g:which_key_map.w['>'] = 'increase-window-width'
+
 nnoremap <silent> <leader>wp :wincmd P<CR>
 let g:which_key_map.w.p = 'preview-window'
 
@@ -834,38 +842,6 @@ nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(0)<CR>
 vnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(1)<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:which_key_map.v = { 'name': '+vim' }
-
-nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
-let g:which_key_map.v.e = 'edit-vimrc'
-
-nnoremap <silent> <leader>vs :source $MYVIMRC<CR>
-let g:which_key_map.v.s = 'source-vimrc'
-
-nnoremap <silent> <leader>vl :luafile %<CR>
-let g:which_key_map.v.l = 'source-luafile'
-
-nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
-let g:which_key_map.v.z = 'open-zshrc'
-
-nnoremap <silent> <leader>v- :RangerCurrentFile<CR>
-let g:which_key_map.v['-'] = 'ranger-current-file'
-
-nnoremap <silent> <leader>v= :terminal<CR>
-let g:which_key_map.v['='] = 'terminal-current-buffer'
-
-nnoremap          <leader>v. :cd %:p:h<CR>:pwd<CR>
-let g:which_key_map.v['.'] = 'set-current-working-directory'
-
-nnoremap <leader>vu :UndotreeToggle<CR>
-let g:which_key_map.v.u = 'open-undo-tree'
-
-command! ZoomToggle :call zoom#toggle()
-nnoremap <leader>vz :ZoomToggle<CR>
-let g:which_key_map.v.z = 'zoom-toggle'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1014,5 +990,37 @@ let g:which_key_map.l.c = 'lsp-comment'
 
 " nnoremap <silent> <leader>lq :<CR>
 " let g:which_key_map.l.q = 'lsp-format'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:which_key_map.v = { 'name': '+vim' }
+
+nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
+let g:which_key_map.v.e = 'edit-vimrc'
+
+nnoremap <silent> <leader>vs :source $MYVIMRC<CR>
+let g:which_key_map.v.s = 'source-vimrc'
+
+nnoremap <silent> <leader>vl :luafile %<CR>
+let g:which_key_map.v.l = 'source-luafile'
+
+nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
+let g:which_key_map.v.z = 'open-zshrc'
+
+nnoremap <silent> <leader>v- :RangerCurrentFile<CR>
+let g:which_key_map.v['-'] = 'ranger-current-file'
+
+nnoremap <silent> <leader>v= :terminal<CR>
+let g:which_key_map.v['='] = 'terminal-current-buffer'
+
+nnoremap          <leader>v. :cd %:p:h<CR>:pwd<CR>
+let g:which_key_map.v['.'] = 'set-current-working-directory'
+
+nnoremap <leader>vu :UndotreeToggle<CR>
+let g:which_key_map.v.u = 'open-undo-tree'
+
+command! ZoomToggle :call zoom#toggle()
+nnoremap <leader>vz :ZoomToggle<CR>
+let g:which_key_map.v.z = 'zoom-toggle'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
