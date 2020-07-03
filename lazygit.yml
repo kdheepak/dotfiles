@@ -23,11 +23,11 @@ gui:
     - bold
     inactivebordercolor:
     - white
-    lighttheme: false
+    lighttheme: true
     optionstextcolor:
     - blue
     selectedlinebgcolor:
-    - blue
+    - reverse
 keybinding:
   branches:
     checkoutbranchbyname: c

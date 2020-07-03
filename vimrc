@@ -175,7 +175,6 @@ set completeopt+=noselect                     | " Do not select a match in the m
 set shortmess+=c                              | " Shut off completion messages
 set shortmess+=I                              | " no intro message
 set scrolloff=10                              | " show 10 lines above and below
-set clipboard+=unnamedplus                    | " Always have the clipboard be the same as my regular clipboard
 " set noswapfile                              | " Don't write .swp files
 
 au CursorHold * checktime
@@ -372,7 +371,6 @@ let maplocalleader = " " | " Map localleader to space
 " Markdown Preview
 " Don't start markdown preview automatically, use :MarkdownPreview
 let g:mkdp_auto_start = 0
-
 
 let g:python_host_prog = expand('~/miniconda3/bin/python')
 let g:python3_host_prog = expand('~/miniconda3/bin/python3')
