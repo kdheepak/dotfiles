@@ -18,7 +18,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf'                                                   | " main fzf
 Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }   | " turn your browser into a Neovim client.
-Plug 'Lokaltog/neoranger'                                             | " neoranger is a simple ranger wrapper script for neovim.
+Plug 'justinmk/vim-dirvish'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
@@ -328,7 +328,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt      = '🔒'
 let g:airline_symbols.notexists  = '∄'
 let g:airline#extensions#tabline#close_symbol = 'X'
-let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerdtree|tagbar|fzf|lazygit|ranger'
+let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerdtree|tagbar|fzf|lazygit'
 
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
@@ -393,7 +393,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 let g:indent_guides_color_change_percent = 1
-let g:indent_guides_exclude_filetypes = ['help', 'ranger', 'fzf', 'openterm', 'neoterm', 'calendar']
+let g:indent_guides_exclude_filetypes = ['help', 'fzf', 'openterm', 'neoterm', 'calendar']
 
 cnoremap <expr> <C-k>  pumvisible() ? "<C-p>"  : "<Up>"
 cnoremap <expr> <C-j>  pumvisible() ? "<C-n>"  : "<Down>"
@@ -533,11 +533,6 @@ augroup TerminalNavigation
     autocmd TermEnter * call s:AddTerminalNavigation()
 augroup END
 
-" for setting ranger viewmode values
-let g:neoranger_viewmode='miller' " supported values are ['multipane', 'miller']
-
-" for setting any extra option passed to ranger params
-let g:neoranger_opts='--cmd="set show_hidden true"' " this line makes ranger show hidden files by default
 " tmuxline
 let g:tmuxline_preset = {
       \'a'    : '#S',
@@ -1000,8 +995,8 @@ let g:which_key_map.v.l = 'source-luafile'
 nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
 let g:which_key_map.v.z = 'open-zshrc'
 
-nnoremap <silent> <leader>v- :RangerCurrentFile<CR>
-let g:which_key_map.v['-'] = 'ranger-current-file'
+nnoremap <silent> <leader>v- :Explore<CR>
+let g:which_key_map.v['-'] = 'explore-with-netrw'
 
 nnoremap <silent> <leader>v= :terminal<CR>
 let g:which_key_map.v['='] = 'terminal-current-buffer'
