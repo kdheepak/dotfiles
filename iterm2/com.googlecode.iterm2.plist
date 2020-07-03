@@ -1327,7 +1327,7 @@
 			<key>Window Type</key>
 			<integer>0</integer>
 			<key>Working Directory</key>
-			<string>/Users/dkrishna</string>
+			<string>~</string>
 		</dict>
 	</array>
 	<key>NoSyncAllAppVersions</key>
@@ -2059,7 +2059,7 @@
 	<key>NoSyncSavePanelSavedSettings_SaveProfile</key>
 	<dict>
 		<key>Initial Directory</key>
-		<string>/Users/dkrishna/gitrepos/dotfiles</string>
+		<string>~/gitrepos/dotfiles</string>
 	</dict>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
 	<real>615452894.79563606</real>
@@ -2099,7 +2099,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/dkrishna/gitrepos/dotfiles/iterm2</string>
+    <string>~/gitrepos/dotfiles/iterm2</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
