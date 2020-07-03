@@ -22,8 +22,8 @@ gui:
     - green
     - bold
     inactivebordercolor:
-    - black
-    lighttheme: true
+    - white
+    lighttheme: false
     optionstextcolor:
     - blue
     selectedlinebgcolor:
