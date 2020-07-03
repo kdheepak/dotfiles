@@ -77,6 +77,7 @@ Plug 'inkarkat/vim-spellcheck'                                        | " Spelli
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
+Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
@@ -499,27 +500,17 @@ nnoremap ' `
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
 
-" Easy moving between the buffers
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-
 nnoremap          <Up>     <C-y>
 nnoremap          <Down>   <C-e>
 nnoremap <silent> <Right> :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap <silent> <Left>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
+nnoremap <silent> <TAB>    :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap <silent> <S-TAB>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
 " Opens line below or above the current line
 inoremap <S-CR> <C-O>o
 inoremap <C-CR> <C-O>O
-
-" Set kj to be escape in insert mode
-inoremap kj <ESC>
 
 " Sizing window horizontally
 nnoremap <c-,> <C-W><
@@ -528,6 +519,10 @@ nnoremap <c-.> <C-W>>
 function s:AddTerminalNavigation()
     echom &filetype
     if &filetype ==# ''
+        tnoremap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+        tnoremap <C-j> <C-\><C-n>:TmuxNavigateDown<CR>
+        tnoremap <C-k> <C-\><C-n>:TmuxNavigateUp<CR>
+        tnoremap <C-l> <C-\><C-n>:TmuxNavigateDown<CR>
         tnoremap <buffer> <silent> <Esc> <C-\><C-n>
         tnoremap <buffer> <silent> <C-\><Esc> <Esc>
     endif
