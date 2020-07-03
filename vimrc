@@ -667,10 +667,7 @@ EOF
 let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_enable_underline = 0
-" Change the completion source automatically if no completion availabe
-let g:completion_auto_change_source = 1
-" Delete on completion
-let g:completion_trigger_on_delete = 1
+let g:completion_timer_cycle = 200 "default value is 80
 
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
