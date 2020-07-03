@@ -80,8 +80,8 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
-Plug 'haorenW1025/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
-Plug 'haorenW1025/completion-nvim'                                    | " better neovim built in lsp completion
+Plug 'nvim-lua/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
+Plug 'nvim-lua/completion-nvim'                                    | " better neovim built in lsp completion
 Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
 Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
