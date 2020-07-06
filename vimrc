@@ -519,10 +519,6 @@ nnoremap <c-.> <C-W>>
 function s:AddTerminalNavigation()
     echom &filetype
     if &filetype ==# ''
-        tnoremap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
-        tnoremap <C-j> <C-\><C-n>:TmuxNavigateDown<CR>
-        tnoremap <C-k> <C-\><C-n>:TmuxNavigateUp<CR>
-        tnoremap <C-l> <C-\><C-n>:TmuxNavigateDown<CR>
         tnoremap <buffer> <silent> <Esc> <C-\><C-n>
         tnoremap <buffer> <silent> <C-\><Esc> <Esc>
     endif
