@@ -19,6 +19,7 @@ Plug 'junegunn/fzf'                                                   | " main f
 Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }   | " turn your browser into a Neovim client.
 Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-vinegar'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser

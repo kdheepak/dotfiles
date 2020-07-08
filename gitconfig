@@ -184,3 +184,5 @@
     enabled = true
 [github]
     user = kdheepak
+[commit]
+	verbose = true
