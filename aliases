@@ -191,7 +191,7 @@ gifify() {
 task-commit() {
     cd ~/gitrepos/task
     git add .
-    git commit -m "Update files" --no-verify
+    git commit -m "Update files" --no-verify -q
     git pull -q
     git push -q
 }
