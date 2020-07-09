@@ -844,8 +844,8 @@
 
   ##############[ taskwarrior: taskwarrior task count (https://taskwarrior.org/) ]##############
   # Taskwarrior color.
-  # typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=0
-  # typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=6
+  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=0
+  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND='#f0f0f0'
 
   # Taskwarrior segment format. The following parameters are available within the expansion.
   #
