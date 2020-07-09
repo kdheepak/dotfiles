@@ -188,6 +188,14 @@ gifify() {
     fi
 }
 
+task-commit() {
+    cd ~/gitrepos/task
+    git add .
+    git commit -m "Update files" --no-verify
+    git pull -q
+    git push -q
+}
+
 update-nvim() {
   curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
   tar xzvf nvim-macos.tar.gz
