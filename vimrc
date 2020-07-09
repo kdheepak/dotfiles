@@ -216,7 +216,8 @@ augroup TermBuffer
         \ |call rpcrequest(g:r, "nvim_command", "call lib#SetNumberDisplay()")
         \ |qa
         \ |endif
-    autocmd TermOpen * call s:AddTerminalMappings()
+    " TermEnter is required here since otherwise fzf filetype is not set
+    autocmd TermEnter * call s:AddTerminalMappings()
 augroup END
 
 autocmd TermOpen * setlocal nonumber
