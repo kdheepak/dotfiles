@@ -150,6 +150,11 @@ zinit light zdharma/fast-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 
+zinit ice wait"0" if'[[ -n "$commands[task]" ]]' lucid
+zinit snippet OMZ::plugins/taskwarrior/taskwarrior.plugin.zsh
+
+zinit snippet OMZ::plugins/brew/brew.plugin.zsh
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
