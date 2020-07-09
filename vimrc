@@ -1005,3 +1005,12 @@ nnoremap <leader>vz :ZoomToggle<CR>
 let g:which_key_map.v.z = 'zoom-toggle'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:vimwiki_map_prefix = '<Leader>n'
+
+let g:vimwiki_list = [{'path': '~/gitrepos/task',
+            \ 'index': 'README', 'syntax': 'markdown', 'ext': '.md',
+            \ 'links_space_char': '_', 'auto_toc': 1}]
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
