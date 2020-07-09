@@ -78,7 +78,7 @@ Plug 'inkarkat/vim-spellcheck'                                        | " Spelli
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'nvim-lua/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
@@ -194,6 +194,14 @@ if has("persistent_undo")
     set undofile
 endif
 
+function s:AddTerminalMappings()
+    echom &filetype
+    if &filetype ==# ''
+        tnoremap <buffer> <silent> <Esc> <C-\><C-n>
+        tnoremap <buffer> <silent> <C-\><Esc> <Esc>
+    endif
+endfunction
+
 augroup TermBuffer
     autocmd!
     autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
@@ -205,17 +213,23 @@ augroup TermBuffer
         \ |call rpcrequest(g:r, "nvim_command", "call lib#SetNumberDisplay()")
         \ |qa
         \ |endif
+    autocmd TermOpen * call s:AddTerminalMappings()
 augroup END
 
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 " autocmd TermOpen term://* startinsert
 autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
-autocmd TermOpen iunmap <buffer> <C-h>
-autocmd TermOpen iunmap <buffer> <C-j>
-autocmd TermOpen iunmap <buffer> <C-k>
-autocmd TermOpen iunmap <buffer> <C-l>
+" autocmd TermOpen iunmap <buffer> <C-h>
+" autocmd TermOpen iunmap <buffer> <C-j>
+" autocmd TermOpen iunmap <buffer> <C-k>
+" autocmd TermOpen iunmap <buffer> <C-l>
 autocmd BufWinEnter term://* IndentGuidesDisable
+
+" inoremap <silent> <C-h> <C-o>:TmuxNavigateLeft<CR>
+" inoremap <silent> <C-j> <C-o>:TmuxNavigateDown<CR>
+" inoremap <silent> <C-k> <C-o>:TmuxNavigateUp<CR>
+" inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 
 augroup LuaHighlight
   autocmd!
@@ -518,19 +532,6 @@ inoremap <C-CR> <C-O>O
 nnoremap <c-,> <C-W><
 nnoremap <c-.> <C-W>>
 
-function s:AddTerminalNavigation()
-    echom &filetype
-    if &filetype ==# ''
-        tnoremap <buffer> <silent> <Esc> <C-\><C-n>
-        tnoremap <buffer> <silent> <C-\><Esc> <Esc>
-    endif
-endfunction
-
-augroup TerminalNavigation
-    autocmd!
-    autocmd TermEnter * call s:AddTerminalNavigation()
-augroup END
-
 " tmuxline
 let g:tmuxline_preset = {
       \'a'    : '#S',
@@ -602,13 +603,6 @@ function! Help( query )
 endfunction
 
 command! -nargs=1 Help call Help( <f-args> )
-
-""""""""""""""""""""""""""""""""""""""""
-
-inoremap <silent> <C-h> <C-o>:TmuxNavigateLeft<CR>
-inoremap <silent> <C-j> <C-o>:TmuxNavigateDown<CR>
-inoremap <silent> <C-k> <C-o>:TmuxNavigateUp<CR>
-inoremap <silent> <C-l> <C-o>:TmuxNavigateRight<CR>
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
