@@ -93,6 +93,7 @@ Plug 'kdheepak/gridlabd.vim'                                          | " gridla
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
+Plug 'vimwiki/vimwiki'                                                | " A personal wiki for vim
 Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 
