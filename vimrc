@@ -93,9 +93,6 @@ Plug 'kdheepak/gridlabd.vim'                                          | " gridla
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
-Plug 'vimwiki/vimwiki'                                                | " A personal wiki for vim
-Plug 'tbabej/taskwiki'                                                | " Proper project management in vim
-Plug 'blindFS/vim-taskwarrior'                                        | " extends taskwarrior with interactive interface
 Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 
@@ -1006,14 +1003,5 @@ let g:which_key_map.v.u = 'open-undo-tree'
 command! ZoomToggle :call zoom#toggle()
 nnoremap <leader>vz :ZoomToggle<CR>
 let g:which_key_map.v.z = 'zoom-toggle'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:vimwiki_map_prefix = '<Leader>n'
-
-let g:vimwiki_list = [{'path': '~/gitrepos/task',
-            \ 'index': 'README', 'syntax': 'markdown', 'ext': '.md',
-            \ 'links_space_char': '_', 'auto_toc': 1}]
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
