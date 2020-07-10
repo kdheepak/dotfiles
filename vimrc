@@ -19,6 +19,7 @@ Plug 'junegunn/fzf'                                                   | " main f
 Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }   | " turn your browser into a Neovim client.
 Plug 'justinmk/vim-dirvish'
+Plug 'mcchrish/nnn.vim'                                               | " Fast and featureful file manager in vim/neovim powered by nnn
 Plug 'tpope/vim-vinegar'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
@@ -497,6 +498,8 @@ nnoremap <silent> <Down> :cnext<CR>
 nnoremap <silent> <Left> :cpfile<CR>
 nnoremap <silent> <Right> :cnfile<CR>
 
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+
 nnoremap <kPlus> <C-a>
 nnoremap <kMinus> <C-x>
 nnoremap + <C-a>
@@ -516,11 +519,6 @@ nnoremap ' `
 " delete buffer
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
-
-nnoremap          <Up>     <C-y>
-nnoremap          <Down>   <C-e>
-nnoremap <silent> <Right> :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
-nnoremap <silent> <Left>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
 nnoremap <silent> <TAB>    :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap <silent> <S-TAB>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
@@ -988,8 +986,8 @@ let g:which_key_map.v.l = 'source-luafile'
 nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
 let g:which_key_map.v.z = 'open-zshrc'
 
-nnoremap <silent> <leader>v- :Explore<CR>
-let g:which_key_map.v['-'] = 'explore-with-netrw'
+nnoremap <silent> <leader>v- :NnnPicker '%:p:h'<CR>
+let g:which_key_map.v['-'] = 'explore-with-nnn'
 
 nnoremap <silent> <leader>v= :terminal<CR>
 let g:which_key_map.v['='] = 'terminal-current-buffer'
