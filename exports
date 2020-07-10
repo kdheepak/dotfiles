@@ -12,7 +12,8 @@ fi
 export EDITOR="$VISUAL"
 export PAGER='bat'
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
-export MANPAGER=nvim -c "set ft=man" -
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
 
 export TERM=xterm-256color
 
