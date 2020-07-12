@@ -128,6 +128,9 @@ zinit load ranger/ranger
 zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
 zinit load sharkdp/fd
 
+zinit ice as"command" extract"" pick"delta/delta" mv"delta* -> delta" from"gh-r"
+zinit load dandavison/delta
+
 zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 

@@ -30,6 +30,7 @@ Plug 'tpope/vim-fugitive'                                             | " vim pl
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
 Plug 'kdheepak/lazygit.vim'                                           | " lazygit
+Plug 'norcalli/typeracer.nvim'
 """"
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
@@ -740,9 +741,6 @@ let g:which_key_map.P = 'paste-from-clipboard'
 
 let g:which_key_map.w = { 'name': '+windows' }
 
-nnoremap <silent> <leader>ww <C-W>w<CR>
-let g:which_key_map.w.w = 'other-window'
-
 nnoremap <silent> <leader>wc :close<CR>
 let g:which_key_map.w.c = 'delete-window'
 
@@ -800,7 +798,7 @@ let g:which_key_map.w.p = 'preview-window'
 nnoremap <silent> <leader>wz :wincmd z<CR>
 let g:which_key_map.w.z = 'quickfix-window'
 
-nnoremap <silent> <leader>w? :FzfWindows<CR>
+nnoremap <silent> <leader>ww :FzfWindows<CR>
 let g:which_key_map.w['?'] = 'fzf-window'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -829,9 +827,6 @@ let g:which_key_map.g = { 'name': '+git' }
 "" Git
 noremap <leader>gw :Gwrite<CR>
 let g:which_key_map.g.w = 'git-write'
-
-noremap <leader>gs :LazyGit<CR>
-let g:which_key_map.g.s = 'git-status'
 
 noremap <leader>gc :Gcommit<CR>
 let g:which_key_map.g.c = 'git-commit'
@@ -863,6 +858,9 @@ let g:which_key_map.g.k = 'git-prev-hunk'
 noremap <leader>g? :FzfCommits<CR>
 let g:which_key_map.g['?'] = 'fzf-git-commit-log'
 
+noremap <leader>gg :LazyGit<CR>
+let g:which_key_map.g.s = 'git-status'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:which_key_map.b = { 'name': '+buffer' }
@@ -891,7 +889,7 @@ let g:which_key_map.b.q = 'buffer-quickfix-open'
 nnoremap <silent> <leader>bQ :cclose<CR>
 let g:which_key_map.b.q = 'buffer-quickfix-close'
 
-nnoremap <silent> <leader>b? :FzfBuffers<CR>
+nnoremap <silent> <leader>bb :FzfBuffers<CR>
 let g:which_key_map.b['?'] = 'fzf-buffer-all'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
