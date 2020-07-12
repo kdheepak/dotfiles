@@ -139,7 +139,6 @@
     # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
     precomposeunicode = false
     editor = nvim
-    pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
 
@@ -175,14 +174,17 @@
     postBuffer = 2M
 [init]
     templatedir = ~/gitrepos/dotfiles/git-templates
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
 [rerere]
     enabled = true
 [github]
     user = kdheepak
 [commit]
-	verbose = true
+    verbose = true
+[pull]
+    rebase = true
+[rebase]
+    autoStash = true
+[core]
+    pager = delta --light
+[interactive]
+    diffFilter = delta --color-only --light
