@@ -185,6 +185,6 @@
 [rebase]
     autoStash = true
 [core]
-    pager = delta --light
+    pager = delta --light --syntax-theme=Github
 [interactive]
-    diffFilter = delta --color-only --light
+    diffFilter = delta --color-only --light --syntax-theme=Github
