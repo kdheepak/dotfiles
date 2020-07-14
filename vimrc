@@ -76,7 +76,7 @@ Plug 'pbrisbin/vim-mkdir'                                             | " automa
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
-Plug 'kamykn/spelunker.vim'                                           | " Spelunker.vim is a plugin that improves Vim's spell checking function.
+Plug 'inkarkat/vim-spellcheck'                                        | " Add vim spell check errors to quicklist
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
@@ -138,7 +138,6 @@ set noshowmode                                | " don't show mode changes
 let &colorcolumn=121                          | " add indicator for 120
 set display+=lastline                         | " as much as possible of the last line in a window will be displayed
 set diffopt+=vertical                         | " Always use vertical diffs
-set laststatus=2                              | " show status at the bottom
 set number relativenumber                     | " use line numbers and relative line numn
 set cursorline                                | " highlight current line
 set showcmd                                   | " show command in bottom bar
@@ -175,7 +174,7 @@ set grepprg=rg\ --vimgrep                     | " use ripgrep
 set redrawtime=10000                          | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
 set updatetime=100                            | " set lower updatetime so that vim git gutter updates sooner
 set switchbuf+=usetab,useopen                 | " open buffers in tab
-set cmdheight=1                               | " default space for displaying messages
+set cmdheight=2                               | " default space for displaying messages
 set completeopt=menuone                       | " Use the popup menu also when there is only one match.
 set completeopt+=noinsert                     | " Do not insert any text for a match until the user selects a match from the menu.
 set completeopt+=noselect                     | " Do not select a match in the menu, force the user to select one from the menu.
