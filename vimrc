@@ -126,7 +126,6 @@ let &showbreak='↳ ' | " string to put at the start of lines that have been wra
 set breakindent     | " every wrapped line will continue visually indented
 set linebreak       | " wrap long lines at a character in breakat
 set wrap            | " lines longer than the width of the window will wrap
-set showcmd         | " display an incomplete command in the lower right of the vim window
 
 
 set termguicolors                             | " enables 24bit colors
@@ -140,7 +139,7 @@ set display+=lastline                         | " as much as possible of the las
 set diffopt+=vertical                         | " Always use vertical diffs
 set number relativenumber                     | " use line numbers and relative line numn
 set cursorline                                | " highlight current line
-set showcmd                                   | " show command in bottom bar
+set showcmd                                   | " show command in bottom bar display an incomplete command in the lower right of the vim window
 set showmatch                                 | " highlight matching [{()}]
 set lazyredraw                                | " redraw only when we need to.
 set ignorecase                                | " Ignore case when searching
@@ -150,8 +149,6 @@ set hlsearch                                  | " highlight matches
 set inccommand=split                          | " live search and replace
 set wildmenu                                  | " visual autocomplete for command menu
 set wildoptions+=pum
-set pumblend=15
-hi PmenuSel blend=0
 set autoread                                  | " automatically read files that have been changed outside of vim
 set noemoji                                   | " emoji characters are not considered full width
 set nobackup                                  | " no backup before overwriting a file
@@ -174,7 +171,7 @@ set grepprg=rg\ --vimgrep                     | " use ripgrep
 set redrawtime=10000                          | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
 set updatetime=100                            | " set lower updatetime so that vim git gutter updates sooner
 set switchbuf+=usetab,useopen                 | " open buffers in tab
-set cmdheight=2                               | " default space for displaying messages
+set cmdheight=1                               | " default space for displaying messages
 set completeopt=menuone                       | " Use the popup menu also when there is only one match.
 set completeopt+=noinsert                     | " Do not insert any text for a match until the user selects a match from the menu.
 set completeopt+=noselect                     | " Do not select a match in the menu, force the user to select one from the menu.
