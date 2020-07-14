@@ -12,6 +12,8 @@ mkdir -p ~/.config/yabai;
 mkdir -p ~/.config/skhd;
 mkdir -p ~/.config/kitty;
 
+rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
+
 rm ~/.config/kitty/AtomOneLight.conf; ln -s $(pwd)/kitty ~/.config/kitty/AtomOneLight.conf
 rm ~/.config/kitty/kitty.conf; ln -s $(pwd)/kitty ~/.config/kitty/kitty.conf
 rm ~/.config/skhd/skhdrc; ln -s $(pwd)/skhdrc ~/.config/skhd/skhdrc
@@ -34,7 +36,6 @@ rm ~/.config/.fzf.bash; ln -s $(pwd)/fzf.bash ~/.config/.fzf.bash
 rm ~/.config/.fzf.zsh; ln -s $(pwd)/fzf.zsh ~/.config/.fzf.zsh
 rm -rf ~/.config/.tridactylrc; ln -s $(pwd)/tridactylrc ~/.config/.tridactylrc
 rm ~/.gdbinit; ln -s $(pwd)/gdbinit ~/.gdbinit
-rm ~/.gitignore; ln -s $(pwd)/gitignore ~/.gitignore
 rm ~/.gitconfig; ln -s $(pwd)/gitconfig ~/.gitconfig
 rm ~/.pylintrc; ln -s $(pwd)/pylintrc ~/.pylintrc
 rm ~/.julia/config/startup.jl; ln -s $(pwd)/juliarc.jl ~/.julia/config/startup.jl
