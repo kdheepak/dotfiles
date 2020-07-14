@@ -76,15 +76,15 @@ Plug 'pbrisbin/vim-mkdir'                                             | " automa
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
-Plug 'inkarkat/vim-spellcheck'                                        | " Spelling errors to quickfix list
+Plug 'kamykn/spelunker.vim'                                           | " Spelunker.vim is a plugin that improves Vim's spell checking function.
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 " Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
-Plug 'nvim-lua/diagnostic-nvim'                                    | " better neovim built in lsp diagnostics
-Plug 'nvim-lua/completion-nvim'                                    | " better neovim built in lsp completion
+Plug 'nvim-lua/diagnostic-nvim'                                       | " better neovim built in lsp diagnostics
+Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
 Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
 Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
