@@ -168,6 +168,12 @@ zinit light 3v1n0/zsh-bash-completions-fallback
 zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
     zsh-users/zsh-completions
 
+# hub: https://github.com/github/hub
+zinit ice from"gh-r" as"program" mv"hub-*/bin/hub -> hub" atclone'./hub alias -s > zhook.zsh' atpull'%atclone'
+zinit light github/hub
+zinit ice silent as"completion" mv'hub.zsh_completion -> _hub'
+zinit snippet https://github.com/github/hub/raw/master/etc/hub.zsh_completion
+
 zinit load Aloxaf/fzf-tab
 
 # zstyle ':fzf-tab:*' show-group full
