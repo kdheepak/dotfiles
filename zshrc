@@ -172,7 +172,7 @@ zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
 zinit ice from"gh-r" as"program" mv"hub-*/bin/hub -> hub" atclone'./hub alias -s > zhook.zsh' atpull'%atclone'
 zinit light github/hub
 zinit ice silent as"completion" mv'hub.zsh_completion -> _hub'
-zinit snippet https://github.com/github/hub/raw/master/etc/hub.zsh_completion
+zinit snippet https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion
 
 zinit load Aloxaf/fzf-tab
 
