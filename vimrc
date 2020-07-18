@@ -343,7 +343,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt      = '🔒'
 let g:airline_symbols.notexists  = '∄'
 let g:airline#extensions#tabline#close_symbol = 'X'
-let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerdtree|tagbar|fzf|lazygit'
+let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerdtree|tagbar|fzf'
 
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
