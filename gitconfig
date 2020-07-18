@@ -190,3 +190,5 @@
     diffFilter = delta --color-only --light --syntax-theme=Github
 [delta]
     line-numbers = true
+[fetch]
+    prune = true
