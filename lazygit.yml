@@ -1,4 +1,5 @@
 confirmonquit: false
+quitOnTopLevelReturn: false
 git:
   autofetch: true
   merging:
