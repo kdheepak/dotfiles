@@ -113,7 +113,7 @@ alias reload="exec $SHELL -l"
     # fi
 # }
 
-alias cdg='cd $(git-root)'
+alias cdg='cd $(git root)'
 
 # ssh() {
     # tmux rename-window -t${TMUX_PANE} "$*"
