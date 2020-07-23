@@ -195,9 +195,6 @@ local realpath=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
 realpath=\${(Qe)~realpath}
 "
 
-setopt glob_dots
-zstyle ':completion:*' special-dirs true
-
 FZF_TAB_COMMAND=(
     fzf
     --ansi   # Enable ANSI color support, necessary for showing groups
@@ -212,14 +209,15 @@ FZF_TAB_COMMAND=(
 zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
 
 local sanitized_in='${~ctxt[hpre]}"${${in//\\ / }/#\~/$HOME}"'
+zstyle ':completion:*' special-dirs true
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
-zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'exa -1 --color=always '$sanitized_in --preview-window=right:40%
-zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:nvr:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'bat --pager=never --color=always --line-range :30 '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:nvr:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
+zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
 zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
 
 ### End of Zinit's installer chunk
