@@ -211,7 +211,7 @@ zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
 local sanitized_in='${~ctxt[hpre]}"${${in//\\ / }/#\~/$HOME}"'
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:40%
+zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'preview_file_or_folder $realpath' --preview-window=right:40%
 zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:40%
 zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
 zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
