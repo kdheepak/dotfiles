@@ -656,7 +656,7 @@ let g:completion_trigger_keyword_length = 3 " default = 1
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_hover = 0
 let g:completion_enable_auto_signature = 0
-let g:completion_enable_auto_popup = 0
+let g:completion_enable_auto_popup = 1
 
 " Use <TAB> and <S-TAB> to navigate through popup menu
 function! s:check_back_space() abort
