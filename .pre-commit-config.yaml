@@ -21,5 +21,5 @@ repos:
   rev: 19.10b0
   hooks:
       - id: black
-        args: [--line-length=88, --safe]
+        args: [--line-length=150, --safe]
         python_version: python3.6

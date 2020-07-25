@@ -203,6 +203,7 @@ FZF_TAB_COMMAND=(
     --nth=2,3 --delimiter='\x00'  # Don't search prefix
     --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
     --tiebreak=begin -m --bind=tab:down,btab:up,change:top,ctrl-space:toggle+down --cycle
+    --bind bspace:backward-delete-char/eof
     '--query=$query'   # $query will be expanded to query string at runtime.
     '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
 )

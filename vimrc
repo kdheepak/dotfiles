@@ -29,6 +29,7 @@ Plug 'tpope/vim-fugitive'                                             | " vim pl
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
 Plug 'kdheepak/lazygit.nvim'                                          | " lazygit
+Plug '~/gitrepos/pandoc.nvim'                                         | " lazygit
 Plug 'norcalli/typeracer.nvim'
 """"
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
@@ -170,7 +171,6 @@ set grepprg=rg\ --vimgrep                     | " use ripgrep
 set redrawtime=10000                          | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
 set updatetime=100                            | " set lower updatetime so that vim git gutter updates sooner
 set switchbuf+=usetab,useopen                 | " open buffers in tab
-set clipboard=unnamedplus                     | " make clipboard default
 set cmdheight=1                               | " default space for displaying messages
 set completeopt=menuone                       | " Use the popup menu also when there is only one match.
 set completeopt+=noinsert                     | " Do not insert any text for a match until the user selects a match from the menu.
@@ -620,30 +620,30 @@ lua <<EOF
     nvim_lsp.sumneko_lua.setup({on_attach=on_attach_vim})
     nvim_lsp.html.setup({on_attach=on_attach_vim})
     nvim_lsp.pyls.setup{
-        on_attach=on_attach_vim,
-        settings = {
-            pyls = {
-                configurationSources = {
-                    pycodestyle,
-                    flake8
-                },
-                plugins = {
-                    mccabe = { enabled = false },
-                    preload = { enabled = true },
-                    pycodestyle = {
-                        enabled = true,
-                        ignore = { "E501" },
-                    },
-                    pydocstyle = {
-                        enabled = false,
-                    },
-                    pyflakes = { enabled = true },
-                    pylint = { enabled = false },
-                    rope_completion = { enabled = true },
-                    black = { enabled = false },
-                }
-            }
-        }
+       on_attach=on_attach_vim,
+       settings = {
+           pyls = {
+               configurationSources = {
+                   pycodestyle,
+                   flake8
+               },
+               plugins = {
+                   mccabe = { enabled = false },
+                   preload = { enabled = true },
+                   pycodestyle = {
+                       enabled = true,
+                       ignore = { "E501" },
+                   },
+                   pydocstyle = {
+                       enabled = false,
+                   },
+                   pyflakes = { enabled = true },
+                   pylint = { enabled = false },
+                   rope_completion = { enabled = true },
+                   black = { enabled = false },
+               }
+           }
+       }
     }
 EOF
 
@@ -651,6 +651,10 @@ let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_enable_underline = 0
 let g:completion_timer_cycle = 200 "default value is 80
+let g:completion_trigger_keyword_length = 3 " default = 1
+let g:completion_matching_ignore_case = 1
+let g:completion_enable_auto_hover = 0
+let g:completion_enable_auto_signature = 0
 
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
