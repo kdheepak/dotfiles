@@ -111,13 +111,13 @@ set fileencodings=utf-8 | " Default file encoding
 set noautochdir         | " Don't change dirs automatically
 set noerrorbells        | " No sound
 
-set tabstop=4                    | " Number of spaces a <Tab> is
+set tabstop=4                    | " Number of spaces a <TAB> is
 set softtabstop=4                | " Fine tunes the amount of white space to be added
 set shiftwidth=4                 | " Number of spaces for indentation
 set expandtab                    | " Expand tab to spaces
 set spelllang=en                 | " Spell checking
 set timeoutlen=500               | " Wait less time for mapped sequences
-set smarttab                     | " <Tab> in front of line inserts blanks according to shiftwidth
+set smarttab                     | " <TAB> in front of line inserts blanks according to shiftwidth
 set autoindent                   | " copy indent from current line
 set smartindent                  | " do smart indenting when starting a new line
 " set backspace=indent,eol,start | "allow backspacing over autoindent, line breaks, the start of insert
@@ -615,6 +615,7 @@ lua <<EOF
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
     nvim_lsp.jsonls.setup({on_attach=on_attach_vim})
     nvim_lsp.nimls.setup({on_attach=on_attach_vim})
+    nvim_lsp.rust_analyzer.setup({on_attach=on_attach_vim})
     nvim_lsp.vimls.setup({on_attach=on_attach_vim})
     nvim_lsp.cssls.setup({on_attach=on_attach_vim})
     nvim_lsp.sumneko_lua.setup({on_attach=on_attach_vim})
@@ -655,6 +656,20 @@ let g:completion_trigger_keyword_length = 3 " default = 1
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_hover = 0
 let g:completion_enable_auto_signature = 0
+let g:completion_enable_auto_popup = 0
+
+" Use <TAB> and <S-TAB> to navigate through popup menu
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
+
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
