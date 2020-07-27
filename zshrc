@@ -149,8 +149,6 @@ zinit snippet OMZ::lib/completion.zsh
 zinit snippet OMZ::lib/git.zsh
 # zinit snippet PZT::modules/completion/init.zsh
 
-zinit ice wait'!0' lucid; zinit load "hlissner/zsh-autopair"
-
 zinit light zdharma/fast-syntax-highlighting
 
 zinit light zsh-users/zsh-autosuggestions
