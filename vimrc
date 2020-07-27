@@ -437,6 +437,11 @@ nnoremap k gk
 nnoremap J j
 nnoremap K k
 
+" move to beginning of the line
+noremap H ^
+" move to end of the line
+noremap L $
+
 "" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -657,6 +662,11 @@ let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_hover = 0
 let g:completion_enable_auto_signature = 0
 let g:completion_enable_auto_popup = 1
+
+augroup lsp
+  autocmd!
+  " autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+augroup END
 
 " Use <TAB> and <S-TAB> to navigate through popup menu
 function! s:check_back_space() abort
@@ -974,6 +984,12 @@ let g:which_key_map.l.w = 'lsp-workspace-symbol'
 
 nnoremap <silent> <leader>lg :lua vim.lsp.util.show_line_diagnostics()<CR>
 let g:which_key_map.l.d = 'lsp-diagnostics-show'
+
+nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
+let g:which_key_map.l.j = 'lsp-next-diagnostic'
+
+nnoremap <silent> <leader>lk :PreviousDiagnosticCycle<CR>
+let g:which_key_map.l.k = 'lsp-previous-diagnostic'
 
 nmap     <silent> <leader>lc :Commentary<CR>
 omap     <silent> <leader>lc :Commentary<CR>
