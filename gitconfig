@@ -175,6 +175,7 @@
     postBuffer = 2M
 [init]
     templatedir = ~/gitrepos/dotfiles/git-templates
+	defaultBranch = main
 [rerere]
     enabled = true
 [github]

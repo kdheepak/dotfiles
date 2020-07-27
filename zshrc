@@ -116,6 +116,9 @@ zinit load samtay/so
 # zinit ice lucid wait from"gh-r" as"program" pick"./*/*/nvim"
 # zinit load neovim/neovim
 
+zinit ice from"gh-r" as"program"
+zinit load extrawurst/gitui
+
 zinit ice lucid wait"0" as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
 zinit load 'jesseduffield/lazygit'
 

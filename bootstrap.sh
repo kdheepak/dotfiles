@@ -14,6 +14,7 @@ mkdir -p ~/.config/kitty;
 
 rm ~/.gitignore; ln -s $(pwd)/.gitignore ~/.gitignore
 
+rm ~/local/bin/preview_file_or_folder; ln -s $(pwd)/preview_file_or_folder ~/local/bin/preview_file_or_folder
 rm ~/.config/kitty/AtomOneLight.conf; ln -s $(pwd)/kitty ~/.config/kitty/AtomOneLight.conf
 rm ~/.config/kitty/kitty.conf; ln -s $(pwd)/kitty ~/.config/kitty/kitty.conf
 rm ~/.config/skhd/skhdrc; ln -s $(pwd)/skhdrc ~/.config/skhd/skhdrc
