@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.4.0
+  rev: v3.1.0
   hooks:
       - id: trailing-whitespace
       - id: check-executables-have-shebangs
@@ -14,12 +14,14 @@ repos:
       - id: check-symlinks
       - id: fix-encoding-pragma
       - id: mixed-line-ending
-      - id: flake8
       - id: pretty-format-json
         args: [--autofix]
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.8.3
+  hooks:
+      - id: flake8
 - repo: https://github.com/ambv/black
   rev: 19.10b0
   hooks:
       - id: black
         args: [--line-length=150, --safe]
-        python_version: python3.6
