@@ -140,6 +140,9 @@ zinit load "cli/cli"
 # zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
 # zinit load ogham/exa
 
+zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
+zinit load kdheepak/taskwarrior-tui
+
 zinit load "b4b4r07/emoji-cli"
 
 zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
