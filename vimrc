@@ -77,6 +77,7 @@ Plug 'kshenoy/vim-signature'                                          | " toggle
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                        | " Add vim spell check errors to quicklist
+Plug 'rhysd/clever-f.vim'
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
@@ -94,6 +95,7 @@ Plug 'JuliaEditorSupport/julia-vim'                                   | " julia 
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
+Plug 'tpope/vim-sleuth'
 Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
@@ -411,6 +413,9 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_color_change_percent = 1
 let g:indent_guides_exclude_filetypes = ['help', 'fzf', 'openterm', 'neoterm', 'calendar']
 
+let g:clever_f_across_no_line    = 1
+let g:clever_f_fix_key_direction = 1
+
 cnoremap <expr> <C-k>  pumvisible() ? "<C-p>"  : "<Up>"
 cnoremap <expr> <C-j>  pumvisible() ? "<C-n>"  : "<Down>"
 
@@ -682,6 +687,31 @@ inoremap <silent><expr> <TAB>
 
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
+
+imap <expr> <C-j> vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-j>"
+imap <expr> <C-k> vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)"      : "<C-k>"
+
+inoremap <silent> <C-s> <C-r>=SnippetsComplete()<CR>
+
+function! SnippetsComplete() abort
+    let wordToComplete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
+    let fromWhere      = col('.') - len(wordToComplete)
+    let containWord    = "stridx(v:val.word, wordToComplete)>=0"
+    let candidates     = vsnip#get_complete_items(bufnr("%"))
+    let matches        = map(filter(candidates, containWord),
+                \  "{
+                \      'word': v:val.word,
+                \      'menu': v:val.kind,
+                \      'dup' : 1,
+                \   }")
+
+
+    if !empty(matches)
+        call complete(fromWhere, matches)
+    endif
+
+    return ""
+endfunction
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
 lua require'colorizer'.setup()
