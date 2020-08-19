@@ -28,7 +28,7 @@ Plug 'rhysd/git-messenger.vim'                                        | " reveal
 Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
-Plug 'kdheepak/lazygit.nvim'                                          | " lazygit
+Plug '~/gitrepos/lazygit.nvim'                                          | " lazygit
 Plug '~/gitrepos/pandoc.nvim'                                         | " lazygit
 Plug 'norcalli/typeracer.nvim'
 """"
@@ -48,6 +48,7 @@ Plug 'tpope/vim-commentary'                                           | " commen
 Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
 Plug 'tpope/vim-surround'                                             | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 Plug 'tpope/vim-repeat'                                               | " repeat.vim remaps . in a way that plugins can tap into it.
+Plug 'vim-utils/vim-vertical-move'
 Plug 'tpope/vim-tbone'                                                | " basic tmux support for vim
 Plug 'tpope/vim-jdaddy'                                               | " mappings for working with json in vim
 Plug 'tpope/vim-obsession'                                            | " no hassle vim sessions
