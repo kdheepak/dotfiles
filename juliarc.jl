@@ -13,8 +13,8 @@ atreplinit() do repl
     end
 end
 
-using OhMyREPL
+# using OhMyREPL
 
-enable_autocomplete_brackets(false)
+# enable_autocomplete_brackets(false)
 
-using Debugger
+# using Debugger

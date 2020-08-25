@@ -167,7 +167,7 @@ alias rg="rg $RG_FLAGS"
 alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
 
 alias julia-bleeding="$HOME/gitrepos/julia/usr/bin/julia"
-alias julia-stable="$HOME/Applications/Julia-1.4.app/Contents/Resources/julia/bin/julia"
+alias julia-stable="$HOME/Applications/Julia-1.5.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
 alias julia="julia-stable --color=yes"
 
