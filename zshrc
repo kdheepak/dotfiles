@@ -181,6 +181,12 @@ zinit light github/hub
 zinit ice silent as"completion" mv'hub.zsh_completion -> _hub'
 zinit snippet https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion
 
+# https://zdharma.org/zinit/wiki/Direnv-explanation/
+zinit from"gh-r" as"program" mv"direnv* -> direnv" \
+    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
+    pick"direnv" src="zhook.zsh" for \
+        direnv/direnv
+
 zinit load Aloxaf/fzf-tab
 
 # zstyle ':fzf-tab:*' show-group full
