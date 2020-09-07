@@ -37,7 +37,6 @@ Plug 'vim-airline/vim-airline'                                        | " airlin
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
-Plug 'liuchengxu/vim-which-key'                                       | " remember which key does what
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
 Plug 'norcalli/nvim-colorizer.lua'                                    | " a high-performance color highlighter for Neovim which has no external dependencies
 Plug 'junegunn/vim-peekaboo'                                          | " extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
@@ -749,15 +748,15 @@ autocmd FileType julia setlocal commentstring=#\ %s
 
 """""""""""""""""""""""""""""""""""""""" which key
 
-if !exists('g:which_key_map') | let g:which_key_map = {} | endif
+" if !exists('g:which_key_map') | let g:which_key_map = {} | endif
 
 """""""""""""""""""""""""""""""""""""""" leader mappings
 
-call which_key#register("<space>", "g:which_key_map")
+" call which_key#register("<space>", "g:which_key_map")
 
 " Map leader to which_key
-nnoremap <silent> <leader> :silent WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
+" nnoremap <silent> <leader> :silent WhichKey '<Space>'<CR>
+" vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -769,109 +768,111 @@ nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
 command! -nargs=0 Fzf call Help( <f-args> )
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " fzf selecting mappings
 nmap <leader>? :FzfMaps<CR>
-let g:which_key_map['?'] = 'fzf-find-mappings'
+" let g:which_key_map['?'] = 'fzf-find-mappings'
 
 " Split terminal
 nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
-let g:which_key_map['\'] = 'split-horizontal-terminal'
+" let g:which_key_map['\'] = 'split-horizontal-terminal'
 
 nnoremap <silent> <leader>/ :split\|wincmd l\|terminal<CR>
-let g:which_key_map['/' ]= 'split-vertical-terminal'
+" let g:which_key_map['/' ]= 'split-vertical-terminal'
 
 vnoremap <leader>y "+y
-let g:which_key_map.y = 'copy-to-clipboard'
+" let g:which_key_map.y = 'copy-to-clipboard'
 
 vnoremap <leader>d "+ygvd
-let g:which_key_map.d = 'cut-to-clipboard'
+" let g:which_key_map.d = 'cut-to-clipboard'
 
 nnoremap <leader>p "+p<CR>
 vnoremap <leader>p "+p<CR>
-let g:which_key_map.p = 'paste-from-clipboard'
+" let g:which_key_map.p = 'paste-from-clipboard'
 
 nnoremap <leader>P "+P<CR>
 vnoremap <leader>P "+P<CR>
-let g:which_key_map.P = 'paste-from-clipboard'
+" let g:which_key_map.P = 'paste-from-clipboard'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.w = { 'name': '+windows' }
+" let g:which_key_map.w = { 'name': '+windows' }
 
 nnoremap <silent> <leader>wc :close<CR>
-let g:which_key_map.w.c = 'delete-window'
+" let g:which_key_map.w.c = 'delete-window'
 
 nnoremap <silent> <leader>w/ :split<CR>
-let g:which_key_map.w['/'] = 'split-window-below'
+" let g:which_key_map.w['/'] = 'split-window-below'
 
 nnoremap <silent> <leader>w\ :vsplit<CR>
-let g:which_key_map.w['\'] = 'split-window-right'
+" let g:which_key_map.w['\'] = 'split-window-right'
 
 nnoremap <silent> <leader>wh <C-w>h
-let g:which_key_map.w.h = 'window-left'
+" let g:which_key_map.w.h = 'window-left'
 
 nnoremap <silent> <leader>wj <C-w>j
-let g:which_key_map.w.j = 'window-below'
+" let g:which_key_map.w.j = 'window-below'
 
 nnoremap <silent> <leader>wl <C-w>l
-let g:which_key_map.w.l = 'window-right'
+" let g:which_key_map.w.l = 'window-right'
 
 nnoremap <silent> <leader>wk <C-w>k
-let g:which_key_map.w.k = 'window-up'
+" let g:which_key_map.w.k = 'window-up'
 
 nnoremap <silent> <leader>wH <C-w>H
-let g:which_key_map.w.H = 'move-window-left'
+" let g:which_key_map.w.H = 'move-window-left'
 
 nnoremap <silent> <leader>wJ <C-w>J
-let g:which_key_map.w.J = 'move-window-bottom'
+" let g:which_key_map.w.J = 'move-window-bottom'
 
 nnoremap <silent> <leader>wL <C-w>L
-let g:which_key_map.w.L = 'move-window-right'
+" let g:which_key_map.w.L = 'move-window-right'
 
 nnoremap <silent> <leader>wK <C-w>K
-let g:which_key_map.w.K = 'move-window-top'
+" let g:which_key_map.w.K = 'move-window-top'
 
 nnoremap <silent> <leader>wo :only<CR>
-let g:which_key_map.w.o = 'maximize-window'
+" let g:which_key_map.w.o = 'maximize-window'
 
 nnoremap <silent> <leader>w= <C-w>=
-let g:which_key_map.w['='] = 'balance-window'
+" let g:which_key_map.w['='] = 'balance-window'
 
 nnoremap <silent> <leader>w+ 20<C-w>+
-let g:which_key_map.w['+'] = 'increase-window-height'
+" let g:which_key_map.w['+'] = 'increase-window-height'
 
 nnoremap <silent> <leader>w- 20<C-w>-
-let g:which_key_map.w['-'] = 'decrease-window-height'
+" let g:which_key_map.w['-'] = 'decrease-window-height'
 
 nnoremap <silent> <leader>w< 20<C-w><
-let g:which_key_map.w['<'] = 'decrease-window-width'
+" let g:which_key_map.w['<'] = 'decrease-window-width'
 
 nnoremap <silent> <leader>w> 20<C-w>>
-let g:which_key_map.w['>'] = 'increase-window-width'
+" let g:which_key_map.w['>'] = 'increase-window-width'
 
 nnoremap <silent> <leader>wp :wincmd P<CR>
-let g:which_key_map.w.p = 'preview-window'
+" let g:which_key_map.w.p = 'preview-window'
 
 nnoremap <silent> <leader>wz :wincmd z<CR>
-let g:which_key_map.w.z = 'quickfix-window'
+" let g:which_key_map.w.z = 'quickfix-window'
 
 nnoremap <silent> <leader>ww :FzfWindows<CR>
-let g:which_key_map.w['?'] = 'fzf-window'
+" let g:which_key_map.w['?'] = 'fzf-window'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.o = { 'name': '+open' }
+" let g:which_key_map.o = { 'name': '+open' }
 
 nnoremap <silent> <leader>oq  :copen<CR>
-let g:which_key_map.o.q = 'open-quickfix'
+" let g:which_key_map.o.q = 'open-quickfix'
 
 nnoremap <silent> <leader>ol  :lopen<CR>
-let g:which_key_map.o.l = 'open-locationlist'
+" let g:which_key_map.o.l = 'open-locationlist'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " reformat paragraph
 
-let g:which_key_map.q = { 'name': '+format' }
+" let g:which_key_map.q = { 'name': '+format' }
 nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(0)<CR>
@@ -879,48 +880,48 @@ vnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(1)<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.g = { 'name': '+git' }
+" let g:which_key_map.g = { 'name': '+git' }
 
 "" Git
 noremap <leader>gw :Gwrite<CR>
-let g:which_key_map.g.w = 'git-write'
+" let g:which_key_map.g.w = 'git-write'
 
 noremap <leader>gc :Gcommit<CR>
-let g:which_key_map.g.c = 'git-commit'
+" let g:which_key_map.g.c = 'git-commit'
 
 noremap <leader>go :.Gbrowse<CR>
 vnoremap <leader>go :Gbrowse<CR>
 
 noremap <leader>gp :Gpush<CR>
-let g:which_key_map.g.p = 'git-push'
+" let g:which_key_map.g.p = 'git-push'
 
 noremap <leader>gP :Gpull<CR>
-let g:which_key_map.g.P = 'git-pull'
+" let g:which_key_map.g.P = 'git-pull'
 
 noremap <leader>gb :Gblame<CR>
-let g:which_key_map.g.b = 'git-blame'
+" let g:which_key_map.g.b = 'git-blame'
 
 noremap <leader>gd :Gvdiff<CR>
-let g:which_key_map.g.d = 'git-diff'
+" let g:which_key_map.g.d = 'git-diff'
 
 noremap <leader>gr :Gremove<CR>
-let g:which_key_map.g.r = 'git-remove'
+" let g:which_key_map.g.r = 'git-remove'
 
 noremap <leader>gj :GitGutterNextHunk<CR>
-let g:which_key_map.g.j = 'git-next-hunk'
+" let g:which_key_map.g.j = 'git-next-hunk'
 
 noremap <leader>gk :GitGutterPrevHunk<CR>
-let g:which_key_map.g.k = 'git-prev-hunk'
+" let g:which_key_map.g.k = 'git-prev-hunk'
 
 noremap <leader>g? :FzfCommits<CR>
-let g:which_key_map.g['?'] = 'fzf-git-commit-log'
+" let g:which_key_map.g['?'] = 'fzf-git-commit-log'
 
 noremap <leader>gg :LazyGit<CR>
-let g:which_key_map.g.s = 'git-status'
+" let g:which_key_map.g.s = 'git-status'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.b = { 'name': '+buffer' }
+" let g:which_key_map.b = { 'name': '+buffer' }
 
 function! DeleteCurrentBuffer()
   let l:buffernumber = bufnr('%')
@@ -929,54 +930,54 @@ endfunction
 command! BufferDelete :call DeleteCurrentBuffer()
 
 nnoremap <silent> <leader>bd :BufferDelete<CR>
-let g:which_key_map.b.d = 'buffer-delete'
+" let g:which_key_map.b.d = 'buffer-delete'
 
 nnoremap <silent> <leader>bw :write<CR>
-let g:which_key_map.b.w = 'buffer-write'
+" let g:which_key_map.b.w = 'buffer-write'
 
 nnoremap <silent> <leader>bj :bnext<CR>
-let g:which_key_map.b.j = 'buffer-next'
+" let g:which_key_map.b.j = 'buffer-next'
 
 nnoremap <silent> <leader>bk :bprev<CR>
-let g:which_key_map.b.k = 'buffer-previous'
+" let g:which_key_map.b.k = 'buffer-previous'
 
 nnoremap <silent> <leader>bq :copen<CR>
-let g:which_key_map.b.q = 'buffer-quickfix-open'
+" let g:which_key_map.b.q = 'buffer-quickfix-open'
 
 nnoremap <silent> <leader>bQ :cclose<CR>
-let g:which_key_map.b.q = 'buffer-quickfix-close'
+" let g:which_key_map.b.q = 'buffer-quickfix-close'
 
 nnoremap <silent> <leader>bb :FzfBuffers<CR>
-let g:which_key_map.b['?'] = 'fzf-buffer-all'
+" let g:which_key_map.b['?'] = 'fzf-buffer-all'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.f = { 'name': '+find' }
+" let g:which_key_map.f = { 'name': '+find' }
 
 nnoremap <silent> <leader>fs :<c-u>FzfRG <C-r>=expand("<cword>")<CR><CR>
 xnoremap          <leader>fs "sy:FzfRG<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
-let g:which_key_map.f.s = 'find-in-files'
+" let g:which_key_map.f.s = 'find-in-files'
 
 nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
-let g:which_key_map.f['*'] = 'find-in-current-file'
+" let g:which_key_map.f['*'] = 'find-in-current-file'
 
 nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
-let g:which_key_map.f.b = 'find-buffers'
+" let g:which_key_map.f.b = 'find-buffers'
 
 nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
-let g:which_key_map.f.c = 'find-commits'
+" let g:which_key_map.f.c = 'find-commits'
 
 nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
-let g:which_key_map.f.f = 'find-files'
+" let g:which_key_map.f.f = 'find-files'
 
 nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
-let g:which_key_map.f.h = 'find-history'
+" let g:which_key_map.f.h = 'find-history'
 
 nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
-let g:which_key_map.f.m = 'find-marks'
+" let g:which_key_map.f.m = 'find-marks'
 
 nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
-let g:which_key_map.f.t = 'find-marks'
+" let g:which_key_map.f.t = 'find-marks'
 
 " Insert mode completion
 " imap <c-x><c-k> <Plug>(fzf-complete-word)
@@ -985,82 +986,82 @@ let g:which_key_map.f.t = 'find-marks'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.l = { 'name': '+lsp' }
+" let g:which_key_map.l = { 'name': '+lsp' }
 
 nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
-let g:which_key_map.l.l = 'lsp-declaration'
+" let g:which_key_map.l.l = 'lsp-declaration'
 
 nnoremap <silent> <leader>lf :lua vim.lsp.buf.definition()<CR>
-let g:which_key_map.l.f = 'lsp-definition'
+" let g:which_key_map.l.f = 'lsp-definition'
 
 nnoremap <silent> <leader>lh :lua vim.lsp.buf.hover()<CR>
-let g:which_key_map.l.h = 'lsp-hover'
+" let g:which_key_map.l.h = 'lsp-hover'
 
 nnoremap <silent> <leader>li :lua vim.lsp.buf.implementation()<CR>
-let g:which_key_map.l.i = 'lsp-implementation'
+" let g:which_key_map.l.i = 'lsp-implementation'
 
 nnoremap <silent> <leader>ls :lua vim.lsp.buf.signature_help()<CR>
-let g:which_key_map.l.s = 'lsp-signature-help'
+" let g:which_key_map.l.s = 'lsp-signature-help'
 
 nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
-let g:which_key_map.l.t = 'lsp-type-definition'
+" let g:which_key_map.l.t = 'lsp-type-definition'
 
 nnoremap <silent> <leader>lr :lua vim.lsp.buf.references()<CR>
-let g:which_key_map.l.r = 'lsp-references'
+" let g:which_key_map.l.r = 'lsp-references'
 
 nnoremap <silent> <leader>l0 :lua vim.lsp.buf.document_symbol()<CR>
-let g:which_key_map.l['0'] = 'lsp-document-symbol'
+" let g:which_key_map.l['0'] = 'lsp-document-symbol'
 
 nnoremap <silent> <leader>lw :lua vim.lsp.buf.workspace_symbol()<CR>
-let g:which_key_map.l.w = 'lsp-workspace-symbol'
+" let g:which_key_map.l.w = 'lsp-workspace-symbol'
 
 nnoremap <silent> <leader>lg :lua vim.lsp.util.show_line_diagnostics()<CR>
-let g:which_key_map.l.d = 'lsp-diagnostics-show'
+" let g:which_key_map.l.d = 'lsp-diagnostics-show'
 
 nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
-let g:which_key_map.l.j = 'lsp-next-diagnostic'
+" let g:which_key_map.l.j = 'lsp-next-diagnostic'
 
 nnoremap <silent> <leader>lk :PreviousDiagnosticCycle<CR>
-let g:which_key_map.l.k = 'lsp-previous-diagnostic'
+" let g:which_key_map.l.k = 'lsp-previous-diagnostic'
 
 nmap     <silent> <leader>lc :Commentary<CR>
 omap     <silent> <leader>lc :Commentary<CR>
 xmap     <silent> <leader>lc :Commentary<CR>
-let g:which_key_map.l.c = 'lsp-comment'
+" let g:which_key_map.l.c = 'lsp-comment'
 
 " nnoremap <silent> <leader>lq :<CR>
-" let g:which_key_map.l.q = 'lsp-format'
+" " let g:which_key_map.l.q = 'lsp-format'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:which_key_map.v = { 'name': '+vim' }
+" let g:which_key_map.v = { 'name': '+vim' }
 
 nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
-let g:which_key_map.v.e = 'edit-vimrc'
+" let g:which_key_map.v.e = 'edit-vimrc'
 
 nnoremap <silent> <leader>vs :source $MYVIMRC<CR>
-let g:which_key_map.v.s = 'source-vimrc'
+" let g:which_key_map.v.s = 'source-vimrc'
 
 nnoremap <silent> <leader>vl :luafile %<CR>
-let g:which_key_map.v.l = 'source-luafile'
+" let g:which_key_map.v.l = 'source-luafile'
 
 nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
-let g:which_key_map.v.z = 'open-zshrc'
+" let g:which_key_map.v.z = 'open-zshrc'
 
 nnoremap <silent> <leader>v- :NnnPicker '%:p:h'<CR>
-let g:which_key_map.v['-'] = 'explore-with-nnn'
+" let g:which_key_map.v['-'] = 'explore-with-nnn'
 
 nnoremap <silent> <leader>v= :terminal<CR>
-let g:which_key_map.v['='] = 'terminal-current-buffer'
+" let g:which_key_map.v['='] = 'terminal-current-buffer'
 
 nnoremap          <leader>v. :cd %:p:h<CR>:pwd<CR>
-let g:which_key_map.v['.'] = 'set-current-working-directory'
+" let g:which_key_map.v['.'] = 'set-current-working-directory'
 
 nnoremap <leader>vu :UndotreeToggle<CR>
-let g:which_key_map.v.u = 'open-undo-tree'
+" let g:which_key_map.v.u = 'open-undo-tree'
 
 command! ZoomToggle :call zoom#toggle()
 nnoremap <leader>vz :ZoomToggle<CR>
-let g:which_key_map.v.z = 'zoom-toggle'
+" let g:which_key_map.v.z = 'zoom-toggle'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
