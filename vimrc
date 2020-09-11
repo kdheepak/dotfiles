@@ -1,5 +1,3 @@
-lua package.loaded['lazygit'] = nil
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -44,7 +42,7 @@ Plug 'itchyny/vim-cursorword'                                         | " underl
 Plug 'junegunn/vim-easy-align'                                        | " helps alignment
 Plug 'godlygeek/tabular'                                              | " line up text
 Plug 'tpope/vim-commentary'                                           | " comment and uncomment stuff
-Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
+" Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
 Plug 'tpope/vim-surround'                                             | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 Plug 'tpope/vim-repeat'                                               | " repeat.vim remaps . in a way that plugins can tap into it.
 Plug 'vim-utils/vim-vertical-move'
@@ -86,8 +84,8 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'nvim-lua/diagnostic-nvim'                                       | " better neovim built in lsp diagnostics
 Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
-Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
-Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
+" Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
+" Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
@@ -96,7 +94,7 @@ Plug 'kdheepak/gridlabd.vim'                                          | " gridla
 Plug 'zah/nim.vim'                                                    | " syntax highlighting auto indent for nim in vim
 Plug 'gpanders/vim-medieval'                                          | " evaluate markdown code blocks within vim
 Plug 'tpope/vim-sleuth'
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
@@ -688,30 +686,30 @@ inoremap <silent><expr> <TAB>
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 
-imap <expr> <C-j> vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-j>"
-imap <expr> <C-k> vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)"      : "<C-k>"
+" imap <expr> <C-j> vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-j>"
+" imap <expr> <C-k> vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)"      : "<C-k>"
 
-inoremap <silent> <C-s> <C-r>=SnippetsComplete()<CR>
+" inoremap <silent> <C-s> <C-r>=SnippetsComplete()<CR>
 
-function! SnippetsComplete() abort
-    let wordToComplete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
-    let fromWhere      = col('.') - len(wordToComplete)
-    let containWord    = "stridx(v:val.word, wordToComplete)>=0"
-    let candidates     = vsnip#get_complete_items(bufnr("%"))
-    let matches        = map(filter(candidates, containWord),
-                \  "{
-                \      'word': v:val.word,
-                \      'menu': v:val.kind,
-                \      'dup' : 1,
-                \   }")
+" function! SnippetsComplete() abort
+"     let wordToComplete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
+"     let fromWhere      = col('.') - len(wordToComplete)
+"     let containWord    = "stridx(v:val.word, wordToComplete)>=0"
+"     let candidates     = vsnip#get_complete_items(bufnr("%"))
+"     let matches        = map(filter(candidates, containWord),
+"                 \  "{
+"                 \      'word': v:val.word,
+"                 \      'menu': v:val.kind,
+"                 \      'dup' : 1,
+"                 \   }")
 
 
-    if !empty(matches)
-        call complete(fromWhere, matches)
-    endif
+"     if !empty(matches)
+"         call complete(fromWhere, matches)
+"     endif
 
-    return ""
-endfunction
+"     return ""
+" endfunction
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
 lua require'colorizer'.setup()

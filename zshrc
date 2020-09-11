@@ -110,6 +110,11 @@ zinit load zdharma/zsh-diff-so-fancy
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat='bat'"
 zinit load sharkdp/bat
 
+zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
+zinit light "jonas/tig"
+
+hash tig &>/dev/null && zinit wait lucid for zdharma/zsh-tig-plugin
+
 zinit ice from"gh-r" as"program" pick"so/so"
 zinit load samtay/so
 
