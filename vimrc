@@ -627,7 +627,21 @@ lua <<EOF
     nvim_lsp.rust_analyzer.setup({on_attach=on_attach_vim})
     nvim_lsp.vimls.setup({on_attach=on_attach_vim})
     nvim_lsp.cssls.setup({on_attach=on_attach_vim})
-    nvim_lsp.sumneko_lua.setup({on_attach=on_attach_vim})
+    nvim_lsp.sumneko_lua.setup({
+      on_attach = on_attach_vim,
+      settings = {
+        Lua = {
+          runtime = { version = "LuaJIT", path = vim.split(package.path, ';'), },
+          completion = { keywordSnippet = "Disable", },
+          diagnostics = { enable = true, globals = { "vim", "describe", "it", "before_each", "after_each" } },
+          workspace = {
+            library = {
+                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+              },
+          },
+        },
+      }
+    })
     nvim_lsp.html.setup({on_attach=on_attach_vim})
     nvim_lsp.pyls.setup{
        on_attach=on_attach_vim,
