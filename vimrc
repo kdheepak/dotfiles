@@ -186,7 +186,7 @@ set shortmess+=I                                                   | " no intro 
 set scrolloff=10                                                   | " show 10 lines above and below
 " set noswapfile                                                   | " Don't write .swp files
 
-au CursorHold * checktime
+" au CursorHold * checktime
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
@@ -397,7 +397,6 @@ let maplocalleader = " " | " Map localleader to space
 " Don't start markdown preview automatically, use :MarkdownPreview
 let g:mkdp_auto_start = 0
 
-let g:python_host_prog = expand('~/miniconda3/bin/python')
 let g:python3_host_prog = expand('~/miniconda3/bin/python3')
 
 " Merge Tool
