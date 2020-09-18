@@ -1,3 +1,5 @@
+lua package.loaded['artist'] = nil
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -18,6 +20,9 @@ Plug 'junegunn/fzf.vim'                                               | " fuzzy 
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }   | " turn your browser into a Neovim client.
 Plug 'justinmk/vim-dirvish'
 Plug 'mcchrish/nnn.vim'                                               | " Fast and featureful file manager in vim/neovim powered by nnn
+Plug 'vim-scripts/sketch.vim'
+Plug '~/gitrepos/artist.nvim'
+Plug 'gyim/vim-boxdraw'
 Plug 'tpope/vim-vinegar'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
@@ -42,7 +47,7 @@ Plug 'itchyny/vim-cursorword'                                         | " underl
 Plug 'junegunn/vim-easy-align'                                        | " helps alignment
 Plug 'godlygeek/tabular'                                              | " line up text
 Plug 'tpope/vim-commentary'                                           | " comment and uncomment stuff
-" Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
+Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
 Plug 'tpope/vim-surround'                                             | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 Plug 'tpope/vim-repeat'                                               | " repeat.vim remaps . in a way that plugins can tap into it.
 Plug 'vim-utils/vim-vertical-move'
