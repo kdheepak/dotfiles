@@ -22,7 +22,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'mcchrish/nnn.vim'                                               | " Fast and featureful file manager in vim/neovim powered by nnn
 Plug 'vim-scripts/sketch.vim'
 Plug '~/gitrepos/artist.nvim'
-Plug 'gyim/vim-boxdraw'
+" Plug 'gyim/vim-boxdraw'
 Plug 'tpope/vim-vinegar'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
@@ -73,7 +73,7 @@ Plug 'joom/latex-unicoder.vim'                                        | " a plug
 Plug 'editorconfig/editorconfig-vim'                                  | " editorconfig plugin for vim
 Plug 'osyo-manga/vim-anzu'                                            | " show total number of matches and current match number
 Plug 'haya14busa/vim-asterisk'                                        | " asterisk.vim provides improved search * motions
-Plug 'ryanoasis/vim-devicons'                                         | " adds icons to plugins
+" Plug 'ryanoasis/vim-devicons'                                         | " adds icons to plugins
 Plug 'segeljakt/vim-isotope'                                          | " insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 Plug 'pbrisbin/vim-mkdir'                                             | " automatically create any non-existent directories before writing the buffer
 Plug 'kshenoy/vim-signature'                                          | " toggle display and navigate marks
