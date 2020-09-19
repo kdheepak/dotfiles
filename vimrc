@@ -24,6 +24,7 @@ Plug 'vim-scripts/sketch.vim'
 Plug '~/gitrepos/artist.nvim'
 " Plug 'gyim/vim-boxdraw'
 Plug 'tpope/vim-vinegar'
+Plug 'Xuyuanp/scrollbar.nvim'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
