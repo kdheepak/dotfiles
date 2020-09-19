@@ -129,10 +129,10 @@ set autoindent                   | " copy indent from current line
 set smartindent                  | " do smart indenting when starting a new line
 " set backspace=indent,eol,start | "allow backspacing over autoindent, line breaks, the start of insert
 
-let &showbreak='↳ ' | " string to put at the start of lines that have been wrapped
+let &showbreak = '↪ ' | " string to put at the start of lines that have been wrapped
 set breakindent     | " every wrapped line will continue visually indented
 set linebreak       | " wrap long lines at a character in breakat
-set nowrap          | " lines longer than the width of the window will not wrap
+set wrap            | " lines longer than the width of the window will not wrap
 
 
 set termguicolors                             | " enables 24bit colors
@@ -172,7 +172,7 @@ set nojoinspaces                                                   | " Use one s
 set splitright                                                     | " split windows right
 set splitbelow                                                     | " split windows below
 set viminfo+=n~/.config/nvim/viminfo                               | " viminfo file
-set virtualedit+=all                                               | " allow virtual editing in all modes
+" set virtualedit+=all                                               | " allow virtual editing in all modes
 set nomodeline                                                     | " no lines are checked for set commands
 set grepprg=rg\ --vimgrep                                          | " use ripgrep
 set redrawtime=10000                                               | " set higher redrawtime so that vim does not hang on difficult syntax highlighting
@@ -556,10 +556,7 @@ let g:tmuxline_status_justify = 'left'
 
 " PromptlineSnapshot! ~/config/.promptline.sh airline<CR>
 
-if has('nvim') && executable('nvr')
-  " pip install neovim-remote
-  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-endif
+let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 
 let g:prettier#config#prose_wrap = 'always'
 
