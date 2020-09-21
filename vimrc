@@ -478,7 +478,7 @@ noremap zj <C-e>
 noremap zk <C-y>
 
 " Macros
-nnoremap Q @@
+nnoremap Q @q
 vnoremap Q :norm @@<CR>
 
 " Select last paste
