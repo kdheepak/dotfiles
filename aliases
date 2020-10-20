@@ -199,10 +199,10 @@ task-commit() {
     )
 }
 
-update-nvim() {
+update-rust-analyzer() {
   curl -LO https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-mac
   rm -rf ~/local/bin/rust-analyzer
-  mv rust-analyzer-mac ~/local/nvim/bin/rust-analyzer
+  mv rust-analyzer-mac ~/local/bin/rust-analyzer
 }
 
 update-nvim() {
