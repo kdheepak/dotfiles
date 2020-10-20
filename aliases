@@ -159,6 +159,7 @@ fi
 
 alias e=vi
 alias vim=vi
+alias ve="vim ~/.config/nvim/init.vim"
 alias :q="exit"
 alias :e="vim"
 

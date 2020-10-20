@@ -22,7 +22,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'mcchrish/nnn.vim'                                               | " Fast and featureful file manager in vim/neovim powered by nnn
 Plug 'vim-scripts/sketch.vim'
 Plug '~/gitrepos/artist.nvim'
-" Plug 'gyim/vim-boxdraw'
+Plug 'gyim/vim-boxdraw'
 Plug 'tpope/vim-vinegar'
 Plug 'Xuyuanp/scrollbar.nvim'
 """"                                                                  | " ### git
@@ -32,8 +32,9 @@ Plug 'rhysd/git-messenger.vim'                                        | " reveal
 Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
 Plug 'samoshkin/vim-mergetool'                                        | " Merge tool for git
-Plug '~/gitrepos/lazygit.nvim'                                          | " lazygit
-Plug '~/gitrepos/pandoc.nvim'                                         | " lazygit
+Plug '~/gitrepos/lazygit.nvim'                                        | " lazygit
+Plug '~/gitrepos/pandoc.nvim'                                         | " pandoc.nvim
+Plug '~/gitrepos/markdown-mode'                                       | " markdown mode
 Plug 'norcalli/typeracer.nvim'
 """"
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
@@ -49,6 +50,7 @@ Plug 'junegunn/vim-easy-align'                                        | " helps 
 Plug 'godlygeek/tabular'                                              | " line up text
 Plug 'tpope/vim-commentary'                                           | " comment and uncomment stuff
 Plug 'tpope/vim-unimpaired'                                           | " complementary pairs of mappings
+Plug 'tpope/vim-abolish'                                              | " convert camel to snake
 Plug 'tpope/vim-surround'                                             | " all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 Plug 'tpope/vim-repeat'                                               | " repeat.vim remaps . in a way that plugins can tap into it.
 Plug 'vim-utils/vim-vertical-move'
@@ -94,6 +96,9 @@ Plug 'nvim-lua/completion-nvim'                                       | " better
 " Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
+Plug 'bfredl/nvim-ipy'
+Plug 'hkupty/iron.nvim'
+Plug '~/gitrepos/ganymede'
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 Plug 'JuliaEditorSupport/julia-vim'                                   | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
@@ -102,7 +107,7 @@ Plug 'gpanders/vim-medieval'                                          | " evalua
 Plug 'tpope/vim-sleuth'
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
-Plug 'kdheepak/JuliaFormatter.vim'                                    | " formatter for Julia
+Plug '~/gitrepos/JuliaFormatter.vim'                                    | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 
 " Initialize plugin system
@@ -620,7 +625,7 @@ lua <<EOF
     local on_attach_vim = function()
         require'diagnostic'.on_attach()
     end
-    nvim_lsp.julials.setup({on_attach=on_attach_vim})
+    -- nvim_lsp.julials.setup({on_attach=on_attach_vim})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
     nvim_lsp.ccls.setup({on_attach=on_attach_vim})
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
@@ -889,8 +894,9 @@ nnoremap <silent> <leader>ol  :lopen<CR>
 " let g:which_key_map.q = { 'name': '+format' }
 nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qt :Tabularize<CR>
-nnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(0)<CR>
-vnoremap <leader>qjf :<C-u>call JuliaFormatter#Format(1)<CR>
+nnoremap <leader>qjf :JuliaFormatterFormat<CR>
+vnoremap <leader>qjf :JuliaFormatterFormat<CR>
+let g:JuliaFormatter_use_sysimage = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -903,7 +909,7 @@ noremap <leader>gw :Gwrite<CR>
 noremap <leader>gc :Gcommit<CR>
 " let g:which_key_map.g.c = 'git-commit'
 
-noremap <leader>go :.Gbrowse<CR>
+noremap <leader>go :Gbrowse<CR>
 vnoremap <leader>go :Gbrowse<CR>
 
 noremap <leader>gp :Gpush<CR>
@@ -993,6 +999,9 @@ nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
 nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
 " let g:which_key_map.f.t = 'find-marks'
 
+inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
+" let g:which_key_map.f.t = 'find-marks'
+
 " Insert mode completion
 " imap <c-x><c-k> <Plug>(fzf-complete-word)
 " imap <c-x><c-f> <Plug>(fzf-complete-path)
@@ -1079,3 +1088,11 @@ nnoremap <leader>vz :ZoomToggle<CR>
 " let g:which_key_map.v.z = 'zoom-toggle'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <leader>is    <Plug>(iron-send-motion)
+vmap <leader>is    <Plug>(iron-visual-send)
+nmap <leader>i<CR> <Plug>(iron-cr)
+nmap <leader>ii    <Plug>(iron-interrupt)
+nmap <leader>il    <Plug>(iron-send-line)
+nmap <leader>iq    <Plug>(iron-exit)
+nmap <leader>ic    <Plug>(iron-clear)
