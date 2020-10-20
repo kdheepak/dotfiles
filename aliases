@@ -202,11 +202,14 @@ task-commit() {
 update-julia() {
   curl -LO https://julialangnightlies-s3.julialang.org/bin/mac/x64/julia-latest-mac64.dmg
   hdiutil mount julia-latest-mac64.dmg
-  rm -rf ~/Applications/Julia-1.6.app/
-  path_to_julia_app=
-  cp -R "$(find '/Volumes' -name 'Julia-1.6.0-DEV*')/Julia-1.6.app" ~/Applications/
+  sleep 1
+  local path_to_julia_volume=$(find '/Volumes' -name 'Julia-*-DEV*')
+  local path_to_julia_app=$(find "$path_to_julia_volume" -name 'Julia-*.app')
+  echo $path_to_julia_app
+  rm -rf ~/Applications/Julia-nightly.app/
+  cp -R "$path_to_julia_app" ~/Applications/Julia-nightly.app
   rm -rf julia-latest-mac64.dmg
-  hdiutil unmount $(find '/Volumes' -name 'Julia-1.6.0-DEV*')
+  hdiutil unmount "$(path_to_julia_volume)"
 }
 
 update-rust-analyzer() {
