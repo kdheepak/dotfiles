@@ -168,7 +168,7 @@ alias rg="rg $RG_FLAGS"
 alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
 
 alias julia-bleeding="$HOME/gitrepos/julia/usr/bin/julia"
-alias julia-stable="$HOME/Applications/Julia-1.5.app/Contents/Resources/julia/bin/julia"
+alias julia-stable="$HOME/Applications/Julia-1.6.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
 alias julia="julia-stable --color=yes"
 
@@ -197,6 +197,16 @@ task-commit() {
         git pull -q
         git push -q
     )
+}
+
+update-julia() {
+  curl -LO https://julialangnightlies-s3.julialang.org/bin/mac/x64/julia-latest-mac64.dmg
+  hdiutil mount julia-latest-mac64.dmg
+  rm -rf ~/Applications/Julia-1.6.app/
+  path_to_julia_app=
+  cp -R "$(find '/Volumes' -name 'Julia-1.6.0-DEV*')/Julia-1.6.app" ~/Applications/
+  rm -rf julia-latest-mac64.dmg
+  hdiutil unmount $(find '/Volumes' -name 'Julia-1.6.0-DEV*')
 }
 
 update-rust-analyzer() {
