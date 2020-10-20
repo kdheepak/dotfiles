@@ -92,8 +92,11 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'nvim-lua/diagnostic-nvim'                                       | " better neovim built in lsp diagnostics
 Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
-" Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
-" Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
+Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/completion-treesitter'
+Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
+Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'bfredl/nvim-ipy'
@@ -625,7 +628,7 @@ lua <<EOF
     local on_attach_vim = function()
         require'diagnostic'.on_attach()
     end
-    -- nvim_lsp.julials.setup({on_attach=on_attach_vim})
+    nvim_lsp.julials.setup({on_attach=on_attach_vim})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
     nvim_lsp.ccls.setup({on_attach=on_attach_vim})
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
@@ -682,11 +685,12 @@ let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_enable_underline = 0
 let g:completion_timer_cycle = 200 "default value is 80
-let g:completion_trigger_keyword_length = 3 " default = 1
+let g:completion_trigger_keyword_length = 1 " default = 1
 let g:completion_matching_ignore_case = 1
-let g:completion_enable_auto_hover = 0
-let g:completion_enable_auto_signature = 0
+let g:completion_enable_auto_hover = 1
+let g:completion_enable_auto_signature = 1
 let g:completion_enable_auto_popup = 1
+let g:completion_matching_ignore_case = 1
 
 augroup lsp
   autocmd!
@@ -731,6 +735,7 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 "     return ""
 " endfunction
+
 """""""""""""""""""""""""""""""""""""""" colorizer setup
 
 lua require'colorizer'.setup()
