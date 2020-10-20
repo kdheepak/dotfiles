@@ -14,7 +14,4 @@ atreplinit() do repl
 end
 
 # using OhMyREPL
-
-# enable_autocomplete_brackets(false)
-
-# using Debugger
+using Debugger
