@@ -209,7 +209,7 @@ update-julia() {
   rm -rf ~/Applications/Julia-nightly.app/
   cp -R "$path_to_julia_app" ~/Applications/Julia-nightly.app
   rm -rf julia-latest-mac64.dmg
-  hdiutil unmount "$(path_to_julia_volume)"
+  hdiutil unmount "$path_to_julia_volume"
 }
 
 update-rust-analyzer() {
