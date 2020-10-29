@@ -200,27 +200,24 @@ zinit load Aloxaf/fzf-tab
 # zstyle ':fzf-tab:*' prefix ''
 # zstyle ':fzf-tab:*' continuous-trigger 'alt-enter'
 # Previews for some commands
-local extract="
-# trim input(what you select)
-local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
-# get ctxt for current completion(some thing before or after the current word)
-local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
-# real path
-local realpath=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
-realpath=\${(Qe)~realpath}
-"
 
-local sanitized_in='${~ctxt[hpre]}"${${in//\\ / }/#\~/$HOME}"'
+zstyle ':completion:complete:*:options' sort false
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' single-group ''
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
+
 zstyle ':completion:*' special-dirs true
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'preview_file_or_folder $realpath' --preview-window=right:40%
-zstyle ':fzf-tab:complete:exa:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:40%
-zstyle ':fzf-tab:complete:bat:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:cat:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:nvr:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:vim:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:nvim:*' extra-opts --preview=$extract'preview_file_or_folder '$sanitized_in --preview-window=right:70%
-zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ":fzf-tab:complete:(exa|bat|nvim):*" fzf-preview '
+  bat --style=numbers --color=always --line-range :250 $realpath 2>/dev/null ||
+  exa -1 --color=always --icons --group-directories-first $realpath
+'
+# give a preview of commandline arguments when completing `kill`
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
 
 ### End of Zinit's installer chunk
 
