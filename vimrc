@@ -21,6 +21,7 @@ Plug 'junegunn/fzf.vim'                                               | " fuzzy 
 Plug 'justinmk/vim-dirvish'
 Plug 'mcchrish/nnn.vim'                                               | " Fast and featureful file manager in vim/neovim powered by nnn
 Plug 'vim-scripts/sketch.vim'
+Plug '~/gitrepos/vim-autoformat'
 Plug '~/gitrepos/artist.nvim'
 Plug 'gyim/vim-boxdraw'
 Plug 'tpope/vim-vinegar'
@@ -901,7 +902,7 @@ nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qjf :JuliaFormatterFormat<CR>
 vnoremap <leader>qjf :JuliaFormatterFormat<CR>
-let g:JuliaFormatter_use_sysimage = 1
+let g:JuliaFormatter_use_sysimage = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1101,3 +1102,6 @@ nmap <leader>ii    <Plug>(iron-interrupt)
 nmap <leader>il    <Plug>(iron-send-line)
 nmap <leader>iq    <Plug>(iron-exit)
 nmap <leader>ic    <Plug>(iron-clear)
+
+autocmd FileType julia
+    \ autocmd BufWrite <buffer> :JuliaFormatterFormat<CR>

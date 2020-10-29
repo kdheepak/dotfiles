@@ -588,12 +588,14 @@
 	<false/>
 	<key>HideActivityIndicator</key>
 	<true/>
+	<key>HideMenuBarInFullscreen</key>
+	<true/>
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
 	<false/>
 	<key>HideTabNumber</key>
-	<true/>
+	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
@@ -652,9 +654,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>-1701 986 841 470 0 0 1680 1050 </string>
+	<string>-4240 1003 799 448 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2560 259 2560 1440 -2560 259 2560 1440 </string>
+	<string>-1270 297 1250 1382 -2560 259 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-2156 695 810 550 -2560 259 2560 1440 </string>
 	<key>NeverWarnAboutShortLivedSessions_FFDE6F18-0A31-423D-88F6-8297AE4A36B2</key>
@@ -1354,16 +1356,16 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{-2560, 259}, {2560, 1440}}</string>
+		<string>{{-5120, 259}, {2560, 1440}}</string>
 		<key>topLeft</key>
-		<string>{-1602, 1392}</string>
+		<string>{-3790, 1493}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>4FBA681B-C24D-4D39-8D58-3FD92CA7E945</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>6</integer>
+	<integer>8</integer>
 	<key>NoSyncNeverPromptToChangeOption</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -2156,8 +2158,10 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-09-10T22:21:19Z</date>
+	<date>2020-10-27T22:26:57Z</date>
 	<key>SUSendProfileInfo</key>
+	<false/>
+	<key>SeparateStatusBarsPerPane</key>
 	<false/>
 	<key>SeparateWindowTitlePerTab</key>
 	<false/>
@@ -2180,7 +2184,7 @@
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>TabsHaveCloseButton</key>
-	<false/>
+	<true/>
 	<key>UseBorder</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
