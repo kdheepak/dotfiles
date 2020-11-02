@@ -192,6 +192,8 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
     pick"direnv" src="zhook.zsh" for \
         direnv/direnv
 
+export FZF_TMUX_HEIGHT='95%'
+
 zinit load Aloxaf/fzf-tab
 
 # zstyle ':fzf-tab:*' show-group full
