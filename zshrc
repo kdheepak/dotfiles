@@ -124,8 +124,10 @@ zinit load samtay/so
 zinit ice from"gh-r" as"program"
 zinit load extrawurst/gitui
 
-# install_name_tool -change /usr/local/opt/openssl@1.1/lib/libssl.1.1.dylib $(brew --prefix)/opt/openssl@1.1/lib/libssl.1.1.dylib ~/.zinit/plugins/foriequal0---git-trim/git-trim/git-trim
-# install_name_tool -change /usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib $(brew --prefix)/opt/openssl@1.1/lib/libcrypto.1.1.dylib ~/.zinit/plugins/foriequal0---git-trim/git-trim/git-trim
+fix-git-trim() {
+  install_name_tool -change /usr/local/opt/openssl@1.1/lib/libssl.1.1.dylib $(brew --prefix)/opt/openssl@1.1/lib/libssl.1.1.dylib ~/.zinit/plugins/foriequal0---git-trim/git-trim/git-trim
+  install_name_tool -change /usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib $(brew --prefix)/opt/openssl@1.1/lib/libcrypto.1.1.dylib ~/.zinit/plugins/foriequal0---git-trim/git-trim/git-trim
+}
 
 zinit ice from"gh-r" as"program" pick"git-trim/git-trim"
 zinit load foriequal0/git-trim
