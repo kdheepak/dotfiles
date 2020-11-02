@@ -124,6 +124,9 @@ zinit load samtay/so
 zinit ice from"gh-r" as"program"
 zinit load extrawurst/gitui
 
+zinit ice from"gh-r" as"program" pick"git-trim/git-trim"
+zinit load foriequal0/git-trim
+
 zinit ice lucid wait"0" as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
 zinit load 'jesseduffield/lazygit'
 
