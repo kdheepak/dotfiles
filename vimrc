@@ -41,6 +41,9 @@ Plug 'norcalli/typeracer.nvim'
 Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
+Plug 'nvim-lua/lsp-status.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
