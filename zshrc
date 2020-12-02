@@ -141,6 +141,9 @@ zinit load 'jesseduffield/lazydocker'
 zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
 zinit load BurntSushi/ripgrep
 
+zinit ice from"gh-r" as"program" mv"ripgrep_all* -> ripgrep_all" pick"ripgrep_all/rga"
+zinit load phiresky/ripgrep-all
+
 zinit ice depth'1' as"program" pick"ranger.py" atload"alias r='ranger.py'"
 zinit load ranger/ranger
 
@@ -152,6 +155,9 @@ zinit load dandavison/delta
 
 zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
+
+zi_completion has'pandoc'
+zinit light srijanshetty/zsh-pandoc-completion
 
 # zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
 # zinit load ogham/exa
