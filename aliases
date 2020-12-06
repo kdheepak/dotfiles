@@ -171,7 +171,7 @@ alias julia-bleeding="$HOME/gitrepos/julia/usr/bin/julia"
 alias julia-nightly="$HOME/Applications/Julia-nightly.app/Contents/Resources/julia/bin/julia"
 alias julia-stable="$HOME/Applications/Julia-1.5.app/Contents/Resources/julia/bin/julia"
 alias julia-lts="$HOME/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia"
-alias julia="julia-stable --color=yes"
+alias julia="julia-nightly --color=yes"
 
 alias fast-julia="julia-bleeding --color=yes --startup-file=no"
 alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
