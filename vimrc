@@ -95,10 +95,10 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
 Plug 'nvim-lua/diagnostic-nvim'                                       | " better neovim built in lsp diagnostics
-Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
-Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/completion-treesitter'
+" Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
+" Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
+" Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/completion-treesitter'
 Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
 Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
@@ -625,10 +625,10 @@ command! -nargs=1 Help call Help( <f-args> )
 
 """""""""""""""""""""""""""""""""""""""" lsp
 
-autocmd BufEnter * lua require'completion'.on_attach()
+" autocmd BufEnter * lua require'completion'.on_attach()
 
 lua <<EOF
-    local nvim_lsp = require'nvim_lsp'
+    local nvim_lsp = require'lspconfig'
     local on_attach_vim = function()
         require'diagnostic'.on_attach()
     end
@@ -1106,5 +1106,4 @@ nmap <leader>il    <Plug>(iron-send-line)
 nmap <leader>iq    <Plug>(iron-exit)
 nmap <leader>ic    <Plug>(iron-clear)
 
-autocmd FileType julia
-    \ autocmd BufWrite <buffer> :JuliaFormatterFormat<CR>
+" autocmd FileType julia autocmd BufWrite <buffer> :JuliaFormatterFormat<CR>
