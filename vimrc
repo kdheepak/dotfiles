@@ -42,7 +42,7 @@ Plug 'airblade/vim-gitgutter'                                         | " shows 
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'romgrk/barbar.nvim'
+" Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
@@ -628,7 +628,7 @@ command! -nargs=1 Help call Help( <f-args> )
 " autocmd BufEnter * lua require'completion'.on_attach()
 
 lua <<EOF
-    local nvim_lsp = require'lspconfig'
+    local nvim_lsp = require'nvim_lsp'
     local on_attach_vim = function()
         require'diagnostic'.on_attach()
     end
