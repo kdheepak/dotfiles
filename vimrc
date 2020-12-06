@@ -628,7 +628,7 @@ command! -nargs=1 Help call Help( <f-args> )
 " autocmd BufEnter * lua require'completion'.on_attach()
 
 lua <<EOF
-    local nvim_lsp = require'nvim_lsp'
+    local nvim_lsp = require'lspconfig'
     local on_attach_vim = function()
         require'diagnostic'.on_attach()
     end
