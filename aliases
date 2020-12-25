@@ -231,3 +231,5 @@ update-nvim() {
 alias gfap="gfa --prune"
 alias gsb='git status -sb'
 alias gst='git status -s'
+
+alias franklin="julia -O0 -e 'using Franklin; serve()'"
