@@ -73,7 +73,7 @@ Plug 'reedes/vim-wordy'                                               | " uncove
 Plug 'farmergreg/vim-lastplace'                                       | " intelligently reopen files at your last edit position
 Plug 'ntpeters/vim-better-whitespace'                                 | " causes all trailing whitespace characters to be highlighted
 Plug 'nathanaelkane/vim-indent-guides'                                | " displaying thin vertical lines at each indentation level for code indented with spaces
-Plug 'jeffkreeftmeijer/vim-numbertoggle'                              | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
+" Plug 'jeffkreeftmeijer/vim-numbertoggle'                              | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
 Plug 'dhruvasagar/vim-table-mode'                                     | " automatic table creator & formatter allowing one to create neat tables as you type
 " Plug 'airblade/vim-rooter'                                          | " rooter changes the working directory to the project root when you open a file or directory
 Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
@@ -93,8 +93,7 @@ Plug 'mhinz/vim-startify'                                             | " This p
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
 " Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
-Plug 'neovim/nvim-lsp'                                                | " neovim built in lsp
-Plug 'nvim-lua/diagnostic-nvim'                                       | " better neovim built in lsp diagnostics
+Plug 'neovim/nvim-lspconfig'
 " Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
 " Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
 " Plug 'nvim-treesitter/nvim-treesitter'
@@ -103,9 +102,6 @@ Plug 'hrsh7th/vim-vsnip'                                              | " VSCode
 Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
-Plug 'bfredl/nvim-ipy'
-Plug 'hkupty/iron.nvim'
-Plug '~/gitrepos/ganymede'
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 Plug 'JuliaEditorSupport/julia-vim'                                   | " julia support for vim
 Plug 'kdheepak/gridlabd.vim'                                          | " gridlabd syntax support
@@ -114,6 +110,14 @@ Plug 'gpanders/vim-medieval'                                          | " evalua
 Plug 'tpope/vim-sleuth'
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'plasticboy/vim-markdown'                                        | " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
+Plug 'kana/vim-textobj-user'
+Plug 'hkupty/iron.nvim'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'GCBallesteros/vim-textobj-hydrogen'
+Plug 'GCBallesteros/jupytext.vim'
+Plug 'bfredl/nvim-ipy'
+Plug '~/gitrepos/ganymede'
 Plug '~/gitrepos/JuliaFormatter.vim'                                    | " formatter for Julia
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 
@@ -156,7 +160,7 @@ set noshowmode                                                     | " don't sho
 let &colorcolumn=121                                               | " add indicator for 120
 set display+=lastline                                              | " as much as possible of the last line in a window will be displayed
 set diffopt+=vertical                                              | " Always use vertical diffs
-set number relativenumber                                          | " use line numbers and relative line numn
+set number norelativenumber                                          | " use line numbers and relative line numn
 set cursorline                                                     | " highlight current line
 set showcmd                                                        | " show command in bottom bar display an incomplete command in the lower right of the vim window
 set showmatch                                                      | " highlight matching [{()}]

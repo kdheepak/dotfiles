@@ -110,6 +110,9 @@ zinit load zdharma/zsh-diff-so-fancy
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat='bat'"
 zinit load sharkdp/bat
 
+zinit ice from"gh-r" as"program" mv"mdcat* -> mdcat" pick"mdcat/mdcat"
+zinit load lunaryorn/mdcat
+
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
