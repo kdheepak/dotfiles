@@ -94,7 +94,8 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 " Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lspconfig'
-" Plug 'nvim-lua/completion-nvim'                                       | " better neovim built in lsp completion
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'nvim-lua/completion-nvim'
 " Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
 " Plug 'nvim-treesitter/nvim-treesitter'
 " Plug 'nvim-treesitter/completion-treesitter'
@@ -632,9 +633,16 @@ command! -nargs=1 Help call Help( <f-args> )
 " autocmd BufEnter * lua require'completion'.on_attach()
 
 lua <<EOF
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = true,
+        signs = true,
+        update_in_insert = true,
+      }
+    )
     local nvim_lsp = require'lspconfig'
-    local on_attach_vim = function()
-        -- require'diagnostic'.on_attach()
+    local on_attach_vim = function(client)
+        require'completion'.on_attach(client)
     end
     nvim_lsp.julials.setup({on_attach=on_attach_vim})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
@@ -700,24 +708,19 @@ let g:completion_enable_auto_signature = 1
 let g:completion_enable_auto_popup = 1
 let g:completion_matching_ignore_case = 1
 
-augroup lsp
-  autocmd!
-  " autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
-augroup END
-
 " Use <TAB> and <S-TAB> to navigate through popup menu
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
+" use <Tab> as trigger keys
+imap <Tab> <Plug>(completion_smart_tab)
+imap <S-Tab> <Plug>(completion_smart_s_tab)
 
 " imap <expr> <C-j> vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-j>"
 " imap <expr> <C-k> vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)"      : "<C-k>"
@@ -1024,9 +1027,6 @@ inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
 
 " let g:which_key_map.l = { 'name': '+lsp' }
 
-nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
-" let g:which_key_map.l.l = 'lsp-declaration'
-
 nnoremap <silent> <leader>lf :lua vim.lsp.buf.definition()<CR>
 " let g:which_key_map.l.f = 'lsp-definition'
 
@@ -1054,6 +1054,11 @@ nnoremap <silent> <leader>lw :lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> <leader>lg :lua vim.lsp.util.show_line_diagnostics()<CR>
 " let g:which_key_map.l.d = 'lsp-diagnostics-show'
 
+nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
+" let g:which_key_map.l.l = 'lsp-declaration'
+
+nnoremap <silent> <leader>la :lua vim.lsp.buf.code_action()<CR>
+
 nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
 " let g:which_key_map.l.j = 'lsp-next-diagnostic'
 
@@ -1064,6 +1069,17 @@ nmap     <silent> <leader>lc :Commentary<CR>
 omap     <silent> <leader>lc :Commentary<CR>
 xmap     <silent> <leader>lc :Commentary<CR>
 " let g:which_key_map.l.c = 'lsp-comment'
+
+" Show diagnostic popup on cursor hold
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> <leader>l[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <leader>l] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+" Enable type inlay hints
+autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
 " nnoremap <silent> <leader>lq :<CR>
 " " let g:which_key_map.l.q = 'lsp-format'
