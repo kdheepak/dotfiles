@@ -634,7 +634,7 @@ command! -nargs=1 Help call Help( <f-args> )
 lua <<EOF
     local nvim_lsp = require'lspconfig'
     local on_attach_vim = function()
-        require'diagnostic'.on_attach()
+        -- require'diagnostic'.on_attach()
     end
     nvim_lsp.julials.setup({on_attach=on_attach_vim})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
