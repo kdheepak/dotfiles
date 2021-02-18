@@ -635,7 +635,7 @@ command! -nargs=1 Help call Help( <f-args> )
 lua <<EOF
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = true,
+        virtual_text = false,
         signs = true,
         update_in_insert = true,
       }
@@ -644,7 +644,7 @@ lua <<EOF
     local on_attach_vim = function(client)
         require'completion'.on_attach(client)
     end
-    nvim_lsp.julials.setup({on_attach=on_attach_vim})
+    -- nvim_lsp.julials.setup({on_attach=on_attach_vim})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
     nvim_lsp.ccls.setup({on_attach=on_attach_vim})
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
@@ -697,9 +697,6 @@ lua <<EOF
     }
 EOF
 
-let g:diagnostic_auto_popup_while_jump = 0
-let g:diagnostic_enable_virtual_text = 0
-let g:diagnostic_enable_underline = 0
 let g:completion_timer_cycle = 200 "default value is 80
 let g:completion_trigger_keyword_length = 1 " default = 1
 let g:completion_matching_ignore_case = 1
@@ -1051,7 +1048,7 @@ nnoremap <silent> <leader>l0 :lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> <leader>lw :lua vim.lsp.buf.workspace_symbol()<CR>
 " let g:which_key_map.l.w = 'lsp-workspace-symbol'
 
-nnoremap <silent> <leader>lg :lua vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>lg :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " let g:which_key_map.l.d = 'lsp-diagnostics-show'
 
 nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
@@ -1079,7 +1076,7 @@ nnoremap <silent> <leader>l] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 " Enable type inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+\ lua require'lsp_extensions'.inlay_hints{ prefix = '» ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
 " nnoremap <silent> <leader>lq :<CR>
 " " let g:which_key_map.l.q = 'lsp-format'
