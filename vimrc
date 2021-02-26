@@ -87,6 +87,7 @@ Plug 'kshenoy/vim-signature'                                          | " toggle
 Plug 'sedm0784/vim-you-autocorrect'                                   | " Automatic autocorrect
 Plug 'inkarkat/vim-ingo-library'                                      | " Spellcheck dependency
 Plug 'inkarkat/vim-spellcheck'                                        | " Add vim spell check errors to quicklist
+Plug 'beloglazov/vim-online-thesaurus'
 Plug 'rhysd/clever-f.vim'
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
