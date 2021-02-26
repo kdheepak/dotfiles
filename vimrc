@@ -97,6 +97,7 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'nvim-lua/completion-nvim'
+Plug 'liuchengxu/vista.vim'
 " Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
 " Plug 'nvim-treesitter/nvim-treesitter'
 " Plug 'nvim-treesitter/completion-treesitter'
