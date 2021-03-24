@@ -97,13 +97,14 @@ Plug 'chrisbra/unicode.vim'                                           | " vim un
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
-Plug 'nvim-lua/completion-nvim'
 Plug 'liuchengxu/vista.vim'
+" Plug 'nvim-lua/completion-nvim'
 " Plug 'steelsojka/completion-buffers'                                  | " a buffer completion source for completion-nvim
 " Plug 'nvim-treesitter/nvim-treesitter'
 " Plug 'nvim-treesitter/completion-treesitter'
 Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
 Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
+Plug 'hrsh7th/nvim-compe'                                            | " VSCode(LSP)'s snippet feature in vim.
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
@@ -643,6 +644,10 @@ lua <<EOF
         update_in_insert = true,
       }
     )
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+
     local nvim_lsp = require'lspconfig'
     local on_attach_vim = function(client)
         require'completion'.on_attach(client)
@@ -653,8 +658,8 @@ lua <<EOF
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
     nvim_lsp.jsonls.setup({on_attach=on_attach_vim})
     nvim_lsp.nimls.setup({on_attach=on_attach_vim})
-    nvim_lsp.rust_analyzer.setup({on_attach=on_attach_vim})
-    nvim_lsp.vimls.setup({on_attach=on_attach_vim})
+    nvim_lsp.rust_analyzer.setup({on_attach=on_attach_vim, capabilities = capabilities})
+    nvim_lsp.vimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
     nvim_lsp.cssls.setup({on_attach=on_attach_vim})
     nvim_lsp.sumneko_lua.setup({
       on_attach = on_attach_vim,
@@ -1124,6 +1129,28 @@ nmap <leader>ii    <Plug>(iron-interrupt)
 nmap <leader>il    <Plug>(iron-send-line)
 nmap <leader>iq    <Plug>(iron-exit)
 nmap <leader>ic    <Plug>(iron-clear)
+
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
 
 " autocmd FileType julia autocmd BufWrite <buffer> :JuliaFormatterFormat<CR>
 " autocmd FileType julia autocmd BufWritePre <buffer> :JuliaFormatterFormat<CR>
