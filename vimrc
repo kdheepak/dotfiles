@@ -38,7 +38,7 @@ Plug '~/gitrepos/pandoc.nvim'                                         | " pandoc
 Plug '~/gitrepos/markdown-mode'                                       | " markdown mode
 Plug 'norcalli/typeracer.nvim'
 """"
-Plug 'airblade/vim-gitgutter'                                         | " shows a git diff in the 'gutter' (sign column)
+Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
 Plug 'kyazdani42/nvim-web-devicons'
@@ -75,6 +75,7 @@ Plug 'ntpeters/vim-better-whitespace'                                 | " causes
 Plug 'nathanaelkane/vim-indent-guides'                                | " displaying thin vertical lines at each indentation level for code indented with spaces
 " Plug 'jeffkreeftmeijer/vim-numbertoggle'                              | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
 Plug 'dhruvasagar/vim-table-mode'                                     | " automatic table creator & formatter allowing one to create neat tables as you type
+Plug 'lukas-reineke/indent-blankline.nvim'                            | " indent line
 " Plug 'airblade/vim-rooter'                                          | " rooter changes the working directory to the project root when you open a file or directory
 Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
 Plug 'editorconfig/editorconfig-vim'                                  | " editorconfig plugin for vim
