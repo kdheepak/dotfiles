@@ -911,7 +911,6 @@ nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qt :Tabularize<CR>
 nnoremap <leader>qjf :JuliaFormatterFormat<CR>
 vnoremap <leader>qjf :JuliaFormatterFormat<CR>
-let g:JuliaFormatter_use_sysimage = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1070,7 +1069,7 @@ xmap     <silent> <leader>lc :Commentary<CR>
 " let g:which_key_map.l.c = 'lsp-comment'
 
 " Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+" autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 
 " Goto previous/next diagnostic warning/error
 nnoremap <silent> <leader>l[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
@@ -1126,3 +1125,4 @@ nmap <leader>iq    <Plug>(iron-exit)
 nmap <leader>ic    <Plug>(iron-clear)
 
 " autocmd FileType julia autocmd BufWrite <buffer> :JuliaFormatterFormat<CR>
+" autocmd FileType julia autocmd BufWritePre <buffer> :JuliaFormatterFormat<CR>
