@@ -44,6 +44,7 @@ Plug 'vim-airline/vim-airline-themes'                                 | " offici
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 """"                                                                  | " ### vim extensions features
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
@@ -958,6 +959,8 @@ noremap <leader>g? :FzfCommits<CR>
 
 noremap <leader>gg :LazyGit<CR>
 " let g:which_key_map.g.s = 'git-status'
+
+let g:lazygit_floating_window_use_plenary = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
