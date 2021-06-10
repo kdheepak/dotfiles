@@ -36,7 +36,6 @@ Plug 'samoshkin/vim-mergetool'                                        | " Merge 
 Plug '~/gitrepos/lazygit.nvim'                                        | " lazygit
 Plug '~/gitrepos/pandoc.nvim'                                         | " pandoc.nvim
 Plug '~/gitrepos/markdown-mode'                                       | " markdown mode
-Plug 'norcalli/typeracer.nvim'
 """"
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
@@ -46,6 +45,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
+Plug 'folke/lsp-colors.nvim'
 """"                                                                  | " ### vim extensions features
 Plug 'bkad/CamelCaseMotion'                                           | " motions for inside camel case
 Plug 'norcalli/nvim-colorizer.lua'                                    | " a high-performance color highlighter for Neovim which has no external dependencies
@@ -94,6 +94,7 @@ Plug 'rhysd/clever-f.vim'
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
+Plug 'leafOfTree/vim-vue-plugin'
 " Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lspconfig'
