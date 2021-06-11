@@ -94,10 +94,12 @@ Plug 'rhysd/clever-f.vim'
 Plug 'takac/vim-hardtime'                                             | " vim hardtime
 Plug 'mhinz/vim-startify'                                             | " This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
 Plug 'chrisbra/unicode.vim'                                           | " vim unicode helper
-Plug 'leafOfTree/vim-vue-plugin'
+" Plug 'leafOfTree/vim-vue-plugin'
+Plug 'posva/vim-vue'
 " Plug 'christoomey/vim-tmux-navigator'
 """"                                                                  | " ### vim programming language features
 Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'liuchengxu/vista.vim'
 " Plug 'nvim-lua/completion-nvim'
