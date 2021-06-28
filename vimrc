@@ -146,6 +146,7 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
 Plug 'rust-lang/vscode-rust'
 Plug 'onsails/lspkind-nvim'
+Plug 'ojroques/nvim-bufdel'
 
 " Initialize plugin system
 call plug#end()
