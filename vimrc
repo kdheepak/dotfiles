@@ -37,13 +37,13 @@ Plug '~/gitrepos/lazygit.nvim'                                        | " lazygi
 Plug '~/gitrepos/pandoc.nvim'                                         | " pandoc.nvim
 Plug '~/gitrepos/markdown-mode'                                       | " markdown mode
 """"
-Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'                                        | " airline status bar
 Plug 'vim-airline/vim-airline-themes'                                 | " official theme repository
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 Plug 'folke/lsp-colors.nvim'
 """"                                                                  | " ### vim extensions features
@@ -73,9 +73,11 @@ Plug 'mbbill/undotree'                                                | " visual
 Plug 'reedes/vim-wordy'                                               | " uncover usage problems in your writing
 Plug 'farmergreg/vim-lastplace'                                       | " intelligently reopen files at your last edit position
 Plug 'ntpeters/vim-better-whitespace'                                 | " causes all trailing whitespace characters to be highlighted
+
 Plug 'nathanaelkane/vim-indent-guides'                                | " displaying thin vertical lines at each indentation level for code indented with spaces
 " Plug 'jeffkreeftmeijer/vim-numbertoggle'                              | " numbertoggle switches to absolute line numbers (:set number norelativenumber) automatically when relative numbers don't make sense
 Plug 'dhruvasagar/vim-table-mode'                                     | " automatic table creator & formatter allowing one to create neat tables as you type
+Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'                            | " indent line
 " Plug 'airblade/vim-rooter'                                          | " rooter changes the working directory to the project root when you open a file or directory
 Plug 'joom/latex-unicoder.vim'                                        | " a plugin to type Unicode chars in Vim, using their LaTeX names
@@ -108,7 +110,7 @@ Plug 'liuchengxu/vista.vim'
 " Plug 'nvim-treesitter/completion-treesitter'
 Plug 'hrsh7th/vim-vsnip'                                              | " VSCode(LSP)'s snippet feature in vim.
 Plug 'hrsh7th/vim-vsnip-integ'                                        | " additional plugins
-Plug 'hrsh7th/nvim-compe'                                            | " VSCode(LSP)'s snippet feature in vim.
+Plug 'hrsh7th/nvim-compe'                                             | " VSCode(LSP)'s snippet feature in vim.
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}         | " vim-plug with on-demand support for the Requirements File Format syntax for vim
 Plug 'Vimjas/vim-python-pep8-indent'                                  | " a nicer Python indentation style for vim
 Plug 'rust-lang/rust.vim'                                             | " rust file detection, syntax highlighting, formatting, Syntastic integration, and more
@@ -128,7 +130,13 @@ Plug 'GCBallesteros/jupytext.vim'
 Plug 'bfredl/nvim-ipy'
 Plug '~/gitrepos/ganymede'
 Plug '~/gitrepos/JuliaFormatter.vim'                                    | " formatter for Julia
+Plug 'sindrets/diffview.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'kosayoda/nvim-lightbulb'
 
 " Initialize plugin system
 call plug#end()
@@ -205,7 +213,7 @@ set updatetime=100                                                 | " set lower
 set switchbuf+=usetab,useopen                                      | " open buffers in tab
 set cmdheight=1                                                    | " default space for displaying messages
 set completeopt=menuone                                            | " Use the popup menu also when there is only one match.
-set completeopt+=noinsert                                          | " Do not insert any text for a match until the user selects a match from the menu.
+" set completeopt+=noinsert                                          | " Do not insert any text for a match until the user selects a match from the menu.
 set completeopt+=noselect                                          | " Do not select a match in the menu, force the user to select one from the menu.
 set shortmess+=c                                                   | " Shut off completion messages
 set shortmess+=I                                                   | " no intro message
@@ -640,7 +648,31 @@ command! -nargs=1 Help call Help( <f-args> )
 
 " autocmd BufEnter * lua require'completion'.on_attach()
 
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.resolve_timeout = 800
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
+
 lua <<EOF
+
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = false,
@@ -651,12 +683,19 @@ lua <<EOF
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+      }
+    }
 
     local nvim_lsp = require'lspconfig'
     local on_attach_vim = function(client)
         -- require'completion'.on_attach(client)
     end
-    -- nvim_lsp.julials.setup({on_attach=on_attach_vim})
+    nvim_lsp.julials.setup({on_attach=on_attach_vim, capabilities = capabilities})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
     nvim_lsp.ccls.setup({on_attach=on_attach_vim})
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
@@ -707,6 +746,50 @@ lua <<EOF
            }
        }
     }
+
+  local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
+
+  local check_back_space = function()
+      local col = vim.fn.col('.') - 1
+      if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+          return true
+      else
+          return false
+      end
+  end
+
+  -- Use (s-)tab to:
+  --- move to prev/next item in completion menuone
+  --- jump to prev/next snippet's placeholder
+  _G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+      return t "<C-n>"
+    elseif vim.fn.call("vsnip#available", {1}) == 1 then
+      return t "<Plug>(vsnip-expand-or-jump)"
+    elseif check_back_space() then
+      return t "<Tab>"
+    else
+      return vim.fn['compe#complete']()
+    end
+  end
+  _G.s_tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+      return t "<C-p>"
+    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+      return t "<Plug>(vsnip-jump-prev)"
+    else
+      -- If <S-Tab> is not working in your terminal, change it to <C-h>
+      return t "<S-Tab>"
+    end
+  end
+
+  vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
 EOF
 
 let g:completion_timer_cycle = 200 "default value is 80
@@ -1160,48 +1243,56 @@ let g:compe.source.vsnip = v:true
 
 lua <<EOF
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+  local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
 
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
+  local check_back_space = function()
+      local col = vim.fn.col('.') - 1
+      if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+          return true
+      else
+          return false
+      end
+  end
+
+  -- Use (s-)tab to:
+  --- move to prev/next item in completion menuone
+  --- jump to prev/next snippet's placeholder
+  _G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+      return t "<C-n>"
+    elseif vim.fn.call("vsnip#available", {1}) == 1 then
+      return t "<Plug>(vsnip-expand-or-jump)"
+    elseif check_back_space() then
+      return t "<Tab>"
     else
-        return false
+      return vim.fn['compe#complete']()
     end
-end
-
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
   end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    return t "<S-Tab>"
+  _G.s_tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+      return t "<C-p>"
+    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+      return t "<Plug>(vsnip-jump-prev)"
+    else
+      return t "<S-Tab>"
+    end
   end
-end
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+  require'lsp_signature'.on_attach()
 EOF
 
 " autocmd FileType julia autocmd BufWrite <buffer> :JuliaFormatterFormat<CR>
 " autocmd FileType julia autocmd BufWritePre <buffer> :JuliaFormatterFormat<CR>
+
+lua <<EOF
+  require('gitsigns').setup()
+EOF
+
+autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
