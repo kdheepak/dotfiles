@@ -140,6 +140,12 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdo
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'kosayoda/nvim-lightbulb'
+Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-telescope/telescope-dap.nvim'
+Plug 'mfussenegger/nvim-dap-python'
+Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+Plug 'rust-lang/vscode-rust'
+Plug 'onsails/lspkind-nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -674,15 +680,48 @@ let g:compe.source.nvim_lsp = v:true
 let g:compe.source.nvim_lua = v:true
 let g:compe.source.vsnip = v:true
 
+nnoremap <silent><leader>clf :Lspsaga lsp_finder<CR>
+nnoremap <silent><leader>cca :Lspsaga code_action<CR>
+vnoremap <silent><leader>cca :<C-U>Lspsaga range_code_action<CR>nnoremap <silent><leader>chd :Lspsaga hover_doc<CR>
+nnoremap <silent><C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+nnoremap <silent><C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>nnoremap <silent><leader>csh :Lspsaga signature_help<CR>nnoremap <silent><leader>crn :Lspsaga rename<CR>nnoremap <silent><leader>cpd:Lspsaga preview_definition<CR>nnoremap <silent> <leader>cld :Lspsaga show_line_diagnostics<CR>nnoremap <silent> [e :Lspsaga diagnostic_jump_next<CR>
+nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>nnoremap <silent> <leader>cot :Lspsaga open_floaterm<CR>
+tnoremap <silent> <leader>cct <C-\><C-n>:Lspsaga close_floaterm<CR>
+
 lua <<EOF
 
+    local saga = require 'lspsaga'
+    saga.init_lsp_saga()
+
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
-        signs = true,
-        update_in_insert = true,
-      }
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = false,
+            underline = true,
+            signs = true,
+            update_in_insert = false
+        }
     )
+    -- Send diagnostics to quickfix list
+    do
+        local method = "textDocument/publishDiagnostics"
+        local default_handler = vim.lsp.handlers[method]
+        vim.lsp.handlers[method] = function(err, method, result, client_id, bufnr,
+                                            config)
+            default_handler(err, method, result, client_id, bufnr, config)
+            local diagnostics = vim.lsp.diagnostic.get_all()
+            local qflist = {}
+            for bufnr, diagnostic in pairs(diagnostics) do
+                for _, d in ipairs(diagnostic) do
+                    d.bufnr = bufnr
+                    d.lnum = d.range.start.line + 1
+                    d.col = d.range.start.character + 1
+                    d.text = d.message
+                    table.insert(qflist, d)
+                end
+            end
+            vim.lsp.util.set_qflist(qflist)
+        end
+    end
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -694,9 +733,85 @@ lua <<EOF
       }
     }
 
+    capabilities.textDocument.codeAction = {
+        dynamicRegistration = true,
+        codeActionLiteralSupport = {
+            codeActionKind = {
+                valueSet = (function()
+                    local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+                    table.sort(res)
+                    return res
+                end)()
+            }
+        }
+    }
+
     local nvim_lsp = require'lspconfig'
-    local on_attach_vim = function(client)
-        -- require'completion'.on_attach(client)
+    local on_attach_vim = function(client, bufnr)
+        require'lsp_signature'.on_attach(client)
+        local function buf_set_keymap(...)
+            vim.api.nvim_buf_set_keymap(bufnr, ...)
+        end
+        local function buf_set_option(...)
+            vim.api.nvim_buf_set_option(bufnr, ...)
+        end
+
+        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+        -- Mappings.
+        local opts = {noremap = true, silent = true}
+        buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+                       opts)
+        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
+                       opts)
+        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
+                       opts)
+        buf_set_keymap('n', '<leader>law',
+                       '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+        buf_set_keymap('n', '<leader>lrw',
+                       '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+        buf_set_keymap('n', '<leader>llw',
+                       '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
+                       opts)
+        buf_set_keymap('n', '<leader>lt',
+                       '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+        buf_set_keymap('n', '<leader>lrn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        buf_set_keymap('n', '<leader>lrf', '<cmd>lua vim.lsp.buf.references()<CR>',
+                       opts)
+        buf_set_keymap('n', '<leader>ld',
+                       '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+                       opts)
+        buf_set_keymap('n', '<leader>ll',
+                       '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+        buf_set_keymap('n', '<leader>lca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+                       opts)
+
+        -- Set some keybinds conditional on server capabilities
+        if client.resolved_capabilities.document_formatting then
+            buf_set_keymap("n", "<leader>lf",
+                           "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        elseif client.resolved_capabilities.document_range_formatting then
+            buf_set_keymap("n", "<leader>lf",
+                           "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+        end
+
+        -- Set autocommands conditional on server_capabilities
+        if client.resolved_capabilities.document_highlight then
+            vim.api.nvim_exec([[
+            hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+            hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+            hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+            augroup lsp_document_highlight
+            autocmd! * <buffer>
+            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+            ]], false)
+        end
     end
     nvim_lsp.julials.setup({on_attach=on_attach_vim, capabilities = capabilities})
     nvim_lsp.bashls.setup({on_attach=on_attach_vim})
@@ -704,7 +819,18 @@ lua <<EOF
     nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
     nvim_lsp.jsonls.setup({on_attach=on_attach_vim})
     nvim_lsp.nimls.setup({on_attach=on_attach_vim})
-    nvim_lsp.rust_analyzer.setup({on_attach=on_attach_vim, capabilities = capabilities})
+    nvim_lsp.rust_analyzer.setup({
+      on_attach=on_attach_vim,
+      capabilities = capabilities,
+      settings = {
+          ['rust-analyzer'] = {
+              cargo = { allFeatures = true, autoReload = true },
+              checkOnSave = {
+                  enable = true, command = "clippy",
+              },
+          }
+        },
+    })
     nvim_lsp.vimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
     nvim_lsp.cssls.setup({on_attach=on_attach_vim})
     nvim_lsp.sumneko_lua.setup({
@@ -1128,6 +1254,31 @@ nnoremap <leader>fp <cmd>lua require('telescope').extensions.gh.pull_request()<c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+nnoremap <leader>dct <cmd>lua require"dap".continue()<CR>
+nnoremap <leader>dsv <cmd>lua require"dap".step_over()<CR>
+nnoremap <leader>dsi <cmd>lua require"dap".step_into()<CR>
+nnoremap <leader>dso <cmd>lua require"dap".step_out()<CR>
+nnoremap <leader>dtb <cmd>lua require"dap".toggle_breakpoint()<CR>
+
+nnoremap <leader>dsc <cmd>lua require"dap.ui.variables".scopes()<CR>
+nnoremap <leader>dhh <cmd>lua require"dap.ui.variables".hover()<CR>
+nnoremap <leader>dhv <cmd>lua require"dap.ui.variables".visual_hover()<CR>
+
+nnoremap <leader>duh <cmd>lua require"dap.ui.widgets".hover()<CR>
+nnoremap <leader>duf <cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>
+
+nnoremap <leader>dsbr <cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>
+nnoremap <leader>dsbm <cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>
+nnoremap <leader>dro <cmd>lua require"dap".repl.open()<CR>
+nnoremap <leader>drl <cmd>lua require"dap".repl.run_last()<CR>
+nnoremap <leader>dcc <cmd>lua require"telescope".extensions.dap.commands{}<CR>
+nnoremap <leader>dco <cmd>lua require"telescope".extensions.dap.configurations{}<CR>
+nnoremap <leader>dlb <cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>
+nnoremap <leader>dv <cmd>lua require"telescope".extensions.dap.variables{}<CR>
+nnoremap <leader>df <cmd>lua require"telescope".extensions.dap.frames{}<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " let g:which_key_map.f = { 'name': '+find' }
 
 " nnoremap <silent> <leader>fs :<c-u>FzfRG <C-r>=expand("<cword>")<CR><CR>
@@ -1340,6 +1491,47 @@ EOF
 
 lua <<EOF
   require('gitsigns').setup()
+  require('telescope').load_extension('dap')
+  require('dap-python').setup('~/miniconda3/bin/python')
+  require('lspkind').init({
+      -- enables text annotations
+      --
+      -- default: true
+      with_text = true,
+
+      -- default symbol map
+      -- can be either 'default' or
+      -- 'codicons' for codicon preset (requires vscode-codicons font installed)
+      --
+      -- default: 'default'
+      preset = 'default',
+
+      -- override preset symbols
+      --
+      -- default: {}
+      symbol_map = {
+        Text = '',
+        Method = 'ƒ',
+        Function = '',
+        Constructor = '',
+        Variable = '',
+        Class = '',
+        Interface = 'ﰮ',
+        Module = '',
+        Property = '',
+        Unit = '',
+        Value = '',
+        Enum = '了',
+        Keyword = '',
+        Snippet = '﬌',
+        Color = '',
+        File = '',
+        Folder = '',
+        EnumMember = '',
+        Constant = '',
+        Struct = ''
+      },
+  })
 EOF
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
