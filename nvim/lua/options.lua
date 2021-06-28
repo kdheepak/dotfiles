@@ -66,3 +66,4 @@ vim.o.completeopt='menuone,noinsert,noselect'                            --  Use
 vim.o.completeopt='menuone,noinsert,noselect'
 vim.o.shortmess='filnxtToOfcI'                                         --  Shut off completion and intro messages
 vim.o.scrolloff=10                                                       --  show 10 lines above and below
+vim.o.number=true
