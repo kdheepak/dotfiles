@@ -419,7 +419,11 @@ inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>lf :lua vim.lsp.buf.definition()<CR>
+nmap     <silent> <leader>lc :Commentary<CR>
+omap     <silent> <leader>lc :Commentary<CR>
+xmap     <silent> <leader>lc :Commentary<CR>
+
+nnoremap <silent> <leader>ld :lua vim.lsp.buf.definition()<CR>
 
 nnoremap <silent> <leader>lh :lua vim.lsp.buf.hover()<CR>
 
@@ -444,10 +448,6 @@ nnoremap <silent> <leader>la :lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
 
 nnoremap <silent> <leader>lk :PreviousDiagnosticCycle<CR>
-
-nmap     <silent> <leader>lc :Commentary<CR>
-omap     <silent> <leader>lc :Commentary<CR>
-xmap     <silent> <leader>lc :Commentary<CR>
 
 nnoremap <silent> <leader>l[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <leader>l] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
