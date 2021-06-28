@@ -15,8 +15,6 @@ filetype off                  " required
 call plug#begin('~/.local/share/nvim/plugged')
 
 """"                                                                  | " ### vim integration with external tools
-Plug 'junegunn/fzf'                                                   | " main fzf
-Plug 'junegunn/fzf.vim'                                               | " fuzzy finding plugin
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }   | " turn your browser into a Neovim client.
 Plug 'justinmk/vim-dirvish'
 Plug 'mcchrish/nnn.vim'                                               | " Fast and featureful file manager in vim/neovim powered by nnn
@@ -29,6 +27,7 @@ Plug 'Xuyuanp/scrollbar.nvim'
 """"                                                                  | " ### git
 Plug 'tyru/open-browser.vim'                                          | " opens url in browser
 Plug 'tyru/open-browser-github.vim'                                   | " opens github repo or github issue in browser
+Plug 'tamago324/telescope-openbrowser.nvim'
 Plug 'rhysd/git-messenger.vim'                                        | " reveal a hidden message from git under the cursor quickly
 Plug 'tpope/vim-fugitive'                                             | " vim plugin for Git that is so awesome, it should be illegal
 Plug 'tpope/vim-rhubarb'                                              | " vim plugin for github
@@ -42,7 +41,11 @@ Plug 'vim-airline/vim-airline-themes'                                 | " offici
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-github.nvim'
+Plug 'gbrlsnchs/telescope-lsp-handlers.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 Plug 'folke/lsp-colors.nvim'
@@ -134,7 +137,6 @@ Plug 'sindrets/diffview.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'} | " Markdown preview
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'nvim-telescope/telescope.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'kosayoda/nvim-lightbulb'
 
@@ -845,29 +847,29 @@ lua require'colorizer'.setup()
 
 """""""""""""""""""""""""""""""""""""""" fzf
 
-let g:fzf_preview_floating_window_winblend = 5
-let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
-let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=OneHalfLight'
-let g:fzf_preview_grep_preview_cmd = expand('~/.config/bat/bin/preview_fzf_grep')
+" let g:fzf_preview_floating_window_winblend = 5
+" let g:fzf_preview_command = 'bat --theme=OneHalfLight --color=always --style=grid {-1}'
+" let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=OneHalfLight'
+" let g:fzf_preview_grep_preview_cmd = expand('~/.config/bat/bin/preview_fzf_grep')
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Todo', 'border': 'sharp' } }
-let g:fzf_buffers_jump = 1
-let g:fzf_command_prefix = 'Fzf'
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Todo', 'border': 'sharp' } }
+" let g:fzf_buffers_jump = 1
+" let g:fzf_command_prefix = 'Fzf'
 
-" Path completion with custom source command
-" inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
-" Word completion with custom spec with popup layout option
-" inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
+" " Path completion with custom source command
+" " inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+" " Word completion with custom spec with popup layout option
+" " inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
 
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
+" function! RipgrepFzf(query, fullscreen)
+"   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+"   let initial_command = printf(command_fmt, shellescape(a:query))
+"   let reload_command = printf(command_fmt, '{q}')
+"   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+"   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+" endfunction
 
-command! -nargs=* -bang FzfRG call RipgrepFzf(<q-args>, <bang>0)
+" command! -nargs=* -bang FzfRG call RipgrepFzf(<q-args>, <bang>0)
 
 """""""""""""""""""""""""""""""""""""""" commentary.vim
 
@@ -893,12 +895,12 @@ nnoremap <silent> <leader><leader> :nohl<CR>:delmarks! \| delmarks a-zA-Z0-9<CR>
 " Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
 nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
-command! -nargs=0 Fzf call Help( <f-args> )
+" command! -nargs=0 Fzf call Help( <f-args> )
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " fzf selecting mappings
-nmap <leader>? :FzfMaps<CR>
+" nmap <leader>? :FzfMaps<CR>
 " let g:which_key_map['?'] = 'fzf-find-mappings'
 
 " Split terminal
@@ -983,7 +985,7 @@ nnoremap <silent> <leader>wp :wincmd P<CR>
 nnoremap <silent> <leader>wz :wincmd z<CR>
 " let g:which_key_map.w.z = 'quickfix-window'
 
-nnoremap <silent> <leader>ww :FzfWindows<CR>
+" nnoremap <silent> <leader>ww :FzfWindows<CR>
 " let g:which_key_map.w['?'] = 'fzf-window'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1040,7 +1042,7 @@ noremap <leader>gj :GitGutterNextHunk<CR>
 noremap <leader>gk :GitGutterPrevHunk<CR>
 " let g:which_key_map.g.k = 'git-prev-hunk'
 
-noremap <leader>g? :FzfCommits<CR>
+" noremap <leader>g? :FzfCommits<CR>
 " let g:which_key_map.g['?'] = 'fzf-git-commit-log'
 
 noremap <leader>gg :LazyGit<CR>
@@ -1076,37 +1078,54 @@ nnoremap <silent> <leader>bq :copen<CR>
 nnoremap <silent> <leader>bQ :cclose<CR>
 " let g:which_key_map.b.q = 'buffer-quickfix-close'
 
-nnoremap <silent> <leader>bb :FzfBuffers<CR>
+" nnoremap <silent> <leader>bb :FzfBuffers<CR>
 " let g:which_key_map.b['?'] = 'fzf-buffer-all'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+  require('telescope').load_extension('gh')
+  require('telescope').load_extension('lsp_handlers')
+  require('telescope').load_extension('openbrowser')
+EOF
+
+" Using lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fs <cmd>lua require('telescope.builtin').grep_string()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+nnoremap <leader>fi <cmd>lua require('telescope').extensions.gh.issues()<cr>
+nnoremap <leader>fp <cmd>lua require('telescope').extensions.gh.pull_request()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " let g:which_key_map.f = { 'name': '+find' }
 
-nnoremap <silent> <leader>fs :<c-u>FzfRG <C-r>=expand("<cword>")<CR><CR>
-xnoremap          <leader>fs "sy:FzfRG<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
-" let g:which_key_map.f.s = 'find-in-files'
+" nnoremap <silent> <leader>fs :<c-u>FzfRG <C-r>=expand("<cword>")<CR><CR>
+" xnoremap          <leader>fs "sy:FzfRG<Space><C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR><CR>
+" " let g:which_key_map.f.s = 'find-in-files'
 
-nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
-" let g:which_key_map.f['*'] = 'find-in-current-file'
+" nnoremap <silent> <leader>f* :<c-u>FzfLines <C-r>=expand("<cword>")<CR><CR>
+" " let g:which_key_map.f['*'] = 'find-in-current-file'
 
-nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
-" let g:which_key_map.f.b = 'find-buffers'
+" nnoremap <silent> <leader>fb :<c-u>FzfBuffers<CR>
+" " let g:which_key_map.f.b = 'find-buffers'
 
-nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
-" let g:which_key_map.f.c = 'find-commits'
+" nnoremap <silent> <leader>fc :<c-u>FzfCommits<CR>
+" " let g:which_key_map.f.c = 'find-commits'
 
-nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
-" let g:which_key_map.f.f = 'find-files'
+" nnoremap <silent> <leader>ff :<c-u>FzfFiles<CR>
+" " let g:which_key_map.f.f = 'find-files'
 
-nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
-" let g:which_key_map.f.h = 'find-history'
+" nnoremap <silent> <leader>fh :<c-u>FzfHistory<CR>
+" " let g:which_key_map.f.h = 'find-history'
 
-nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
-" let g:which_key_map.f.m = 'find-marks'
+" nnoremap <silent> <leader>fm :<c-u>FzfMarks<CR>
+" " let g:which_key_map.f.m = 'find-marks'
 
-nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
-" let g:which_key_map.f.t = 'find-marks'
+" nnoremap <silent> <leader>ft :<c-u>FzfTags<CR>
+" " let g:which_key_map.f.t = 'find-marks'
 
 inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
 " let g:which_key_map.f.t = 'find-marks'
