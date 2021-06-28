@@ -46,6 +46,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'gbrlsnchs/telescope-lsp-handlers.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'kdheepak/vim-one'                                               | " light and dark vim colorscheme
 Plug 'folke/lsp-colors.nvim'
@@ -1083,17 +1084,44 @@ nnoremap <silent> <leader>bQ :cclose<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua <<EOF
+  local actions = require('telescope.actions')
+  require('telescope').setup {
+    defaults = {
+      set_env = {["COLORTERM"] = "truecolor"}, -- default = nil,
+      sorting_strategy = "ascending",
+      mappings = {
+        n = {
+          ["<esc>"] = actions.close,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+        },
+        i = {
+          ["<esc>"] = actions.close,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+        },
+      }
+    },
+    extensions = {
+      fzy_native = {
+        override_generic_sorter = false,
+        override_file_sorter = true,
+      }
+    }
+  }
+
+  require('telescope').load_extension('fzy_native')
   require('telescope').load_extension('gh')
   require('telescope').load_extension('lsp_handlers')
   require('telescope').load_extension('openbrowser')
 EOF
 
 " Using lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fs <cmd>lua require('telescope.builtin').grep_string()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 nnoremap <leader>fi <cmd>lua require('telescope').extensions.gh.issues()<cr>
 nnoremap <leader>fp <cmd>lua require('telescope').extensions.gh.pull_request()<cr>
