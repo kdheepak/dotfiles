@@ -403,6 +403,8 @@ nnoremap <leader>vu :UndotreeToggle<CR>
 
 command! ZoomToggle :call zoom#toggle()
 nnoremap <leader>vz :ZoomToggle<CR>
+let g:lsp_log_file = luaeval('vim.lsp.get_log_path()')
+command! LspLogFile execute 'edit ' . g:lsp_log_file
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
