@@ -53,33 +53,6 @@ zinit ice depth=1; zinit load romkatv/powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    dir                     # current directory
-    vcs                     # git status
-    # =========================[ Line #2 ]=========================
-    newline                 # \n
-)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    timewarrior             # timewarrior tracking status (https://timewarrior.net/)
-    taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
-    time                    # current time
-    command_execution_time  # duration of the last command
-    status                  # exit code of the last command
-    background_jobs         # presence of background jobs
-    direnv                  # direnv status (https://direnv.net/)
-    asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
-    virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
-    anaconda                # conda environment (https://conda.io/)
-    todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
-    # =========================[ Line #2 ]=========================
-    newline
-    # ip                    # ip address and bandwidth usage for a specified network interface
-    # public_ip             # public IP address
-    # proxy                 # system-wide http/https/ftp proxy
-    # battery               # internal battery
-    # wifi                  # wifi speed
-    # example               # example user-defined segment (see prompt_example function below)
-)
 POWERLEVEL9K_DIR_HYPERLINK=true
 POWERLEVEL9K_TRANSIENT_PROMPT=off
 
