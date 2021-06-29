@@ -419,13 +419,7 @@ inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap     <silent> <leader>lc :Commentary<CR>
-omap     <silent> <leader>lc :Commentary<CR>
-xmap     <silent> <leader>lc :Commentary<CR>
-
 nnoremap <silent> <leader>ld :Lspsaga preview_definition<CR>
-
-nnoremap <silent> <leader>li :lua vim.lsp.buf.implementation()<CR>
 
 nnoremap <silent> <leader>lh :Lspsaga hover_doc<CR>
 
@@ -433,9 +427,7 @@ nnoremap <silent> <leader>ls :Lspsaga signature_help<CR>
 
 nnoremap <silent> <leader>lr :Lspsaga rename<CR>
 
-nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
-
-nnoremap <silent> <leader>lf :lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <leader>lf :Lspsaga lsp_finder<CR>
 
 nnoremap <silent> <leader>l0 :lua vim.lsp.buf.document_symbol()<CR>
 
@@ -445,19 +437,19 @@ nnoremap <silent> <leader>lg <cmd>lua require'lspsaga.diagnostic'.show_cursor_di
 
 nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
 
-nnoremap <silent> <leader>la :lua vim.lsp.buf.code_action()<CR>
-
 nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
 
 nnoremap <silent> <leader>lk :PreviousDiagnosticCycle<CR>
 
 nnoremap <silent> <leader>] :Lspsaga diagnostic_jump_next<CR>
 nnoremap <silent> <leader>[ :Lspsaga diagnostic_jump_prev<CR>
+nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 
-nnoremap <silent> <leader>lca :Lspsaga code_action<CR>
-vnoremap <silent> <leader>lca :<C-U>Lspsaga range_code_action<CR>
+nnoremap <silent> <leader>lc :Lspsaga code_action<CR>
+vnoremap <silent> <leader>lc :<C-U>Lspsaga range_code_action<CR>
 
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '» ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = '» ', highlight = "Comment", }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -480,4 +472,9 @@ nnoremap <leader>vu :UndotreeToggle<CR>
 command! ZoomToggle :call zoom#toggle()
 nnoremap <leader>vz :ZoomToggle<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <F5> :lua require("nabla").place_inline()<CR>
+
+let bufferline = get(g:, 'bufferline', {})
 ]], false)

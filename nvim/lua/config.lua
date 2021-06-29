@@ -56,6 +56,9 @@ local on_attach_vim = function(client, bufnr)
     require "lsp_signature".on_attach({
       bind = true,
       use_lspsaga = true,
+      floating_window = true,
+      fix_pos = true,
+      hint_enable = true,
     })
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)

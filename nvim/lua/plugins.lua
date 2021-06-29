@@ -39,8 +39,19 @@ packer.startup(function()
     'kabouzeid/nvim-lspinstall', requires = {'neovim/nvim-lspconfig' },
   }
 
-  use {'glepnir/lspsaga.nvim', config = function ()
-      require('lspsaga').init_lsp_saga()
+  use {
+    'glepnir/lspsaga.nvim', config = function ()
+      require('lspsaga').init_lsp_saga{
+        code_action_icon = '',
+        code_action_prompt = {
+          enable = true,
+          sign = true,
+          sign_priority = 20,
+          virtual_text = false,
+        },
+        code_action_keys = { quit = {'q', '<ESC>'}, exec = '<CR>' },
+        border_style = 2,
+      }
     end
   }
 
@@ -95,6 +106,8 @@ packer.startup(function()
     "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" },
   }
 
+  use "tversteeg/registers.nvim"
+
   use {'ojroques/nvim-bufdel'}
 
   use 'ful1e5/onedark.nvim'
@@ -128,7 +141,6 @@ packer.startup(function()
   use { 'norcalli/nvim-colorizer.lua', config = function ()            -- a high-performance color highlighter for Neovim which has no external dependencies
     require('colorizer').setup()
   end }
-  use 'junegunn/vim-peekaboo'                                          -- extends double quote and at sign in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
   use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
   use 'junegunn/vim-easy-align'                                        -- helps alignment
   use 'godlygeek/tabular'                                              -- line up text
@@ -192,11 +204,12 @@ packer.startup(function()
   use 'sindrets/diffview.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use 'ray-x/lsp_signature.nvim'
-  use 'kosayoda/nvim-lightbulb'
+  use 'romgrk/barbar.nvim'
   use 'mfussenegger/nvim-dap'
   use 'nvim-telescope/telescope-dap.nvim'
   use 'mfussenegger/nvim-dap-python'
-  -- use 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+  use {"npxbr/glow.nvim", branch = "main", run = ":GlowInstall"}
+  use 'kosayoda/nvim-lightbulb'
   use 'rust-lang/vscode-rust'
   use {
     'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}, config = function()
@@ -207,4 +220,5 @@ packer.startup(function()
       }
     end
   }
+  use 'jbyuki/nabla.nvim'
 end)
