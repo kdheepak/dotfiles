@@ -379,7 +379,7 @@ nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_sag
 nnoremap <silent> <leader>lc :Lspsaga code_action<CR>
 vnoremap <silent> <leader>lc :<C-U>Lspsaga range_code_action<CR>
 
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = '» ', highlight = "Comment", }
+" autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = '» ', highlight = "Comment", }
 
 autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
 

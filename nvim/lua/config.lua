@@ -99,7 +99,7 @@ local on_attach_vim = function(client, bufnr)
         ]], false)
     end
 end
-nvim_lsp.julials.setup({on_attach=on_attach_vim, capabilities = capabilities})
+nvim_lsp.julials.setup({on_attach=on_attach_vim})
 nvim_lsp.bashls.setup({on_attach=on_attach_vim, capabilities = capabilities})
 nvim_lsp.ccls.setup({on_attach=on_attach_vim, capabilities = capabilities})
 nvim_lsp.tsserver.setup({on_attach=on_attach_vim, capabilities = capabilities})
