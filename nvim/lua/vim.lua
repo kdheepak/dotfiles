@@ -2,72 +2,14 @@ api.nvim_exec([[
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-let g:one_allow_italics = 1                   | " I love italic for comments
-set background=dark
-let g:onedark_style = 'darker'
-colorscheme onedark
+colorscheme gruvbox-material
 
 filetype plugin indent on    " required
 syntax enable | " enable syntax processing
 
-" vim-airline
-let g:airline#extensions#syntastic#enabled = 0
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-let g:airline#extensions#tagbar#enabled = 0
-let g:airline#extensions#virtualenv#enabled = 1
-" let g:airline_skip_empty_sections = 1 " causes json to crash
-
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_splits = 1
-let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#show_tab_count = 2
-let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
-let g:airline#extensions#tabline#current_first = 0
-
-let g:airline#extensions#tabline#buffers_label  = ''
-let g:airline#extensions#tabline#tabs_label     = ''
-let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
-let g:airline#extensions#quickfix#location_text = 'Location'
-
-let g:airline#extensions#fugitiveline#enabled = 1
-let g:airline#extensions#denite#enabled = 1
-
-" air-line
-" let g:airline_powerline_fonts = 1
-
-let g:airline_symbols = {}
-
-" airline symbols
-let g:airline_left_sep          = ''
-let g:airline_left_alt_sep      = ''
-let g:airline_right_sep         = ''
-let g:airline_right_alt_sep     = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.crypt      = '🔒'
-let g:airline_symbols.notexists  = '∄'
-let g:airline#extensions#tabline#close_symbol = 'X'
-let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerdtree|tagbar|fzf'
-
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
-
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
 
 " vim-markdown
 let g:vim_markdown_emphasis_multiline = 0
@@ -78,15 +20,6 @@ let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_fenced_languages = ['julia=jl', 'python=py']
 
-" vim gitgutter
-let g:gitgutter_override_sign_column_highlight = 1
-
-let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_modified = '▎'
-let g:gitgutter_sign_removed = '▏'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_modified_removed = '▋'
-
 let g:latex_to_unicode_auto = 1
 let g:latex_to_unicode_tab = 0
 let g:latex_to_unicode_cmd_mapping = ['<C-j>']
@@ -96,12 +29,6 @@ let g:unicoder_cancel_normal = 1
 let g:unicoder_cancel_insert = 1
 let g:unicoder_cancel_visual = 1
 let g:unicoder_no_map = 1
-
-" 'Yggdroot/indentLine'
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
-let mapleader = " "      | " Map leader to space
-let maplocalleader = " " | " Map localleader to space
 
 " Markdown Preview
 " Don't start markdown preview automatically, use :MarkdownPreview

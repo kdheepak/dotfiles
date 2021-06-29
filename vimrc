@@ -179,9 +179,8 @@ set wrap            | " lines longer than the width of the window will not wrap
 
 
 set termguicolors                             | " enables 24bit colors
-let g:one_allow_italics = 1                   | " I love italic for comments
-set background=light
-colorscheme one
+colorscheme material
+let g:material_style = 'darker'
 set novisualbell                                                   | " don't display visual bell
 set noshowmode                                                     | " don't show mode changes
 let &colorcolumn=121                                               | " add indicator for 120

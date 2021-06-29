@@ -25,7 +25,13 @@ packer.startup(function()
 
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
 
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function()
+    require'nvim-treesitter.configs'.setup {
+      highlight = {
+        enable = true,
+      }
+    }
+  end}
 
   use {
     'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function()
@@ -82,7 +88,7 @@ packer.startup(function()
           buffer = true,
           calc = true,
           nvim_lsp = true,
-          nvim_lua = true,
+          nvim_pllua = true,
           tags = true,
           treesitter = true,
         },
@@ -140,7 +146,7 @@ packer.startup(function()
   use { 'norcalli/nvim-colorizer.lua', config = function ()            -- a high-performance color highlighter for Neovim which has no external dependencies
     require('colorizer').setup()
   end }
-  use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
+  -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
   use 'junegunn/vim-easy-align'                                        -- helps alignment
   use 'godlygeek/tabular'                                              -- line up text
   use 'tpope/vim-commentary'                                           -- comment and uncomment stuff
@@ -213,7 +219,7 @@ packer.startup(function()
     'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}, config = function()
       require'lualine'.setup {
         options = {
-          theme = 'onedark',
+          theme = 'gruvbox',
         },
       }
     end
@@ -223,6 +229,9 @@ packer.startup(function()
   use 'folke/tokyonight.nvim'
   use 'Th3Whit3Wolf/one-nvim'
   use 'navarasu/onedark.nvim'
+  use 'marko-cerovac/material.nvim'
+  use 'lourenci/github-colors'
+  use 'sainnhe/gruvbox-material'
   use {
     'jghauser/mkdir.nvim',
     config = function()
