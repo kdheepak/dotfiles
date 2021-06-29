@@ -423,23 +423,25 @@ nmap     <silent> <leader>lc :Commentary<CR>
 omap     <silent> <leader>lc :Commentary<CR>
 xmap     <silent> <leader>lc :Commentary<CR>
 
-nnoremap <silent> <leader>ld :lua vim.lsp.buf.definition()<CR>
-
-nnoremap <silent> <leader>lh :lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>ld :Lspsaga preview_definition<CR>
 
 nnoremap <silent> <leader>li :lua vim.lsp.buf.implementation()<CR>
 
-nnoremap <silent> <leader>ls :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>lh :Lspsaga hover_doc<CR>
+
+nnoremap <silent> <leader>ls :Lspsaga signature_help<CR>
+
+nnoremap <silent> <leader>lr :Lspsaga rename<CR>
 
 nnoremap <silent> <leader>lt :lua vim.lsp.buf.type_definition()<CR>
 
-nnoremap <silent> <leader>lr :lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <leader>lf :lua vim.lsp.buf.references()<CR>
 
 nnoremap <silent> <leader>l0 :lua vim.lsp.buf.document_symbol()<CR>
 
 nnoremap <silent> <leader>lw :lua vim.lsp.buf.workspace_symbol()<CR>
 
-nnoremap <silent> <leader>lg :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>lg <cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
 
 nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
 
@@ -449,8 +451,11 @@ nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
 
 nnoremap <silent> <leader>lk :PreviousDiagnosticCycle<CR>
 
-nnoremap <silent> <leader>l[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <leader>l] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> <leader>] :Lspsaga diagnostic_jump_next<CR>
+nnoremap <silent> <leader>[ :Lspsaga diagnostic_jump_prev<CR>
+
+nnoremap <silent> <leader>lca :Lspsaga code_action<CR>
+vnoremap <silent> <leader>lca :<C-U>Lspsaga range_code_action<CR>
 
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '» ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 

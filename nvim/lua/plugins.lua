@@ -39,7 +39,10 @@ packer.startup(function()
     'kabouzeid/nvim-lspinstall', requires = {'neovim/nvim-lspconfig' },
   }
 
-  use 'glepnir/lspsaga.nvim'
+  use {'glepnir/lspsaga.nvim', config = function ()
+      require('lspsaga').init_lsp_saga()
+    end
+  }
 
   use 'onsails/lspkind-nvim'
 
@@ -114,8 +117,8 @@ packer.startup(function()
   use '~/gitrepos/lazygit.nvim'                                        -- lazygit
   use '~/gitrepos/pandoc.nvim'                                         -- pandoc.nvim
   use '~/gitrepos/markdown-mode'                                       -- markdown mode
-  use 'vim-airline/vim-airline'                                        -- airline status bar
-  use 'vim-airline/vim-airline-themes'                                 -- official theme repository
+  -- use 'vim-airline/vim-airline'                                        -- airline status bar
+  -- use 'vim-airline/vim-airline-themes'                                 -- official theme repository
   use 'nvim-telescope/telescope-github.nvim'
   use 'gbrlsnchs/telescope-lsp-handlers.nvim'
   use 'nvim-telescope/telescope-fzy-native.nvim'
@@ -151,8 +154,6 @@ packer.startup(function()
   use 'ntpeters/vim-better-whitespace'                                 -- causes all trailing whitespace characters to be highlighted
   use 'nathanaelkane/vim-indent-guides'                                -- displaying thin vertical lines at each indentation level for code indented with spaces
   use 'dhruvasagar/vim-table-mode'                                     -- automatic table creator & formatter allowing one to create neat tables as you type
-  use 'Yggdroot/indentLine'
-  use 'lukas-reineke/indent-blankline.nvim'                            -- indent line
   use 'joom/latex-unicoder.vim'                                        -- a plugin to type Unicode chars in Vim, using their LaTeX names
   use 'editorconfig/editorconfig-vim'                                  -- editorconfig plugin for vim
   use 'osyo-manga/vim-anzu'                                            -- show total number of matches and current match number
@@ -197,5 +198,13 @@ packer.startup(function()
   use 'mfussenegger/nvim-dap-python'
   -- use 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
   use 'rust-lang/vscode-rust'
-
+  use {
+    'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}, config = function()
+      require'lualine'.setup {
+        options = {
+          theme = 'onelight',
+        },
+      }
+    end
+  }
 end)

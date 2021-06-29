@@ -1,4 +1,3 @@
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = false,
@@ -54,7 +53,10 @@ capabilities.textDocument.codeAction = {
 
 local nvim_lsp = require'lspconfig'
 local on_attach_vim = function(client, bufnr)
-    require'lsp_signature'.on_attach(client)
+    require "lsp_signature".on_attach({
+      bind = true,
+      use_lspsaga = true,
+    })
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
