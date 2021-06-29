@@ -381,6 +381,8 @@ vnoremap <silent> <leader>lc :<C-U>Lspsaga range_code_action<CR>
 
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = '» ', highlight = "Comment", }
 
+autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
