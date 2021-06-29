@@ -219,7 +219,7 @@ packer.startup(function()
     'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}, config = function()
       require'lualine'.setup {
         options = {
-          theme = 'gruvbox',
+          theme = 'horizon',
         },
       }
     end
@@ -232,6 +232,8 @@ packer.startup(function()
   use 'marko-cerovac/material.nvim'
   use 'lourenci/github-colors'
   use 'sainnhe/gruvbox-material'
+  use 'ishan9299/nvim-solarized-lua'
+  use 'dracula/vim'
   use {
     'jghauser/mkdir.nvim',
     config = function()

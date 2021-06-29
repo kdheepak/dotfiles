@@ -2,7 +2,7 @@ api.nvim_exec([[
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-colorscheme gruvbox-material
+colorscheme dracula
 
 filetype plugin indent on    " required
 syntax enable | " enable syntax processing
