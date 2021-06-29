@@ -1,6 +1,4 @@
 
-vim.o.background='dark'
-
 vim.o.undodir=vim.fn.stdpath('cache')..'/undodir'
 vim.o.backupdir=vim.fn.stdpath('cache')..'/backup'
 vim.o.directory=vim.fn.stdpath('cache')..'/swap'

@@ -3,7 +3,8 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 let g:one_allow_italics = 1                   | " I love italic for comments
-colorscheme tokyonight
+colorscheme one-nvim
+set background=dark
 
 filetype plugin indent on    " required
 syntax enable | " enable syntax processing
