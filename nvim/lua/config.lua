@@ -27,8 +27,11 @@ do
         vim.lsp.util.set_qflist(qflist)
     end
 end
+local lsp_status = require'lsp-status'
+lsp_status.register_progress()
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+local capabilities = lsp_status.capabilities
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = {
@@ -60,6 +63,7 @@ local on_attach_vim = function(client, bufnr)
       fix_pos = true,
       hint_enable = true,
     })
+    require'lsp-status'.on_attach(client)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -96,11 +100,11 @@ local on_attach_vim = function(client, bufnr)
     end
 end
 nvim_lsp.julials.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.bashls.setup({on_attach=on_attach_vim})
-nvim_lsp.ccls.setup({on_attach=on_attach_vim})
-nvim_lsp.tsserver.setup({on_attach=on_attach_vim})
-nvim_lsp.jsonls.setup({on_attach=on_attach_vim})
-nvim_lsp.nimls.setup({on_attach=on_attach_vim})
+nvim_lsp.bashls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+nvim_lsp.ccls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+nvim_lsp.tsserver.setup({on_attach=on_attach_vim, capabilities = capabilities})
+nvim_lsp.jsonls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+nvim_lsp.nimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
 nvim_lsp.rust_analyzer.setup({
   on_attach=on_attach_vim,
   capabilities = capabilities,
@@ -114,7 +118,7 @@ nvim_lsp.rust_analyzer.setup({
     },
 })
 nvim_lsp.vimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.cssls.setup({on_attach=on_attach_vim})
+nvim_lsp.cssls.setup({on_attach=on_attach_vim, capabilities = capabilities})
 
 local system_name
 if vim.fn.has("mac") == 1 then
@@ -136,6 +140,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 nvim_lsp.sumneko_lua.setup({
+  capabilities = capabilities,
   on_attach = on_attach_vim,
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
   settings = {
@@ -161,31 +166,32 @@ nvim_lsp.sumneko_lua.setup({
     },
   },
 })
-nvim_lsp.html.setup({on_attach=on_attach_vim})
+nvim_lsp.html.setup({on_attach=on_attach_vim, capabilities = capabilities})
 nvim_lsp.pyls.setup{
-   on_attach=on_attach_vim,
-   settings = {
-       pyls = {
-           configurationSources = {
-               pycodestyle,
-               flake8
-           },
-           plugins = {
-               mccabe = { enabled = false },
-               preload = { enabled = true },
-               pycodestyle = {
-                   enabled = true,
-                   ignore = { "E501" },
-               },
-               pydocstyle = {
-                   enabled = false,
-               },
-               pyflakes = { enabled = true },
-               pylint = { enabled = false },
-               rope_completion = { enabled = true },
-               black = { enabled = false },
-           }
-       }
+  on_attach=on_attach_vim,
+  capabilities = capabilities,
+  settings = {
+      pyls = {
+          configurationSources = {
+              pycodestyle,
+              flake8
+          },
+          plugins = {
+              mccabe = { enabled = false },
+              preload = { enabled = true },
+              pycodestyle = {
+                  enabled = true,
+                  ignore = { "E501" },
+              },
+              pydocstyle = {
+                  enabled = false,
+              },
+              pyflakes = { enabled = true },
+              pylint = { enabled = false },
+              rope_completion = { enabled = true },
+              black = { enabled = false },
+          }
+      }
    }
 }
 

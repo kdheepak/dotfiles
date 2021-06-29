@@ -63,7 +63,9 @@ packer.startup(function()
 
   use 'onsails/lspkind-nvim'
 
-  use 'nvim-lua/lsp-status.nvim'
+  use { 'nvim-lua/lsp-status.nvim', config = function()
+    require('lsp-status').register_progress()
+  end}
 
   use {
     "hrsh7th/nvim-compe",
@@ -217,11 +219,6 @@ packer.startup(function()
   use 'rust-lang/vscode-rust'
   use {
     'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}, config = function()
-      require'lualine'.setup {
-        options = {
-          theme = 'dracula',
-        },
-      }
     end
   }
   use 'jbyuki/nabla.nvim'
@@ -257,3 +254,25 @@ packer.startup(function()
       end
   }
 end)
+
+require'lualine'.setup {
+  options = {
+    theme = 'dracula',
+  },
+  sections = {
+      lualine_a = {'mode'},
+      lualine_b = {'branch'},
+      lualine_c = {{'filename', file_status = true, full_path = true}, require('lsp-status').status_progress},
+      lualine_x = {{"diagnostics", sources = {"nvim_lsp"}}, 'encoding', 'fileformat', 'filetype'},
+      lualine_y = {'progress'},
+      lualine_z = {'location'}
+  },
+  inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = {'filename'},
+      lualine_x = {'location'},
+      lualine_y = {},
+      lualine_z = {}
+  },
+}
