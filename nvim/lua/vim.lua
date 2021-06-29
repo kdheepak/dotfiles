@@ -2,7 +2,8 @@ api.nvim_exec([[
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-colorscheme one
+let g:one_allow_italics = 1                   | " I love italic for comments
+colorscheme tokyonight
 
 filetype plugin indent on    " required
 syntax enable | " enable syntax processing

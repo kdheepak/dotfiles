@@ -215,10 +215,12 @@ packer.startup(function()
     'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}, config = function()
       require'lualine'.setup {
         options = {
-          theme = 'onelight',
+          theme = 'horizon',
         },
       }
     end
   }
   use 'jbyuki/nabla.nvim'
+  use 'jbyuki/venn.nvim'
+  use 'folke/tokyonight.nvim'
 end)
