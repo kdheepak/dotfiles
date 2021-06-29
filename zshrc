@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/gitrepos/dotfiles/base16-github.fzf.config
+source ~/gitrepos/dotfiles/base16.fzf.config
 
 # practically unlimited history
 

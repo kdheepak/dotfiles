@@ -186,9 +186,9 @@
 [rebase]
     autoStash = true
 [core]
-    pager = delta --syntax-theme=zenburn
+    pager = delta --syntax-theme=dracula
 [interactive]
-    diffFilter = delta --color-only --syntax-theme=zenburn
+    diffFilter = delta --color-only --syntax-theme=dracula
 [delta]
     line-numbers = true
 [fetch]
