@@ -110,8 +110,6 @@ packer.startup(function()
 
   use {'ojroques/nvim-bufdel'}
 
-  use 'ful1e5/onedark.nvim'
-
   use 'justinmk/vim-dirvish'
   use 'mcchrish/nnn.vim'                                               -- Fast and featureful file manager in vim/neovim powered by nnn
   use 'vim-scripts/sketch.vim'
@@ -224,4 +222,6 @@ packer.startup(function()
   use 'jbyuki/venn.nvim'
   use 'folke/tokyonight.nvim'
   use 'Th3Whit3Wolf/one-nvim'
+  use 'navarasu/onedark.nvim'
+  -- use 'ful1e5/onedark.nvim'
 end)
