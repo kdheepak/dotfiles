@@ -109,6 +109,7 @@ packer.startup(function()
   use "tversteeg/registers.nvim"
 
   use {'ojroques/nvim-bufdel'}
+  use 'famiu/bufdelete.nvim'
 
   use 'justinmk/vim-dirvish'
   use 'mcchrish/nnn.vim'                                               -- Fast and featureful file manager in vim/neovim powered by nnn
@@ -170,7 +171,6 @@ packer.startup(function()
   use 'haya14busa/vim-asterisk'                                        -- asterisk.vim provides improved search * motions
   use 'ryanoasis/vim-devicons'                                         -- adds icons to plugins
   use 'segeljakt/vim-isotope'                                          -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
-  use 'pbrisbin/vim-mkdir'                                             -- automatically create any non-existent directories before writing the buffer
   use 'kshenoy/vim-signature'                                          -- toggle display and navigate marks
   use 'sedm0784/vim-you-autocorrect'                                   -- Automatic autocorrect
   use 'inkarkat/vim-ingo-library'                                      -- Spellcheck dependency
@@ -223,5 +223,26 @@ packer.startup(function()
   use 'folke/tokyonight.nvim'
   use 'Th3Whit3Wolf/one-nvim'
   use 'navarasu/onedark.nvim'
-  -- use 'ful1e5/onedark.nvim'
+  use {
+    'jghauser/mkdir.nvim',
+    config = function()
+      require('mkdir')
+    end
+  }
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+  use {
+      'numToStr/Navigator.nvim',
+      config = function()
+          require('Navigator').setup()
+      end
+  }
 end)
