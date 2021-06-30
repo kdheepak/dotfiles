@@ -103,19 +103,15 @@ local mappings = {
         i = {"<cmd>lua require'telescope'.extensions.gh.issues()<CR>", "Git issues"},
         p = {"<cmd>lua require'telescope'.extensions.gh.pull_request()<CR>", "Git pull request"},
         c = {"<cmd>Telescope colorscheme<CR>", "Colorscheme"},
-        d = {
-            "<cmd>Telescope lsp_document_diagnostics<CR>",
-            "Document Diagnostics"
-        },
-        D = {
-            "<cmd>Telescope lsp_workspace_diagnostics<CR>",
-            "Workspace Diagnostics"
-        },
+        d = { "<cmd>Telescope lsp_document_diagnostics<CR>", "Document Diagnostics" },
+        D = {"<cmd>Telescope lsp_workspace_diagnostics<CR>", "Workspace Diagnostics"},
         m = {"<cmd>Telescope marks<CR>", "Marks"},
         M = {"<cmd>Telescope man_pages<CR>", "Man Pages"},
         r = {"<cmd>Telescope oldfiles<CR>", "Open Recent File"},
         R = {"<cmd>Telescope registers<CR>", "Registers"},
-        t = {"<cmd>Telescope live_grep<CR>", "Text"}
+        n = {"<cmd>lua require('telescope.builtin').file_browser()<CR>", 'File Browser' },
+        ["%"] = {"<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Find in Current Buffer' },
+        t = { [[<cmd>lua require('telescope.builtin').current_buffer_tags()<CR>]], 'tags of buffer' },
     },
 
     d = {
