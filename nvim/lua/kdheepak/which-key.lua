@@ -56,14 +56,12 @@ vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-
 vim.api.nvim_set_keymap('n', '<Leader>/', '<cmd>split|wincmd l|terminal<CR>',
                         {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', '<Leader>\\', '<cmd>vsplit|wincmd l|terminal<CR>',
+vim.api.nvim_set_keymap('n', '<leader>\\', '<cmd>vsplit|wincmd l|terminal<cr>',
                         {noremap = true, silent = true})
 
+vim.api.nvim_set_keymap('n', '<leader>y', '"+y',
+                        {noremap = true, silent = true})
 local mappings = {
-
-    y = {
-        {"\"+y", "Copy to clipboard"},
-    },
 
     q = {
         name = "Format",
