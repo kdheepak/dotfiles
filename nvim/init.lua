@@ -3,20 +3,28 @@ fn = vim.fn
 cmd = vim.cmd
 lsp = vim.lsp
 api = vim.api
+g = vim.g      -- a table to access global variables
 
-require('plugins')
+-- For debugging purpose
+function _G.dump(...)
+    local objects = vim.tbl_map(vim.inspect, {...})
+    print(unpack(objects))
+end
 
-require('options')
 
-require('keymappings')
+require('kdheepak/plugins')
 
-require('autocommands')
+require('kdheepak/options')
 
-require('vim')
+require('kdheepak/keymappings')
 
-require('config')
+require('kdheepak/autocommands')
 
-vim.notify = function (msg, log_level, _opts)
+require('kdheepak/vim')
+
+require('kdheepak/config')
+
+vim.notify = function (msg, log_level, _)
    if msg:match("exit code") then return end
    if log_level == vim.log.levels.ERROR then
        vim.api.nvim_err_writeln(msg)

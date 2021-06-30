@@ -54,7 +54,7 @@ capabilities.textDocument.codeAction = {
     }
 }
 
-local nvim_lsp = require'lspconfig'
+local lspconfig = require'lspconfig'
 local on_attach_vim = function(client, bufnr)
     require "lsp_signature".on_attach({
       bind = true,
@@ -99,13 +99,13 @@ local on_attach_vim = function(client, bufnr)
         ]], false)
     end
 end
--- nvim_lsp.julials.setup({on_attach=on_attach_vim})
-nvim_lsp.bashls.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.ccls.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.tsserver.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.jsonls.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.nimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.rust_analyzer.setup({
+lspconfig.julials.setup({on_attach=on_attach_vim})
+lspconfig.bashls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.ccls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.tsserver.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.jsonls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.nimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.rust_analyzer.setup({
   on_attach=on_attach_vim,
   capabilities = capabilities,
   settings = {
@@ -117,8 +117,8 @@ nvim_lsp.rust_analyzer.setup({
       }
     },
 })
-nvim_lsp.vimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.cssls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.vimls.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.cssls.setup({on_attach=on_attach_vim, capabilities = capabilities})
 
 local system_name
 if vim.fn.has("mac") == 1 then
@@ -139,7 +139,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-nvim_lsp.sumneko_lua.setup({
+lspconfig.sumneko_lua.setup({
   capabilities = capabilities,
   on_attach = on_attach_vim,
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
@@ -166,8 +166,8 @@ nvim_lsp.sumneko_lua.setup({
     },
   },
 })
-nvim_lsp.html.setup({on_attach=on_attach_vim, capabilities = capabilities})
-nvim_lsp.pyls.setup{
+lspconfig.html.setup({on_attach=on_attach_vim, capabilities = capabilities})
+lspconfig.pyls.setup{
   on_attach=on_attach_vim,
   capabilities = capabilities,
   settings = {
