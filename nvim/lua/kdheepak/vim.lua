@@ -1,11 +1,5 @@
 api.nvim_exec([[
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
 colorscheme dracula
-
-filetype plugin indent on    " required
-syntax enable | " enable syntax processing
 
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
@@ -100,8 +94,8 @@ command! -bang Q q
 command! -bang Qa qa
 
 " kakoune like mapping
-noremap gj G
 noremap ge G$
+noremap gj G
 noremap gk gg
 noremap gi 0
 noremap gh ^
@@ -109,9 +103,6 @@ noremap gl $
 noremap gt H20k
 noremap gb L20j
 noremap ga <C-^>
-
-noremap zj <C-e>
-noremap zk <C-y>
 
 " Macros
 nnoremap Q @q
@@ -178,237 +169,22 @@ let g:medieval_langs = ['python=python3', 'julia', 'sh', 'console=bash']
 nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
 let g:slime_target = "neovim"
 
-"""""""""""""""""""""""""""""""""""""""" commentary.vim
-
 autocmd FileType julia setlocal commentstring=#\ %s
-
-" Clear highlighting
-nnoremap <silent> <leader><leader> :nohl<CR>:delmarks! \| delmarks a-zA-Z0-9<CR><ESC>
 
 " Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
 nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <leader>\ :vsplit\|wincmd l\|terminal<CR>
-
-nnoremap <silent> <leader>/ :split\|wincmd l\|terminal<CR>
-
-vnoremap <leader>y "+y
-
-vnoremap <leader>d "+ygvd
-
-nnoremap <leader>p "+p<CR>
-vnoremap <leader>p "+p<CR>
-
-nnoremap <leader>P "+P<CR>
-vnoremap <leader>P "+P<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <leader>wc :close<CR>
-
-nnoremap <silent> <leader>w/ :split<CR>
-
-nnoremap <silent> <leader>w\ :vsplit<CR>
-
-nnoremap <silent> <leader>wh <C-w>h
-
-nnoremap <silent> <leader>wj <C-w>j
-
-nnoremap <silent> <leader>wl <C-w>l
-
-nnoremap <silent> <leader>wk <C-w>k
-
-nnoremap <silent> <leader>wH <C-w>H
-
-nnoremap <silent> <leader>wJ <C-w>J
-
-nnoremap <silent> <leader>wL <C-w>L
-
-nnoremap <silent> <leader>wK <C-w>K
-
-nnoremap <silent> <leader>wo :only<CR>
-
-nnoremap <silent> <leader>w= <C-w>=
-
-nnoremap <silent> <leader>w+ 20<C-w>+
-
-nnoremap <silent> <leader>w- 20<C-w>-
-
-nnoremap <silent> <leader>w< 20<C-w><
-
-nnoremap <silent> <leader>w> 20<C-w>>
-
-nnoremap <silent> <leader>wp :wincmd P<CR>
-
-nnoremap <silent> <leader>wz :wincmd z<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <leader>oq  :copen<CR>
-
-nnoremap <silent> <leader>ol  :lopen<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <leader>qt :Tabularize<CR>
-nnoremap <leader>qt :Tabularize<CR>
-nnoremap <leader>qjf :JuliaFormatterFormat<CR>
-vnoremap <leader>qjf :JuliaFormatterFormat<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-noremap <leader>gw :Gwrite<CR>
-
-noremap <leader>gc :Gcommit<CR>
-
-noremap <leader>go :Gbrowse<CR>
-vnoremap <leader>go :Gbrowse<CR>
-
-noremap <leader>gp :Gpush<CR>
-
-noremap <leader>gP :Gpull<CR>
-
-noremap <leader>gb :Gblame<CR>
-
-noremap <leader>gd :Gvdiff<CR>
-
-noremap <leader>gr :Gremove<CR>
-
-noremap <leader>gj :GitGutterNextHunk<CR>
-
-noremap <leader>gk :GitGutterPrevHunk<CR>
-
-noremap <leader>gg :LazyGit<CR>
-
-let g:lazygit_floating_window_use_plenary = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! DeleteCurrentBuffer()
-  let l:buffernumber = bufnr('%')
-  execute ":bn" | execute ":bd " . l:buffernumber
-endfunction
-command! BufferDelete :call DeleteCurrentBuffer()
-
-nnoremap <silent> <leader>bd :BufferDelete<CR>
-
-nnoremap <silent> <leader>bw :write<CR>
-
-nnoremap <silent> <leader>bj :bnext<CR>
-
-nnoremap <silent> <leader>bk :bprev<CR>
-
-nnoremap <silent> <leader>bq :copen<CR>
-
-nnoremap <silent> <leader>bQ :cclose<CR>
-
-" nnoremap <silent> <leader>bb :FzfBuffers<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Using lua functions
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fs <cmd>lua require('telescope.builtin').grep_string()<cr>
-
-nnoremap <leader>fi <cmd>lua require('telescope').extensions.gh.issues()<cr>
-nnoremap <leader>fp <cmd>lua require('telescope').extensions.gh.pull_request()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <leader>dct <cmd>lua require"dap".continue()<CR>
-nnoremap <leader>dsv <cmd>lua require"dap".step_over()<CR>
-nnoremap <leader>dsi <cmd>lua require"dap".step_into()<CR>
-nnoremap <leader>dso <cmd>lua require"dap".step_out()<CR>
-nnoremap <leader>dtb <cmd>lua require"dap".toggle_breakpoint()<CR>
-
-nnoremap <leader>dsc <cmd>lua require"dap.ui.variables".scopes()<CR>
-nnoremap <leader>dhh <cmd>lua require"dap.ui.variables".hover()<CR>
-nnoremap <leader>dhv <cmd>lua require"dap.ui.variables".visual_hover()<CR>
-
-nnoremap <leader>duh <cmd>lua require"dap.ui.widgets".hover()<CR>
-nnoremap <leader>duf <cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>
-
-nnoremap <leader>dsbr <cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>
-nnoremap <leader>dsbm <cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>
-nnoremap <leader>dro <cmd>lua require"dap".repl.open()<CR>
-nnoremap <leader>drl <cmd>lua require"dap".repl.run_last()<CR>
-nnoremap <leader>dcc <cmd>lua require"telescope".extensions.dap.commands{}<CR>
-nnoremap <leader>dco <cmd>lua require"telescope".extensions.dap.configurations{}<CR>
-nnoremap <leader>dlb <cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>
-nnoremap <leader>dv <cmd>lua require"telescope".extensions.dap.variables{}<CR>
-nnoremap <leader>df <cmd>lua require"telescope".extensions.dap.frames{}<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <leader>ld :Lspsaga preview_definition<CR>
-
-nnoremap <silent> <leader>lh :Lspsaga hover_doc<CR>
-
-nnoremap <silent> <leader>ls :Lspsaga signature_help<CR>
-
-nnoremap <silent> <leader>lr :Lspsaga rename<CR>
-
-nnoremap <silent> <leader>lf :Lspsaga lsp_finder<CR>
-
-nnoremap <silent> <leader>l0 :lua vim.lsp.buf.document_symbol()<CR>
-
-nnoremap <silent> <leader>lw :lua vim.lsp.buf.workspace_symbol()<CR>
-
-nnoremap <silent> <leader>lg <cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
-
-nnoremap <silent> <leader>ll :lua vim.lsp.buf.declaration()<CR>
-
-nnoremap <silent> <leader>lj :NextDiagnosticCycle<CR>
-
-nnoremap <silent> <leader>lk :PreviousDiagnosticCycle<CR>
-
-nnoremap <silent> <leader>] :Lspsaga diagnostic_jump_next<CR>
-nnoremap <silent> <leader>[ :Lspsaga diagnostic_jump_prev<CR>
 nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
 nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 
-nnoremap <silent> <leader>lc :Lspsaga code_action<CR>
-vnoremap <silent> <leader>lc :<C-U>Lspsaga range_code_action<CR>
-
-" autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = '» ', highlight = "Comment", }
-
 autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
-
-nnoremap <silent> <leader>vs :source $MYVIMRC<CR>
-
-nnoremap <silent> <leader>vl :luafile %<CR>
-
-nnoremap <silent> <leader>vz :e ~/.zshrc<CR>
-
-nnoremap <silent> <leader>v- :NnnPicker '%:p:h'<CR>
-
-nnoremap <silent> <leader>v= :terminal<CR>
-
-nnoremap          <leader>v. :cd %:p:h<CR>:pwd<CR>
-
-nnoremap <leader>vu :UndotreeToggle<CR>
 
 command! ZoomToggle :call zoom#toggle()
 nnoremap <leader>vz :ZoomToggle<CR>
+
 let g:lsp_log_file = luaeval('vim.lsp.get_log_path()')
 command! LspLogFile execute 'edit ' . g:lsp_log_file
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <F5> :lua require("nabla").place_inline()<CR>
-
-let bufferline = get(g:, 'bufferline', {})
 ]], false)

@@ -18,7 +18,7 @@ vim.api.nvim_exec([[
 ]], false)
 
 local packer = require('packer')
-
+local use = require('packer').use
 packer.startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
@@ -238,21 +238,13 @@ packer.startup(function()
     end
   }
   use {
-    "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
-  }
-  use {
       'numToStr/Navigator.nvim',
       config = function()
           require('Navigator').setup()
       end
   }
+  use "folke/which-key.nvim"
+
 end)
 
 require'lualine'.setup {

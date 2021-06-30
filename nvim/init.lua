@@ -11,24 +11,16 @@ function _G.dump(...)
     print(unpack(objects))
 end
 
+require'kdheepak/plugins'
 
-require('kdheepak/plugins')
+require'kdheepak/options'
 
-require('kdheepak/options')
+require'kdheepak/keymappings'
 
-require('kdheepak/keymappings')
+require'kdheepak/autocommands'
 
-require('kdheepak/autocommands')
+require'kdheepak/vim'
 
-require('kdheepak/vim')
+require'kdheepak/config'
 
-require('kdheepak/config')
-
-vim.notify = function (msg, log_level, _)
-   if msg:match("exit code") then return end
-   if log_level == vim.log.levels.ERROR then
-       vim.api.nvim_err_writeln(msg)
-   else
-   vim.api.nvim_echo({{msg}}, true, {})
-   end
-end
+require'kdheepak/which-key'

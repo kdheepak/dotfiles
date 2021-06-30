@@ -1,9 +1,7 @@
 api.nvim_set_keymap('n', '<space>', '<nop>', { noremap = true, silent = true })
 
-vim.g.mapleader = ' '
-
--- clear highlights
-api.nvim_set_keymap('n', '<leader><leader>', ':noh<cr>', { noremap = true, silent = true })
+-- -- clear highlights
+-- api.nvim_set_keymap('n', '<leader><leader>', ':noh<cr>', { noremap = true, silent = true })
 
 -- simplify split movements
 api.nvim_set_keymap('n', '<c-h>', '<c-w><c-h>', { noremap = true, silent = true })
