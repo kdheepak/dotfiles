@@ -75,3 +75,42 @@ vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.shortmess = 'filnxtToOfcI' --  Shut off completion and intro messages
 vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
+
+vim.g.VtrStripLeadingWhitespace = false
+vim.g.VtrClearEmptyLines = false
+vim.g.VtrAppendNewline = true
+
+vim.g.vim_markdown_emphasis_multiline = false
+vim.g.vim_markdown_folding_disabled = true
+vim.g.tex_conceal = ""
+vim.g.vim_markdown_math = true
+vim.g.vim_markdown_frontmatter = true
+vim.g.vim_markdown_strikethrough = true
+vim.g.vim_markdown_fenced_languages = {'julia=jl', 'python=py'}
+vim.g.latex_to_unicode_auto = true
+vim.g.latex_to_unicode_tab = false
+vim.g.latex_to_unicode_cmd_mapping = {'<C-j>'}
+
+-- TODO: add shortcut to transform string
+vim.g.unicoder_cancel_normal = true
+vim.g.unicoder_cancel_insert = true
+vim.g.unicoder_cancel_visual = true
+vim.g.unicoder_no_map = true
+
+vim.g.mkdp_auto_start = 0
+
+vim.g.python3_host_prog = vim.fn.expand('~/miniconda3/bin/python3')
+
+vim.g.mergetool_layout = 'bmr'
+vim.g.mergetool_prefer_revision = 'local'
+
+vim.g.camelcasemotion_key = ','
+
+vim.g.indent_guides_enable_on_vim_startup = 1
+vim.g.indent_guides_guide_size = 1
+vim.g.indent_guides_start_level = 2
+vim.g.indent_guides_color_change_percent = 1
+vim.g.indent_guides_exclude_filetypes = {'help', 'fzf', 'openterm', 'neoterm', 'calendar'}
+
+vim.g.clever_f_across_no_line = 1
+vim.g.clever_f_fix_key_direction = 1

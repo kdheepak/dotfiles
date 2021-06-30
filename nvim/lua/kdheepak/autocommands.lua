@@ -1,4 +1,4 @@
-api.nvim_command([[
+vim.api.nvim_command([[
 
 augroup LuaHighlight
     autocmd TextYankPost * silent! lua if vim.fn.reg_executing() == '' then require'vim.highlight'.on_yank() end
