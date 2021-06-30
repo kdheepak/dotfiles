@@ -77,7 +77,7 @@ local on_attach_vim = function(client, bufnr)
         ]], false)
     end
 end
-lspconfig.julials.setup({on_attach = on_attach_vim})
+-- lspconfig.julials.setup({on_attach = on_attach_vim})
 lspconfig.bashls.setup({on_attach = on_attach_vim, capabilities = capabilities})
 lspconfig.ccls.setup({on_attach = on_attach_vim, capabilities = capabilities})
 lspconfig.tsserver.setup({on_attach = on_attach_vim, capabilities = capabilities})
@@ -155,9 +155,10 @@ lspconfig.pyls.setup {
         }
     }
 }
+
 require"lspconfig".efm.setup {
     init_options = {documentFormatting = true},
-    filetypes = {"lua"},
+    filetypes = {"lua", "julia"},
     settings = {
         rootMarkers = {".git/"},
         languages = {
@@ -166,7 +167,8 @@ require"lspconfig".efm.setup {
                     formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=150 --break-after-table-lb",
                     formatStdin = true
                 }
-            }
+            },
+            julia = {require'juliaformatter'.efmConfig}
         }
     }
 }

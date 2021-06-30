@@ -249,6 +249,12 @@ packer.startup(function()
             require("terminal").setup()
         end
     }
+    use {
+        'lithammer/nvim-diagnosticls',
+        config = function()
+            require("diagnosticls")
+        end
+    }
 end)
 
 require'lualine'.setup {
