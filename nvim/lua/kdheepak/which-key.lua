@@ -56,18 +56,14 @@ vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>',
                         {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', '<Leader>/', '<cmd>split|wincmd l|terminal<CR>',
-                        {noremap = true, silent = true})
-
-vim.api.nvim_set_keymap('n', '<leader>\\', '<cmd>vsplit|wincmd l|terminal<cr>',
-                        {noremap = true, silent = true})
-
 local mappings = {
 
-    p = { [["+p]], 'Paste from clipboard' },
-    P = { [["+P]], 'Paste from clipboard (before)' },
-    y = { [["+y]], 'Yank to clipboard' },
-    Y = { [["+Y]], 'Yank line to clipboard' },
+    p = { '"+p', 'Paste from clipboard' },
+    P = { '"+P', 'Paste from clipboard (before)' },
+    y = { '"+y', 'Yank to clipboard' },
+    Y = { '"+Y', 'Yank line to clipboard' },
+    ['/'] = {'<cmd>split|wincmd l|terminal<CR>', 'Split terminal horizontally'},
+    ['\\'] = {'<cmd>vsplit|wincmd l|terminal<CR>', 'Split terminal vertically'},
 
     q = {
         name = "Format",
