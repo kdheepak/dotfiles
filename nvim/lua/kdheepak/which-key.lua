@@ -71,7 +71,7 @@ local mappings = {
 
     b = {
         name = "+Buffers",
-        d = {"<cmd>BufDel>", "delete current buffer"},
+        d = {"<cmd>BufDel<CR>", "delete current buffer"},
         j = {"<cmd>bnext<CR>", "Next buffer"},
         k = {"<cmd>bprev<CR>", "Prev buffer"},
         w = {"<cmd>BufferWipeout<CR>", "wipeout buffer"},
@@ -82,6 +82,7 @@ local mappings = {
         j = {"<cmd>GitGutterNextHunk<CR>", "Next Hunk"},
         k = {"<cmd>GitGutterPrevHunk<CR>", "Prev Hunk"},
         b = {"<cmd>Gblame<CR>", "Blame"},
+        B = {"<cmd>lua require'gitsigns'.blame_line(true)<CR>", "Blame"},
         p = {"<cmd>Gpush<CR>", "Git Push"},
         P = {"<cmd>Gpull<CR>", "Git Pull"},
         r = {"<cmd>Gremove<CR>", "Git Remove"},
