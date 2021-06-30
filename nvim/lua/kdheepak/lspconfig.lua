@@ -194,6 +194,21 @@ lspconfig.pyls.setup{
       }
    }
 }
+require"lspconfig".efm.setup {
+    init_options = {documentFormatting = true},
+    filetypes = {"lua"},
+    settings = {
+        rootMarkers = {".git/"},
+        languages = {
+            lua = {
+                {
+                    formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=150 --break-after-table-lb",
+                    formatStdin = true
+                }
+            }
+        }
+    }
+}
 
 local actions = require('telescope.actions')
 require('telescope').setup {
@@ -220,8 +235,3 @@ require('telescope').setup {
     }
   }
 }
-
-require('telescope').load_extension('fzy_native')
-require('telescope').load_extension('gh')
-require('telescope').load_extension('lsp_handlers')
-require('telescope').load_extension('openbrowser')

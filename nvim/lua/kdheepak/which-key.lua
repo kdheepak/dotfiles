@@ -1,4 +1,4 @@
-local wk = require'which-key'
+local wk = require 'which-key'
 
 wk.setup {
     plugins = {
@@ -50,18 +50,17 @@ local opts = {
     nowait = false -- use `nowait` when creating keymaps
 }
 
-vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], {noremap = true})
 
 -- no hl
-vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>',
-                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>', {noremap = true, silent = true})
 
 local mappings = {
 
-    p = { '"+p', 'Paste from clipboard' },
-    P = { '"+P', 'Paste from clipboard (before)' },
-    y = { '"+y', 'Yank to clipboard' },
-    Y = { '"+Y', 'Yank line to clipboard' },
+    p = {'"+p', 'Paste from clipboard'},
+    P = {'"+P', 'Paste from clipboard (before)'},
+    y = {'"+y', 'Yank to clipboard'},
+    Y = {'"+Y', 'Yank line to clipboard'},
     ['/'] = {'<cmd>split|wincmd l|terminal<CR>', 'Split terminal horizontally'},
     ['\\'] = {'<cmd>vsplit|wincmd l|terminal<CR>', 'Split terminal vertically'},
 
@@ -69,7 +68,7 @@ local mappings = {
         name = "Format",
         t = {"<cmd>Tabularize<CR>", "Tabularize"},
         j = {"<cmd>JuliaFormatterFormat<CR>", "Format Julia file"},
-        q = {"<cmd>lua require('telescope.builtin').quickfix()<CR>", 'Quickfix' },
+        q = {"<cmd>lua require('telescope.builtin').quickfix()<CR>", 'Quickfix'}
     },
 
     b = {
@@ -77,7 +76,7 @@ local mappings = {
         d = {"<cmd>BufDel<CR>", "delete current buffer"},
         j = {"<cmd>bnext<CR>", "Next buffer"},
         k = {"<cmd>bprev<CR>", "Prev buffer"},
-        w = {"<cmd>BufferWipeout<CR>", "wipeout buffer"},
+        w = {"<cmd>BufferWipeout<CR>", "wipeout buffer"}
     },
 
     g = {
@@ -90,7 +89,7 @@ local mappings = {
         P = {"<cmd>Gpull<CR>", "Git Pull"},
         r = {"<cmd>Gremove<CR>", "Git Remove"},
         g = {"<cmd>Telescope git_status<CR>", "Git Status"},
-        o = {"<cmd>Gbrowse<CR>", "Open file in browser"},
+        o = {"<cmd>Gbrowse<CR>", "Open file in browser"}
     },
 
     f = {
@@ -103,15 +102,15 @@ local mappings = {
         i = {"<cmd>lua require'telescope'.extensions.gh.issues()<CR>", "Git issues"},
         p = {"<cmd>lua require'telescope'.extensions.gh.pull_request()<CR>", "Git pull request"},
         c = {"<cmd>Telescope colorscheme<CR>", "Colorscheme"},
-        d = { "<cmd>Telescope lsp_document_diagnostics<CR>", "Document Diagnostics" },
+        d = {"<cmd>Telescope lsp_document_diagnostics<CR>", "Document Diagnostics"},
         D = {"<cmd>Telescope lsp_workspace_diagnostics<CR>", "Workspace Diagnostics"},
         m = {"<cmd>Telescope marks<CR>", "Marks"},
         M = {"<cmd>Telescope man_pages<CR>", "Man Pages"},
         r = {"<cmd>Telescope oldfiles<CR>", "Open Recent File"},
         R = {"<cmd>Telescope registers<CR>", "Registers"},
-        n = {"<cmd>lua require('telescope.builtin').file_browser()<CR>", 'File Browser' },
-        ["%"] = {"<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Find in Current Buffer' },
-        t = { [[<cmd>lua require('telescope.builtin').current_buffer_tags()<CR>]], 'tags of buffer' },
+        n = {"<cmd>lua require('telescope.builtin').file_browser()<CR>", 'File Browser'},
+        ["%"] = {"<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Find in Current Buffer'},
+        t = {[[<cmd>lua require('telescope.builtin').current_buffer_tags()<CR>]], 'tags of buffer'}
     },
 
     d = {
@@ -134,7 +133,7 @@ local mappings = {
         co = {"<cmd>lua require'telescope'.extensions.dap.configurations{}<CR>", ""},
         lb = {"<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<CR>", ""},
         v = {"<cmd>lua require'telescope'.extensions.dap.variables{}<CR>", ""},
-        f = {"<cmd>lua require'telescope'.extensions.dap.frames{}<CR>", ""},
+        f = {"<cmd>lua require'telescope'.extensions.dap.frames{}<CR>", ""}
     },
 
     l = {
@@ -143,15 +142,9 @@ local mappings = {
         ["["] = {"<cmd>Lspsaga diagnostic_jump_prev<CR>", "Previous Diagnostic"},
         a = {"<cmd>Lspsaga code_action<CR>", "Code Action"},
         A = {"<cmd>Lspsaga range_code_action<CR>", "Selected Action"},
-        d = {
-            "<cmd>Telescope lsp_document_diagnostics<CR>",
-            "Document Diagnostics"
-        },
-        D = {
-            "<cmd>Telescope lsp_workspace_diagnostics<CR>",
-            "Workspace Diagnostics"
-        },
-        f = {"<cmd>lua require vim.lsp.buf.formatting()<CR>", "Format"},
+        d = {"<cmd>Telescope lsp_document_diagnostics<CR>", "Document Diagnostics"},
+        D = {"<cmd>Telescope lsp_workspace_diagnostics<CR>", "Workspace Diagnostics"},
+        f = {"<cmd>lua vim.lsp.buf.formatting()<CR>", "Format"},
         h = {"<cmd>Lspsaga hover_doc<CR>", "Hover Doc"},
         H = {"<cmd>Lspsaga signature_help<CR>", "Signature Help"},
         i = {"<cmd>LspInfo<CR>", "Info"},
@@ -164,20 +157,11 @@ local mappings = {
         x = {"<cmd>cclose<CR>", "Close Quickfix"},
         s = {"<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols"},
         g = {"<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", "Document Symbols"},
-        S = {
-            "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>",
-            "Workspace Symbols"
-        }
+        S = {"<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", "Workspace Symbols"}
     },
 
-    v = {
-        name = "Vim",
-        e = {"<cmd>e $MYVIMRC<CR>"},
-        s = {"<cmd>luafile $MYVIMRC<CR>"},
-        z = {"<cmd>e ~/.zshrc<CR>"},
-    },
+    v = {name = "Vim", e = {"<cmd>e $MYVIMRC<CR>"}, s = {"<cmd>luafile $MYVIMRC<CR>"}, z = {"<cmd>e ~/.zshrc<CR>"}}
 
 }
-
 
 wk.register(mappings, opts)

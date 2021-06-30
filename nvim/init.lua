@@ -3,7 +3,7 @@ fn = vim.fn
 cmd = vim.cmd
 lsp = vim.lsp
 api = vim.api
-g = vim.g      -- a table to access global variables
+g = vim.g -- a table to access global variables
 
 -- For debugging purpose
 function _G.dump(...)
@@ -11,16 +11,12 @@ function _G.dump(...)
     print(unpack(objects))
 end
 
-require'kdheepak/plugins'
+require 'kdheepak/plugins'
 
-require'kdheepak/options'
+require 'kdheepak/settings'
 
-require'kdheepak/keymappings'
+require 'kdheepak/keymappings'
 
-require'kdheepak/autocommands'
+require 'kdheepak/autocommands'
 
-require'kdheepak/vim'
-
-require'kdheepak/config'
-
-require'kdheepak/which-key'
+require 'kdheepak/vim'
