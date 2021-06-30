@@ -244,7 +244,12 @@ packer.startup(function()
       end
   }
   use "folke/which-key.nvim"
-
+  use {
+    'norcalli/nvim-terminal.lua',
+    config = function()
+      require("terminal").setup()
+    end,
+  }
 end)
 
 require'lualine'.setup {

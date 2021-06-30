@@ -39,6 +39,7 @@ wk.setup {
 vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true})
 
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 local opts = {
     mode = "n", -- NORMAL mode
@@ -48,6 +49,8 @@ local opts = {
     noremap = true, -- use `noremap` when creating keymaps
     nowait = false -- use `nowait` when creating keymaps
 }
+
+vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], { noremap = true })
 
 -- no hl
 vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>',
@@ -59,14 +62,18 @@ vim.api.nvim_set_keymap('n', '<Leader>/', '<cmd>split|wincmd l|terminal<CR>',
 vim.api.nvim_set_keymap('n', '<leader>\\', '<cmd>vsplit|wincmd l|terminal<cr>',
                         {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', '<leader>y', '"+y',
-                        {noremap = true, silent = true})
 local mappings = {
+
+    p = { [["+p]], 'Paste from clipboard' },
+    P = { [["+P]], 'Paste from clipboard (before)' },
+    y = { [["+y]], 'Yank to clipboard' },
+    Y = { [["+Y]], 'Yank line to clipboard' },
 
     q = {
         name = "Format",
         t = {"<cmd>Tabularize<CR>", "Tabularize"},
         j = {"<cmd>JuliaFormatterFormat<CR>", "Format Julia file"},
+        q = {"<cmd>lua require('telescope.builtin').quickfix()<CR>", 'Quickfix' },
     },
 
     b = {
