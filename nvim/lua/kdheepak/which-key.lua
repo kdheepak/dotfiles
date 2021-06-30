@@ -53,35 +53,13 @@ local opts = {
 vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>',
                         {noremap = true, silent = true})
 
--- telescope
-vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files<CR>',
+vim.api.nvim_set_keymap('n', '<Leader>/', '<cmd>split|wincmd l|terminal<CR>',
                         {noremap = true, silent = true})
 
--- dashboard
-vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>',
+vim.api.nvim_set_keymap('n', '<Leader>\\', '<cmd>vsplit|wincmd l|terminal<CR>',
                         {noremap = true, silent = true})
-
--- Comments
-vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>",
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>",
-                        {noremap = true, silent = true})
-
--- close buffer
-vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>",
-                        {noremap = true, silent = true})
-
--- TODO create entire treesitter section
 
 local mappings = {
-
-    ["\\"] = {
-        {"<cmd>vsplit|wincmd l|terminal<CR>", "Split vertical terminal"},
-    },
-
-    ["/"] = {
-        {"<cmd>split|wincmd l|terminal<CR>", "Split horizontal terminal"},
-    },
 
     y = {
         {"\"+y", "Copy to clipboard"},
