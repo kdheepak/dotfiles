@@ -30,10 +30,10 @@ packer.startup(function()
         run = ':TSUpdate',
         config = function()
             require'nvim-treesitter.configs'.setup {
-                highlight = {enable = true},
-                incremental_selection = {enable = true},
-                textobjects = {enable = true},
-                indent = {enable = true}
+                highlight = {enable = true}
+                -- incremental_selection = {enable = true},
+                -- textobjects = {enable = true},
+                -- indent = {enable = true}
             }
         end,
         requires = {{'nvim-treesitter/playground', opt = true}, {'windwp/nvim-autopairs'}, {'windwp/nvim-ts-autotag'}}

@@ -136,25 +136,8 @@ lspconfig.sumneko_lua.setup({
     }
 })
 lspconfig.html.setup({on_attach = on_attach_vim, capabilities = capabilities})
-lspconfig.pyls.setup {
-    on_attach = on_attach_vim,
-    capabilities = capabilities,
-    settings = {
-        pyls = {
-            configurationSources = {pycodestyle, flake8},
-            plugins = {
-                mccabe = {enabled = false},
-                preload = {enabled = true},
-                pycodestyle = {enabled = true, ignore = {"E501"}},
-                pydocstyle = {enabled = false},
-                pyflakes = {enabled = true},
-                pylint = {enabled = false},
-                rope_completion = {enabled = true},
-                black = {enabled = false}
-            }
-        }
-    }
-}
+
+lspconfig.pyright.setup {on_attach = on_attach_vim, capabilities = capabilities}
 
 require"lspconfig".efm.setup {
     init_options = {documentFormatting = true},
