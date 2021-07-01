@@ -55,25 +55,16 @@ vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], {noremap = true})
 -- no hl
 vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>', {noremap = true, silent = true})
 
-local normal_visual_mappings = {
+local visual_mappings = {
     p = {'"+p', 'Paste from clipboard'},
     P = {'"+P', 'Paste from clipboard (before)'},
     y = {'"+y', 'Yank to clipboard'},
     Y = {'"+Y', 'Yank line to clipboard'},
     d = {'"+ygvd', 'Cut line to clipboard'},
-    g = {name = "Git", o = {"<cmd>GBrowse<CR>", "Open file in browser"}}
+    g = {name = "Git", o = {"<cmd>'<,'>GBrowse<CR>", "Open file in browser"}}
 }
 
-wk.register(normal_visual_mappings, {
-    mode = "n", -- NORMAL mode
-    prefix = "<leader>",
-    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-    silent = true, -- use `silent` when creating keymaps
-    noremap = true, -- use `noremap` when creating keymaps
-    nowait = false -- use `nowait` when creating keymaps
-})
-
-wk.register(normal_visual_mappings, {
+wk.register(visual_mappings, {
     mode = "v", -- NORMAL mode
     prefix = "<leader>",
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -83,6 +74,10 @@ wk.register(normal_visual_mappings, {
 })
 
 local mappings = {
+    p = {'"+p', 'Paste from clipboard'},
+    P = {'"+P', 'Paste from clipboard (before)'},
+    y = {'"+y', 'Yank to clipboard'},
+    Y = {'"+Y', 'Yank line to clipboard'},
 
     ['/'] = {'<cmd>split|wincmd l|terminal<CR>', 'Split terminal horizontally'},
     ['\\'] = {'<cmd>vsplit|wincmd l|terminal<CR>', 'Split terminal vertically'},
