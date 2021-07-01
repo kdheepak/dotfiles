@@ -405,10 +405,10 @@
     fi
 
     # Styling for different parts of Git status.
-    local       meta='%07F' # white foreground
-    local      clean='%07F' # black foreground
-    local   modified='%07F' # black foreground
-    local  untracked='%07F' # black foreground
+    local       meta='%15F' # white foreground
+    local      clean='%15F' # black foreground
+    local   modified='%15F' # black foreground
+    local  untracked='%15F' # black foreground
     local conflicted='%1F' # red foreground
 
     local res
@@ -526,14 +526,14 @@
   typeset -g POWERLEVEL9K_STATUS_OK=true
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
   typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_PURPLE
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_BRIGHTPURPLE
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_PURPLE
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_BRIGHTPURPLE
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
@@ -559,7 +559,7 @@
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_WHITE
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_BLACK
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
@@ -574,8 +574,8 @@
 
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_WHITE
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_BRIGHTWHITE
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_BLACK
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Custom icon.
@@ -904,7 +904,7 @@
 
   ##############[ taskwarrior: taskwarrior task count (https://taskwarrior.org/) ]##############
   # Taskwarrior color.
-  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_WHITE
+  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
   typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_BLACK
 
   # Taskwarrior segment format. The following parameters are available within the expansion.
@@ -1644,7 +1644,7 @@
 
   ####################################[ time: current time ]####################################
   # Current time color.
-  typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_WHITE
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
   typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_BLACK
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
