@@ -55,14 +55,39 @@ vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], {noremap = true})
 -- no hl
 vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>', {noremap = true, silent = true})
 
-local mappings = {
-
+local normal_visual_mappings = {
     p = {'"+p', 'Paste from clipboard'},
     P = {'"+P', 'Paste from clipboard (before)'},
     y = {'"+y', 'Yank to clipboard'},
     Y = {'"+Y', 'Yank line to clipboard'},
+    d = {'"+ygvd', 'Cut line to clipboard'},
+    g = {name = "Git", o = {"<cmd>GBrowse<CR>", "Open file in browser"}}
+}
+
+wk.register(normal_visual_mappings, {
+    mode = "n", -- NORMAL mode
+    prefix = "<leader>",
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false -- use `nowait` when creating keymaps
+})
+
+wk.register(normal_visual_mappings, {
+    mode = "v", -- NORMAL mode
+    prefix = "<leader>",
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false -- use `nowait` when creating keymaps
+})
+
+local mappings = {
+
     ['/'] = {'<cmd>split|wincmd l|terminal<CR>', 'Split terminal horizontally'},
     ['\\'] = {'<cmd>vsplit|wincmd l|terminal<CR>', 'Split terminal vertically'},
+
+    w = {name = "+Windows", ['/'] = {'<cmd>split<CR>', 'Split window horizontally'}, ['\\'] = {'<cmd>vsplit<CR>', 'Split window vertically'}},
 
     q = {
         name = "Format",
@@ -89,7 +114,7 @@ local mappings = {
         P = {"<cmd>Gpull<CR>", "Git Pull"},
         r = {"<cmd>Gremove<CR>", "Git Remove"},
         g = {"<cmd>Telescope git_status<CR>", "Git Status"},
-        o = {"<cmd>Gbrowse<CR>", "Open file in browser"}
+        o = {"<cmd>GBrowse<CR>", "Open file in browser"}
     },
 
     f = {
