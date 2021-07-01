@@ -1,9 +1,8 @@
 vim.api.nvim_command([[
 
 augroup LuaHighlight
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank() end
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup="Search", timeout=300, on_visual=false,})
 augroup END
-
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
