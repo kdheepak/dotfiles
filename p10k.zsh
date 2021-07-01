@@ -22,15 +22,29 @@
 () {
   emulate -L zsh -o extended_glob
 
-  export POWERLEVEL10K_GRAY='#44475a'
-  export POWERLEVEL10K_LIGHTGRAY='#5f6a8e'
-  export POWERLEVEL10K_ORANGE='#ffb86c'
-  export POWERLEVEL10K_PURPLE='#bd93f9'
-  export POWERLEVEL10K_RED='#ff5555'
-  export POWERLEVEL10K_YELLOW='#f1fa8c'
-  export POWERLEVEL10K_GREEN='#50fa7b'
-  export POWERLEVEL10K_WHITE='#f8f8f2'
-  export POWERLEVEL10K_BLACK='#282a36'
+  export POWERLEVEL10K_BACKGROUND='#011627'
+  export POWERLEVEL10K_FOREGROUND='#acb4c2'
+  export POWERLEVEL10K_BOLD='#eeeeee'
+  export POWERLEVEL10K_CURSOR='#9ca1aa'
+  export POWERLEVEL10K_CURSORTEXT='#080808'
+  export POWERLEVEL10K_SELECTION='#b2ceee'
+  export POWERLEVEL10K_SELECTIONTEXT='#080808'
+  export POWERLEVEL10K_BLACK='#1d3b53'
+  export POWERLEVEL10K_RED='#fc514e'
+  export POWERLEVEL10K_GREEN='#a1cd5e'
+  export POWERLEVEL10K_YELLOW='#e3d18a'
+  export POWERLEVEL10K_BLUE='#82aaff'
+  export POWERLEVEL10K_PURPLE='#c792ea'
+  export POWERLEVEL10K_CYAN='#7fdbca'
+  export POWERLEVEL10K_WHITE='#a1aab8'
+  export POWERLEVEL10K_BRIGHTBLACK='#7c8f8f'
+  export POWERLEVEL10K_BRIGHTRED='#ff5874'
+  export POWERLEVEL10K_BRIGHTGREEN='#21c7a8'
+  export POWERLEVEL10K_BRIGHTYELLOW='#ecc48d'
+  export POWERLEVEL10K_BRIGHTBLUE='#82aaff'
+  export POWERLEVEL10K_BRIGHTPURPLE='#ae81ff'
+  export POWERLEVEL10K_BRIGHTCYAN='#7fdbca'
+  export POWERLEVEL10K_BRIGHTWHITE='#d6deeb'
 
   # Unset all configuration options. This allows you to apply configuration changes without
   # restarting zsh. Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
@@ -220,7 +234,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
-  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_PURPLE
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_BRIGHTPURPLE
   # Default current directory foreground color.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=$POWERLEVEL10K_BLACK
   # If directory is too long, shorten some of its segments to the shortest possible unique
@@ -359,11 +373,11 @@
 
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
-  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=$POWERLEVEL10K_BLACK
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=
@@ -391,10 +405,10 @@
     fi
 
     # Styling for different parts of Git status.
-    local       meta='%15F' # white foreground
-    local      clean='%15F' # black foreground
-    local   modified='%15F' # black foreground
-    local  untracked='%15F' # black foreground
+    local       meta='%07F' # white foreground
+    local      clean='%07F' # black foreground
+    local   modified='%07F' # black foreground
+    local  untracked='%07F' # black foreground
     local conflicted='%1F' # red foreground
 
     local res
@@ -546,7 +560,7 @@
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_WHITE
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_BLACK
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   # Show this many fractional digits. Zero means round to seconds.
@@ -561,7 +575,7 @@
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_WHITE
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_GRAY
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_BRIGHTWHITE
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Custom icon.
@@ -891,7 +905,7 @@
   ##############[ taskwarrior: taskwarrior task count (https://taskwarrior.org/) ]##############
   # Taskwarrior color.
   typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_WHITE
-  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_GRAY
+  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_BLACK
 
   # Taskwarrior segment format. The following parameters are available within the expansion.
   #
@@ -1631,7 +1645,7 @@
   ####################################[ time: current time ]####################################
   # Current time color.
   typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_WHITE
-  typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_BLACK
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
   # If set to true, time will update when you hit enter. This way prompts for the past

@@ -29,7 +29,12 @@ packer.startup(function()
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         config = function()
-            require'nvim-treesitter.configs'.setup {highlight = {enable = true}}
+            require'nvim-treesitter.configs'.setup {
+                highlight = {enable = true},
+                incremental_selection = {enable = true},
+                textobjects = {enable = true},
+                indent = {enable = true}
+            }
         end,
         requires = {{'nvim-treesitter/playground', opt = true}, {'windwp/nvim-autopairs'}, {'windwp/nvim-ts-autotag'}}
     }
@@ -209,12 +214,7 @@ packer.startup(function()
     use {"npxbr/glow.nvim", branch = "main", run = ":GlowInstall"}
     use 'kosayoda/nvim-lightbulb'
     use 'rust-lang/vscode-rust'
-    use {
-        'hoob3rt/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
-        config = function()
-        end
-    }
+    use {'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
     use 'jbyuki/nabla.nvim'
     use 'jbyuki/venn.nvim'
     use 'folke/tokyonight.nvim'
@@ -225,6 +225,8 @@ packer.startup(function()
     use 'sainnhe/gruvbox-material'
     use 'ishan9299/nvim-solarized-lua'
     use 'dracula/vim'
+    use 'bluz71/vim-nightfly-guicolors'
+    -- use 'Mofiqul/dracula.nvim'
     use {
         'jghauser/mkdir.nvim',
         config = function()
@@ -258,7 +260,7 @@ packer.startup(function()
 end)
 
 require'lualine'.setup {
-    options = {theme = 'dracula'},
+    options = {theme = 'nightfly'},
     sections = {
         lualine_a = {'mode'},
         lualine_b = {'branch'},

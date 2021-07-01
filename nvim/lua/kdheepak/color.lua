@@ -1,5 +1,5 @@
 vim.api.nvim_exec([[
 
-colorscheme dracula
+colorscheme nightfly
 
 ]], false)
