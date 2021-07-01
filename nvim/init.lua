@@ -9,6 +9,7 @@ require 'kdheepak/settings'
 require 'kdheepak/keymappings'
 require 'kdheepak/config'
 require 'kdheepak/color'
+
 require 'kdheepak/autocommands'
 
 vim.notify = function(msg, log_level, _)
