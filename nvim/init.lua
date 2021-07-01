@@ -3,12 +3,14 @@ function _G.dump(...)
     local objects = vim.tbl_map(vim.inspect, {...})
     print(unpack(objects))
 end
+
 require 'kdheepak/plugins'
 require 'kdheepak/settings'
 require 'kdheepak/keymappings'
-require 'kdheepak/autocommands'
-require 'kdheepak/vim'
+require 'kdheepak/config'
 require 'kdheepak/color'
+require 'kdheepak/autocommands'
+
 vim.notify = function(msg, log_level, _)
     if msg:match("exit code") then return end
     if log_level == vim.log.levels.ERROR then
