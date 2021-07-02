@@ -67,6 +67,8 @@ export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=~/Library/Fonts"
 
 export XPRESSDIR="$HOME/Applications/fico-xpress/xpressmp"
 
+export NEXTWORD_DATA_PATH=~/local/dictionary/nextword-data-large
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"

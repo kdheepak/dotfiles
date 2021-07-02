@@ -1,5 +1,5 @@
-vim.api.nvim_exec([[
+vim.api.nvim_exec( [[
 
 colorscheme nightfly
 
-]], false)
+]], false )

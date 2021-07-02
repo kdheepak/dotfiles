@@ -58,7 +58,7 @@ vim.o.signcolumn = 'yes' --  Always show git gutter / sign column
 vim.o.joinspaces = false --  Use one space, not two, after punctuation
 vim.o.splitright = true --  split windows right
 vim.o.splitbelow = true --  split windows below
-vim.o.viminfo = vim.o.viminfo .. ",n" .. vim.fn.stdpath("cache") .. "/viminfo"
+vim.o.viminfo = vim.o.viminfo .. ',n' .. vim.fn.stdpath('cache') .. '/viminfo'
 vim.o.virtualedit = vim.o.virtualedit .. 'all' --  allow virtual editing in all modes
 vim.o.modeline = false --  no lines are checked for set commands
 vim.o.grepprg = 'rg --vimgrep' --  use ripgrep
@@ -81,14 +81,14 @@ vim.g.VtrAppendNewline = true
 
 vim.g.vim_markdown_emphasis_multiline = false
 vim.g.vim_markdown_folding_disabled = true
-vim.g.tex_conceal = ""
+vim.g.tex_conceal = ''
 vim.g.vim_markdown_math = true
 vim.g.vim_markdown_frontmatter = true
 vim.g.vim_markdown_strikethrough = true
-vim.g.vim_markdown_fenced_languages = {'julia=jl', 'python=py'}
+vim.g.vim_markdown_fenced_languages = { 'julia=jl', 'python=py' }
 vim.g.latex_to_unicode_auto = true
 vim.g.latex_to_unicode_tab = false
-vim.g.latex_to_unicode_cmd_mapping = {'<C-j>'}
+vim.g.latex_to_unicode_cmd_mapping = { '<C-j>' }
 
 -- TODO: add shortcut to transform string
 vim.g.unicoder_cancel_normal = true
@@ -109,7 +109,7 @@ vim.g.indent_guides_enable_on_vim_startup = 1
 vim.g.indent_guides_guide_size = 1
 vim.g.indent_guides_start_level = 2
 vim.g.indent_guides_color_change_percent = 1
-vim.g.indent_guides_exclude_filetypes = {'help', 'fzf', 'openterm', 'neoterm', 'calendar'}
+vim.g.indent_guides_exclude_filetypes = { 'help', 'fzf', 'openterm', 'neoterm', 'calendar' }
 
 vim.g.clever_f_across_no_line = 1
 vim.g.clever_f_fix_key_direction = 1

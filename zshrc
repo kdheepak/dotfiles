@@ -67,6 +67,8 @@ export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
+zmodload zsh/zpty
+
 zinit ice blockf atpull'zinit creinstall -q .'
 
 zinit ice lucid wait \
@@ -89,6 +91,7 @@ zinit load lunaryorn/mdcat
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
+zinit wait'1' lucid from"gh-r" as"program" light-mode for @high-moctane/nextword
 
 hash tig &>/dev/null && zinit wait lucid for zdharma/zsh-tig-plugin
 
