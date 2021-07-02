@@ -22,7 +22,7 @@
 () {
   emulate -L zsh -o extended_glob
 
-  export POWERLEVEL10K_BACKGROUND='#011627'
+  export POWERLEVEL10K_BACKGROUND='#061626'
   export POWERLEVEL10K_FOREGROUND='#acb4c2'
   export POWERLEVEL10K_BOLD='#eeeeee'
   export POWERLEVEL10K_CURSOR='#9ca1aa'
