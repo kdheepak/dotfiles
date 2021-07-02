@@ -22,13 +22,17 @@ local inspected_buffers = {}
 function limit_by_line_count(max_lines)
   local fname = vim.fn.expand('%:p')
   local cache = inspected_buffers[fname]
-  if cache ~= nil then return cache end
+  if cache ~= nil then
+    return cache
+  end
 
   max_lines = max_lines or 1000
   local lines = 0
   for _ in io.lines(fname) do
     lines = lines + 1
-    if lines > max_lines then break end
+    if lines > max_lines then
+      break
+    end
   end
   inspected_buffers[fname] = (lines <= max_lines)
   return inspected_buffers[fname]
@@ -113,7 +117,16 @@ packer.startup(function()
 
   use { 'ojroques/nvim-bufdel' }
   use 'famiu/bufdelete.nvim'
-
+  use {
+    'rmagatti/goto-preview',
+    config = function()
+      require('goto-preview').setup {}
+    end,
+  }
+  use 'ggandor/lightspeed.nvim'
+  use 'Pocco81/DAPInstall.nvim'
+  use 'kevinhwang91/nvim-bqf'
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'justinmk/vim-dirvish'
   use 'mcchrish/nnn.vim' -- Fast and featureful file manager in vim/neovim powered by nnn
   use 'vim-scripts/sketch.vim'
@@ -211,6 +224,7 @@ packer.startup(function()
   use 'romgrk/barbar.nvim'
   use 'mfussenegger/nvim-dap'
   use 'nvim-telescope/telescope-dap.nvim'
+  use 'theHamsta/nvim-dap-virtual-text'
   use 'mfussenegger/nvim-dap-python'
   use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
   use 'kosayoda/nvim-lightbulb'

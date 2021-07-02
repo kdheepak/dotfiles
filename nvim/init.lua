@@ -12,7 +12,9 @@ require 'kdheepak/autocommands'
 require 'kdheepak/keymappings'
 
 vim.notify = function(msg, log_level, _)
-  if msg:match('exit code') then return end
+  if msg:match('exit code') then
+    return
+  end
   if log_level == vim.log.levels.ERROR then
     vim.api.nvim_err_writeln(msg)
   else

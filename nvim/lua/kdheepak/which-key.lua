@@ -115,7 +115,7 @@ local mappings = {
     p = { '<cmd>Gpush<CR>', 'Git Push' },
     P = { '<cmd>Gpull<CR>', 'Git Pull' },
     r = { '<cmd>Gremove<CR>', 'Git Remove' },
-    g = { '<cmd>Telescope git_status<CR>', 'Git Status' },
+    g = { '<cmd>Neogit<CR>', 'Git Status' },
     o = { '<cmd>GBrowse<CR>', 'Open file in browser' },
   },
 

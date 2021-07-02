@@ -164,7 +164,7 @@ require'lspconfig'.efm.setup {
     languages = {
       lua = {
         {
-          formatCommand = 'lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=120 --break-after-table-lb --extra-sep-at-table-end --double-quote-to-single-quote --no-spaces-inside-functiondef-parens --no-spaces-inside-functioncall-parens --spaces-around-equals-in-field --spaces-inside-table-braces --no-use-tab --indent-width=2 --align-table-field --align-parameter --align-args',
+          formatCommand = 'lua-format -i --table-sep=, --no-keep-simple-control-block-one-line --no-keep-simple-function-one-line --no-break-after-operator --column-limit=120 --break-after-table-lb --extra-sep-at-table-end --double-quote-to-single-quote --no-spaces-inside-functiondef-parens --no-spaces-inside-functioncall-parens --spaces-around-equals-in-field --spaces-inside-table-braces --no-use-tab --indent-width=2 --align-table-field --align-parameter --align-args',
           formatStdin = true,
         },
       },
