@@ -17,6 +17,23 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
+local inspected_buffers = {}
+-- this function is called b4 a buffer is opened, so we need to manually open the file and count the lines.
+function limit_by_line_count(max_lines)
+    local fname = vim.fn.expand("%:p")
+    local cache = inspected_buffers[fname]
+    if cache ~= nil then return cache end
+
+    max_lines = max_lines or 1000
+    local lines = 0
+    for _ in io.lines(fname) do
+        lines = lines + 1
+        if lines > max_lines then break end
+    end
+    inspected_buffers[fname] = (lines <= max_lines)
+    return inspected_buffers[fname]
+end
+
 local packer = require('packer')
 local use = require('packer').use
 packer.startup(function()
@@ -77,36 +94,13 @@ packer.startup(function()
         end
     }
 
-    use {
-        "hrsh7th/nvim-compe",
-        config = function()
-            vim.opt.completeopt = "menuone,noselect"
-            require("compe").setup({
-                enabled = true,
-                autocomplete = true,
-                debug = false,
-                min_length = 1,
-                preselect = "enable",
-                throttle_time = 80,
-                source_timeout = 200,
-                resolve_timeout = 800,
-                incomplete_delay = 400,
-                max_abbr_width = 100,
-                max_kind_width = 100,
-                max_menu_width = 100,
-                documentation = true,
-                source = {path = true, buffer = true, calc = true, nvim_lsp = true, nvim_pllua = true, tags = true, treesitter = true}
-            })
-        end
-    }
+    use {"hrsh7th/nvim-compe"}
 
-    use {"hrsh7th/vim-vsnip", after = "nvim-compe"}
+    use {'hrsh7th/vim-vsnip'}
 
-    use {'hrsh7th/vim-vsnip-integ', after = "nvim-compe"}
+    use {'hrsh7th/vim-vsnip-integ'}
 
-    use {"rafamadriz/friendly-snippets", after = "nvim-compe"}
-
-    use {"nvim-telescope/telescope.nvim", requires = {"nvim-lua/plenary.nvim", "nvim-lua/popup.nvim"}}
+    use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim'}}
 
     use "tversteeg/registers.nvim"
 
@@ -276,3 +270,40 @@ require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('gh')
 require('telescope').load_extension('lsp_handlers')
 require('telescope').load_extension('openbrowser')
+
+require'compe'.setup {
+    enabled = true,
+    autocomplete = true,
+    debug = false,
+    min_length = 1,
+    preselect = 'enable',
+    throttle_time = 80,
+    source_timeout = 200,
+    resolve_timeout = 800,
+    incomplete_delay = 400,
+    max_abbr_width = 100,
+    max_kind_width = 100,
+    max_menu_width = 100,
+    documentation = {
+        border = {'', '', '', ' ', '', '', '', ' '}, -- the border option is the same as `|help nvim_open_win|`
+        winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+        max_width = 120,
+        min_width = 60,
+        max_height = math.floor(vim.o.lines * 0.3),
+        min_height = 1
+    },
+
+    source = {
+        path = true,
+        buffer = true,
+        calc = true,
+        nvim_lsp = true,
+        nvim_lua = true,
+        vsnip = true,
+        treesitter = false,
+        ultisnips = true,
+        luasnip = true
+    }
+}
+
+require('nvim-autopairs').setup()

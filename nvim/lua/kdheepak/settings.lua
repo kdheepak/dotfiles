@@ -71,7 +71,6 @@ vim.o.winheight = cmdheight
 vim.o.winminheight = cmdheight
 vim.o.winminwidth = cmdheight * 2
 vim.o.completeopt = 'menuone,noinsert,noselect' --  Use the popup menu also when there is only one match.
-vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.shortmess = 'filnxtToOfcI' --  Shut off completion and intro messages
 vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
@@ -114,3 +113,5 @@ vim.g.indent_guides_exclude_filetypes = {'help', 'fzf', 'openterm', 'neoterm', '
 
 vim.g.clever_f_across_no_line = 1
 vim.g.clever_f_fix_key_direction = 1
+
+vim.api.nvim_set_var('mucomplete#enable_auto_at_startup', true)

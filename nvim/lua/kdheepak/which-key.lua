@@ -55,6 +55,8 @@ vim.api.nvim_set_keymap('n', '<leader>w', [[<C-w>]], {noremap = true})
 -- no hl
 vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-9<CR>:let @/=""<CR>', {noremap = true, silent = true})
 
+-- inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
 local visual_mappings = {
     p = {'"+p', 'Paste from clipboard'},
     P = {'"+P', 'Paste from clipboard (before)'},
