@@ -188,6 +188,7 @@ packer.startup(function()
   use 'joom/latex-unicoder.vim' -- a plugin to type Unicode chars in Vim, using their LaTeX names
   use 'editorconfig/editorconfig-vim' -- editorconfig plugin for vim
   use 'osyo-manga/vim-anzu' -- show total number of matches and current match number
+  use 'jeffkreeftmeijer/vim-numbertoggle'
   use 'haya14busa/vim-asterisk' -- asterisk.vim provides improved search * motions
   use 'ryanoasis/vim-devicons' -- adds icons to plugins
   use 'segeljakt/vim-isotope' -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
@@ -199,6 +200,7 @@ packer.startup(function()
   use 'rhysd/clever-f.vim'
   use 'takac/vim-hardtime' -- vim hardtime
   -- use 'mhinz/vim-startify' -- This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
+  use 'glepnir/dashboard-nvim'
   use 'chrisbra/unicode.vim' -- vim unicode helper
   use 'posva/vim-vue'
   use 'nvim-lua/lsp_extensions.nvim'

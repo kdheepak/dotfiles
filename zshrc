@@ -98,6 +98,9 @@ hash tig &>/dev/null && zinit wait lucid for zdharma/zsh-tig-plugin
 zinit ice from"gh-r" as"program" pick"so/so"
 zinit load samtay/so
 
+zinit ice from"gh-r" as"program" pick"pq-*/pq"
+zinit load Th3Whit3Wolf/pquote
+
 # zinit ice lucid wait from"gh-r" as"program" pick"./*/*/nvim"
 # zinit load neovim/neovim
 

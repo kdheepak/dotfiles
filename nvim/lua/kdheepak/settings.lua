@@ -122,7 +122,7 @@ vim.g.nvim_tree_icons = {
   git = { unstaged = '', staged = '✓', unmerged = '', renamed = '➜', untracked = '' },
   folder = { default = '', open = '', symlink = '' },
 }
-vim.g.nvim_tree_auto_open = 1
+vim.g.nvim_tree_auto_open = 0
 vim.g.nvim_tree_auto_close = 1
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_indent_markers = 1
@@ -133,3 +133,18 @@ vim.g.nvim_tree_bindings = {
   { key = '/', cb = require'nvim-tree.config'.nvim_tree_callback('vsplit') },
   { key = '\\', cb = require'nvim-tree.config'.nvim_tree_callback('split') },
 }
+
+vim.g.dashboard_default_executive = 'telescope'
+
+vim.g.dashboard_custom_header = {
+  ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+  ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+  ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+  ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+  ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+  ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+}
+
+vim.g.dashboard_custom_footer = {}
+local q = vim.fn.systemlist('pq')
+vim.g.dashboard_custom_footer = q

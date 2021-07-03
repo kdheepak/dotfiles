@@ -153,6 +153,7 @@ lspconfig.sumneko_lua.setup({
   },
 })
 lspconfig.html.setup({ on_attach = on_attach_vim, capabilities = capabilities })
+lspconfig.vuels.setup({ on_attach = on_attach_vim, capabilities = capabilities })
 
 lspconfig.pyright.setup { on_attach = on_attach_vim, capabilities = capabilities }
 
