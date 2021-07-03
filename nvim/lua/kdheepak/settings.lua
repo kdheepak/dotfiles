@@ -115,3 +115,17 @@ vim.g.clever_f_across_no_line = 1
 vim.g.clever_f_fix_key_direction = 1
 
 vim.api.nvim_set_var('mucomplete#enable_auto_at_startup', true)
+
+vim.g.nvim_tree_icons = {
+  default = '',
+  symlink = '',
+  git = { unstaged = '', staged = '✓', unmerged = '', renamed = '➜', untracked = '' },
+  folder = { default = '', open = '', symlink = '' },
+}
+vim.g.nvim_tree_auto_open = 1
+vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_quit_on_open = 1
+vim.g.nvim_tree_indent_markers = 1
+vim.g.nvim_tree_highlight_opened_files = 1
+vim.g.nvim_tree_disable_netrw = 1
+vim.g.nvim_tree_follow = 1

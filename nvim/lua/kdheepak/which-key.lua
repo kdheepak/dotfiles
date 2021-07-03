@@ -101,8 +101,8 @@ local mappings = {
   b = {
     name = '+Buffers',
     d = { '<cmd>BufferClose<CR>', 'delete current buffer' },
-    j = { '<cmd>BufferMoveNext<CR>', 'Next buffer' },
-    k = { '<cmd>BufferMovePrevious<CR>', 'Prev buffer' },
+    j = { '<cmd>BufferNext<CR>', 'Next buffer' },
+    k = { '<cmd>BufferPrevious<CR>', 'Prev buffer' },
     w = { '<cmd>BufferWipeout<CR>', 'wipeout buffer' },
   },
 

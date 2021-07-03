@@ -198,7 +198,7 @@ packer.startup(function()
   use 'beloglazov/vim-online-thesaurus'
   use 'rhysd/clever-f.vim'
   use 'takac/vim-hardtime' -- vim hardtime
-  use 'mhinz/vim-startify' -- This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
+  -- use 'mhinz/vim-startify' -- This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
   use 'chrisbra/unicode.vim' -- vim unicode helper
   use 'posva/vim-vue'
   use 'nvim-lua/lsp_extensions.nvim'
