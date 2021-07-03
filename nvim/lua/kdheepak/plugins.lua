@@ -114,6 +114,7 @@ packer.startup(function()
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' } }
 
   use 'tversteeg/registers.nvim'
+  use 'kyazdani42/nvim-tree.lua'
 
   use { 'ojroques/nvim-bufdel' }
   use 'famiu/bufdelete.nvim'
@@ -128,7 +129,7 @@ packer.startup(function()
   use 'kevinhwang91/nvim-bqf'
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'justinmk/vim-dirvish'
-  use 'mcchrish/nnn.vim' -- Fast and featureful file manager in vim/neovim powered by nnn
+  -- use 'mcchrish/nnn.vim' -- Fast and featureful file manager in vim/neovim powered by nnn
   use 'vim-scripts/sketch.vim'
   use '~/gitrepos/vim-autoformat'
   use '~/gitrepos/artist.nvim'

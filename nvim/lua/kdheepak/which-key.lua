@@ -140,6 +140,13 @@ local mappings = {
     t = { [[<cmd>lua require('telescope.builtin').current_buffer_tags()<CR>]], 'tags of buffer' },
   },
 
+  n = {
+    name = 'NerdTree',
+    n = { '<cmd>NvimTreeToggle<CR>', 'Open NERDTree' },
+    r = { '<cmd>NvimTreeRefresh<CR>', 'Refresh NERDTree' },
+    f = { '<cmd>NvimTreeFindFile<CR>', 'Find File NERDTree' },
+  },
+
   d = {
     name = 'Debug Adapter',
     ct = { '<cmd>lua require\'dap\'.continue()<CR>', '' },
