@@ -144,7 +144,3 @@ vim.g.dashboard_custom_header = {
   ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
   ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
 }
-
-vim.g.dashboard_custom_footer = {}
-local q = vim.fn.systemlist('pq')
-vim.g.dashboard_custom_footer = q
