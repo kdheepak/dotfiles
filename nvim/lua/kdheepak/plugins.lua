@@ -302,6 +302,7 @@ require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('gh')
 require('telescope').load_extension('lsp_handlers')
 require('telescope').load_extension('openbrowser')
+require('telescope').load_extension('dap')
 
 require'compe'.setup {
   enabled = true,

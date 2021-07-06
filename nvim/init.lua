@@ -7,10 +7,13 @@ end
 require 'kdheepak/plugins'
 require 'kdheepak/settings'
 require 'kdheepak/config'
-require 'kdheepak/debug'
 require 'kdheepak/color'
 require 'kdheepak/autocommands'
 require 'kdheepak/keymappings'
+require 'kdheepak/lspconfig'
+require 'kdheepak/telescope'
+require 'kdheepak/which-key'
+require 'kdheepak/debug'
 
 vim.notify = function(msg, log_level, _)
   if msg:match('exit code') then
