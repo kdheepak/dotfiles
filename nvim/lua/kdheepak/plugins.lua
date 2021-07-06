@@ -112,12 +112,12 @@ packer.startup({
       end,
     }
     use { 'hrsh7th/nvim-compe' }
-    use 'mattn/emmet-vim'
-    use 'FateXii/emmet-compe'
+    use { 'mattn/emmet-vim', ft = { 'html', 'vue' } }
+    use { 'FateXii/emmet-compe', ft = { 'html', 'vue' } }
     use 'Gavinok/compe-nextword'
     use 'GoldsteinE/compe-latex-symbols'
-    use 'sblumentritt/cmake.vim'
-    use 'tamago324/compe-zsh'
+    use { 'sblumentritt/cmake.vim', ft = 'cmake' }
+    use { 'tamago324/compe-zsh', ft = 'zsh' }
     use { 'hrsh7th/vim-vsnip' }
     use { 'hrsh7th/vim-vsnip-integ' }
 
