@@ -151,7 +151,6 @@ packer.startup(function()
   use 'nvim-telescope/telescope-github.nvim'
   use 'gbrlsnchs/telescope-lsp-handlers.nvim'
   use 'nvim-telescope/telescope-fzy-native.nvim'
-  use 'kdheepak/vim-one' -- light and dark vim colorscheme
   use 'folke/lsp-colors.nvim'
   use 'bkad/CamelCaseMotion' -- motions for inside camel case
   use {
@@ -249,6 +248,9 @@ packer.startup(function()
       require'octo'.setup()
     end,
   }
+  use 'RRethy/nvim-base16'
+  -- colorschemes
+  use 'kdheepak/vim-one' -- light and dark vim colorscheme
   use 'Th3Whit3Wolf/one-nvim'
   use 'navarasu/onedark.nvim'
   use 'marko-cerovac/material.nvim'
@@ -259,7 +261,12 @@ packer.startup(function()
   use 'bluz71/vim-nightfly-guicolors'
   use 'bluz71/vim-moonfly-colors'
   use 'folke/tokyonight.nvim'
-  -- use 'Mofiqul/dracula.nvim'
+  use 'mhartington/oceanic-next'
+  use 'kyazdani42/blue-moon'
+  use 'yonlu/omni.vim'
+  use 'fenetikm/falcon'
+  use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
+
   use {
     'jghauser/mkdir.nvim',
     config = function()
@@ -293,7 +300,7 @@ packer.startup(function()
 end)
 
 require'lualine'.setup {
-  options = { theme = 'tokyonight' },
+  options = { theme = 'nightfly' },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
