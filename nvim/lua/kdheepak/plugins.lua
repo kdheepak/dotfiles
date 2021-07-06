@@ -154,15 +154,15 @@ packer.startup({
       end,
       event = 'InsertEnter',
     }
-    use { 'mattn/emmet-vim', ft = { 'html', 'vue' }, event = 'InsertEnter' }
-    use { 'FateXii/emmet-compe', ft = { 'html', 'vue' }, event = 'InsertEnter' }
-    use { 'Gavinok/compe-nextword', ft = 'markdown', event = 'InsertEnter' }
-    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter' }
-    use { 'sblumentritt/cmake.vim', ft = 'cmake', event = 'InsertEnter' }
-    use { 'tamago324/compe-zsh', ft = 'zsh', event = 'InsertEnter' }
-    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
-    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter' }
-    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter' }
+    use { 'mattn/emmet-vim', ft = { 'html', 'vue' }, event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'FateXii/emmet-compe', ft = { 'html', 'vue' }, event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'Gavinok/compe-nextword', ft = 'markdown', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'sblumentritt/cmake.vim', ft = 'cmake', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'tamago324/compe-zsh', ft = 'zsh', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
+    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter', after = 'hrsh7th/nvim-compe' }
 
     use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
     use 'kyazdani42/nvim-tree.lua'
@@ -191,8 +191,9 @@ packer.startup({
         require('spellsitter').setup()
       end,
     }
-    --  -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
+    -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
     use 'yamatsum/nvim-cursorline'
+    -- use 'RRethy/vim-illuminate'
     --  use 'junegunn/vim-easy-align' -- helps alignment
     use 'godlygeek/tabular' -- line up text
     use 'tpope/vim-commentary' -- comment and uncomment stuff
