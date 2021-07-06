@@ -1,5 +1,10 @@
 vim.api.nvim_set_keymap('n', '<space>', '<nop>', { noremap = true, silent = true })
 
+vim.g.nvim_tree_bindings = {
+  { key = '/', cb = require'nvim-tree.config'.nvim_tree_callback('vsplit') },
+  { key = '\\', cb = require'nvim-tree.config'.nvim_tree_callback('split') },
+}
+
 -- -- clear highlights
 -- vim.api.nvim_set_keymap('n', '<leader><leader>', ':noh<cr>', { noremap = true, silent = true })
 

@@ -5,10 +5,6 @@ function _G.dump(...)
 end
 
 require 'kdheepak/plugins'
-require 'kdheepak/settings'
-require 'kdheepak/config'
-require 'kdheepak/autocommands'
-require 'kdheepak/keymappings'
 
 vim.notify = function(msg, log_level, _)
   if msg:match('exit code') then

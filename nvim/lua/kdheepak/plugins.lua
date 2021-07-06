@@ -75,28 +75,41 @@ packer.startup({
       end,
     }
 
-    use {'neovim/nvim-lspconfig', config = function()
-      require 'kdheepak/lspconfig'
-    end}
+    use {
+      'neovim/nvim-lspconfig',
+      config = function()
+        require 'kdheepak/lspconfig'
+      end,
+    }
 
-    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' }, config = function()
-      require 'kdheepak/telescope'
-    end}
+    use {
+      'nvim-telescope/telescope.nvim',
+      requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' },
+      config = function()
+        require 'kdheepak/telescope'
+      end,
+    }
     use 'tamago324/telescope-openbrowser.nvim'
     use 'nvim-telescope/telescope-github.nvim'
     use 'gbrlsnchs/telescope-lsp-handlers.nvim'
     use 'nvim-telescope/telescope-fzy-native.nvim'
     use 'nvim-telescope/telescope-dap.nvim'
     use 'Pocco81/DAPInstall.nvim'
-    use {'mfussenegger/nvim-dap', config = function()
-      require 'kdheepak/debug'
-    end}
+    use {
+      'mfussenegger/nvim-dap',
+      config = function()
+        require 'kdheepak/debug'
+      end,
+    }
     use 'theHamsta/nvim-dap-virtual-text'
     use 'mfussenegger/nvim-dap-python'
 
-    use { 'folke/which-key.nvim', config = function()
-      require 'kdheepak/which-key'
-    end }
+    use {
+      'folke/which-key.nvim',
+      config = function()
+        require 'kdheepak/which-key'
+      end,
+    }
 
     use {
       'glepnir/lspsaga.nvim',
@@ -119,9 +132,12 @@ packer.startup({
         require('lsp-status').register_progress()
       end,
     }
-    use { 'hrsh7th/nvim-compe', config = function()
-      require 'kdheepak/compe'
-    end }
+    use {
+      'hrsh7th/nvim-compe',
+      config = function()
+        require 'kdheepak/compe'
+      end,
+    }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue' } }
     use { 'FateXii/emmet-compe', ft = { 'html', 'vue' } }
     use { 'Gavinok/compe-nextword', ft = 'markdown' }
@@ -199,11 +215,11 @@ packer.startup({
     use 'takac/vim-hardtime' -- vim hardtime
     use 'glepnir/dashboard-nvim'
     use 'chrisbra/unicode.vim' -- vim unicode helper
-    use { 'posva/vim-vue', ft = 'vue' }
+    use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
     use 'liuchengxu/vista.vim'
-    use { 'Vimjas/vim-python-pep8-indent', ft = 'python' } -- a nicer Python indentation style for vim
-    use { 'rust-lang/rust.vim', ft = 'rust' } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+    use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } } -- a nicer Python indentation style for vim
+    use { 'rust-lang/rust.vim', ft = { 'rust' } } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
     -- use { 'JuliaEditorSupport/julia-vim', ft = 'julia' } -- julia support for vim
     use { 'kdheepak/gridlabd.vim', ft = 'gridlabd' } -- gridlabd syntax support
     use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim
@@ -303,3 +319,7 @@ require'lualine'.setup {
     lualine_z = {},
   },
 }
+require 'kdheepak/settings'
+require 'kdheepak/config'
+require 'kdheepak/autocommands'
+require 'kdheepak/keymappings'
