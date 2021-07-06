@@ -209,7 +209,7 @@ packer.startup(function()
   use 'liuchengxu/vista.vim'
   use { 'Vimjas/vim-python-pep8-indent', ft = 'python' } -- a nicer Python indentation style for vim
   use { 'rust-lang/rust.vim', ft = 'rust' } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
-  use { 'JuliaEditorSupport/julia-vim', ft = 'julia' } -- julia support for vim
+  -- use { 'JuliaEditorSupport/julia-vim', ft = 'julia' } -- julia support for vim
   use { 'kdheepak/gridlabd.vim', ft = 'gridlabd' } -- gridlabd syntax support
   use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim
   use { 'gpanders/vim-medieval', ft = 'markdown' } -- evaluate markdown code blocks within vim
