@@ -242,24 +242,24 @@ packer.startup(function()
       require'octo'.setup()
     end,
   }
-  use 'RRethy/nvim-base16'
   -- colorschemes
-  use 'kdheepak/vim-one' -- light and dark vim colorscheme
-  use 'Th3Whit3Wolf/one-nvim'
-  use 'navarasu/onedark.nvim'
-  use 'marko-cerovac/material.nvim'
-  use 'lourenci/github-colors'
-  use 'sainnhe/gruvbox-material'
-  use 'ishan9299/nvim-solarized-lua'
-  use 'dracula/vim'
+  -- use 'RRethy/nvim-base16'
+  -- use 'kdheepak/vim-one' -- light and dark vim colorscheme
+  -- use 'Th3Whit3Wolf/one-nvim'
+  -- use 'navarasu/onedark.nvim'
+  -- use 'marko-cerovac/material.nvim'
+  -- use 'lourenci/github-colors'
+  -- use 'sainnhe/gruvbox-material'
+  -- use 'ishan9299/nvim-solarized-lua'
+  -- use 'dracula/vim'
   use 'bluz71/vim-nightfly-guicolors'
-  use 'bluz71/vim-moonfly-colors'
-  use 'folke/tokyonight.nvim'
-  use 'mhartington/oceanic-next'
-  use 'kyazdani42/blue-moon'
-  use 'yonlu/omni.vim'
-  use 'fenetikm/falcon'
-  use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
+  -- use 'bluz71/vim-moonfly-colors'
+  -- use 'folke/tokyonight.nvim'
+  -- use 'mhartington/oceanic-next'
+  -- use 'kyazdani42/blue-moon'
+  -- use 'yonlu/omni.vim'
+  -- use 'fenetikm/falcon'
+  -- use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
 
   use {
     'jghauser/mkdir.nvim',
