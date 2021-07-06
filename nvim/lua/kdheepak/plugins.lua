@@ -44,7 +44,7 @@ packer.startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview' }
+  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview', ft = 'markdown' }
 
   use {
     'nvim-treesitter/nvim-treesitter',
