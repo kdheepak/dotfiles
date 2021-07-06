@@ -9,7 +9,7 @@ git:
     useconfig: false
   skiphookprefix: WIP
 os:
-  openCommand: 'nvim {{filename}}'
+  openCommand: "nvim {{filename}}"
 gui:
   commitlength:
     show: true
@@ -20,15 +20,15 @@ gui:
   skipunstagelinewarning: false
   theme:
     activebordercolor:
-    - green
-    - bold
+      - green
+      - bold
     inactivebordercolor:
-    - white
-    lighttheme: true
+      - white
+    lighttheme: false
     optionstextcolor:
-    - blue
+      - blue
     selectedlinebgcolor:
-    - reverse
+      - reverse
 keybinding:
   branches:
     checkoutbranchbyname: c
@@ -90,10 +90,10 @@ keybinding:
     createrebaseoptionsmenu: m
     diffingmenu: <c-e>
     edit: e
-    executecustomcommand: ':'
+    executecustomcommand: ":"
     filteringmenu: <c-s>
     gointo: <enter>
-    gotobottom: '>'
+    gotobottom: ">"
     gototop: <
     new: "n"
     nextblock: <right>
@@ -103,18 +103,18 @@ keybinding:
     nextmatch: "n"
     nextpage: .
     nextscreenmode: +
-    nexttab: ']'
+    nexttab: "]"
     openfile: o
     optionmenu: x
-    optionmenu-alt1: '?'
+    optionmenu-alt1: "?"
     prevblock: <left>
     prevblock-alt: h
     previtem: <up>
     previtem-alt: k
     prevmatch: "N"
-    prevpage: ','
+    prevpage: ","
     prevscreenmode: _
-    prevtab: '['
+    prevtab: "["
     pullfiles: p
     pushfiles: P
     quit: q
