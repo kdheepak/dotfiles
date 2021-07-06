@@ -12,8 +12,8 @@ end
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
-    autocmd BufWritePost plugins.lua PackerCompile
-    autocmd BufWritePost init.lua PackerCompile
+    autocmd BufWritePost plugins.lua PackerCompile profile=true
+    autocmd BufWritePost init.lua PackerCompile profile=true
   augroup end
 ]], false)
 
@@ -113,7 +113,7 @@ packer.startup(function()
 
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' } }
 
-  use 'tversteeg/registers.nvim'
+  use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
   use 'kyazdani42/nvim-tree.lua'
 
   use { 'ojroques/nvim-bufdel' }
@@ -124,15 +124,12 @@ packer.startup(function()
       require('goto-preview').setup {}
     end,
   }
-  use 'ggandor/lightspeed.nvim'
+  use 'ggandor/lightspeed.nvim' -- use s and S to search
   use 'Pocco81/DAPInstall.nvim'
-  use 'kevinhwang91/nvim-bqf'
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  use 'kevinhwang91/nvim-bqf' -- The goal of nvim-bqf is to make Neovim's quickfix window better.
   use 'justinmk/vim-dirvish'
   -- use 'mcchrish/nnn.vim' -- Fast and featureful file manager in vim/neovim powered by nnn
   use 'vim-scripts/sketch.vim'
-  use '~/gitrepos/vim-autoformat'
-  use '~/gitrepos/artist.nvim'
   use 'gyim/vim-boxdraw'
   use 'tpope/vim-vinegar'
   use 'Xuyuanp/scrollbar.nvim'
@@ -144,8 +141,6 @@ packer.startup(function()
   use 'tpope/vim-rhubarb' -- vim plugin for github
   use 'samoshkin/vim-mergetool' -- Merge tool for git
   use '~/gitrepos/lazygit.nvim' -- lazygit
-  use '~/gitrepos/pandoc.nvim' -- pandoc.nvim
-  use '~/gitrepos/markdown-mode' -- markdown mode
   -- use 'vim-airline/vim-airline'                                        -- airline status bar
   -- use 'vim-airline/vim-airline-themes'                                 -- official theme repository
   use 'nvim-telescope/telescope-github.nvim'
@@ -181,6 +176,7 @@ packer.startup(function()
   use 'tpope/vim-speeddating' -- Tools for working with dates
   use 'tpope/vim-scriptease' -- a Vim plugin for making Vim plugins.
   use 'tpope/vim-eunuch' -- vim sugar for UNIX shell commands like :Rename
+  use 'tpope/vim-sleuth'
   use 'inkarkat/vim-visualrepeat' -- repetition of vim built-in normal mode commands via . for visual mode
   use 'Konfekt/vim-CtrlXA' -- Increment and decrement and toggle keywords
   use 'dhruvasagar/vim-zoom' -- toggle zoom of current window within the current tab
@@ -202,36 +198,34 @@ packer.startup(function()
   use 'sedm0784/vim-you-autocorrect' -- Automatic autocorrect
   use 'inkarkat/vim-ingo-library' -- Spellcheck dependency
   use 'inkarkat/vim-spellcheck' -- Add vim spell check errors to quicklist
-  use 'beloglazov/vim-online-thesaurus'
+  -- use 'beloglazov/vim-online-thesaurus'
   use 'rhysd/clever-f.vim'
   use 'takac/vim-hardtime' -- vim hardtime
   -- use 'mhinz/vim-startify' -- This plugin provides a start screen for Vim and Neovim. Also provides SSave and SLoad
   use 'glepnir/dashboard-nvim'
   use 'chrisbra/unicode.vim' -- vim unicode helper
-  use 'posva/vim-vue'
+  use { 'posva/vim-vue', ft = 'vue' }
   use 'nvim-lua/lsp_extensions.nvim'
   use 'liuchengxu/vista.vim'
-  use 'Vimjas/vim-python-pep8-indent' -- a nicer Python indentation style for vim
-  use 'rust-lang/rust.vim' -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
-  use 'JuliaEditorSupport/julia-vim' -- julia support for vim
-  use 'kdheepak/gridlabd.vim' -- gridlabd syntax support
-  use 'zah/nim.vim' -- syntax highlighting auto indent for nim in vim
-  use 'gpanders/vim-medieval' -- evaluate markdown code blocks within vim
-  use 'tpope/vim-sleuth'
-  use 'plasticboy/vim-markdown' -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
+  use { 'Vimjas/vim-python-pep8-indent', ft = 'python' } -- a nicer Python indentation style for vim
+  use { 'rust-lang/rust.vim', ft = 'rust' } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+  use { 'JuliaEditorSupport/julia-vim', ft = 'julia' } -- julia support for vim
+  use { 'kdheepak/gridlabd.vim', ft = 'gridlabd' } -- gridlabd syntax support
+  use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim
+  use { 'gpanders/vim-medieval', ft = 'markdown' } -- evaluate markdown code blocks within vim
+  use { 'plasticboy/vim-markdown', ft = 'markdown' } -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
   use 'hkupty/iron.nvim'
   use 'kana/vim-textobj-user'
   use 'kana/vim-textobj-line'
-  use 'GCBallesteros/vim-textobj-hydrogen'
-  use 'GCBallesteros/jupytext.vim'
-  use 'bfredl/nvim-ipy'
-  use '~/gitrepos/ganymede'
+  use { 'GCBallesteros/vim-textobj-hydrogen', ft = { 'ipynb', 'python', 'markdown' } }
+  use { 'GCBallesteros/jupytext.vim', ft = { 'ipynb', 'python', 'markdown' } }
+  use { 'bfredl/nvim-ipy', ft = 'python' }
   use '~/gitrepos/JuliaFormatter.vim' -- formatter for Julia
   use 'sindrets/diffview.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use 'ray-x/lsp_signature.nvim'
   use 'romgrk/barbar.nvim'
-  use 'jbyuki/one-small-step-for-vimkind'
+  use { 'jbyuki/one-small-step-for-vimkind', ft = 'lua' }
   use 'mfussenegger/nvim-dap'
   use 'nvim-telescope/telescope-dap.nvim'
   use 'theHamsta/nvim-dap-virtual-text'
@@ -240,8 +234,8 @@ packer.startup(function()
   use 'kosayoda/nvim-lightbulb'
   use 'rust-lang/vscode-rust'
   use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
-  use 'jbyuki/nabla.nvim'
-  use 'jbyuki/venn.nvim'
+  use { 'jbyuki/nabla.nvim', ft = 'markdown' } -- Take your scentific notes in Neovim.
+  use 'jbyuki/venn.nvim' -- Draw ASCII diagrams in Neovim.
   use {
     'pwntester/octo.nvim',
     config = function()
