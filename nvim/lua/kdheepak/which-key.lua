@@ -38,6 +38,24 @@ wk.setup {
 
 vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', { noremap = true, silent = true })
 
+-- vim.api.nvim_set_keymap('<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', '<NOP>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>', '<NOP>', {noremap = true, silent = true})
+
+local saga = require('lspsaga')
+
+saga.init_lsp_saga()
+
+vim.api.nvim_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', 'ca', ':Lspsaga code_action<CR>', { silent = true, noremap = true })
+
+-- scroll down hover doc or scroll in definition preview
+vim.api.nvim_set_keymap('n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<C-g>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", { silent = true, noremap = true })
+
+vim.cmd([[
+autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
+]])
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 

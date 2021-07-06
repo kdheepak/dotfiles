@@ -127,11 +127,6 @@ nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
 inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
 
-nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
-
-autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
-
 command! ZoomToggle :call zoom#toggle()
 nnoremap <leader>vz :ZoomToggle<CR>
 

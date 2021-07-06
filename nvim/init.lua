@@ -5,16 +5,15 @@ function _G.dump(...)
 end
 
 require 'kdheepak/plugins'
--- require 'kdheepak/settings'
--- require 'kdheepak/config'
--- require 'kdheepak/color'
--- require 'kdheepak/autocommands'
--- require 'kdheepak/keymappings'
--- require 'kdheepak/lspconfig'
--- require 'kdheepak/telescope'
--- require 'kdheepak/lualine'
+require 'kdheepak/lualine'
+require 'kdheepak/settings'
+require 'kdheepak/config'
+require 'kdheepak/autocommands'
+require 'kdheepak/keymappings'
+require 'kdheepak/which-key'
+require 'kdheepak/telescope'
+require 'kdheepak/lspconfig'
 -- require 'kdheepak/compe'
--- require 'kdheepak/which-key'
 -- require 'kdheepak/debug'
 
 vim.notify = function(msg, log_level, _)

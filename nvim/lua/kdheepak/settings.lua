@@ -130,8 +130,8 @@ vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_disable_netrw = 1
 vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_bindings = {
-  { key = '/', cb = require'nvim-tree.config'.nvim_tree_callback('vsplit') },
-  { key = '\\', cb = require'nvim-tree.config'.nvim_tree_callback('split') },
+  -- { key = '/', cb = require'nvim-tree.config'.nvim_tree_callback('vsplit') },
+  -- { key = '\\', cb = require'nvim-tree.config'.nvim_tree_callback('split') },
 }
 
 vim.g.dashboard_default_executive = 'telescope'
