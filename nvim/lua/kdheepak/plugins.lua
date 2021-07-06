@@ -12,8 +12,8 @@ end
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
-    autocmd BufWritePost plugins.lua PackerCompile
-    autocmd BufWritePost init.lua PackerCompile
+    autocmd BufWritePost plugins.lua PackerCompile profile=true
+    autocmd BufWritePost init.lua PackerCompile profile=true
   augroup end
 ]], false)
 
@@ -241,12 +241,12 @@ packer.startup({
     use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
     use { 'jbyuki/nabla.nvim', ft = 'markdown' } -- Take your scentific notes in Neovim.
     use 'jbyuki/venn.nvim' -- Draw ASCII diagrams in Neovim.
-    use {
-      'pwntester/octo.nvim',
-      config = function()
-        require'octo'.setup()
-      end,
-    }
+    -- use {
+    --   'pwntester/octo.nvim',
+    --   config = function()
+    --     require'octo'.setup()
+    --   end,
+    -- }
     -- colorschemes
     -- use 'RRethy/nvim-base16'
     -- use 'kdheepak/vim-one' -- light and dark vim colorscheme
