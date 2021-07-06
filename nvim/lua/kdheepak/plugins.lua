@@ -225,6 +225,7 @@ packer.startup(function()
   use 'kyazdani42/nvim-web-devicons'
   use 'ray-x/lsp_signature.nvim'
   use 'romgrk/barbar.nvim'
+  use 'jbyuki/one-small-step-for-vimkind'
   use 'mfussenegger/nvim-dap'
   use 'nvim-telescope/telescope-dap.nvim'
   use 'theHamsta/nvim-dap-virtual-text'

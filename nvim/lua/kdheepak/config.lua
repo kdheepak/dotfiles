@@ -91,8 +91,8 @@ nnoremap ' `
 " works nicely in terminal mode as well
 nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
 
-nnoremap <silent> <TAB>    :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:BufferMoveNext<CR>
-nnoremap <silent> <S-TAB>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:BufferMovePrevious<CR>
+nnoremap <silent> <TAB>    :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:BufferNext<CR>
+nnoremap <silent> <S-TAB>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:BufferPrevious<CR>
 
 " Opens line below or above the current line
 inoremap <S-CR> <C-O>o
