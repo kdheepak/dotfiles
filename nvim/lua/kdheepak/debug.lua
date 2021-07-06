@@ -23,7 +23,6 @@ dap.adapters.nlua = function(callback, config)
   callback({ type = 'server', host = config.host, port = config.port })
 end
 
-local dap = require 'dap'
 dap.adapters.rust = {
   type = 'executable',
   attach = { pidProperty = 'pid', pidSelect = 'ask' },
