@@ -183,29 +183,6 @@ require'lspconfig'.efm.setup {
   },
 }
 
-local actions = require('telescope.actions')
-require('telescope').setup {
-  defaults = {
-    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-    sorting_strategy = 'ascending',
-    mappings = {
-      n = {
-        ['<esc>'] = actions.close,
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
-      },
-      i = {
-        ['<esc>'] = actions.close,
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
-      },
-    },
-  },
-  extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
-}
-
-local wk = require 'which-key'
-
 vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
                         { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
@@ -214,40 +191,3 @@ vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua require("lspsaga.action").smart_
 vim.cmd([[
 autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
 ]])
-
-local opts = {
-  mode = 'n', -- NORMAL mode
-  prefix = '<leader>',
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
-
-local mappings = {
-  l = {
-    name = 'LSP',
-    [']'] = { '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next Diagnostic' },
-    ['['] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic' },
-    a = { '<cmd>Lspsaga code_action<CR>', 'Code Action' },
-    A = { '<cmd>Lspsaga range_code_action<CR>', 'Selected Action' },
-    d = { '<cmd>Telescope lsp_document_diagnostics<CR>', 'Document Diagnostics' },
-    D = { '<cmd>Telescope lsp_workspace_diagnostics<CR>', 'Workspace Diagnostics' },
-    f = { '<cmd>lua vim.lsp.buf.formatting()<CR>', 'Format' },
-    h = { '<cmd>Lspsaga hover_doc<CR>', 'Hover Doc' },
-    H = { '<cmd>Lspsaga signature_help<CR>', 'Signature Help' },
-    i = { '<cmd>LspInfo<CR>', 'Info' },
-    l = { '<cmd>Lspsaga lsp_finder<CR>', 'LSP Finder' },
-    L = { '<cmd>Lspsaga show_line_diagnostics<CR>', 'Line Diagnostics' },
-    p = { '<cmd>Lspsaga preview_definition<CR>', 'Preview Definition' },
-    q = { '<cmd>Telescope quickfix<CR>', 'Quickfix' },
-    r = { '<cmd>Lspsaga rename<CR>', 'Rename' },
-    t = { '<cmd>LspTypeDefinition<CR>', 'Type Definition' },
-    x = { '<cmd>cclose<CR>', 'Close Quickfix' },
-    s = { '<cmd>Telescope lsp_document_symbols<CR>', 'Document Symbols' },
-    g = { '<cmd>lua require\'lspsaga.diagnostic\'.show_cursor_diagnostics()<CR>', 'Document Symbols' },
-    S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'Workspace Symbols' },
-  },
-}
-
-wk.register(mappings, opts)

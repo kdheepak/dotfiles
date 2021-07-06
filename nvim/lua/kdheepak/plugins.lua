@@ -53,7 +53,6 @@ packer.startup({
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
       config = function()
-        require('nvim-autopairs').setup()
         require'nvim-treesitter.configs'.setup {
           autotag = { enable = true },
           highlight = { enable = true },
@@ -63,8 +62,20 @@ packer.startup({
         }
       end,
       requires = {
-        { 'nvim-treesitter/playground', opt = true }, { 'windwp/nvim-autopairs' }, { 'windwp/nvim-ts-autotag' },
+        { 'nvim-treesitter/playground', opt = true, event = 'BufRead' }, {
+          'windwp/nvim-autopairs',
+          event = 'InsertEnter',
+          config = function()
+            require('nvim-autopairs').setup()
+          end,
+        }, { 'windwp/nvim-ts-autotag', event = 'InsertEnter' },
       },
+    }
+    use {
+      'terrortylor/nvim-comment',
+      config = function()
+        require('nvim_comment').setup()
+      end,
     }
 
     use {
@@ -73,6 +84,7 @@ packer.startup({
       config = function()
         require('gitsigns').setup()
       end,
+      event = 'BufRead',
     }
 
     use {
@@ -81,6 +93,7 @@ packer.startup({
         require 'kdheepak/lspconfig'
       end,
     }
+    use { 'kabouzeid/nvim-lspinstall', event = 'BufRead' }
 
     use {
       'nvim-telescope/telescope.nvim',
@@ -88,6 +101,7 @@ packer.startup({
       config = function()
         require 'kdheepak/telescope'
       end,
+      event = 'BufEnter',
     }
     use 'tamago324/telescope-openbrowser.nvim'
     use 'nvim-telescope/telescope-github.nvim'
@@ -109,6 +123,7 @@ packer.startup({
       config = function()
         require 'kdheepak/which-key'
       end,
+      event = 'BufRead',
     }
 
     use {
@@ -123,8 +138,8 @@ packer.startup({
       end,
     }
 
-    use 'onsails/lspkind-nvim'
-    use 'ray-x/lsp_signature.nvim'
+    use { 'onsails/lspkind-nvim', event = 'BufEnter' }
+    use { 'ray-x/lsp_signature.nvim', event = 'BufEnter' }
 
     use {
       'nvim-lua/lsp-status.nvim',
@@ -137,15 +152,17 @@ packer.startup({
       config = function()
         require 'kdheepak/compe'
       end,
+      event = 'InsertEnter',
     }
-    use { 'mattn/emmet-vim', ft = { 'html', 'vue' } }
-    use { 'FateXii/emmet-compe', ft = { 'html', 'vue' } }
-    use { 'Gavinok/compe-nextword', ft = 'markdown' }
-    use 'GoldsteinE/compe-latex-symbols'
-    use { 'sblumentritt/cmake.vim', ft = 'cmake' }
-    use { 'tamago324/compe-zsh', ft = 'zsh' }
-    use { 'hrsh7th/vim-vsnip' }
-    use { 'hrsh7th/vim-vsnip-integ' }
+    use { 'mattn/emmet-vim', ft = { 'html', 'vue' }, event = 'InsertEnter' }
+    use { 'FateXii/emmet-compe', ft = { 'html', 'vue' }, event = 'InsertEnter' }
+    use { 'Gavinok/compe-nextword', ft = 'markdown', event = 'InsertEnter' }
+    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter' }
+    use { 'sblumentritt/cmake.vim', ft = 'cmake', event = 'InsertEnter' }
+    use { 'tamago324/compe-zsh', ft = 'zsh', event = 'InsertEnter' }
+    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
+    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter' }
+    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter' }
 
     use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
     use 'kyazdani42/nvim-tree.lua'
@@ -166,6 +183,7 @@ packer.startup({
       config = function() -- a high-performance color highlighter for Neovim which has no external dependencies
         require('colorizer').setup()
       end,
+      event = 'BufRead',
     }
     use {
       'lewis6991/spellsitter.nvim',
@@ -195,10 +213,10 @@ packer.startup({
     use 'dhruvasagar/vim-zoom' -- toggle zoom of current window within the current tab
     use 'kana/vim-niceblock' -- makes blockwise Visual mode more useful and intuitive
     use 'mbbill/undotree' -- visualizes undo history and makes it easier to browse and switch between different undo branches
-    use 'reedes/vim-wordy' -- uncover usage problems in your writing
+    use { 'reedes/vim-wordy', event = 'BufRead' } -- uncover usage problems in your writing
     use 'farmergreg/vim-lastplace' -- intelligently reopen files at your last edit position
-    use 'ntpeters/vim-better-whitespace' -- causes all trailing whitespace characters to be highlighted
-    use 'nathanaelkane/vim-indent-guides' -- displaying thin vertical lines at each indentation level for code indented with spaces
+    use { 'ntpeters/vim-better-whitespace', event = 'BufRead' } -- causes all trailing whitespace characters to be highlighted
+    use { 'nathanaelkane/vim-indent-guides', event = 'BufRead' } -- displaying thin vertical lines at each indentation level for code indented with spaces
     use 'dhruvasagar/vim-table-mode' -- automatic table creator & formatter allowing one to create neat tables as you type
     use 'joom/latex-unicoder.vim' -- a plugin to type Unicode chars in Vim, using their LaTeX names
     use 'editorconfig/editorconfig-vim' -- editorconfig plugin for vim
@@ -213,7 +231,7 @@ packer.startup({
     -- use 'beloglazov/vim-online-thesaurus'
     use 'rhysd/clever-f.vim'
     use 'takac/vim-hardtime' -- vim hardtime
-    use 'glepnir/dashboard-nvim'
+    use { 'glepnir/dashboard-nvim', opt = true, event = 'BufWinEnter' }
     use 'chrisbra/unicode.vim' -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
@@ -232,8 +250,15 @@ packer.startup({
     use { 'GCBallesteros/jupytext.vim', ft = { 'ipynb', 'python', 'markdown' } }
     use { 'bfredl/nvim-ipy', ft = 'python' }
     use { '~/gitrepos/JuliaFormatter.vim', ft = 'julia' } -- formatter for Julia
-    use 'sindrets/diffview.nvim'
-    use 'romgrk/barbar.nvim'
+    use { 'sindrets/diffview.nvim', event = 'BufRead' }
+    use {
+      'romgrk/barbar.nvim',
+      config = function()
+        vim.api.nvim_set_keymap('n', '<TAB>', ':BufferNext<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<S-TAB>', ':BufferPrevious<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':BufferClose<CR>', { noremap = true, silent = true })
+      end,
+    }
     use { 'jbyuki/one-small-step-for-vimkind', ft = 'lua' }
     use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
     use 'kosayoda/nvim-lightbulb'

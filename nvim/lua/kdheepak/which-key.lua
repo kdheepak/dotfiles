@@ -49,8 +49,10 @@ vim.api.nvim_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', { silent = true, nor
 vim.api.nvim_set_keymap('n', 'ca', ':Lspsaga code_action<CR>', { silent = true, noremap = true })
 
 -- scroll down hover doc or scroll in definition preview
-vim.api.nvim_set_keymap('n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap('n', '<C-g>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require(\'lspsaga.action\').smart_scroll_with_saga(1)<CR>',
+                        { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<C-g>', '<cmd>lua require(\'lspsaga.action\').smart_scroll_with_saga(-1)<CR>',
+                        { silent = true, noremap = true })
 
 vim.cmd([[
 autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
@@ -123,13 +125,12 @@ local mappings = {
     k = { '<cmd>BufferPrevious<CR>', 'Prev buffer' },
     w = { '<cmd>BufferWipeout<CR>', 'wipeout buffer' },
   },
-
   g = {
     name = 'Git',
     j = { '<cmd>GitGutterNextHunk<CR>', 'Next Hunk' },
     k = { '<cmd>GitGutterPrevHunk<CR>', 'Prev Hunk' },
     b = { '<cmd>Gblame<CR>', 'Blame' },
-    B = { '<cmd>lua require\'gitsigns\'.blame_line(true)<CR>', 'Blame' },
+    B = { '<cmd>lua require"gitsigns".blame_line(true)<CR>', 'Blame' },
     p = { '<cmd>Gpush<CR>', 'Git Push' },
     P = { '<cmd>Gpull<CR>', 'Git Pull' },
     r = { '<cmd>Gremove<CR>', 'Git Remove' },
