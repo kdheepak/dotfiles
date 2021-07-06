@@ -75,20 +75,28 @@ packer.startup({
       end,
     }
 
-    use 'neovim/nvim-lspconfig'
+    use {'neovim/nvim-lspconfig', config = function()
+      require 'kdheepak/lspconfig'
+    end}
 
-    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' } }
+    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' }, config = function()
+      require 'kdheepak/telescope'
+    end}
     use 'tamago324/telescope-openbrowser.nvim'
     use 'nvim-telescope/telescope-github.nvim'
     use 'gbrlsnchs/telescope-lsp-handlers.nvim'
     use 'nvim-telescope/telescope-fzy-native.nvim'
     use 'nvim-telescope/telescope-dap.nvim'
     use 'Pocco81/DAPInstall.nvim'
-    use 'mfussenegger/nvim-dap'
+    use {'mfussenegger/nvim-dap', config = function()
+      require 'kdheepak/debug'
+    end}
     use 'theHamsta/nvim-dap-virtual-text'
     use 'mfussenegger/nvim-dap-python'
 
-    use { 'folke/which-key.nvim' }
+    use { 'folke/which-key.nvim', config = function()
+      require 'kdheepak/which-key'
+    end }
 
     use {
       'glepnir/lspsaga.nvim',
@@ -111,7 +119,9 @@ packer.startup({
         require('lsp-status').register_progress()
       end,
     }
-    use { 'hrsh7th/nvim-compe' }
+    use { 'hrsh7th/nvim-compe', config = function()
+      require 'kdheepak/compe'
+    end }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue' } }
     use { 'FateXii/emmet-compe', ft = { 'html', 'vue' } }
     use { 'Gavinok/compe-nextword', ft = 'markdown' }
