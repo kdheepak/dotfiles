@@ -160,7 +160,14 @@ packer.startup(function()
       require('colorizer').setup()
     end,
   }
+  use {
+    'lewis6991/spellsitter.nvim',
+    config = function()
+      require('spellsitter').setup()
+    end,
+  }
   -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
+  use 'yamatsum/nvim-cursorline'
   use 'junegunn/vim-easy-align' -- helps alignment
   use 'godlygeek/tabular' -- line up text
   use 'tpope/vim-commentary' -- comment and uncomment stuff
@@ -236,7 +243,12 @@ packer.startup(function()
   use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
   use 'jbyuki/nabla.nvim'
   use 'jbyuki/venn.nvim'
-  use 'folke/tokyonight.nvim'
+  use {
+    'pwntester/octo.nvim',
+    config = function()
+      require'octo'.setup()
+    end,
+  }
   use 'Th3Whit3Wolf/one-nvim'
   use 'navarasu/onedark.nvim'
   use 'marko-cerovac/material.nvim'
@@ -245,6 +257,8 @@ packer.startup(function()
   use 'ishan9299/nvim-solarized-lua'
   use 'dracula/vim'
   use 'bluz71/vim-nightfly-guicolors'
+  use 'bluz71/vim-moonfly-colors'
+  use 'folke/tokyonight.nvim'
   -- use 'Mofiqul/dracula.nvim'
   use {
     'jghauser/mkdir.nvim',
@@ -279,7 +293,7 @@ packer.startup(function()
 end)
 
 require'lualine'.setup {
-  options = { theme = 'nightfly' },
+  options = { theme = 'tokyonight' },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },

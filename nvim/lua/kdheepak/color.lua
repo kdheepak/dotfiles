@@ -1,5 +1,3 @@
-vim.api.nvim_exec( [[
-
-colorscheme nightfly
-
-]], false )
+vim.g.tokyonight_style = 'night'
+vim.g.tokyonight_lualine_bold = true
+vim.cmd 'colorscheme tokyonight'
