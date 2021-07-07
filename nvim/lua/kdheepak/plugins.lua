@@ -150,16 +150,17 @@ packer.startup({
       config = function()
         require 'kdheepak/compe'
       end,
+      -- event = 'BufRead',
     }
     use { 'mattn/emmet-vim' }
-    use { 'FateXii/emmet-compe' }
-    use { 'Gavinok/compe-nextword', requires = { 'nvim-lua/plenary.nvim', 'hrsh7th/nvim-compe' } }
-    use { 'GoldsteinE/compe-latex-symbols' }
-    use { 'sblumentritt/cmake.vim' }
-    use { 'tamago324/compe-zsh' }
-    use { 'hrsh7th/vim-vsnip' }
-    use { 'hrsh7th/vim-vsnip-integ' }
-    use { 'rafamadriz/friendly-snippets' }
+    use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
+    use { 'tamago324/compe-zsh', ft = 'zsh', requires = { 'nvim-lua/plenary.nvim', 'hrsh7th/nvim-compe' } }
+    use { 'Gavinok/compe-nextword', event = 'BufRead', requires = { 'nvim-lua/plenary.nvim', 'hrsh7th/nvim-compe' } }
+    use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
+    -- use { 'sblumentritt/cmake.vim', ft = 'cmake' }
+    use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
+    use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
+    use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
 
     use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
     use 'kyazdani42/nvim-tree.lua'
@@ -195,46 +196,45 @@ packer.startup({
     use 'RRethy/vim-illuminate'
     --  use 'junegunn/vim-easy-align' -- helps alignment
     use 'godlygeek/tabular' -- line up text
-    use 'tpope/vim-commentary' -- comment and uncomment stuff
-    use 'tpope/vim-unimpaired' -- complementary pairs of mappings
-    use 'tpope/vim-abolish' -- convert camel to snake
-    use 'tpope/vim-surround' -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
-    use 'tpope/vim-repeat' -- repeat.vim remaps . in a way that plugins can tap into it.
+    use { 'tpope/vim-unimpaired', event = 'BufRead' } -- complementary pairs of mappings
+    use { 'tpope/vim-abolish', event = 'BufRead' } -- convert camel to snake
+    use { 'tpope/vim-surround', event = 'BufRead' } -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
+    use { 'tpope/vim-repeat', event = 'BufRead' } -- repeat.vim remaps . in a way that plugins can tap into it.
     use 'vim-utils/vim-vertical-move'
-    use 'tpope/vim-tbone' -- basic tmux support for vim
-    use 'tpope/vim-jdaddy' -- mappings for working with json in vim
-    use 'tpope/vim-obsession' -- no hassle vim sessions
-    use 'tpope/vim-speeddating' -- Tools for working with dates
-    use 'tpope/vim-eunuch' -- vim sugar for UNIX shell commands like :Rename
-    use 'tpope/vim-sleuth'
-    use 'inkarkat/vim-visualrepeat' -- repetition of vim built-in normal mode commands via . for visual mode
-    use 'Konfekt/vim-CtrlXA' -- Increment and decrement and toggle keywords
-    use 'dhruvasagar/vim-zoom' -- toggle zoom of current window within the current tab
-    use 'kana/vim-niceblock' -- makes blockwise Visual mode more useful and intuitive
-    use 'mbbill/undotree' -- visualizes undo history and makes it easier to browse and switch between different undo branches
+    -- use 'tpope/vim-tbone'                                                                                                                            -- basic tmux support for vim
+    use { 'tpope/vim-jdaddy', event = 'BufRead' } -- mappings for working with json in vim
+    -- use 'tpope/vim-obsession'                                                                                                                        -- no hassle vim sessions
+    use { 'tpope/vim-speeddating', event = 'BufRead' } -- Tools for working with dates
+    use { 'tpope/vim-eunuch', event = 'BufRead' } -- vim sugar for UNIX shell commands like :Rename
+    use { 'tpope/vim-sleuth', event = 'BufRead' } -- This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
+    use { 'inkarkat/vim-visualrepeat', event = 'BufRead' } -- repetition of vim built-in normal mode commands via . for visual mode
+    use { 'Konfekt/vim-CtrlXA', event = 'BufRead' } -- Increment and decrement and toggle keywords
+    use { 'dhruvasagar/vim-zoom' } -- toggle zoom of current window within the current tab
+    use { 'kana/vim-niceblock' } -- makes blockwise Visual mode more useful and intuitive
+    use { 'mbbill/undotree', event = 'BufRead' } -- visualizes undo history and makes it easier to browse and switch between different undo branches
     use { 'reedes/vim-wordy' } -- uncover usage problems in your writing
     use 'farmergreg/vim-lastplace' -- intelligently reopen files at your last edit position
-    use { 'ntpeters/vim-better-whitespace' } -- causes all trailing whitespace characters to be highlighted
-    use { 'nathanaelkane/vim-indent-guides' } -- displaying thin vertical lines at each indentation level for code indented with spaces
-    use 'dhruvasagar/vim-table-mode' -- automatic table creator & formatter allowing one to create neat tables as you type
-    use 'joom/latex-unicoder.vim' -- a plugin to type Unicode chars in Vim, using their LaTeX names
+    use { 'ntpeters/vim-better-whitespace', event = 'BufRead' } -- causes all trailing whitespace characters to be highlighted
+    use { 'nathanaelkane/vim-indent-guides', event = 'BufRead' } -- displaying thin vertical lines at each indentation level for code indented with spaces
+    use { 'dhruvasagar/vim-table-mode', event = 'BufRead' } -- automatic table creator & formatter allowing one to create neat tables as you type
+    use { 'joom/latex-unicoder.vim', event = 'BufRead' } -- a plugin to type Unicode chars in Vim, using their LaTeX names
     use 'editorconfig/editorconfig-vim' -- editorconfig plugin for vim
-    use 'osyo-manga/vim-anzu' -- show total number of matches and current match number
-    use 'jeffkreeftmeijer/vim-numbertoggle'
-    use 'haya14busa/vim-asterisk' -- asterisk.vim provides improved search * motions
-    use 'segeljakt/vim-isotope' -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
-    -- use 'kshenoy/vim-signature' -- toggle display and navigate marks
-    use 'sedm0784/vim-you-autocorrect' -- Automatic autocorrect
-    use 'inkarkat/vim-ingo-library' -- Spellcheck dependency
-    use 'inkarkat/vim-spellcheck' -- Add vim spell check errors to quicklist
+    use { 'osyo-manga/vim-anzu', event = 'BufRead' } -- show total number of matches and current match number
+    use { 'jeffkreeftmeijer/vim-numbertoggle', event = 'BufRead' }
+    use { 'haya14busa/vim-asterisk', event = 'BufRead' } -- asterisk.vim provides improved search * motions
+    use { 'segeljakt/vim-isotope', event = 'BufRead' } -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
+    -- use 'kshenoy/vim-signature'                                                                                                                      -- toggle display and navigate marks
+    use { 'sedm0784/vim-you-autocorrect', event = 'BufRead' } -- Automatic autocorrect
+    use { 'inkarkat/vim-ingo-library', event = 'BufRead' } -- Spellcheck dependency
+    use { 'inkarkat/vim-spellcheck', event = 'BufRead' } -- Add vim spell check errors to quicklist
     -- use 'beloglazov/vim-online-thesaurus'
-    use 'rhysd/clever-f.vim'
-    use 'takac/vim-hardtime' -- vim hardtime
+    use { 'takac/vim-hardtime', event = 'BufRead' } -- vim hardtime
     use { 'glepnir/dashboard-nvim' }
-    use 'chrisbra/unicode.vim' -- vim unicode helper
+    use { 'chrisbra/unicode.vim', event = 'BufRead' } -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
-    use 'liuchengxu/vista.vim'
+    use 'liuchengxu/vista.vim' -- viewer and finder for lsp symbols
+    use { 'kosayoda/nvim-lightbulb', event = 'BufRead' }
     use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } } -- a nicer Python indentation style for vim
     use { 'rust-lang/rust.vim', ft = { 'rust' } } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
     -- use { 'JuliaEditorSupport/julia-vim', ft = 'julia' } -- julia support for vim
@@ -242,9 +242,9 @@ packer.startup({
     use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim
     use { 'gpanders/vim-medieval', ft = 'markdown' } -- evaluate markdown code blocks within vim
     use { 'plasticboy/vim-markdown', ft = 'markdown' } -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
-    use 'hkupty/iron.nvim'
-    use 'kana/vim-textobj-user'
-    use 'kana/vim-textobj-line'
+    use { 'hkupty/iron.nvim', event = 'BufRead' }
+    use { 'kana/vim-textobj-user', event = 'BufRead' }
+    use { 'kana/vim-textobj-line', event = 'BufRead' }
     use { 'GCBallesteros/vim-textobj-hydrogen', ft = { 'ipynb', 'python', 'markdown' } }
     use { 'GCBallesteros/jupytext.vim', ft = { 'ipynb', 'python', 'markdown' } }
     use { 'bfredl/nvim-ipy', ft = 'python' }
@@ -260,17 +260,17 @@ packer.startup({
     }
     use { 'jbyuki/one-small-step-for-vimkind', ft = 'lua' }
     use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
-    use 'kosayoda/nvim-lightbulb'
-    use 'rust-lang/vscode-rust'
-    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    use { 'rust-lang/vscode-rust', ft = 'rust' }
     use { 'jbyuki/nabla.nvim', ft = 'markdown' } -- Take your scentific notes in Neovim.
-    use 'jbyuki/venn.nvim' -- Draw ASCII diagrams in Neovim.
-    -- use {
-    --   'pwntester/octo.nvim',
-    --   config = function()
-    --     require'octo'.setup()
-    --   end,
-    -- }
+    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    use { 'jbyuki/venn.nvim', event = 'BufRead' } -- Draw ASCII diagrams in Neovim.
+    use {
+      'pwntester/octo.nvim',
+      config = function()
+        require'octo'.setup()
+      end,
+      event = 'BufRead',
+    }
     -- colorschemes
     -- use 'RRethy/nvim-base16'
     -- use 'kdheepak/vim-one' -- light and dark vim colorscheme
