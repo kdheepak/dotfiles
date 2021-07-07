@@ -54,6 +54,7 @@ packer.startup({
       config = function()
         require('nvim-autopairs').setup()
       end,
+      event = 'InsertEnter',
     }
     use { 'windwp/nvim-ts-autotag' }
     use {
@@ -152,7 +153,7 @@ packer.startup({
     }
     use { 'mattn/emmet-vim' }
     use { 'FateXii/emmet-compe' }
-    use { 'Gavinok/compe-nextword' }
+    use { 'Gavinok/compe-nextword', requires = { 'nvim-lua/plenary.nvim', 'hrsh7th/nvim-compe' } }
     use { 'GoldsteinE/compe-latex-symbols' }
     use { 'sblumentritt/cmake.vim' }
     use { 'tamago324/compe-zsh' }
