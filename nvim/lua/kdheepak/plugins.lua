@@ -231,7 +231,7 @@ packer.startup({
     -- use 'beloglazov/vim-online-thesaurus'
     use 'rhysd/clever-f.vim'
     use 'takac/vim-hardtime' -- vim hardtime
-    use { 'glepnir/dashboard-nvim', opt = true }
+    use { 'glepnir/dashboard-nvim' }
     use 'chrisbra/unicode.vim' -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
