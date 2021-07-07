@@ -280,7 +280,7 @@ packer.startup({
     -- use 'sainnhe/gruvbox-material'
     -- use 'ishan9299/nvim-solarized-lua'
     -- use 'dracula/vim'
-    use 'yashguptaz/calvera-dark.nvim'
+    use { 'yashguptaz/calvera-dark.nvim' }
     use 'marko-cerovac/material.nvim'
     use {
       'bluz71/vim-nightfly-guicolors',
