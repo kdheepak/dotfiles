@@ -191,8 +191,8 @@ packer.startup({
       end,
     }
     -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
-    use 'yamatsum/nvim-cursorline'
-    -- use 'RRethy/vim-illuminate'
+    -- use 'yamatsum/nvim-cursorline'
+    use 'RRethy/vim-illuminate'
     --  use 'junegunn/vim-easy-align' -- helps alignment
     use 'godlygeek/tabular' -- line up text
     use 'tpope/vim-commentary' -- comment and uncomment stuff
@@ -205,7 +205,6 @@ packer.startup({
     use 'tpope/vim-jdaddy' -- mappings for working with json in vim
     use 'tpope/vim-obsession' -- no hassle vim sessions
     use 'tpope/vim-speeddating' -- Tools for working with dates
-    use 'tpope/vim-scriptease' -- a Vim plugin for making Vim plugins.
     use 'tpope/vim-eunuch' -- vim sugar for UNIX shell commands like :Rename
     use 'tpope/vim-sleuth'
     use 'inkarkat/vim-visualrepeat' -- repetition of vim built-in normal mode commands via . for visual mode

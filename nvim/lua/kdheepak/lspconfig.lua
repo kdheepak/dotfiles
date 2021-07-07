@@ -56,6 +56,7 @@ local on_attach_vim = function(client, bufnr)
     hint_enable = true,
   })
   require'lsp-status'.on_attach(client)
+  require'illuminate'.on_attach(client)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -75,19 +76,6 @@ local on_attach_vim = function(client, bufnr)
     buf_set_keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
   end
 
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-        hi LspReferenceRead ctermbg=236 guibg=#363a4e cterm=bold gui=bold
-        hi LspReferenceText ctermbg=236 guibg=#363a4e cterm=bold gui=bold
-        hi LspReferenceWrite ctermbg=236 guibg=#363a4e cterm=bold gui=bold
-        augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-        ]], false)
-  end
 end
 -- lspconfig.julials.setup({on_attach = on_attach_vim})
 lspconfig.bashls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
