@@ -12,8 +12,7 @@ end
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
-    autocmd BufWritePost plugins.lua PackerCompile profile=true
-    autocmd BufWritePost init.lua PackerCompile profile=true
+    autocmd BufWritePost plugins.lua PackerCompile
   augroup end
 ]], false)
 
@@ -50,6 +49,14 @@ packer.startup({
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview', ft = 'markdown' }
 
     use {
+      'windwp/nvim-autopairs',
+      after = { 'telescope.nvim', 'nvim-compe' },
+      config = function()
+        require('nvim-autopairs').setup()
+      end,
+    }
+    use { 'windwp/nvim-ts-autotag' }
+    use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
       config = function()
@@ -61,15 +68,7 @@ packer.startup({
           indent = { enable = true },
         }
       end,
-      requires = {
-        { 'nvim-treesitter/playground', opt = true }, {
-          'windwp/nvim-autopairs',
-          after = { 'telescope.nvim', 'nvim-compe' },
-          config = function()
-            require('nvim-autopairs').setup()
-          end,
-        }, { 'windwp/nvim-ts-autotag' },
-      },
+      requires = { { 'nvim-treesitter/playground', opt = true } },
     }
     use {
       'terrortylor/nvim-comment',
