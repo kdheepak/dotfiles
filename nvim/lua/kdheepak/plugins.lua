@@ -65,6 +65,7 @@ packer.startup({
         { 'nvim-treesitter/playground', opt = true, event = 'BufRead' }, {
           'windwp/nvim-autopairs',
           event = 'InsertEnter',
+          after = { 'telescope.nvim', 'nvim-compe' },
           config = function()
             require('nvim-autopairs').setup()
           end,
@@ -97,7 +98,7 @@ packer.startup({
 
     use {
       'nvim-telescope/telescope.nvim',
-      requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' },
+      requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'nvim-telescope/telescope-fzy-native.nvim' },
       config = function()
         require 'kdheepak/telescope'
       end,
@@ -106,7 +107,6 @@ packer.startup({
     use 'tamago324/telescope-openbrowser.nvim'
     use 'nvim-telescope/telescope-github.nvim'
     use 'gbrlsnchs/telescope-lsp-handlers.nvim'
-    use 'nvim-telescope/telescope-fzy-native.nvim'
     use 'nvim-telescope/telescope-dap.nvim'
     use 'Pocco81/DAPInstall.nvim'
     use {
@@ -123,9 +123,8 @@ packer.startup({
       config = function()
         require 'kdheepak/which-key'
       end,
-      event = 'BufRead',
+      after = 'nvim-compe',
     }
-
     use {
       'glepnir/lspsaga.nvim',
       config = function()
@@ -135,7 +134,11 @@ packer.startup({
           code_action_keys = { quit = { 'q', '<ESC>' }, exec = '<CR>' },
           border_style = 'round',
         }
+        vim.cmd([[
+        autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
+        ]])
       end,
+      event = 'BufRead',
     }
 
     use { 'onsails/lspkind-nvim', event = 'BufEnter' }
@@ -154,20 +157,24 @@ packer.startup({
       end,
       event = 'InsertEnter',
     }
-    use { 'mattn/emmet-vim', event = 'InsertEnter' }
-    use { 'FateXii/emmet-compe', event = 'InsertEnter' }
-    use { 'Gavinok/compe-nextword', event = 'InsertEnter' }
-    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter' }
-    use { 'sblumentritt/cmake.vim', event = 'InsertEnter' }
-    use { 'tamago324/compe-zsh', event = 'InsertEnter' }
-    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
-    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter' }
-    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter' }
+    use { 'mattn/emmet-vim', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'FateXii/emmet-compe', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'Gavinok/compe-nextword', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'sblumentritt/cmake.vim', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'tamago324/compe-zsh', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter', after = 'nvim-compe' }
 
     use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
     use 'kyazdani42/nvim-tree.lua'
 
-    use 'ggandor/lightspeed.nvim' -- use s and S to search
+    use {
+      'ggandor/lightspeed.nvim', -- use s and S to search
+      event = 'BufRead',
+    }
+
     use 'kevinhwang91/nvim-bqf' -- The goal of nvim-bqf is to make Neovim's quickfix window better.
     use 'tyru/open-browser.vim' -- opens url in browser
     use 'tyru/open-browser-github.vim' -- opens github repo or github issue in browser

@@ -41,10 +41,6 @@ vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', { noremap = true, silent = true
 -- vim.api.nvim_set_keymap('<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', '<NOP>', {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap('<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>', '<NOP>', {noremap = true, silent = true})
 
-local saga = require('lspsaga')
-
-saga.init_lsp_saga()
-
 vim.api.nvim_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', 'ca', ':Lspsaga code_action<CR>', { silent = true, noremap = true })
 
@@ -77,6 +73,22 @@ vim.api.nvim_set_keymap('n', '<Leader><Leader>', ':delmarks! | delmarks a-zA-Z0-
                         { noremap = true, silent = true })
 
 -- inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+local global_opts = {
+  mode = 'n', -- normal mode
+  buffer = nil, -- global mappings. specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
+}
+
+local global_mappings = {
+  ['<C-c><C-c>'] = { '<cmd>BufferClose<cr>', 'close buffer' },
+  ['<Tab>'] = { '<cmd>BufferNext<cr>', 'Jump to next buffer' },
+  ['<S-Tab>'] = { '<cmd>BufferPrevious<cr>', 'Jump to prev buffer' },
+}
+
+wk.register(global_mappings, global_opts)
 
 local visual_mappings = {
   p = { '"+p', 'Paste from clipboard' },
@@ -144,9 +156,9 @@ local mappings = {
     g = { '<cmd>Telescope live_grep<CR>', 'Live grep' },
     b = { '<cmd>Telescope buffers<CR>', 'Buffers' },
     h = { '<cmd>Telescope help_tags<CR>', 'Help tags' },
-    s = { '<cmd>lua require\'telescope.builtin\'.grep_string()<CR>', 'Search for word under cursor' },
-    i = { '<cmd>lua require\'telescope\'.extensions.gh.issues()<CR>', 'Git issues' },
-    p = { '<cmd>lua require\'telescope\'.extensions.gh.pull_request()<CR>', 'Git pull request' },
+    s = { '<cmd>lua require"telescope.builtin".grep_string()<CR>', 'Search for word under cursor' },
+    i = { '<cmd>lua require"telescope".extensions.gh.issues()<CR>', 'Git issues' },
+    p = { '<cmd>lua require"telescope".extensions.gh.pull_request()<CR>', 'Git pull request' },
     c = { '<cmd>Telescope colorscheme<CR>', 'Colorscheme' },
     d = { '<cmd>Telescope lsp_document_diagnostics<CR>', 'Document Diagnostics' },
     D = { '<cmd>Telescope lsp_workspace_diagnostics<CR>', 'Workspace Diagnostics' },
@@ -154,9 +166,9 @@ local mappings = {
     M = { '<cmd>Telescope man_pages<CR>', 'Man Pages' },
     r = { '<cmd>Telescope oldfiles<CR>', 'Open Recent File' },
     R = { '<cmd>Telescope registers<CR>', 'Registers' },
-    n = { '<cmd>lua require(\'telescope.builtin\').file_browser()<CR>', 'File Browser' },
-    ['%'] = { '<cmd>lua require(\'telescope.builtin\').current_buffer_fuzzy_find()<CR>', 'Find in Current Buffer' },
-    t = { [[<cmd>lua require('telescope.builtin').current_buffer_tags()<CR>]], 'tags of buffer' },
+    n = { '<cmd>lua require("telescope.builtin").file_browser()<CR>', 'File Browser' },
+    ['%'] = { '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>', 'Find in Current Buffer' },
+    t = { '<cmd>lua require("telescope.builtin").current_buffer_tags()<CR>', 'tags of buffer' },
   },
 
   n = {
