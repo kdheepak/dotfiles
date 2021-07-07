@@ -145,6 +145,13 @@ packer.startup({
         require('lsp-status').register_progress()
       end,
     }
+    use {
+      'hrsh7th/nvim-compe',
+      config = function()
+        require 'kdheepak/compe'
+      end,
+      event = 'BufRead',
+    }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue', 'css' } }
     use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
     use { 'tamago324/compe-zsh', ft = 'zsh' }
@@ -154,13 +161,6 @@ packer.startup({
     use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
     use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
     use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
-    use {
-      'hrsh7th/nvim-compe',
-      config = function()
-        require 'kdheepak/compe'
-      end,
-      event = 'BufRead',
-    }
 
     use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
 
@@ -286,8 +286,7 @@ packer.startup({
       'bluz71/vim-nightfly-guicolors',
       config = function()
         vim.o.termguicolors = true
-        vim.g.material_style = 'deep ocean'
-        vim.cmd('colorscheme material')
+        vim.cmd('colorscheme nightfly')
       end,
     }
     -- use 'bluz71/vim-moonfly-colors'
@@ -327,7 +326,7 @@ packer.startup({
 })
 
 require'lualine'.setup {
-  options = { theme = 'material-nvim' },
+  options = { theme = 'nightfly' },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
