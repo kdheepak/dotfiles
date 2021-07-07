@@ -145,38 +145,36 @@ packer.startup({
         require('lsp-status').register_progress()
       end,
     }
+    use { 'mattn/emmet-vim', ft = { 'html', 'vue', 'css' } }
+    use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
+    use { 'tamago324/compe-zsh', ft = 'zsh' }
+    use { 'sblumentritt/cmake.vim', ft = 'cmake' }
+    use { 'Gavinok/compe-nextword', event = 'InsertEnter' }
+    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter' }
+    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
+    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter' }
+    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter' }
     use {
       'hrsh7th/nvim-compe',
       config = function()
         require 'kdheepak/compe'
       end,
-      -- event = 'BufRead',
+      event = 'InsertEnter',
     }
-    use { 'mattn/emmet-vim' }
-    use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
-    use { 'tamago324/compe-zsh', ft = 'zsh', requires = { 'nvim-lua/plenary.nvim', 'hrsh7th/nvim-compe' } }
-    use { 'Gavinok/compe-nextword', event = 'BufRead', requires = { 'nvim-lua/plenary.nvim', 'hrsh7th/nvim-compe' } }
-    use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
-    -- use { 'sblumentritt/cmake.vim', ft = 'cmake' }
-    use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
-    use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
-    use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
 
-    use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
+    use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
+
+    use { 'ggandor/lightspeed.nvim', event = 'BufRead' } -- use s and S to search
+
     use 'kyazdani42/nvim-tree.lua'
-
-    use {
-      'ggandor/lightspeed.nvim', -- use s and S to search
-    }
-
     use 'kevinhwang91/nvim-bqf' -- The goal of nvim-bqf is to make Neovim's quickfix window better.
-    use 'tyru/open-browser.vim' -- opens url in browser
-    use 'tyru/open-browser-github.vim' -- opens github repo or github issue in browser
-    use 'rhysd/git-messenger.vim' -- reveal a hidden message from git under the cursor quickly
-    use 'tpope/vim-fugitive' -- vim plugin for Git that is so awesome, it should be illegal
-    use 'tpope/vim-rhubarb' -- vim plugin for github
-    use 'samoshkin/vim-mergetool' -- Merge tool for git
-    use '~/gitrepos/lazygit.nvim' -- lazygit
+    use { 'tyru/open-browser.vim' } -- opens url in browser
+    use { 'tyru/open-browser-github.vim', event = 'BufRead' } -- opens github repo or github issue in browser
+    use { 'rhysd/git-messenger.vim', event = 'BufRead' } -- reveal a hidden message from git under the cursor quickly
+    use { 'tpope/vim-fugitive', event = 'BufRead' } -- vim plugin for Git that is so awesome, it should be illegal
+    use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
+    use { 'samoshkin/vim-mergetool', event = 'BufRead' } -- Merge tool for git
+    use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
     use 'folke/lsp-colors.nvim'
     --  use 'bkad/CamelCaseMotion' -- motions for inside camel case
     use {
@@ -193,14 +191,14 @@ packer.startup({
     }
     -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
     -- use 'yamatsum/nvim-cursorline'
-    use 'RRethy/vim-illuminate'
+    use { 'RRethy/vim-illuminate' }
     --  use 'junegunn/vim-easy-align' -- helps alignment
-    use 'godlygeek/tabular' -- line up text
+    use { 'godlygeek/tabular', event = 'BufRead' } -- line up text
     use { 'tpope/vim-unimpaired', event = 'BufRead' } -- complementary pairs of mappings
     use { 'tpope/vim-abolish', event = 'BufRead' } -- convert camel to snake
     use { 'tpope/vim-surround', event = 'BufRead' } -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
     use { 'tpope/vim-repeat', event = 'BufRead' } -- repeat.vim remaps . in a way that plugins can tap into it.
-    use 'vim-utils/vim-vertical-move'
+    use { 'vim-utils/vim-vertical-move', event = 'BufRead' }
     -- use 'tpope/vim-tbone'                                                                                                                            -- basic tmux support for vim
     use { 'tpope/vim-jdaddy', event = 'BufRead' } -- mappings for working with json in vim
     -- use 'tpope/vim-obsession'                                                                                                                        -- no hassle vim sessions
@@ -257,6 +255,7 @@ packer.startup({
         vim.api.nvim_set_keymap('n', '<S-TAB>', ':BufferPrevious<CR>', { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':BufferClose<CR>', { noremap = true, silent = true })
       end,
+      event = 'BufRead',
     }
     use { 'jbyuki/one-small-step-for-vimkind', ft = 'lua' }
     use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
