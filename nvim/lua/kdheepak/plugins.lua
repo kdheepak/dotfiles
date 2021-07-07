@@ -62,14 +62,13 @@ packer.startup({
         }
       end,
       requires = {
-        { 'nvim-treesitter/playground', opt = true, event = 'BufRead' }, {
+        { 'nvim-treesitter/playground', opt = true }, {
           'windwp/nvim-autopairs',
-          event = 'InsertEnter',
           after = { 'telescope.nvim', 'nvim-compe' },
           config = function()
             require('nvim-autopairs').setup()
           end,
-        }, { 'windwp/nvim-ts-autotag', event = 'InsertEnter' },
+        }, { 'windwp/nvim-ts-autotag' },
       },
     }
     use {
@@ -85,7 +84,6 @@ packer.startup({
       config = function()
         require('gitsigns').setup()
       end,
-      event = 'BufRead',
     }
 
     use {
@@ -94,7 +92,7 @@ packer.startup({
         require 'kdheepak/lspconfig'
       end,
     }
-    use { 'kabouzeid/nvim-lspinstall', event = 'BufRead' }
+    use { 'kabouzeid/nvim-lspinstall' }
 
     use {
       'nvim-telescope/telescope.nvim',
@@ -102,7 +100,6 @@ packer.startup({
       config = function()
         require 'kdheepak/telescope'
       end,
-      event = 'BufEnter',
     }
     use 'tamago324/telescope-openbrowser.nvim'
     use 'nvim-telescope/telescope-github.nvim'
@@ -123,7 +120,6 @@ packer.startup({
       config = function()
         require 'kdheepak/which-key'
       end,
-      after = 'nvim-compe',
     }
     use {
       'glepnir/lspsaga.nvim',
@@ -138,11 +134,10 @@ packer.startup({
         autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
         ]])
       end,
-      event = 'BufRead',
     }
 
-    use { 'onsails/lspkind-nvim', event = 'BufEnter' }
-    use { 'ray-x/lsp_signature.nvim', event = 'BufEnter' }
+    use { 'onsails/lspkind-nvim' }
+    use { 'ray-x/lsp_signature.nvim' }
 
     use {
       'nvim-lua/lsp-status.nvim',
@@ -155,24 +150,22 @@ packer.startup({
       config = function()
         require 'kdheepak/compe'
       end,
-      event = 'InsertEnter',
     }
-    use { 'mattn/emmet-vim', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'FateXii/emmet-compe', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'Gavinok/compe-nextword', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'sblumentritt/cmake.vim', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'tamago324/compe-zsh', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter', after = 'nvim-compe' }
-    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter', after = 'nvim-compe' }
+    use { 'mattn/emmet-vim' }
+    use { 'FateXii/emmet-compe' }
+    use { 'Gavinok/compe-nextword' }
+    use { 'GoldsteinE/compe-latex-symbols' }
+    use { 'sblumentritt/cmake.vim' }
+    use { 'tamago324/compe-zsh' }
+    use { 'hrsh7th/vim-vsnip' }
+    use { 'hrsh7th/vim-vsnip-integ' }
+    use { 'rafamadriz/friendly-snippets' }
 
     use 'tversteeg/registers.nvim' -- Show register content when you try to access it in NeoVim.
     use 'kyazdani42/nvim-tree.lua'
 
     use {
       'ggandor/lightspeed.nvim', -- use s and S to search
-      event = 'BufRead',
     }
 
     use 'kevinhwang91/nvim-bqf' -- The goal of nvim-bqf is to make Neovim's quickfix window better.
@@ -190,7 +183,6 @@ packer.startup({
       config = function() -- a high-performance color highlighter for Neovim which has no external dependencies
         require('colorizer').setup()
       end,
-      event = 'BufRead',
     }
     use {
       'lewis6991/spellsitter.nvim',
@@ -221,10 +213,10 @@ packer.startup({
     use 'dhruvasagar/vim-zoom' -- toggle zoom of current window within the current tab
     use 'kana/vim-niceblock' -- makes blockwise Visual mode more useful and intuitive
     use 'mbbill/undotree' -- visualizes undo history and makes it easier to browse and switch between different undo branches
-    use { 'reedes/vim-wordy', event = 'BufRead' } -- uncover usage problems in your writing
+    use { 'reedes/vim-wordy' } -- uncover usage problems in your writing
     use 'farmergreg/vim-lastplace' -- intelligently reopen files at your last edit position
-    use { 'ntpeters/vim-better-whitespace', event = 'BufRead' } -- causes all trailing whitespace characters to be highlighted
-    use { 'nathanaelkane/vim-indent-guides', event = 'BufRead' } -- displaying thin vertical lines at each indentation level for code indented with spaces
+    use { 'ntpeters/vim-better-whitespace' } -- causes all trailing whitespace characters to be highlighted
+    use { 'nathanaelkane/vim-indent-guides' } -- displaying thin vertical lines at each indentation level for code indented with spaces
     use 'dhruvasagar/vim-table-mode' -- automatic table creator & formatter allowing one to create neat tables as you type
     use 'joom/latex-unicoder.vim' -- a plugin to type Unicode chars in Vim, using their LaTeX names
     use 'editorconfig/editorconfig-vim' -- editorconfig plugin for vim
@@ -232,14 +224,14 @@ packer.startup({
     use 'jeffkreeftmeijer/vim-numbertoggle'
     use 'haya14busa/vim-asterisk' -- asterisk.vim provides improved search * motions
     use 'segeljakt/vim-isotope' -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
-    use 'kshenoy/vim-signature' -- toggle display and navigate marks
+    -- use 'kshenoy/vim-signature' -- toggle display and navigate marks
     use 'sedm0784/vim-you-autocorrect' -- Automatic autocorrect
     use 'inkarkat/vim-ingo-library' -- Spellcheck dependency
     use 'inkarkat/vim-spellcheck' -- Add vim spell check errors to quicklist
     -- use 'beloglazov/vim-online-thesaurus'
     use 'rhysd/clever-f.vim'
     use 'takac/vim-hardtime' -- vim hardtime
-    use { 'glepnir/dashboard-nvim', opt = true, event = 'BufWinEnter' }
+    use { 'glepnir/dashboard-nvim', opt = true }
     use 'chrisbra/unicode.vim' -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
@@ -258,7 +250,7 @@ packer.startup({
     use { 'GCBallesteros/jupytext.vim', ft = { 'ipynb', 'python', 'markdown' } }
     use { 'bfredl/nvim-ipy', ft = 'python' }
     use { '~/gitrepos/JuliaFormatter.vim', ft = 'julia' } -- formatter for Julia
-    use { 'sindrets/diffview.nvim', event = 'BufRead' }
+    use { 'sindrets/diffview.nvim' }
     use {
       'romgrk/barbar.nvim',
       config = function()
