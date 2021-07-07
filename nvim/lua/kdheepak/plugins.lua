@@ -54,7 +54,7 @@ packer.startup({
       config = function()
         require('nvim-autopairs').setup()
       end,
-      event = 'InsertEnter',
+      event = 'BufRead',
     }
     use { 'windwp/nvim-ts-autotag' }
     use {
@@ -149,17 +149,17 @@ packer.startup({
     use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
     use { 'tamago324/compe-zsh', ft = 'zsh' }
     use { 'sblumentritt/cmake.vim', ft = 'cmake' }
-    use { 'Gavinok/compe-nextword', event = 'InsertEnter' }
-    use { 'GoldsteinE/compe-latex-symbols', event = 'InsertEnter' }
-    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
-    use { 'hrsh7th/vim-vsnip-integ', event = 'InsertEnter' }
-    use { 'rafamadriz/friendly-snippets', event = 'InsertEnter' }
+    use { 'Gavinok/compe-nextword', event = 'BufRead' }
+    use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
+    use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
+    use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
+    use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
     use {
       'hrsh7th/nvim-compe',
       config = function()
         require 'kdheepak/compe'
       end,
-      event = 'InsertEnter',
+      event = 'BufRead',
     }
 
     use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
@@ -280,13 +280,14 @@ packer.startup({
     -- use 'sainnhe/gruvbox-material'
     -- use 'ishan9299/nvim-solarized-lua'
     -- use 'dracula/vim'
-    use { 'yashguptaz/calvera-dark.nvim' }
+    -- use { 'yashguptaz/calvera-dark.nvim' }
     use 'marko-cerovac/material.nvim'
     use {
       'bluz71/vim-nightfly-guicolors',
       config = function()
         vim.o.termguicolors = true
-        vim.cmd('colorscheme nightfly')
+        vim.g.material_style = 'deep ocean'
+        vim.cmd('colorscheme material')
       end,
     }
     -- use 'bluz71/vim-moonfly-colors'
@@ -326,7 +327,7 @@ packer.startup({
 })
 
 require'lualine'.setup {
-  options = { theme = 'nightfly' },
+  options = { theme = 'material-nvim' },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
