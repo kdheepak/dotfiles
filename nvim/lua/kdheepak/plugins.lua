@@ -82,7 +82,24 @@ packer.startup({
       'lewis6991/gitsigns.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
-        require('gitsigns').setup()
+        require('gitsigns').setup {
+          signs = {
+            add = { hl = 'GitSignsAdd', text = '▎', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+            change = { hl = 'GitSignsChange', text = '▎', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+            delete = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+            topdelete = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+          },
+          numhl = false,
+          linehl = false,
+          watch_index = { interval = 1000 },
+          current_line_blame = false,
+          sign_priority = 6,
+          update_debounce = 1000,
+          status_formatter = nil, -- Use default
+          use_decoration_api = true,
+          use_internal_diff = true, -- If luajit is present
+        }
       end,
     }
 
@@ -150,7 +167,6 @@ packer.startup({
       config = function()
         require 'kdheepak/compe'
       end,
-      event = 'BufRead',
     }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue', 'css' } }
     use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
@@ -277,18 +293,19 @@ packer.startup({
     -- use 'navarasu/onedark.nvim'
     -- use 'marko-cerovac/material.nvim'
     -- use 'lourenci/github-colors'
-    -- use 'sainnhe/gruvbox-material'
+    use {
+      'sainnhe/gruvbox-material',
+      config = function()
+      end,
+    }
     -- use 'ishan9299/nvim-solarized-lua'
     -- use 'dracula/vim'
     -- use { 'yashguptaz/calvera-dark.nvim' }
     use 'marko-cerovac/material.nvim'
-    use {
-      'bluz71/vim-nightfly-guicolors',
-      config = function()
-        vim.o.termguicolors = true
-        vim.cmd('colorscheme nightfly')
-      end,
-    }
+    use { 'bluz71/vim-nightfly-guicolors' }
+    use { 'cocopon/iceberg.vim' }
+    use 'ntk148v/vim-horizon'
+    use { 'folke/tokyonight.nvim' }
     -- use 'bluz71/vim-moonfly-colors'
     -- use 'folke/tokyonight.nvim'
     -- use 'mhartington/oceanic-next'
@@ -297,6 +314,13 @@ packer.startup({
     -- use 'fenetikm/falcon'
     -- use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
 
+    use {
+      'tomasr/molokai',
+      config = function()
+        vim.o.termguicolors = true
+        vim.cmd('colorscheme molokai')
+      end,
+    }
     use {
       'jghauser/mkdir.nvim',
       config = function()
@@ -321,12 +345,13 @@ packer.startup({
         require('diagnosticls')
       end,
     }
+    use 'famiu/nvim-reload'
   end,
   config = { display = { open_fn = require('packer.util').float } },
 })
 
 require'lualine'.setup {
-  options = { theme = 'nightfly' },
+  options = { theme = 'powerline' },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
