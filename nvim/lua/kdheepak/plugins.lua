@@ -286,6 +286,8 @@ packer.startup({
       end,
       event = 'BufRead',
     }
+    -- use { 'glepnir/galaxyline.nvim' }
+
     -- colorschemes
     -- use 'RRethy/nvim-base16'
     -- use 'kdheepak/vim-one' -- light and dark vim colorscheme
@@ -293,34 +295,32 @@ packer.startup({
     -- use 'navarasu/onedark.nvim'
     -- use 'marko-cerovac/material.nvim'
     -- use 'lourenci/github-colors'
-    use {
-      'sainnhe/gruvbox-material',
-      config = function()
-      end,
-    }
     -- use 'ishan9299/nvim-solarized-lua'
     -- use 'dracula/vim'
     -- use { 'yashguptaz/calvera-dark.nvim' }
-    use 'marko-cerovac/material.nvim'
-    use { 'bluz71/vim-nightfly-guicolors' }
-    use { 'cocopon/iceberg.vim' }
-    use 'ntk148v/vim-horizon'
-    use { 'folke/tokyonight.nvim' }
+    -- use 'marko-cerovac/material.nvim'
+    -- use { 'cocopon/iceberg.vim' }
+    -- use 'ntk148v/vim-horizon'
+    -- use { 'folke/tokyonight.nvim' }
     -- use 'bluz71/vim-moonfly-colors'
-    -- use 'folke/tokyonight.nvim'
-    -- use 'mhartington/oceanic-next'
-    -- use 'kyazdani42/blue-moon'
-    -- use 'yonlu/omni.vim'
-    -- use 'fenetikm/falcon'
-    -- use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
-
     use {
-      'tomasr/molokai',
+      'bluz71/vim-nightfly-guicolors',
       config = function()
-        vim.o.termguicolors = true
-        vim.cmd('colorscheme molokai')
+        vim.g.termguicolors = true
+        vim.cmd('colorscheme nightfly')
       end,
     }
+    -- use 'mhartington/oceanic-next'
+    -- use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
+    -- use 'projekt0n/github-nvim-theme'
+    -- use {
+    --   'tomasr/molokai',
+    --   config = function()
+    --     vim.o.termguicolors = true
+    --     vim.cmd('colorscheme github')
+    --     require('github-theme').setup({ themeStyle = 'dark' })
+    --   end,
+    -- }
     use {
       'jghauser/mkdir.nvim',
       config = function()
@@ -350,26 +350,8 @@ packer.startup({
   config = { display = { open_fn = require('packer.util').float } },
 })
 
-require'lualine'.setup {
-  options = { theme = 'powerline' },
-  sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'branch' },
-    lualine_c = { { 'filename', file_status = true, full_path = true }, require('lsp-status').status_progress },
-    lualine_x = { { 'diagnostics', sources = { 'nvim_lsp' } }, 'encoding', 'fileformat', 'filetype' },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' },
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = { 'filename' },
-    lualine_x = { 'location' },
-    lualine_y = {},
-    lualine_z = {},
-  },
-}
 require 'kdheepak/settings'
 require 'kdheepak/config'
 require 'kdheepak/autocommands'
 require 'kdheepak/keymappings'
+require 'kdheepak/statusline'
