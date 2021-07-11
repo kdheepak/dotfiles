@@ -297,7 +297,13 @@ packer.startup({
     use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
     use { 'rust-lang/vscode-rust', ft = 'rust' }
     use { 'jbyuki/nabla.nvim', ft = 'markdown' } -- Take your scentific notes in Neovim.
-    use { 'glepnir/galaxyline.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    -- use { 'glepnir/galaxyline.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    use {
+      'hoob3rt/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      config = function()
+      end,
+    }
     use { 'jbyuki/venn.nvim', event = 'BufRead' } -- Draw ASCII diagrams in Neovim.
     use {
       'pwntester/octo.nvim',
@@ -383,10 +389,10 @@ packer.startup({
   config = { display = { open_fn = require('packer.util').float } },
 })
 
+require 'kdheepak/statusline'
 require 'kdheepak/settings'
 require 'kdheepak/config'
 require 'kdheepak/autocommands'
 require 'kdheepak/keymappings'
-require 'kdheepak/statusline'
 
 return M
