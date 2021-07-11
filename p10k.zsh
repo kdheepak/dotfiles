@@ -22,18 +22,19 @@
 () {
   emulate -L zsh -o extended_glob
 
-  export POWERLEVEL10K_BACKGROUND='#061626'
-  export POWERLEVEL10K_FOREGROUND='#acb4c2'
+  export POWERLEVEL10K_BACKGROUND='#1c1e26'
+  export POWERLEVEL10K_LIGHTGRAY='#2E303E'
+  export POWERLEVEL10K_FOREGROUND='#6C6F93'
   export POWERLEVEL10K_BOLD='#eeeeee'
   export POWERLEVEL10K_CURSOR='#9ca1aa'
   export POWERLEVEL10K_CURSORTEXT='#080808'
   export POWERLEVEL10K_SELECTION='#b2ceee'
   export POWERLEVEL10K_SELECTIONTEXT='#080808'
   export POWERLEVEL10K_BLACK='#1d3b53'
-  export POWERLEVEL10K_RED='#fc514e'
-  export POWERLEVEL10K_GREEN='#a1cd5e'
-  export POWERLEVEL10K_YELLOW='#e3d18a'
-  export POWERLEVEL10K_BLUE='#82aaff'
+  export POWERLEVEL10K_RED='#F43E5C'
+  export POWERLEVEL10K_GREEN='#09F7A0'
+  export POWERLEVEL10K_YELLOW='#F09383'
+  export POWERLEVEL10K_BLUE='#25B2BC'
   export POWERLEVEL10K_PURPLE='#c792ea'
   export POWERLEVEL10K_CYAN='#7fdbca'
   export POWERLEVEL10K_WHITE='#a1aab8'
@@ -234,7 +235,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
-  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_BRIGHTPURPLE
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_RED
   # Default current directory foreground color.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=$POWERLEVEL10K_BLACK
   # If directory is too long, shorten some of its segments to the shortest possible unique
@@ -373,11 +374,11 @@
 
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=
@@ -526,14 +527,14 @@
   typeset -g POWERLEVEL9K_STATUS_OK=true
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
   typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_BRIGHTPURPLE
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_RED
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_BRIGHTPURPLE
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_RED
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
@@ -560,7 +561,7 @@
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   # Show this many fractional digits. Zero means round to seconds.
@@ -575,7 +576,7 @@
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Custom icon.
@@ -905,7 +906,7 @@
   ##############[ taskwarrior: taskwarrior task count (https://taskwarrior.org/) ]##############
   # Taskwarrior color.
   typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
-  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
 
   # Taskwarrior segment format. The following parameters are available within the expansion.
   #
@@ -1645,7 +1646,7 @@
   ####################################[ time: current time ]####################################
   # Current time color.
   typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
-  typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
   # If set to true, time will update when you hit enter. This way prompts for the past
