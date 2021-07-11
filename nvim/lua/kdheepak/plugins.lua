@@ -302,6 +302,9 @@ packer.startup({
       'hoob3rt/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
       config = function()
+        vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':bdelete<CR>', { noremap = true, silent = true })
       end,
     }
     use { 'jbyuki/venn.nvim', event = 'BufRead' } -- Draw ASCII diagrams in Neovim.
