@@ -48,14 +48,19 @@ packer.startup({
 
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview', ft = 'markdown' }
 
-    use {
-      'windwp/nvim-autopairs',
-      after = { 'telescope.nvim', 'nvim-compe' },
-      config = function()
-        require('nvim-autopairs').setup()
-      end,
-      event = 'BufRead',
-    }
+    -- use {
+    --   'windwp/nvim-autopairs',
+    --   after = { 'telescope.nvim', 'nvim-compe' },
+    --   config = function()
+    --     require('nvim-autopairs').setup()
+    --     require('nvim-autopairs.completion.compe').setup({
+    --       map_cr = true, --  map <CR> on insert mode
+    --       map_complete = true, -- it will auto insert `(` after select function or method item
+    --     })
+    --     require('nvim-treesitter.configs').setup { autopairs = { enable = true } }
+    --   end,
+    --   event = 'BufRead',
+    -- }
     use { 'windwp/nvim-ts-autotag' }
     use {
       'nvim-treesitter/nvim-treesitter',
@@ -69,7 +74,7 @@ packer.startup({
           indent = { enable = true },
         }
       end,
-      requires = { { 'nvim-treesitter/playground', opt = true } },
+      requires = { { 'nvim-treesitter/playground' } },
     }
     use {
       'terrortylor/nvim-comment',
@@ -194,11 +199,15 @@ packer.startup({
     use 'folke/lsp-colors.nvim'
     --  use 'bkad/CamelCaseMotion' -- motions for inside camel case
     use {
-      'norcalli/nvim-colorizer.lua',
-      config = function() -- a high-performance color highlighter for Neovim which has no external dependencies
-        require('colorizer').setup()
+      'RRethy/vim-hexokinase',
+      run = 'make hexokinase',
+      config = function()
+        vim.g.Hexokinase_highlighters = { 'backgroundfull' }
+        vim.g.Hexokinase_optInPatterns = { 'full_hex', 'triple_hex', 'rgb', 'rgba', 'hsl', 'hsla' }
       end,
     }
+    use { 'euclidianAce/BetterLua.vim' }
+    use { 'bfredl/nvim-luadev' }
     use {
       'lewis6991/spellsitter.nvim',
       config = function()
@@ -267,6 +276,7 @@ packer.startup({
     use {
       'romgrk/barbar.nvim',
       config = function()
+        vim.g.bufferline.icons = 'both'
         vim.api.nvim_set_keymap('n', '<TAB>', ':BufferNext<CR>', { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<S-TAB>', ':BufferPrevious<CR>', { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':BufferClose<CR>', { noremap = true, silent = true })
@@ -277,7 +287,7 @@ packer.startup({
     use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
     use { 'rust-lang/vscode-rust', ft = 'rust' }
     use { 'jbyuki/nabla.nvim', ft = 'markdown' } -- Take your scentific notes in Neovim.
-    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    use { 'glepnir/galaxyline.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
     use { 'jbyuki/venn.nvim', event = 'BufRead' } -- Draw ASCII diagrams in Neovim.
     use {
       'pwntester/octo.nvim',
@@ -304,6 +314,13 @@ packer.startup({
     -- use { 'folke/tokyonight.nvim' }
     -- use 'bluz71/vim-moonfly-colors'
     use {
+      '~/gitrepos/monochrome.nvim',
+      config = function()
+        -- vim.g.termguicolors = true
+        -- vim.cmd('colorscheme monochrome')
+      end,
+    }
+    use {
       'bluz71/vim-nightfly-guicolors',
       config = function()
         vim.g.termguicolors = true
@@ -312,7 +329,13 @@ packer.startup({
     }
     -- use 'mhartington/oceanic-next'
     -- use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
-    -- use 'projekt0n/github-nvim-theme'
+    use {
+      'projekt0n/github-nvim-theme',
+      config = function()
+        -- vim.g.termguicolors = true
+        -- require('github-theme').setup({ themeStyle = 'dark', keywordStyle = 'NONE' })
+      end,
+    }
     -- use {
     --   'tomasr/molokai',
     --   config = function()
