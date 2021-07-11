@@ -1,3 +1,4 @@
+M = {}
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
@@ -8,11 +9,20 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute 'packadd packer.nvim'
 end
 
+function M.reload_config()
+  vim.cmd 'source ~/.config/nvim/init.lua'
+  vim.cmd 'source ~/.config/nvim/lua/kdheepak/plugins.lua'
+  vim.cmd ':PackerCompile'
+  vim.cmd ':PackerClean'
+  vim.cmd ':PackerInstall'
+end
+
 -- Need to replace this once lua api has vim modes
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
-    autocmd BufWritePost plugins.lua PackerCompile
+    autocmd BufWritePost init.lua lua require'kdheepak/plugins'.reload_config()
+    autocmd BufWritePost plugins.lua lua require'kdheepak/plugins'.reload_config()
   augroup end
 ]], false)
 
@@ -378,3 +388,5 @@ require 'kdheepak/config'
 require 'kdheepak/autocommands'
 require 'kdheepak/keymappings'
 require 'kdheepak/statusline'
+
+return M
