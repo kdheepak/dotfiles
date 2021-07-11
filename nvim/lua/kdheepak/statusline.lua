@@ -34,76 +34,35 @@ icons = {
   hint = '', -- f059
 }
 
--- Gruvbox
-colors = {
-  bg0_h = '#1d2021',
-  bg0 = '#282828',
-  bg1 = '#3c3836',
-  bg2 = '#504945',
-  bg3 = '#665c54',
-  bg4 = '#7c6f64',
-  gray = '#928374',
-  fg0 = '#fbf1c7',
-  fg1 = '#ebdbb2',
-  fg2 = '#d5c4a1',
-  fg3 = '#bdae93',
-  fg4 = '#a89984',
-  bright_red = '#fb4934',
-  bright_green = '#b8bb26',
-  bright_yellow = '#fabd2f',
-  bright_blue = '#83a598',
-  bright_purple = '#d3869b',
-  bright_aqua = '#8ec07c',
-  bright_orange = '#fe8019',
-  neutral_red = '#cc241d',
-  neutral_green = '#98971a',
-  neutral_yellow = '#d79921',
-  neutral_blue = '#458588',
-  neutral_purple = '#b16286',
-  neutral_aqua = '#689d6a',
-  neutral_orange = '#d65d0e',
-  faded_red = '#9d0006',
-  faded_green = '#79740e',
-  faded_yellow = '#b57614',
-  faded_blue = '#076678',
-  faded_purple = '#8f3f71',
-  faded_aqua = '#427b58',
-  faded_orange = '#af3a03',
+local colors = {
+  black = '#232526',
+  gray = '#808080',
+  white = '#f8f8f2',
+  cyan = '#66d9ef',
+  green = '#a6e22e',
+  orange = '#ef5939',
+  pink = '#f92672',
+  red = '#ff0000',
+  yellow = '#e6db74',
 }
 
 gl.short_line_list = { 'vim-plug', 'tagbar', 'Mundo', 'MundoDiff', 'coc-explorer', 'startify', 'packer', 'Outline' }
 
 local mode_map = {
-  ['n'] = { 'NORMAL', colors.fg3, colors.bg2 },
-  -- ["n"] = {"NORMAL", colors.bright_green, colors.faded_green},
-  ['i'] = { 'INSERT', colors.bright_blue, colors.faded_blue },
-  ['R'] = { 'REPLACE', colors.bright_red, colors.faded_red },
-  ['v'] = { 'VISUAL', colors.bright_orange, colors.faded_orange },
-  ['V'] = { 'V-LINE', colors.bright_orange, colors.faded_orange },
-  ['c'] = { 'COMMAND', colors.bright_yellow, colors.faded_yellow },
-  ['s'] = { 'SELECT', colors.bright_orange, colors.faded_orange },
-  ['S'] = { 'S-LINE', colors.bright_orange, colors.faded_orange },
-  ['t'] = { 'TERMINAL', colors.bright_aqua, colors.faded_aqua },
-  [''] = { 'V-BLOCK', colors.bright_orange, colors.faded_orange },
-  [''] = { 'S-BLOCK', colors.bright_orange, colors.faded_orange },
+  ['n'] = { 'NORMAL', colors.cyan, colors.black },
+  ['i'] = { 'INSERT', colors.green, colors.black },
+  ['R'] = { 'REPLACE', colors.red, colors.black },
+  ['v'] = { 'VISUAL', colors.yellow, colors.black },
+  ['V'] = { 'V-LINE', colors.yellow, colors.black },
+  [''] = { 'V-BLOCK', colors.yellow, colors.black },
+  ['c'] = { 'COMMAND', colors.gray, colors.black },
+  ['s'] = { 'SELECT', colors.white, colors.black },
+  ['S'] = { 'S-LINE', colors.white, colors.black },
+  [''] = { 'S-BLOCK', colors.white, colors.black },
+  ['t'] = { 'TERMINAL', colors.gray, colors.black },
   ['Rv'] = { 'VIRTUAL' },
   ['rm'] = { '--MORE' },
 }
-
--- local mode_sign_map = {
---   ["n"] = {"", colors.fg3, colors.bg2},
---   ["i"] = {"", colors.bright_blue, colors.faded_blue},
---   ["R"] = {"", colors.bright_red, colors.faded_red},
---   ["v"] = {"", colors.bright_orange, colors.faded_orange},
---   ["V"] = {"", colors.bright_orange, colors.faded_orange},
---   ["c"] = {"ﲵ", colors.bright_yellow, colors.faded_yellow},
---   ["s"] = {"", colors.bright_orange, colors.faded_orange},
---   ["S"] = {"", colors.bright_orange, colors.faded_orange},
---   ["t"] = {"", colors.bright_aqua, colors.faded_aqua},
---   [""] = {"", colors.bright_orange, colors.faded_orange},
---   [""] = {"", colors.bright_orange, colors.faded_orange},
---   ["rm"] = {""}
--- }
 
 local sep = {
   -- right_filled = "", -- e0b6
@@ -176,7 +135,7 @@ gls.left[1] = {
       highlight('GalaxyViMode', nested_fg, fg)
       highlight('GalaxyViModeInv', fg, nested_fg)
       highlight('GalaxyViModeNested', fg, nested_fg)
-      highlight('GalaxyViModeInvNested', nested_fg, colors.bg1)
+      highlight('GalaxyViModeInvNested', nested_fg, colors.black)
       local mode = '   ' .. label .. ' '
       if vim.o.paste then
         mode = mode .. sep.left .. ' ' .. icons.paste .. ' Paste '
@@ -255,9 +214,9 @@ gls.left[4] = {
 gls.left[5] = {
   GitIcon = {
     provider = function()
-      highlight('DiffAdd', colors.bright_green, colors.bg1)
-      highlight('DiffChange', colors.bright_orange, colors.bg1)
-      highlight('DiffDelete', colors.bright_red, colors.bg1)
+      highlight('DiffAdd', colors.green, colors.black)
+      highlight('DiffChange', colors.orange, colors.black)
+      highlight('DiffDelete', colors.red, colors.black)
 
       local branch = vcs.get_git_branch()
 
@@ -267,7 +226,7 @@ gls.left[5] = {
 
       return ''
     end,
-    highlight = { colors.bright_red, colors.bg1 },
+    highlight = { colors.red, colors.black },
   },
 }
 gls.left[6] = {
@@ -281,7 +240,7 @@ gls.left[6] = {
 
       return ''
     end,
-    highlight = { colors.fg2, colors.bg1 },
+    highlight = { colors.white, colors.black },
   },
 }
 gls.left[7] = {
@@ -293,7 +252,7 @@ gls.left[7] = {
       return ''
     end,
     icon = icons.added .. ' ',
-    highlight = { colors.bright_green, colors.bg1 },
+    highlight = { colors.green, colors.black },
   },
 }
 gls.left[8] = {
@@ -305,7 +264,7 @@ gls.left[8] = {
       return ''
     end,
     icon = icons.modified .. ' ',
-    highlight = { colors.bright_orange, colors.bg1 },
+    highlight = { colors.orange, colors.black },
   },
 }
 gls.left[9] = {
@@ -317,7 +276,7 @@ gls.left[9] = {
       return ''
     end,
     icon = icons.removed .. ' ',
-    highlight = { colors.bright_red, colors.bg1 },
+    highlight = { colors.red, colors.black },
   },
 }
 
@@ -328,7 +287,7 @@ gls.right[1] = {
         return icons.gears .. ' '
       end
     end,
-    highlight = { colors.bright_purple, colors.bg1 },
+    highlight = { colors.cyan, colors.black },
   },
 }
 gls.right[2] = {
@@ -343,7 +302,7 @@ gls.right[2] = {
         return client .. ' '
       end
     end,
-    highlight = { colors.fg4, colors.bg1 },
+    highlight = { colors.gray, colors.black },
   },
 }
 gls.right[3] = {
@@ -361,7 +320,7 @@ gls.right[3] = {
       end
       return icons.ok .. ' '
     end,
-    highlight = { colors.bright_green, colors.bg1 },
+    highlight = { colors.green, colors.black },
   },
 }
 gls.right[4] = {
@@ -369,7 +328,7 @@ gls.right[4] = {
     provider = function()
       return diag('Error')
     end,
-    highlight = { colors.bright_red, colors.bg1 },
+    highlight = { colors.red, colors.black },
   },
 }
 gls.right[5] = {
@@ -377,7 +336,7 @@ gls.right[5] = {
     provider = function()
       return diag('Warning')
     end,
-    highlight = { colors.bright_yellow, colors.bg1 },
+    highlight = { colors.yellow, colors.black },
   },
 }
 gls.right[6] = {
@@ -385,7 +344,7 @@ gls.right[6] = {
     provider = function()
       return diag('Information')
     end,
-    highlight = { colors.bright_blue, colors.bg1 },
+    highlight = { colors.blue, colors.black },
   },
 }
 gls.right[7] = {
@@ -393,7 +352,7 @@ gls.right[7] = {
     provider = function()
       return diag('Hint')
     end,
-    highlight = { colors.bright_aqua, colors.bg1 },
+    highlight = { colors.cyan, colors.black },
   },
 }
 gls.right[8] = {
@@ -474,7 +433,7 @@ gls.short_line_left[1] = {
       local _, fg, nested_fg = unpack(mode_hl())
       highlight('GalaxyViMode', nested_fg, fg)
       highlight('GalaxyViModeInv', fg, nested_fg)
-      highlight('GalaxyViModeInvNested', nested_fg, colors.bg1)
+      highlight('GalaxyViModeInvNested', nested_fg, colors.black)
       local name = short_map[vim.bo.filetype] or 'Editor'
       return string.format('  %s ', name)
     end,
