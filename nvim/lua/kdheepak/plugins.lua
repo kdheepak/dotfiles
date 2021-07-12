@@ -315,7 +315,12 @@ packer.startup({
       event = 'BufRead',
     }
     -- use { 'glepnir/galaxyline.nvim' }
-    use { 'akinsho/nvim-toggleterm.lua' }
+    use {
+      'akinsho/nvim-toggleterm.lua',
+      config = function()
+        require('toggleterm').setup {}
+      end,
+    }
     -- colorschemes
     -- use 'RRethy/nvim-base16'
     -- use 'kdheepak/vim-one' -- light and dark vim colorscheme
