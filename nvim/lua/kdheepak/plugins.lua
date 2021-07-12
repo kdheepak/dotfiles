@@ -335,7 +335,6 @@ packer.startup({
       '~/gitrepos/monochrome.nvim',
       config = function()
         vim.g.termguicolors = true
-        vim.g.monochrome_style = 'amplified'
         vim.cmd('colorscheme monochrome')
       end,
     }
