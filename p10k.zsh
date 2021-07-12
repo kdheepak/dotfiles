@@ -46,6 +46,42 @@
   export POWERLEVEL10K_BRIGHTPURPLE='#ae81ff'
   export POWERLEVEL10K_BRIGHTCYAN='#7fdbca'
   export POWERLEVEL10K_BRIGHTWHITE='#d6deeb'
+  export POWERLEVEL10K_BLACK="#0E0E0E"
+  export POWERLEVEL10K_WHITE="#EEEEEE"
+  export POWERLEVEL10K_BRIGHT_AQUA="#DDFCF8"
+  export POWERLEVEL10K_BRIGHT_BLUE="#C9E6FD"
+  export POWERLEVEL10K_BRIGHT_GREEN="#EFF6AB"
+  export POWERLEVEL10K_BRIGHT_ORANGE="#FFD3C2"
+  export POWERLEVEL10K_BRIGHT_PURPLE="#F7D7FF"
+  export POWERLEVEL10K_BRIGHT_RED="#FFC4C4"
+  export POWERLEVEL10K_BRIGHT_YELLOW="#FFE6B5"
+  export POWERLEVEL10K_FADED_AQUA="#ABEBE2"
+  export POWERLEVEL10K_FADED_BLUE="#8ABAE1"
+  export POWERLEVEL10K_FADED_GREEN="#C9D36A"
+  export POWERLEVEL10K_FADED_ORANGE="#E69E83"
+  export POWERLEVEL10K_FADED_PURPLE="#DB9FE9"
+  export POWERLEVEL10K_FADED_RED="#EC8989"
+  export POWERLEVEL10K_FADED_YELLOW="#CEB581"
+  export POWERLEVEL10K_BG="#0E0E0E"
+  export POWERLEVEL10K_BG_ALT="#191919"
+  export POWERLEVEL10K_FG="#EEEEEE"
+  export POWERLEVEL10K_FG_ALT="#E1E1E1"
+  export POWERLEVEL10K_GRAY1="#222222"
+  export POWERLEVEL10K_GRAY2="#353535"
+  export POWERLEVEL10K_GRAY3="#494949"
+  export POWERLEVEL10K_GRAY4="#5E5E5E"
+  export POWERLEVEL10K_GRAY5="#747474"
+  export POWERLEVEL10K_GRAY6="#8B8B8B"
+  export POWERLEVEL10K_GRAY7="#A3A3A3"
+  export POWERLEVEL10K_GRAY8="#BBBBBB"
+  export POWERLEVEL10K_GRAY9="#D4D4D4"
+  export POWERLEVEL10K_NEUTRAL_AQUA="#C7EBE6"
+  export POWERLEVEL10K_NEUTRAL_BLUE="#A5C6E1"
+  export POWERLEVEL10K_NEUTRAL_GREEN="#CCD389"
+  export POWERLEVEL10K_NEUTRAL_ORANGE="#EFB6A0"
+  export POWERLEVEL10K_NEUTRAL_PURPLE="#E1BEE9"
+  export POWERLEVEL10K_NEUTRAL_RED="#ECA8A8"
+  export POWERLEVEL10K_NEUTRAL_YELLOW="#EFD5A0"
 
   # Unset all configuration options. This allows you to apply configuration changes without
   # restarting zsh. Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
@@ -235,9 +271,9 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
-  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_RED
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_FG
   # Default current directory foreground color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=$POWERLEVEL10K_BG
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
@@ -407,9 +443,9 @@
 
     # Styling for different parts of Git status.
     local       meta='%15F' # white foreground
-    local      clean='%15F' # black foreground
-    local   modified='%15F' # black foreground
-    local  untracked='%15F' # black foreground
+    local      clean='%15F' # white foreground
+    local   modified='%15F' # white foreground
+    local  untracked='%15F' # white foreground
     local conflicted='%1F' # red foreground
 
     local res
@@ -526,41 +562,41 @@
   # it will signify success by turning green.
   typeset -g POWERLEVEL9K_STATUS_OK=true
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_RED
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_FG
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_RED
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_FG
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=$POWERLEVEL10K_RED
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=$POWERLEVEL10K_FG
 
   # Status when the last command was terminated by a signal.
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
   # Use terse signal names: "INT" instead of "SIGINT(2)".
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=$POWERLEVEL10K_RED
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=$POWERLEVEL10K_FG
 
   # Status when some part of a pipe command fails and the overall exit status is also non-zero.
   # It may look like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=$POWERLEVEL10K_RED
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=$POWERLEVEL10K_FG
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_FG
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
@@ -575,7 +611,7 @@
 
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_FG
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
@@ -905,7 +941,7 @@
 
   ##############[ taskwarrior: taskwarrior task count (https://taskwarrior.org/) ]##############
   # Taskwarrior color.
-  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
+  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_FG
   typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
 
   # Taskwarrior segment format. The following parameters are available within the expansion.
@@ -1645,7 +1681,7 @@
 
   ####################################[ time: current time ]####################################
   # Current time color.
-  typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_BRIGHTWHITE
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_FG
   typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_LIGHTGRAY
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
