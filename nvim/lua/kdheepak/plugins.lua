@@ -21,7 +21,6 @@ end
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
-    autocmd BufWritePost init.lua lua require'kdheepak/plugins'.reload_config()
     autocmd BufWritePost plugins.lua lua require'kdheepak/plugins'.reload_config()
   augroup end
 ]], false)
@@ -335,15 +334,16 @@ packer.startup({
     use {
       '~/gitrepos/monochrome.nvim',
       config = function()
-        -- vim.g.termguicolors = true
-        -- vim.cmd('colorscheme monochrome')
+        vim.g.termguicolors = true
+        vim.g.monochrome_style = 'amplified'
+        vim.cmd('colorscheme monochrome')
       end,
     }
     use {
       'bluz71/vim-nightfly-guicolors',
       config = function()
-        vim.g.termguicolors = true
-        vim.cmd('colorscheme nightfly')
+        -- vim.g.termguicolors = true
+        -- vim.cmd('colorscheme nightfly')
       end,
     }
     -- use 'mhartington/oceanic-next'

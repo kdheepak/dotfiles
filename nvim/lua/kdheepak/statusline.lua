@@ -49,7 +49,7 @@ local theme = {
 
 require'lualine'.setup {
   extensions = { 'fzf', 'nvim-tree', 'fugitive' },
-  options = { theme = theme },
+  options = { theme = 'monochrome' },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
