@@ -315,7 +315,7 @@ packer.startup({
       event = 'BufRead',
     }
     -- use { 'glepnir/galaxyline.nvim' }
-
+    use { 'akinsho/nvim-toggleterm.lua' }
     -- colorschemes
     -- use 'RRethy/nvim-base16'
     -- use 'kdheepak/vim-one' -- light and dark vim colorscheme
