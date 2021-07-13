@@ -186,13 +186,13 @@ packer.startup({
     use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
     use { 'tamago324/compe-zsh', ft = 'zsh' }
     use { 'sblumentritt/cmake.vim', ft = 'cmake' }
-    use { 'Gavinok/compe-nextword', event = 'BufRead' }
+    -- use { 'Gavinok/compe-nextword', event = 'BufRead' }
     use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
     use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
     use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
     use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
 
-    use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
+    -- use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
 
     use { 'ggandor/lightspeed.nvim', event = 'BufRead' } -- use s and S to search
 
@@ -280,7 +280,7 @@ packer.startup({
     use { 'GCBallesteros/vim-textobj-hydrogen', ft = { 'ipynb', 'python', 'markdown' } }
     use { 'GCBallesteros/jupytext.vim', ft = { 'ipynb', 'python', 'markdown' } }
     use { 'bfredl/nvim-ipy', ft = 'python' }
-    use { '~/gitrepos/JuliaFormatter.vim', ft = 'julia' } -- formatter for Julia
+    use { '~/gitrepos/JuliaFormatter.vim' } -- formatter for Julia
     use { 'sindrets/diffview.nvim' }
     use {
       'romgrk/barbar.nvim',
