@@ -337,10 +337,26 @@ packer.startup({
     -- use { 'folke/tokyonight.nvim' }
     -- use 'bluz71/vim-moonfly-colors'
     use {
+      'srcery-colors/srcery-vim',
+      config = function()
+        -- vim.g.termguicolors = true
+        -- vim.o.background = 'dark'
+        -- vim.cmd('colorscheme srcery')
+      end,
+    }
+    use {
+      'axvr/photon.vim',
+      -- config = function()
+      --   vim.g.termguicolors = true
+      --   -- vim.o.background = 'dark'
+      --   -- vim.cmd('colorscheme photon')
+      -- end,
+    }
+    use {
       '~/gitrepos/monochrome.nvim',
       config = function()
         vim.g.termguicolors = true
-        -- vim.o.background = 'light'
+        vim.o.background = 'dark'
         vim.cmd('colorscheme monochrome')
       end,
     }
@@ -356,8 +372,8 @@ packer.startup({
     use {
       'projekt0n/github-nvim-theme',
       config = function()
-        -- vim.g.termguicolors = true
-        -- require('github-theme').setup({ themeStyle = 'dark', keywordStyle = 'NONE' })
+        vim.g.termguicolors = true
+        -- require('github-theme').setup({ themeStyle = 'light', keywordStyle = 'NONE' })
       end,
     }
     -- use {
@@ -393,6 +409,12 @@ packer.startup({
       end,
     }
     use 'famiu/nvim-reload'
+    use {
+      'folke/twilight.nvim',
+      config = function()
+        require('twilight').setup {}
+      end,
+    }
   end,
   config = { display = { open_fn = require('packer.util').float } },
 })
