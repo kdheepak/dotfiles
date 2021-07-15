@@ -141,7 +141,7 @@ lspconfig.pyright.setup { on_attach = on_attach_vim, capabilities = capabilities
 
 require'lspconfig'.efm.setup {
   init_options = { documentFormatting = true },
-  filetypes = { 'lua', 'julia' },
+  filetypes = { 'lua' },
   settings = {
     rootMarkers = { '.git/' },
     languages = {
@@ -151,15 +151,15 @@ require'lspconfig'.efm.setup {
           formatStdin = true,
         },
       },
-      julia = {
-        {
-          formatCommand = 'julia --sysimage=' .. vim.fn.stdpath('data')
-              .. '/site/pack/packer/start/JuliaFormatter.vim/scripts/juliaformatter.dylib --project='
-              .. vim.fn.stdpath('data')
-              .. 'site/pack/packer/start/JuliaFormatter.vim/ --startup-file=no --color=no -e \'using JuliaFormatter; print(format_text(String(read(stdin))))\'',
-          formatStdin = true,
-        },
-      },
+      -- julia = {
+      --   {
+      --     formatCommand = 'julia --sysimage=' .. vim.fn.stdpath('data')
+      --         .. '/site/pack/packer/start/JuliaFormatter.vim/scripts/juliaformatter.dylib --project='
+      --         .. vim.fn.stdpath('data')
+      --         .. 'site/pack/packer/start/JuliaFormatter.vim/ --startup-file=no --color=no -e \'using JuliaFormatter; print(format_text(String(read(stdin))))\'',
+      --     formatStdin = true,
+      --   },
+      -- },
 
     },
   },

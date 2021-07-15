@@ -152,7 +152,29 @@ packer.startup({
         require 'kdheepak/which-key'
       end,
     }
+    use {
+      'ibhagwan/fzf-lua',
+      requires = {
+        'kyazdani42/nvim-web-devicons', -- optional for icons
+        'vijaymarupudi/nvim-fzf',
+      },
+    }
+
     use 'folke/trouble.nvim'
+    use {
+      'glepnir/lspsaga.nvim',
+      config = function()
+        require('lspsaga').init_lsp_saga {
+          code_action_icon = '',
+          code_action_prompt = { enable = true, sign = true, sign_priority = 20, virtual_text = false },
+          code_action_keys = { quit = { 'q', '<ESC>' }, exec = '<CR>' },
+          border_style = 'round',
+        }
+        vim.cmd([[
+        autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
+        ]])
+      end,
+    }
 
     use { 'onsails/lspkind-nvim' }
     use { 'ray-x/lsp_signature.nvim' }
