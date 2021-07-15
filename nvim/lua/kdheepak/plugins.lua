@@ -343,7 +343,13 @@ packer.startup({
     -- use 'marko-cerovac/material.nvim'
     -- use { 'cocopon/iceberg.vim' }
     -- use 'ntk148v/vim-horizon'
-    -- use { 'folke/tokyonight.nvim' }
+    use {
+      'folke/tokyonight.nvim',
+      config = function()
+        vim.g.termguicolors = true
+        vim.cmd('colorscheme tokyonight')
+      end,
+    }
     -- use 'bluz71/vim-moonfly-colors'
     use {
       'srcery-colors/srcery-vim',
@@ -363,12 +369,12 @@ packer.startup({
     }
     use {
       '~/gitrepos/monochrome.nvim',
-      config = function()
-        vim.g.termguicolors = true
-        vim.o.background = 'dark'
-        vim.g.monochrome_style = 'coolgray'
-        vim.cmd('colorscheme monochrome')
-      end,
+      -- config = function()
+      --   vim.g.termguicolors = true
+      --   vim.o.background = 'dark'
+      --   vim.g.monochrome_style = 'coolgray'
+      --   vim.cmd('colorscheme monochrome')
+      -- end,
     }
     use {
       'bluz71/vim-nightfly-guicolors',
