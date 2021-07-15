@@ -48,13 +48,7 @@ capabilities.textDocument.codeAction = {
 
 local lspconfig = require 'lspconfig'
 local on_attach_vim = function(client, bufnr)
-  require'lsp_signature'.on_attach({
-    bind = true,
-    use_lspsaga = true,
-    floating_window = true,
-    fix_pos = true,
-    hint_enable = true,
-  })
+  require'lsp_signature'.on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
   require'lsp-status'.on_attach(client)
   require'illuminate'.on_attach(client)
   local function buf_set_keymap(...)
@@ -77,7 +71,7 @@ local on_attach_vim = function(client, bufnr)
   end
 
 end
--- lspconfig.julials.setup({on_attach = on_attach_vim})
+lspconfig.julials.setup({ on_attach = on_attach_vim })
 lspconfig.bashls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
 lspconfig.ccls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
 lspconfig.tsserver.setup({ on_attach = on_attach_vim, capabilities = capabilities })
@@ -170,8 +164,3 @@ require'lspconfig'.efm.setup {
     },
   },
 }
-
-vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
-                        { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
-                        { noremap = true, silent = true })

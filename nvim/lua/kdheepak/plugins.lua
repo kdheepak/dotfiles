@@ -152,20 +152,7 @@ packer.startup({
         require 'kdheepak/which-key'
       end,
     }
-    use {
-      'glepnir/lspsaga.nvim',
-      config = function()
-        require('lspsaga').init_lsp_saga {
-          code_action_icon = '',
-          code_action_prompt = { enable = true, sign = true, sign_priority = 20, virtual_text = false },
-          code_action_keys = { quit = { 'q', '<ESC>' }, exec = '<CR>' },
-          border_style = 'round',
-        }
-        vim.cmd([[
-        autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
-        ]])
-      end,
-    }
+    use 'folke/trouble.nvim'
 
     use { 'onsails/lspkind-nvim' }
     use { 'ray-x/lsp_signature.nvim' }
@@ -269,7 +256,7 @@ packer.startup({
     use { 'kosayoda/nvim-lightbulb', event = 'BufRead' }
     use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } } -- a nicer Python indentation style for vim
     use { 'rust-lang/rust.vim', ft = { 'rust' } } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
-    -- use { 'JuliaEditorSupport/julia-vim', ft = 'julia' } -- julia support for vim
+    use { 'JuliaEditorSupport/julia-vim' } -- julia support for vim
     use { 'kdheepak/gridlabd.vim', ft = 'gridlabd' } -- gridlabd syntax support
     use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim
     use { 'gpanders/vim-medieval', ft = 'markdown' } -- evaluate markdown code blocks within vim
@@ -357,6 +344,7 @@ packer.startup({
       config = function()
         vim.g.termguicolors = true
         vim.o.background = 'dark'
+        vim.g.monochrome_style = 'coolgray'
         vim.cmd('colorscheme monochrome')
       end,
     }

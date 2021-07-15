@@ -38,22 +38,6 @@ wk.setup {
 
 vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', { noremap = true, silent = true })
 
--- vim.api.nvim_set_keymap('<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', '<NOP>', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>', '<NOP>', {noremap = true, silent = true})
-
-vim.api.nvim_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', { silent = true, noremap = true })
-vim.api.nvim_set_keymap('n', 'ca', ':Lspsaga code_action<CR>', { silent = true, noremap = true })
-
--- scroll down hover doc or scroll in definition preview
-vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require(\'lspsaga.action\').smart_scroll_with_saga(1)<CR>',
-                        { silent = true, noremap = true })
-vim.api.nvim_set_keymap('n', '<C-g>', '<cmd>lua require(\'lspsaga.action\').smart_scroll_with_saga(-1)<CR>',
-                        { silent = true, noremap = true })
-
-vim.cmd([[
-autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
-]])
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -208,26 +192,20 @@ local mappings = {
 
   l = {
     name = 'LSP',
-    [']'] = { '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next Diagnostic' },
-    ['['] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic' },
-    a = { '<cmd>Lspsaga code_action<CR>', 'Code Action' },
-    A = { '<cmd>Lspsaga range_code_action<CR>', 'Selected Action' },
-    d = { '<cmd>Telescope lsp_document_diagnostics<CR>', 'Document Diagnostics' },
-    D = { '<cmd>Telescope lsp_workspace_diagnostics<CR>', 'Workspace Diagnostics' },
     f = { '<cmd>lua vim.lsp.buf.formatting()<CR>', 'Format' },
-    h = { '<cmd>Lspsaga hover_doc<CR>', 'Hover Doc' },
-    H = { '<cmd>Lspsaga signature_help<CR>', 'Signature Help' },
     i = { '<cmd>LspInfo<CR>', 'Info' },
-    l = { '<cmd>Lspsaga lsp_finder<CR>', 'LSP Finder' },
-    L = { '<cmd>Lspsaga show_line_diagnostics<CR>', 'Line Diagnostics' },
-    p = { '<cmd>Lspsaga preview_definition<CR>', 'Preview Definition' },
-    q = { '<cmd>Telescope quickfix<CR>', 'Quickfix' },
-    r = { '<cmd>Lspsaga rename<CR>', 'Rename' },
     t = { '<cmd>LspTypeDefinition<CR>', 'Type Definition' },
     x = { '<cmd>cclose<CR>', 'Close Quickfix' },
     s = { '<cmd>Telescope lsp_document_symbols<CR>', 'Document Symbols' },
-    g = { '<cmd>lua require\'lspsaga.diagnostic\'.show_cursor_diagnostics()<CR>', 'Document Symbols' },
     S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'Workspace Symbols' },
+    l = { '<cmd>TroubleToggle<CR>', 'Trouble Toggle' },
+    d = { '<cmd>Trouble lsp_document_diagnostics<cr>', 'document diagnostics' },
+    r = { '<cmd>Trouble lsp_references<cr>', 'references' },
+    L = { '<cmd>Trouble loclist<cr>', 'loclist' },
+    q = { '<cmd>Trouble quickfix<cr>', 'quickfix' },
+    w = { '<cmd>Trouble lsp_workspace_diagnostics<cr>', 'workspace diagnostics' },
+    [']'] = { [[<cmd>lua require("trouble").next({skip_groups = true, jump = true})<CR>]], 'Next diagnostic' },
+    ['['] = { [[<cmd>lua require("trouble").previous({skip_groups = true, jump = true})<CR>]], 'Prev diagnostic' },
   },
 
   v = { name = 'Vim', e = { '<cmd>e $MYVIMRC<CR>' }, s = { '<cmd>luafile $MYVIMRC<CR>' }, z = { '<cmd>e ~/.zshrc<CR>' } },

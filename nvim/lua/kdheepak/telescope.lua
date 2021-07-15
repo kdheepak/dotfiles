@@ -13,6 +13,7 @@ require('telescope').load_extension('gh')
 require('telescope').load_extension('lsp_handlers')
 require('telescope').load_extension('openbrowser')
 require('telescope').load_extension('dap')
+local trouble = require('trouble.providers.telescope')
 
 local actions = require('telescope.actions')
 require('telescope').setup {
@@ -24,11 +25,13 @@ require('telescope').setup {
         ['<esc>'] = actions.close,
         ['<C-j>'] = actions.move_selection_next,
         ['<C-k>'] = actions.move_selection_previous,
+        ['<C-t>'] = trouble.open_with_trouble,
       },
       i = {
         ['<esc>'] = actions.close,
         ['<C-j>'] = actions.move_selection_next,
         ['<C-k>'] = actions.move_selection_previous,
+        ['<C-t>'] = trouble.open_with_trouble,
       },
     },
   },
