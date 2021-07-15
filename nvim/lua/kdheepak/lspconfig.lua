@@ -71,7 +71,18 @@ local on_attach_vim = function(client, bufnr)
   end
 
 end
-lspconfig.julials.setup({ on_attach = on_attach_vim })
+local cmd = {
+  'env', 'JULIA_DEBUG=all', 'julia', '--project=' .. vim.fn.expand('~/.config/nvim/lsp-julia'), '--startup-file=no',
+  '--history-file=no', vim.fn.expand('~/.config/nvim/lsp-julia/run.jl'),
+}
+
+vim.lsp.set_log_level 'trace'
+lspconfig.julials.setup({
+  on_attach = on_attach_vim,
+  on_new_config = function(new_config, _)
+    new_config.cmd = cmd
+  end,
+})
 lspconfig.bashls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
 lspconfig.ccls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
 lspconfig.tsserver.setup({ on_attach = on_attach_vim, capabilities = capabilities })
