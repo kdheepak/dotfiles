@@ -346,8 +346,9 @@ packer.startup({
     use {
       'folke/tokyonight.nvim',
       config = function()
-        vim.g.termguicolors = true
-        vim.cmd('colorscheme tokyonight')
+        -- vim.g.termguicolors = true
+        -- vim.g.tokyonight_style = 'night'
+        -- vim.cmd('colorscheme tokyonight')
       end,
     }
     -- use 'bluz71/vim-moonfly-colors'
@@ -379,8 +380,8 @@ packer.startup({
     use {
       'bluz71/vim-nightfly-guicolors',
       config = function()
-        -- vim.g.termguicolors = true
-        -- vim.cmd('colorscheme nightfly')
+        vim.g.termguicolors = true
+        vim.cmd('colorscheme nightfly')
       end,
     }
     -- use 'mhartington/oceanic-next'

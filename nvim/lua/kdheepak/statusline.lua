@@ -1,8 +1,42 @@
 require('plenary.reload').reload_module('lualine', true)
-require 'monochrome'
+local colors = require 'monochrome.colors'
+colors.bg = '#011627'
+local theme = {
+  normal = {
+    a = { fg = colors.black, bg = colors.neutral_green, gui = 'bold' },
+    b = { fg = colors.fg, bg = colors.gray1 },
+    c = { fg = colors.fg, bg = colors.bg },
+  },
+  insert = {
+    a = { fg = colors.black, bg = colors.faded_blue, gui = 'bold' },
+    b = { fg = colors.fg, bg = colors.gray1 },
+    c = { fg = colors.fg, bg = colors.bg },
+  },
+  visual = {
+    a = { fg = colors.black, bg = colors.faded_yellow, gui = 'bold' },
+    b = { fg = colors.fg, bg = colors.gray1 },
+    c = { fg = colors.fg, bg = colors.bg },
+  },
+  replace = {
+    a = { fg = colors.black, bg = colors.faded_red, gui = 'bold' },
+    b = { fg = colors.fg, bg = colors.gray1 },
+    c = { fg = colors.fg, bg = colors.bg },
+  },
+  command = {
+    a = { fg = colors.black, bg = colors.faded_aqua, gui = 'bold' },
+    b = { fg = colors.fg, bg = colors.gray1 },
+    c = { fg = colors.fg, bg = colors.bg },
+  },
+  inactive = {
+    a = { fg = colors.white, bg = colors.fg, gui = 'bold' },
+    b = { fg = colors.white, bg = colors.gray1 },
+    c = { fg = colors.white, bg = colors.bg },
+  },
+}
+
 require'lualine'.setup {
   extensions = { 'fzf', 'nvim-tree', 'fugitive' },
-  options = { theme = 'monochrome' },
+  options = { theme = theme },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
