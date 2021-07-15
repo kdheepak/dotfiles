@@ -71,12 +71,11 @@ local on_attach_vim = function(client, bufnr)
   end
 
 end
-local cmd = {
-  'env', 'JULIA_DEBUG=all', 'julia', '--project=' .. vim.fn.expand('~/.config/nvim/lsp-julia'), '--startup-file=no',
-  '--history-file=no', vim.fn.expand('~/.config/nvim/lsp-julia/run.jl'),
-}
 
-vim.lsp.set_log_level 'trace'
+local cmd = {
+  'julia', '--project=' .. vim.fn.expand('~/.config/nvim/lsp-julia'), '--startup-file=no', '--history-file=no',
+  vim.fn.expand('~/.config/nvim/lsp-julia/run.jl'),
+}
 lspconfig.julials.setup({
   on_attach = on_attach_vim,
   on_new_config = function(new_config, _)
