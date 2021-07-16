@@ -216,14 +216,15 @@ packer.startup({
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
     use 'folke/lsp-colors.nvim'
     --  use 'bkad/CamelCaseMotion' -- motions for inside camel case
-    use {
-      'RRethy/vim-hexokinase',
-      run = 'make hexokinase',
-      config = function()
-        vim.g.Hexokinase_highlighters = { 'backgroundfull' }
-        vim.g.Hexokinase_optInPatterns = { 'full_hex', 'triple_hex', 'rgb', 'rgba', 'hsl', 'hsla' }
-      end,
-    }
+    use { 'norcalli/nvim-colorizer.lua' }
+    -- use {
+    --   'RRethy/vim-hexokinase',
+    --   run = 'make hexokinase',
+    --   config = function()
+    --     vim.g.Hexokinase_highlighters = { 'backgroundfull' }
+    --     vim.g.Hexokinase_optInPatterns = { 'full_hex', 'triple_hex', 'rgb', 'rgba', 'hsl', 'hsla' }
+    --   end,
+    -- }
     use { 'euclidianAce/BetterLua.vim' }
     use { 'bfredl/nvim-luadev' }
     use {
