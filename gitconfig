@@ -124,7 +124,7 @@
 [core]
 
     # Use custom `.gitignore` and `.gitattributes`
-    excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
 
     # Treat spaces before tabs and all kinds of trailing whitespace as an error
@@ -186,10 +186,15 @@
 [rebase]
     autoStash = true
 [core]
-    pager = delta --syntax-theme=dracula
+    pager = delta --syntax-theme=GitHub
 [interactive]
-    diffFilter = delta --color-only --syntax-theme=dracula
+    diffFilter = delta --color-only --syntax-theme=GitHub
 [delta]
     line-numbers = true
 [fetch]
     prune = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

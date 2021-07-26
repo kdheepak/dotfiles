@@ -235,4 +235,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-alias luamake=/Users/dkrishna/gitrepos/lua-language-server/3rd/luamake/luamake
+export PATH="$PATH:/Users/$USER/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
