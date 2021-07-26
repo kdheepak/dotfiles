@@ -216,7 +216,12 @@ packer.startup({
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
     use 'folke/lsp-colors.nvim'
     --  use 'bkad/CamelCaseMotion' -- motions for inside camel case
-    use { 'norcalli/nvim-colorizer.lua' }
+    use {
+      'norcalli/nvim-colorizer.lua',
+      config = function()
+        require'colorizer'.setup()
+      end,
+    }
     -- use {
     --   'RRethy/vim-hexokinase',
     --   run = 'make hexokinase',
@@ -311,9 +316,9 @@ packer.startup({
       'hoob3rt/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
       config = function()
-        vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
-        vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
-        vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':bdelete<CR>', { noremap = true, silent = true })
+        -- vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
+        -- vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
+        -- vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':bdelete<CR>', { noremap = true, silent = true })
       end,
     }
     use { 'jbyuki/venn.nvim', event = 'BufRead' } -- Draw ASCII diagrams in Neovim.
@@ -382,7 +387,7 @@ packer.startup({
       'bluz71/vim-nightfly-guicolors',
       config = function()
         vim.g.termguicolors = true
-        vim.cmd('colorscheme nightfly')
+        -- vim.cmd('colorscheme nightfly')
       end,
     }
     -- use 'mhartington/oceanic-next'
@@ -391,7 +396,8 @@ packer.startup({
       'projekt0n/github-nvim-theme',
       config = function()
         vim.g.termguicolors = true
-        -- require('github-theme').setup({ themeStyle = 'light', keywordStyle = 'NONE' })
+        -- require('github-theme').setup()
+        require('github-theme').setup({ themeStyle = 'light', keywordStyle = 'NONE' })
       end,
     }
     -- use {

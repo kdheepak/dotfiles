@@ -22,6 +22,13 @@
 () {
   emulate -L zsh -o extended_glob
 
+  export POWERLEVEL10K_COMMAND_A_BG="#bc05bc"
+  export POWERLEVEL10K_COMMAND_A_FG="#ffffff"
+  export POWERLEVEL10K_COMMAND_B_BG="#f6f8fa"
+  export POWERLEVEL10K_COMMAND_B_FG="#bc05bc"
+  export POWERLEVEL10K_COMMAND_C_BG="#ffffff"
+  export POWERLEVEL10K_COMMAND_C_FG="#586069"
+
   export POWERLEVEL10K_BACKGROUND=#1c1e26
   export POWERLEVEL10K_LIGHTGRAY=#2E303E
   export POWERLEVEL10K_FOREGROUND=#6C6F93
@@ -271,19 +278,19 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
-  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_NEUTRAL_GREEN
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=$POWERLEVEL10K_COMMAND_A_BG
   # Default current directory foreground color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
   # Color of the shortened directory segments.
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=$POWERLEVEL10K_BLACK
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -410,11 +417,11 @@
 
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=$POWERLEVEL10K_GRAY1
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$POWERLEVEL10K_GRAY1
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$POWERLEVEL10K_GRAY1
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=$POWERLEVEL10K_GRAY1
-  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=$POWERLEVEL10K_GRAY1
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=
@@ -562,21 +569,21 @@
   # it will signify success by turning green.
   typeset -g POWERLEVEL9K_STATUS_OK=true
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$POWERLEVEL10K_BG
-  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_NEUTRAL_GREEN
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=$POWERLEVEL10K_COMMAND_A_BG
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL10K_BG
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_GRAY7
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL10K_COMMAND_A_FG
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
   typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=$POWERLEVEL10K_FADED_RED
 
   # Status when the last command was terminated by a signal.
@@ -584,20 +591,20 @@
   # Use terse signal names: "INT" instead of "SIGINT(2)".
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$POWERLEVEL10K_BG
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=$POWERLEVEL10K_GRAY7
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=$POWERLEVEL10K_COMMAND_A_FG
 
   # Status when some part of a pipe command fails and the overall exit status is also non-zero.
   # It may look like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=$POWERLEVEL10K_BG
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=$POWERLEVEL10K_FADED_RED
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_FG
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_GRAY1
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=$POWERLEVEL10K_COMMAND_A_BG
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   # Show this many fractional digits. Zero means round to seconds.
@@ -611,8 +618,8 @@
 
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_FG
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_GRAY1
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$POWERLEVEL10K_COMMAND_A_FG
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=$POWERLEVEL10K_COMMAND_A_BG
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Custom icon.
@@ -816,8 +823,8 @@
 
   ###########################[ vim_shell: vim shell indicator (:sh) ]###########################
   # Vim shell indicator color.
-  typeset -g POWERLEVEL9K_VIM_SHELL_FOREGROUND=$POWERLEVEL10K_BLACK
-  typeset -g POWERLEVEL9K_VIM_SHELL_BACKGROUND=$POWERLEVEL10K_FADED_BLUE
+  typeset -g POWERLEVEL9K_VIM_SHELL_FOREGROUND=$POWERLEVEL10K_INSERT_A_FG
+  typeset -g POWERLEVEL9K_VIM_SHELL_BACKGROUND=$POWERLEVEL10K_INSERT_A_BG
   # Custom icon.
   # typeset -g POWERLEVEL9K_VIM_SHELL_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -941,8 +948,8 @@
 
   ##############[ taskwarrior: taskwarrior task count (https://taskwarrior.org/) ]##############
   # Taskwarrior color.
-  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_FG
-  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_GRAY1
+  typeset -g POWERLEVEL9K_TASKWARRIOR_FOREGROUND=$POWERLEVEL10K_COMMAND_B_FG
+  typeset -g POWERLEVEL9K_TASKWARRIOR_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
 
   # Taskwarrior segment format. The following parameters are available within the expansion.
   #
@@ -1681,8 +1688,8 @@
 
   ####################################[ time: current time ]####################################
   # Current time color.
-  typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_FG
-  typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_GRAY1
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND=$POWERLEVEL10K_COMMAND_B_FG
+  typeset -g POWERLEVEL9K_TIME_BACKGROUND=$POWERLEVEL10K_COMMAND_B_BG
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
   # If set to true, time will update when you hit enter. This way prompts for the past
