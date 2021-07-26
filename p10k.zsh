@@ -165,8 +165,8 @@
     todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
-    command_execution_time  # duration of the last command
     time                    # current time
+    command_execution_time  # duration of the last command
     status                  # exit code of the last command
     # =========================[ Line #2 ]=========================
     newline
