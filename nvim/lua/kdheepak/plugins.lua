@@ -59,7 +59,7 @@ packer.startup({
 
     use {
       'windwp/nvim-autopairs',
-      after = { 'telescope.nvim', 'nvim-compe' },
+      after = { 'nvim-compe' },
       config = function()
         require('nvim-autopairs').setup()
         require('nvim-autopairs.completion.compe').setup({
@@ -180,17 +180,20 @@ packer.startup({
     }
     use { 'kabouzeid/nvim-lspinstall' }
 
-    use {
-      'nvim-telescope/telescope.nvim',
-      requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'nvim-telescope/telescope-fzy-native.nvim' },
-      config = function()
-        require 'kdheepak/telescope'
-      end,
-    }
-    use 'tamago324/telescope-openbrowser.nvim'
-    use 'nvim-telescope/telescope-github.nvim'
-    use 'gbrlsnchs/telescope-lsp-handlers.nvim'
-    use 'nvim-telescope/telescope-dap.nvim'
+    use { 'nvim-lua/plenary.nvim' }
+    use { 'nvim-lua/popup.nvim' }
+    -- use {
+    --   'nvim-telescope/telescope.nvim',
+    --   requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
+    --   config = function()
+    --     require 'kdheepak/telescope'
+    --   end,
+    -- }
+    -- use 'tamago324/telescope-openbrowser.nvim'
+    -- use 'nvim-telescope/telescope-github.nvim'
+    -- use 'gbrlsnchs/telescope-lsp-handlers.nvim'
+    -- use 'nvim-telescope/telescope-dap.nvim'
+
     use 'Pocco81/DAPInstall.nvim'
     use {
       'mfussenegger/nvim-dap',
@@ -213,6 +216,9 @@ packer.startup({
         'kyazdani42/nvim-web-devicons', -- optional for icons
         'vijaymarupudi/nvim-fzf',
       },
+      config = function()
+        require'fzf-lua'.setup { preview_cmd = 'bat' }
+      end,
     }
 
     use 'folke/trouble.nvim'
