@@ -33,6 +33,7 @@ require('plenary.reload').reload_module('lualine', true)
 --     c = { fg = colors.white, bg = colors.bg },
 --   },
 -- }
+
 local theme = {
   command = { a = { bg = '#14ce14', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#bc05bc' } },
   inactive = {

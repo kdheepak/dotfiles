@@ -57,20 +57,32 @@ packer.startup({
 
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview', ft = 'markdown' }
 
-    -- use {
-    --   'windwp/nvim-autopairs',
-    --   after = { 'telescope.nvim', 'nvim-compe' },
-    --   config = function()
-    --     require('nvim-autopairs').setup()
-    --     require('nvim-autopairs.completion.compe').setup({
-    --       map_cr = true, --  map <CR> on insert mode
-    --       map_complete = true, -- it will auto insert `(` after select function or method item
-    --     })
-    --     require('nvim-treesitter.configs').setup { autopairs = { enable = true } }
-    --   end,
-    --   event = 'BufRead',
-    -- }
-    use { 'windwp/nvim-ts-autotag' }
+    use {
+      'windwp/nvim-autopairs',
+      after = { 'telescope.nvim', 'nvim-compe' },
+      config = function()
+        require('nvim-autopairs').setup()
+        require('nvim-autopairs.completion.compe').setup({
+          map_cr = true, --  map <CR> on insert mode
+          map_complete = true, -- it will auto insert `(` after select function or method item
+        })
+        require('nvim-treesitter.configs').setup { autopairs = { enable = true } }
+      end,
+      event = 'BufRead',
+    }
+    use {
+      'windwp/nvim-ts-autotag',
+      config = function()
+        require'nvim-treesitter.configs'.setup { autotag = { enable = true } }
+      end,
+    }
+    use {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+      config = function()
+        require'nvim-treesitter.configs'.setup { context_commentstring = { enable = true } }
+
+      end,
+    }
     use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
@@ -85,6 +97,48 @@ packer.startup({
       end,
       requires = { { 'nvim-treesitter/playground' } },
     }
+    use {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      config = function()
+        require'nvim-treesitter.configs'.setup {
+          textobjects = {
+            select = {
+              enable = true,
+              -- Automatically jump forward to textobj, similar to targets.vim
+              lookahead = true,
+              keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ['af'] = '@function.outer',
+                ['if'] = '@function.inner',
+                ['ac'] = '@class.outer',
+                ['ic'] = '@class.inner',
+              },
+            },
+            swap = {
+              enable = true,
+              swap_next = { ['<leader>a'] = '@parameter.inner' },
+              swap_previous = { ['<leader>A'] = '@parameter.inner' },
+            },
+            move = {
+              enable = true,
+              set_jumps = true, -- whether to set jumps in the jumplist
+              goto_next_start = { [']m'] = '@function.outer', [']]'] = '@class.outer' },
+              goto_next_end = { [']M'] = '@function.outer', [']['] = '@class.outer' },
+              goto_previous_start = { ['[m'] = '@function.outer', ['[['] = '@class.outer' },
+              goto_previous_end = { ['[M'] = '@function.outer', ['[]'] = '@class.outer' },
+            },
+            textobjects = {
+              lsp_interop = {
+                enable = true,
+                border = 'none',
+                peek_definition_code = { ['df'] = '@function.outer', ['dF'] = '@class.outer' },
+              },
+            },
+          },
+        }
+      end,
+    }
+
     use {
       'terrortylor/nvim-comment',
       config = function()
@@ -238,7 +292,7 @@ packer.startup({
         require('spellsitter').setup()
       end,
     }
-    -- use 'itchyny/vim-cursorword'                                         -- underlines the word under the cursor
+    use 'itchyny/vim-cursorword' -- underlines the word under the cursor
     -- use 'yamatsum/nvim-cursorline'
     use { 'RRethy/vim-illuminate' }
     --  use 'junegunn/vim-easy-align' -- helps alignment
@@ -352,7 +406,7 @@ packer.startup({
     use {
       'folke/tokyonight.nvim',
       config = function()
-        -- vim.g.termguicolors = true
+        vim.g.termguicolors = true
         -- vim.g.tokyonight_style = 'night'
         -- vim.cmd('colorscheme tokyonight')
       end,
@@ -393,11 +447,17 @@ packer.startup({
     -- use 'mhartington/oceanic-next'
     -- use 'https://git.sr.ht/~novakane/kosmikoa.nvim'
     use {
+      'fenetikm/falcon',
+      config = function()
+        vim.g.termguicolors = true
+        -- vim.cmd [[colorscheme falcon]]
+      end,
+    }
+    use {
       'projekt0n/github-nvim-theme',
       config = function()
         vim.g.termguicolors = true
-        -- require('github-theme').setup()
-        require('github-theme').setup({ themeStyle = 'light', keywordStyle = 'NONE' })
+        require('github-theme').setup({ themeStyle = 'light' })
       end,
     }
     -- use {
