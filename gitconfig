@@ -10,16 +10,21 @@
 [push]
     default = simple
 [merge]
-    tool = vimdiff
+    tool = nfugitive
     # Include summaries of merged commits in newly created merge commit messages
     log = true
     conflictstyle = diff3
 [mergetool]
-  prompt = true
+    prompt = true
 [mergetool "vimdiff"]
-  cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-[mergetool]
-    prompt = false
+    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[mergetool "diffconflicts"]
+    cmd = nvim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+    trustExitCode = true
+[mergetool "nfugitive"]
+    cmd = nvim -f -c "Gdiffsplit!" "$MERGED"
+    trustExitCode = true
+
 [diff]
     tool = vimdiff
     algorithm = patience
@@ -118,6 +123,7 @@
 
     edit-unmerged = "!f() { git diff --name-status --diff-filter=U | cut -f2 ; }; vim `f`"
     add-unmerged = "!f() { git diff --name-status --diff-filter=U | cut -f2 ; }; git add `f`"
+    conflicted = !nvim +Conflicted
 
 [apply]
 
@@ -197,7 +203,7 @@
 [fetch]
     prune = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
