@@ -301,14 +301,27 @@ packer.startup({
     }
     use 'itchyny/vim-cursorword' -- underlines the word under the cursor
     -- use 'yamatsum/nvim-cursorline'
-    use { 'RRethy/vim-illuminate' }
+    -- use { 'RRethy/vim-illuminate' }
     --  use 'junegunn/vim-easy-align' -- helps alignment
+    use { 'whiteinge/diffconflicts' }
     use { 'godlygeek/tabular', event = 'BufRead' } -- line up text
     use { 'tpope/vim-unimpaired', event = 'BufRead' } -- complementary pairs of mappings
     use { 'tpope/vim-abolish', event = 'BufRead' } -- convert camel to snake
     use { 'tpope/vim-surround', event = 'BufRead' } -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
     use { 'tpope/vim-repeat', event = 'BufRead' } -- repeat.vim remaps . in a way that plugins can tap into it.
     use { 'vim-utils/vim-vertical-move', event = 'BufRead' }
+    use {
+      'rmagatti/auto-session',
+      config = function()
+        local opts = {
+          log_level = 'info',
+          auto_session_enabled = false,
+          auto_save_enabled = false,
+          auto_restore_enabled = false,
+        }
+        require('auto-session').setup(opts)
+      end,
+    }
     -- use 'tpope/vim-tbone'                                                                                                                            -- basic tmux support for vim
     use { 'tpope/vim-jdaddy', event = 'BufRead' } -- mappings for working with json in vim
     -- use 'tpope/vim-obsession'                                                                                                                        -- no hassle vim sessions
@@ -358,16 +371,17 @@ packer.startup({
     use { 'bfredl/nvim-ipy', ft = 'python' }
     use { '~/gitrepos/JuliaFormatter.vim' } -- formatter for Julia
     use { 'sindrets/diffview.nvim' }
-    use {
-      'romgrk/barbar.nvim',
-      config = function()
-        vim.g.bufferline.icons = 'both'
-        vim.api.nvim_set_keymap('n', '<TAB>', ':BufferNext<CR>', { noremap = true, silent = true })
-        vim.api.nvim_set_keymap('n', '<S-TAB>', ':BufferPrevious<CR>', { noremap = true, silent = true })
-        vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':BufferClose<CR>', { noremap = true, silent = true })
-      end,
-      event = 'BufRead',
-    }
+    use { 'christoomey/vim-conflicted' }
+    -- use {
+    --   'romgrk/barbar.nvim',
+    --   config = function()
+    --     vim.g.bufferline.icons = 'both'
+    --     vim.api.nvim_set_keymap('n', '<TAB>', ':BufferNext<CR>', { noremap = true, silent = true })
+    --     vim.api.nvim_set_keymap('n', '<S-TAB>', ':BufferPrevious<CR>', { noremap = true, silent = true })
+    --     vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':BufferClose<CR>', { noremap = true, silent = true })
+    --   end,
+    --   event = 'BufRead',
+    -- }
     use { 'jbyuki/one-small-step-for-vimkind', ft = 'lua' }
     use { 'npxbr/glow.nvim', branch = 'main', run = ':GlowInstall' }
     use { 'rust-lang/vscode-rust', ft = 'rust' }
@@ -461,10 +475,18 @@ packer.startup({
       end,
     }
     use {
-      'projekt0n/github-nvim-theme',
+      'kdheepak/github-nvim-theme',
+      branch = 'fix-bar-bar-colors',
       config = function()
         vim.g.termguicolors = true
-        require('github-theme').setup({ themeStyle = 'light' })
+        require('github-theme').setup({
+          themeStyle = 'light',
+          keywordStyle = 'NONE',
+          functionStyle = 'NONE',
+          variableStyle = 'NONE',
+          commentStyle = 'italic',
+          colors = { lsp = { referenceText = nil } },
+        })
       end,
     }
     -- use {

@@ -51,13 +51,47 @@ local theme = {
   visual = { a = { bg = '#949800', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#949800' } },
 }
 
+function git_root()
+  local original_current_dir = vim.fn.expand('%:p:h')
+  local current_dir = original_current_dir
+  while true do
+    if vim.fn.globpath(current_dir, '.git', 1) ~= '' then
+      return vim.fn.fnamemodify(current_dir, ':t')
+    end
+    local temp_dir = current_dir
+    current_dir = vim.fn.fnamemodify(current_dir, ':h')
+    if temp_dir == current_dir then
+      break
+    end
+  end
+  return original_current_dir
+end
+
 require'lualine'.setup {
-  extensions = { 'fzf', 'nvim-tree', 'fugitive' },
+  extensions = { 'fzf', 'nvim-tree', 'fugitive', 'quickfix' },
   options = { theme = theme },
+  tabline = {
+    lualine_a = { git_root },
+    lualine_b = { 'filename' },
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch' },
-    lualine_c = { { 'filename', file_status = true, full_path = true } },
+    lualine_c = {
+      { 'filename', file_status = true, path = 1 }, {
+        'diff',
+        colored = true, -- displays diff status in color if set to true
+        -- all colors are in format #rrggbb
+        color_added = nil, -- changes diff's added foreground color
+        color_modified = nil, -- changes diff's modified foreground color
+        color_removed = nil, -- changes diff's removed foreground color
+        symbols = { added = '+', modified = '~', removed = '-' }, -- changes diff symbols
+      },
+    },
     lualine_x = {
       require('lsp-status').status_progress, { 'diagnostics', sources = { 'nvim_lsp' } }, 'encoding', 'fileformat',
       'filetype',

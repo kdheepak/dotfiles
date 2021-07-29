@@ -58,4 +58,5 @@ let g:strip_only_modified_lines=1
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
 " autocmd! BufWritePost * make
+
 ]])

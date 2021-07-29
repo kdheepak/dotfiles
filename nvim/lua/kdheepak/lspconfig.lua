@@ -50,7 +50,7 @@ local lspconfig = require 'lspconfig'
 local on_attach_vim = function(client, bufnr)
   require'lsp_signature'.on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
   require'lsp-status'.on_attach(client)
-  require'illuminate'.on_attach(client)
+  -- require'illuminate'.on_attach(client)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
