@@ -55,6 +55,9 @@ noremap gt H20k
 noremap gb L20j
 noremap ga <C-^>
 
+nnoremap <a-s-tab> :tabprevious<CR>
+nnoremap <a-tab> :tabnext<CR>
+
 " Macros
 nnoremap Q @q
 vnoremap Q :norm @@<CR>

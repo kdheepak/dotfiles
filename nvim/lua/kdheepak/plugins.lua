@@ -217,7 +217,16 @@ packer.startup({
         'vijaymarupudi/nvim-fzf',
       },
       config = function()
-        require'fzf-lua'.setup { preview_cmd = 'bat' }
+        require'fzf-lua'.setup {
+          bat_opts = '',
+          files = { actions = { ['ctrl-b'] = require'fzf-lua.actions'.file_open_in_background } },
+        }
+      end,
+    }
+    use {
+      '~/gitrepos/moonshine.nvim',
+      config = function()
+        require'moonshine'.setup {}
       end,
     }
 

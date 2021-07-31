@@ -137,6 +137,14 @@ local mappings = {
     k = { '<cmd>BufferPrevious<CR>', 'Prev buffer' },
     w = { '<cmd>BufferWipeout<CR>', 'wipeout buffer' },
   },
+
+  t = {
+    name = '+Tabs',
+    d = { '<cmd>tabclose<CR>', 'delete current tab' },
+    j = { '<cmd>tabnext<CR>', 'Next tab' },
+    k = { '<cmd>tabprevious<CR>', 'Prev tab' },
+  },
+
   g = {
     name = 'Git',
     j = { '<cmd>GitGutterNextHunk<CR>', 'Next Hunk' },

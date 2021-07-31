@@ -37,18 +37,19 @@ require('plenary.reload').reload_module('lualine', true)
 local theme = {
   command = { a = { bg = '#14ce14', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#bc05bc' } },
   inactive = {
-    a = { bg = '#0451a5', fg = '#14ce14' },
-    b = { bg = '#0451a5', fg = '#f6f8fa', gui = 'bold' },
-    c = { bg = '#0451a5', fg = '#f6f8fa' },
+    a = { bg = '#bc05bc', fg = '#ffffff' },
+    b = { bg = '#f6f8fa', fg = '#0451a5' },
+    c = { bg = '#ffffff', fg = '#586069' },
   },
   insert = { a = { bg = '#14ce14', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#14ce14' } },
   normal = {
-    a = { bg = '#bc05bc', fg = '#ffffff' },
+    a = { bg = '#bc05bc', fg = '#ffffff', gui = 'bold' },
     b = { bg = '#f6f8fa', fg = '#0451a5' },
     c = { bg = '#ffffff', fg = '#586069' },
   },
   replace = { a = { bg = '#d03d3d', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#d03d3d' } },
   visual = { a = { bg = '#949800', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#949800' } },
+
 }
 
 function git_root()
@@ -67,37 +68,31 @@ function git_root()
   return original_current_dir
 end
 
+local sections = {
+  lualine_a = { git_root, { 'filename', path = 1 } },
+  lualine_b = { 'branch' },
+  lualine_c = {},
+  lualine_x = {
+    require('lsp-status').status_progress, { 'diagnostics', sources = { 'nvim_lsp' } }, 'encoding', 'fileformat',
+    'filetype',
+  },
+  lualine_y = { 'progress' },
+  lualine_z = { 'location', 'mode' },
+}
+
+local moonshine = require 'moonshine'
+
 require'lualine'.setup {
   extensions = { 'fzf', 'nvim-tree', 'fugitive', 'quickfix' },
   options = { theme = theme },
   tabline = {
-    lualine_a = { git_root },
-    lualine_b = { 'filename' },
+    lualine_a = { require'moonshine'.buffers },
+    lualine_b = {},
     lualine_c = {},
     lualine_x = {},
     lualine_y = {},
-    lualine_z = {},
+    lualine_z = { require'moonshine'.tabs },
   },
-  sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'branch' },
-    lualine_c = {
-      { 'filename', file_status = true, path = 1 }, {
-        'diff',
-        colored = true, -- displays diff status in color if set to true
-        -- all colors are in format #rrggbb
-        color_added = nil, -- changes diff's added foreground color
-        color_modified = nil, -- changes diff's modified foreground color
-        color_removed = nil, -- changes diff's removed foreground color
-        symbols = { added = '+', modified = '~', removed = '-' }, -- changes diff symbols
-      },
-    },
-    lualine_x = {
-      require('lsp-status').status_progress, { 'diagnostics', sources = { 'nvim_lsp' } }, 'encoding', 'fileformat',
-      'filetype',
-    },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' },
-  },
-  inactive_sections = { a = {}, b = {}, c = { 'filename' }, x = { 'location' }, y = {}, z = {} },
+  sections = vim.deepcopy(sections),
+  inactive_sections = vim.deepcopy(sections),
 }
