@@ -169,6 +169,7 @@ packer.startup({
           use_decoration_api = true,
           use_internal_diff = true, -- If luajit is present
         }
+
       end,
     }
 

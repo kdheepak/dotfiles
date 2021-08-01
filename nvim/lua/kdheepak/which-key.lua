@@ -140,6 +140,7 @@ local mappings = {
 
   t = {
     name = '+Tabs',
+    n = { '<cmd>tabnew<CR>', 'New tab' },
     d = { '<cmd>tabclose<CR>', 'delete current tab' },
     j = { '<cmd>tabnext<CR>', 'Next tab' },
     k = { '<cmd>tabprevious<CR>', 'Prev tab' },
