@@ -39,7 +39,7 @@ local theme = {
   inactive = {
     a = { bg = '#bc05bc', fg = '#ffffff' },
     b = { bg = '#f6f8fa', fg = '#0451a5' },
-    c = { bg = '#ffffff', fg = '#586069' },
+    c = { bg = '#f6f8fa', fg = '#586069' },
   },
   insert = { a = { bg = '#14ce14', fg = '#ffffff' }, b = { bg = '#f6f8fa', fg = '#14ce14' } },
   normal = {
@@ -80,19 +80,27 @@ local sections = {
   lualine_z = { 'location', 'mode' },
 }
 
-local moonshine = require 'moonshine'
+-- local tabline = require 'tabline'
 
 require'lualine'.setup {
   extensions = { 'fzf', 'nvim-tree', 'fugitive', 'quickfix' },
   options = { theme = theme },
-  tabline = {
-    lualine_a = { require'moonshine'.buffers },
-    lualine_b = {},
+  -- tabline = {
+  --   lualine_a = { require'tabline'.buffers },
+  --   lualine_b = {},
+  --   lualine_c = {},
+  --   lualine_x = {},
+  --   lualine_y = {},
+  --   lualine_z = { require'tabline'.tabs },
+  -- },
+  sections = vim.deepcopy(sections),
+  inactive_sections = {
+
+    lualine_a = {},
+    lualine_b = { git_root, { 'filename', path = 1 } },
     lualine_c = {},
     lualine_x = {},
-    lualine_y = {},
-    lualine_z = { require'moonshine'.tabs },
+    lualine_y = { 'location', 'mode' },
+    lualine_z = {},
   },
-  sections = vim.deepcopy(sections),
-  inactive_sections = vim.deepcopy(sections),
 }

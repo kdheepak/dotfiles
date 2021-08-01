@@ -179,7 +179,21 @@ packer.startup({
       end,
     }
     use { 'kabouzeid/nvim-lspinstall' }
-
+    --     use {
+    --       'gelguy/wilder.nvim',
+    --       config = function()
+    --         vim.cmd [[
+    --               call wilder#enable_cmdline_enter()
+    --               set wildcharm=<Tab>
+    --               cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+    --               cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+    --
+    --               " only / and ? are enabled by default
+    --               call wilder#set_option('modes', ['/', '?', ':'])
+    --             ]]
+    --       end,
+    --     }
+    --
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-lua/popup.nvim' }
     -- use {
@@ -224,11 +238,34 @@ packer.startup({
       end,
     }
     use {
-      '~/gitrepos/moonshine.nvim',
+      '~/gitrepos/tabline.nvim',
       config = function()
-        require'moonshine'.setup {}
+        require'tabline'.setup {}
       end,
     }
+
+    use { 'mhinz/vim-sayonara' }
+
+    -- use {
+    --   'vim-airline/vim-airline',
+    --   config = function()
+    --     vim.cmd [[
+    --       let g:airline#extensions#tabline#enabled = 1
+    --       let g:airline_powerline_fonts = 1
+    --       if !exists('g:airline_symbols')
+    --           let g:airline_symbols = {}
+    --       endif
+    --       let g:airline_left_sep = ''
+    --       let g:airline_left_alt_sep = ''
+    --       let g:airline_right_sep = ''
+    --       let g:airline_right_alt_sep = ''
+    --       let g:airline_symbols.branch = ''
+    --       let g:airline_symbols.readonly = ''
+    --       let g:airline_symbols.linenr = ''
+    --   ]]
+    --   end,
+    -- }
+    -- use 'vim-airline/vim-airline-themes'
 
     use 'folke/trouble.nvim'
     use {

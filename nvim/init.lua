@@ -4,6 +4,10 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
+vim.cmd [[
+runtime! plugin/rplugin.vim
+silent! UpdateRemotePlugins
+]]
 -- Disable some unused built-in Neovim plugins
 vim.g.loaded_man = false
 vim.g.loaded_gzip = false

@@ -74,6 +74,7 @@ vim.o.completeopt = 'menuone,noinsert,noselect' --  Use the popup menu also when
 vim.o.shortmess = 'filnxtToOfcI' --  Shut off completion and intro messages
 vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
+vim.o.sessionoptions = vim.o.sessionoptions .. ',globals'
 
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
