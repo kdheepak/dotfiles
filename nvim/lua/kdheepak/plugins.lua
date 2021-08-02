@@ -360,12 +360,7 @@ packer.startup({
     use {
       'rmagatti/auto-session',
       config = function()
-        local opts = {
-          log_level = 'info',
-          auto_session_enabled = false,
-          auto_save_enabled = false,
-          auto_restore_enabled = false,
-        }
+        local opts = { auto_session_enabled = false, auto_save_enabled = false, auto_restore_enabled = false }
         require('auto-session').setup(opts)
       end,
     }
@@ -397,7 +392,12 @@ packer.startup({
     use { 'inkarkat/vim-spellcheck', event = 'BufRead' } -- Add vim spell check errors to quicklist
     -- use 'beloglazov/vim-online-thesaurus'
     use { 'takac/vim-hardtime', event = 'BufRead' } -- vim hardtime
-    use { 'glepnir/dashboard-nvim' }
+    use {
+      'glepnir/dashboard-nvim',
+      config = function()
+        vim.g.dashboard_enable_session = false
+      end,
+    }
     use { 'chrisbra/unicode.vim', event = 'BufRead' } -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
