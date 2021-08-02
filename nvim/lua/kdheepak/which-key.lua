@@ -177,7 +177,7 @@ local mappings = {
     s = { ':lua require\'fzf-lua\'.lsp_workspace_symbols()<cr>', 'Workspace Symbols' },
   },
 
-  s = { name = 'Session', s = { ':SaveSession', 'Save Session' }, l = { ':RestoreSession', 'Load Session' } },
+  s = { name = 'Session', s = { ':SaveSession<CR>', 'Save Session' }, l = { ':RestoreSession', 'Load Session' } },
 
   n = {
     name = 'NerdTree',

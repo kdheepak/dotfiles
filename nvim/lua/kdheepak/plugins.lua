@@ -233,7 +233,7 @@ packer.startup({
       },
       config = function()
         require'fzf-lua'.setup {
-          bat_opts = '',
+          bat_theme = 'GitHub',
           files = { actions = { ['ctrl-b'] = require'fzf-lua.actions'.file_open_in_background } },
         }
       end,
@@ -246,27 +246,6 @@ packer.startup({
     }
 
     use { 'mhinz/vim-sayonara' }
-
-    -- use {
-    --   'vim-airline/vim-airline',
-    --   config = function()
-    --     vim.cmd [[
-    --       let g:airline#extensions#tabline#enabled = 1
-    --       let g:airline_powerline_fonts = 1
-    --       if !exists('g:airline_symbols')
-    --           let g:airline_symbols = {}
-    --       endif
-    --       let g:airline_left_sep = ''
-    --       let g:airline_left_alt_sep = ''
-    --       let g:airline_right_sep = ''
-    --       let g:airline_right_alt_sep = ''
-    --       let g:airline_symbols.branch = ''
-    --       let g:airline_symbols.readonly = ''
-    --       let g:airline_symbols.linenr = ''
-    --   ]]
-    --   end,
-    -- }
-    -- use 'vim-airline/vim-airline-themes'
 
     use 'folke/trouble.nvim'
     use {
