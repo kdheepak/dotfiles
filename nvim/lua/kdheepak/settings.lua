@@ -75,6 +75,7 @@ vim.o.shortmess = 'filnxtToOfcI' --  Shut off completion and intro messages
 vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ',globals'
+vim.o.hidden = true
 
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
@@ -106,38 +107,5 @@ vim.g.mergetool_prefer_revision = 'local'
 
 vim.g.camelcasemotion_key = ','
 
-vim.g.indent_guides_enable_on_vim_startup = 1
-vim.g.indent_guides_guide_size = 1
-vim.g.indent_guides_start_level = 2
-vim.g.indent_guides_color_change_percent = 1
-vim.g.indent_guides_exclude_filetypes = { 'help', 'fzf', 'openterm', 'neoterm', 'calendar' }
-
 vim.g.clever_f_across_no_line = 1
 vim.g.clever_f_fix_key_direction = 1
-
-vim.api.nvim_set_var('mucomplete#enable_auto_at_startup', true)
-
-vim.g.nvim_tree_icons = {
-  default = '',
-  symlink = '',
-  git = { unstaged = '', staged = '✓', unmerged = '', renamed = '➜', untracked = '' },
-  folder = { default = '', open = '', symlink = '' },
-}
-vim.g.nvim_tree_auto_open = 0
-vim.g.nvim_tree_auto_close = 1
-vim.g.nvim_tree_quit_on_open = 1
-vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_disable_netrw = 1
-vim.g.nvim_tree_follow = 1
-
-vim.g.dashboard_default_executive = 'telescope'
-
-vim.g.dashboard_custom_header = {
-  ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-  ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-  ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-  ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-  ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-  ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-}

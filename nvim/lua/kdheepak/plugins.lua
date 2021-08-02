@@ -313,7 +313,24 @@ packer.startup({
 
     use { 'ggandor/lightspeed.nvim', event = 'BufRead' } -- use s and S to search
 
-    use 'kyazdani42/nvim-tree.lua'
+    use {
+      'kyazdani42/nvim-tree.lua',
+      config = function()
+        vim.g.nvim_tree_icons = {
+          default = '',
+          symlink = '',
+          git = { unstaged = '', staged = '✓', unmerged = '', renamed = '➜', untracked = '' },
+          folder = { default = '', open = '', symlink = '' },
+        }
+        vim.g.nvim_tree_auto_open = 1
+        vim.g.nvim_tree_auto_close = 1
+        vim.g.nvim_tree_quit_on_open = 1
+        vim.g.nvim_tree_indent_markers = 1
+        vim.g.nvim_tree_highlight_opened_files = 1
+        vim.g.nvim_tree_disable_netrw = 1
+        vim.g.nvim_tree_follow = 1
+      end,
+    }
     use 'kevinhwang91/nvim-bqf' -- The goal of nvim-bqf is to make Neovim's quickfix window better.
     use { 'tyru/open-browser.vim' } -- opens url in browser
     use { 'tyru/open-browser-github.vim', event = 'BufRead' } -- opens github repo or github issue in browser
@@ -378,7 +395,6 @@ packer.startup({
     use { 'reedes/vim-wordy' } -- uncover usage problems in your writing
     use 'farmergreg/vim-lastplace' -- intelligently reopen files at your last edit position
     use { 'ntpeters/vim-better-whitespace', event = 'BufRead' } -- causes all trailing whitespace characters to be highlighted
-    use { 'nathanaelkane/vim-indent-guides', event = 'BufRead' } -- displaying thin vertical lines at each indentation level for code indented with spaces
     use { 'dhruvasagar/vim-table-mode', event = 'BufRead' } -- automatic table creator & formatter allowing one to create neat tables as you type
     use { 'joom/latex-unicoder.vim', event = 'BufRead' } -- a plugin to type Unicode chars in Vim, using their LaTeX names
     use 'editorconfig/editorconfig-vim' -- editorconfig plugin for vim
@@ -392,12 +408,6 @@ packer.startup({
     use { 'inkarkat/vim-spellcheck', event = 'BufRead' } -- Add vim spell check errors to quicklist
     -- use 'beloglazov/vim-online-thesaurus'
     use { 'takac/vim-hardtime', event = 'BufRead' } -- vim hardtime
-    use {
-      'glepnir/dashboard-nvim',
-      config = function()
-        vim.g.dashboard_enable_session = false
-      end,
-    }
     use { 'chrisbra/unicode.vim', event = 'BufRead' } -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
     use 'nvim-lua/lsp_extensions.nvim'
@@ -410,7 +420,6 @@ packer.startup({
     use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim
     use { 'gpanders/vim-medieval', ft = 'markdown' } -- evaluate markdown code blocks within vim
     use { 'plasticboy/vim-markdown', ft = 'markdown' } -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
-    use { 'hkupty/iron.nvim', event = 'BufRead' }
     use { 'kana/vim-textobj-user', event = 'BufRead' }
     use { 'kana/vim-textobj-line', event = 'BufRead' }
     use { 'GCBallesteros/vim-textobj-hydrogen', ft = { 'ipynb', 'python', 'markdown' } }
@@ -457,16 +466,16 @@ packer.startup({
       config = function()
         require('toggleterm').setup {
           -- size can be a number or function which is passed the current terminal
-          open_mapping = [[<c-\>]],
+          open_mapping = [[<c-\><c-\>]],
           hide_numbers = true, -- hide the number column in toggleterm buffers
-          shade_terminals = true,
+          shade_terminals = false,
           start_in_insert = true,
           insert_mappings = true, -- whether or not the open mapping applies in insert mode
           persist_size = true,
           direction = 'float',
           close_on_exit = true, -- close the terminal window when the process exits
           -- This field is only relevant if direction is set to 'float'
-          float_opts = { border = 'curved', winblend = 3, highlights = { border = 'Normal', background = 'Normal' } },
+          float_opts = { border = 'curved' },
         }
       end,
     }

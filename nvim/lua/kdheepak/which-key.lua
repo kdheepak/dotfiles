@@ -83,9 +83,9 @@ local global_opts = {
 }
 
 local global_mappings = {
-  ['<C-c><C-c>'] = { '<cmd>BufferClose<cr>', 'close buffer' },
-  ['<Tab>'] = { '<cmd>BufferNext<cr>', 'Jump to next buffer' },
-  ['<S-Tab>'] = { '<cmd>BufferPrevious<cr>', 'Jump to prev buffer' },
+  ['<C-c><C-c>'] = { '<cmd>Sayonara<cr>', 'close buffer' },
+  ['<Tab>'] = { '<cmd>TablineBufferNext<CR>', 'Jump to next buffer' },
+  ['<S-Tab>'] = { '<cmd>TablineBufferPrevious<CR>', 'Jump to next buffer' },
 }
 
 wk.register(global_mappings, global_opts)
@@ -114,8 +114,8 @@ local mappings = {
   y = { '"+y', 'Yank to clipboard' },
   Y = { '"+Y', 'Yank line to clipboard' },
 
-  ['/'] = { '<cmd>split|wincmd l|terminal<CR>', 'Split terminal horizontally' },
-  ['\\'] = { '<cmd>vsplit|wincmd l|terminal<CR>', 'Split terminal vertically' },
+  ['/'] = { '<cmd>ToggleTerm direction=horizontal<CR>', 'Split terminal horizontally' },
+  ['\\'] = { '<cmd>ToggleTerm direction=vertical<CR>', 'Split terminal vertically' },
 
   w = {
     name = '+Windows',
@@ -133,8 +133,8 @@ local mappings = {
   b = {
     name = '+Buffers',
     d = { '<cmd>Sayonara<CR>', 'delete current buffer' },
-    j = { '<cmd>BufferNext<CR>', 'Next buffer' },
-    k = { '<cmd>BufferPrevious<CR>', 'Prev buffer' },
+    j = { '<cmd>TablineBufferNext<CR>', 'Next buffer' },
+    k = { '<cmd>TablineBufferPrevious<CR>', 'Prev buffer' },
     w = { '<cmd>BufferWipeout<CR>', 'wipeout buffer' },
   },
 
