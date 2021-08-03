@@ -154,6 +154,7 @@ local mappings = {
     P = { '<cmd>Git pull<CR>', 'Git Pull' },
     r = { '<cmd>GRemove<CR>', 'Git Remove' },
     g = { '<cmd>LazyGit<CR>', 'Git Status' },
+    c = { '<cmd>Git commit', 'Git commit' },
     o = { '<cmd>GBrowse<CR>', 'Open file in browser' },
     s = { '<cmd>Git<cr>', 'Status' },
     w = { '<cmd>Gwrite<cr>', 'Stage' },

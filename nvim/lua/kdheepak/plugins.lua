@@ -316,7 +316,7 @@ packer.startup({
     use { 'tyru/open-browser.vim' } -- opens url in browser
     use { 'tyru/open-browser-github.vim', event = 'BufRead' } -- opens github repo or github issue in browser
     use { 'rhysd/git-messenger.vim', event = 'BufRead' } -- reveal a hidden message from git under the cursor quickly
-    use { 'tpope/vim-fugitive', event = 'BufRead' } -- vim plugin for Git that is so awesome, it should be illegal
+    use { 'tpope/vim-fugitive' } -- vim plugin for Git that is so awesome, it should be illegal
     use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
     use { 'samoshkin/vim-mergetool', event = 'BufRead' } -- Merge tool for git
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
