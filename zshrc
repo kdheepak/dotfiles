@@ -202,17 +202,57 @@ zinit load Aloxaf/fzf-tab
 
 zstyle ':completion:complete:*:options' sort false
 zstyle ":completion:*:git-checkout:*" sort false
-zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' single-group ''
 zstyle ':fzf-tab:complete:_zlua:*' query-string input
+zstyle ':completion:*:descriptions' format ' %d'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:*' switch-group ',' '.'
 
 zstyle ':completion:*' special-dirs true
 
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'tree -L 2 $realpath'
-zstyle ":fzf-tab:complete:(exa|bat|nvim):*" fzf-preview '
-  bat --style=numbers --color=always --line-range :250 $realpath 2>/dev/null ||
-  exa -1 --color=always --icons --group-directories-first $realpath
-'
+# setup file preview - keep adding commands we might need preview for
+local PREVIEW_SNIPPET='if [ -d $realpath ]; then exa -1 --color=always $realpath; elif [ -f $realpath ]; then bat -pp --color=always --line-range :30 $realpath; else echo "Cannot preview $realpath"; fi'
+local NOT_PREVIEW_SNIPPET='echo "Cannot preview $realpath"'
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview 'eval echo \$$word'
+zstyle ':fzf-tab:complete:ln:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:ls:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:cd:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:z:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:zd:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:exa:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:v:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:nvim:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:vim:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:vi:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:c:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:cat:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:bat:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:rm:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:cp:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:mv:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:rsync:*' fzf-preview $PREVIEW_SNIPPET
+
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta --syntax-theme=GitHub'
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --oneline --decorate --graph --color=always $word'
+zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
+	'case "$group" in
+	"commit tag") git show --color=always $word ;;
+	*) git show --color=always $word | delta --syntax-theme=GitHub;;
+	esac'
+zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+	'case "$group" in
+	"modified file") git diff $word | delta --syntax-theme=GitHub;;
+	"recent commit object name") git show --color=always $word | delta --syntax-theme=GitHub;;
+	*) git log --oneline --decorate --graph --color=always $word ;;
+	esac'
+
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+
+# Preview variables
+# TODO: Only works with exported values as this is executed in a subshell. Is
+#       there a way around this? I fear not...
+zstyle ':fzf-tab:complete:-parameter-:*' fzf-preview 'typeset -p1 "$word"'
+
 # give a preview of commandline arguments when completing `kill`
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
