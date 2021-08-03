@@ -208,7 +208,7 @@ zstyle ':fzf-tab:complete:_zlua:*' query-string input
 
 zstyle ':completion:*' special-dirs true
 
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'tree -L 2 $realpath'
 zstyle ":fzf-tab:complete:(exa|bat|nvim):*" fzf-preview '
   bat --style=numbers --color=always --line-range :250 $realpath 2>/dev/null ||
   exa -1 --color=always --icons --group-directories-first $realpath
