@@ -212,8 +212,9 @@ zstyle ':completion:*' special-dirs true
 
 # setup file preview - keep adding commands we might need preview for
 local PREVIEW_SNIPPET='if [ -d $realpath ]; then exa -1 --color=always $realpath; elif [ -f $realpath ]; then bat -pp --color=always --line-range :30 $realpath; else echo "Cannot preview $realpath"; fi'
-local NOT_PREVIEW_SNIPPET='echo "Cannot preview $realpath"'
+local NO_PREVIEW_SNIPPET='echo "desc=$desc group=$group path=$realpath"'
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview 'eval echo \$$word'
+zstyle ':fzf-tab:complete:*:*' fzf-preview $NO_PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:ln:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:ls:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:cd:*' fzf-preview $PREVIEW_SNIPPET
