@@ -248,6 +248,7 @@ packer.startup({
     }
 
     use { 'moll/vim-bbye' }
+    use { 'aymericbeaumet/vim-symlink' }
 
     use 'folke/trouble.nvim'
     use {
