@@ -246,6 +246,13 @@ packer.startup({
         require'tabline'.setup {}
       end,
     }
+    use {
+      'samoshkin/vim-mergetool',
+      config = function()
+        vim.g.mergetool_layout = 'mr'
+        vim.g.mergetool_prefer_revision = 'local'
+      end,
+    }
 
     use { 'moll/vim-bbye' }
     use { 'aymericbeaumet/vim-symlink' }
@@ -319,7 +326,6 @@ packer.startup({
     use { 'rhysd/git-messenger.vim', event = 'BufRead' } -- reveal a hidden message from git under the cursor quickly
     use { 'tpope/vim-fugitive' } -- vim plugin for Git that is so awesome, it should be illegal
     use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
-    use { 'samoshkin/vim-mergetool', event = 'BufRead' } -- Merge tool for git
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
     use 'folke/lsp-colors.nvim'
     --  use 'bkad/CamelCaseMotion' -- motions for inside camel case

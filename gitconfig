@@ -10,7 +10,7 @@
 [push]
     default = simple
 [merge]
-    tool = nfugitive
+    tool = vim_mergetool
     # Include summaries of merged commits in newly created merge commit messages
     log = true
     conflictstyle = diff3
@@ -23,6 +23,9 @@
     trustExitCode = true
 [mergetool "nfugitive"]
     cmd = nvim -f -c "Gdiffsplit!" "$MERGED"
+    trustExitCode = true
+[mergetool "vim_mergetool"]
+    cmd = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
     trustExitCode = true
 
 [diff]

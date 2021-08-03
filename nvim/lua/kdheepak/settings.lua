@@ -33,7 +33,9 @@ vim.o.termguicolors = true --  enables 24bit colors
 vim.o.visualbell = false --  don't display visual bell
 vim.o.showmode = false --  don't show mode changes
 vim.o.colorcolumn = '121' --  add indicator for 120
-vim.o.diffopt = 'internal,filler,closeoff,vertical' --  Always use vertical diffs
+vim.o.diffopt = vim.o.diffopt .. ',vertical' --  Always use vertical diffs
+vim.o.diffopt = vim.o.diffopt .. ',algorithm:patience'
+vim.o.diffopt = vim.o.diffopt .. ',indent-heuristic'
 vim.o.cursorline = true --  highlight current line
 vim.o.showcmd = true --  show command in bottom bar display an incomplete command in the lower right of the vim window
 vim.o.showmatch = true --  highlight matching [{()}]
@@ -76,6 +78,7 @@ vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ',globals'
 vim.o.hidden = true
+-- Use a (usually) better diff algorithm.
 
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
