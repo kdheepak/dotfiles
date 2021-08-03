@@ -13,10 +13,6 @@ vnoremap > >gv
 nnoremap > >>_
 nnoremap < <<_
 
-" Navigate jump list
-nnoremap g, <C-o>
-nnoremap g. <C-i>
-
 " highlight last inserted text
 nnoremap gV `[v`]
 
@@ -51,9 +47,15 @@ noremap gk gg
 noremap gi 0
 noremap gh ^
 noremap gl $
-noremap gt H20k
-noremap gb L20j
 noremap ga <C-^>
+
+" Navigate jump list
+nnoremap g, <C-o>
+nnoremap g. <C-i>
+
+" Goto file under cursor
+noremap gf gF
+noremap gF gf
 
 nnoremap <a-s-tab> :tabprevious<CR>
 nnoremap <a-tab> :tabnext<CR>
@@ -61,6 +63,10 @@ nnoremap <a-tab> :tabnext<CR>
 " Macros
 nnoremap Q @q
 vnoremap Q :norm @@<CR>
+
+nnoremap q: <nop>
+nnoremap q/ <nop>
+nnoremap q? <nop>
 
 " Select last paste
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
@@ -84,15 +90,9 @@ vnoremap - g<C-x>gv
 nmap <Plug>SpeedDatingFallbackUp   <Plug>(CtrlXA-CtrlA)
 nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
 
-nmap <silent> tt :tabnew<CR>
-
 " backtick goes to the exact mark location, single quote just the line; swap 'em
 nnoremap ` '
 nnoremap ' `
-
-" delete buffer
-" works nicely in terminal mode as well
-nnoremap <silent> <C-d><C-d> :confirm bdelete<CR>
 
 " Opens line below or above the current line
 inoremap <S-CR> <C-O>o
@@ -126,17 +126,4 @@ autocmd FileType julia setlocal commentstring=#\ %s
 nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
 inoremap <silent> <C-u> <C-\><C-O>:call unicode#Fuzzy()<CR>
-
-command! ZoomToggle :call zoom#toggle()
-nnoremap <leader>vz :ZoomToggle<CR>
-
-let g:lsp_log_file = luaeval('vim.lsp.get_log_path()')
-command! LspLogFile execute 'edit ' . g:lsp_log_file
-
-function! SynGroup()
-    let l:s = synID(line('.'), col('.'), 1)
-    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-endfun
-
-map gm :TSHighlightCapturesUnderCursor<CR>
 ]], false)

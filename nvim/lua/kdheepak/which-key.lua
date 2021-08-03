@@ -41,9 +41,6 @@ vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', { noremap = true, silent = true
 -- vim.api.nvim_set_keymap('<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', '<NOP>', {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap('<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>', '<NOP>', {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', { silent = true, noremap = true })
-vim.api.nvim_set_keymap('n', 'ca', ':Lspsaga code_action<CR>', { silent = true, noremap = true })
-
 -- scroll down hover doc or scroll in definition preview
 vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require(\'lspsaga.action\').smart_scroll_with_saga(1)<CR>',
                         { silent = true, noremap = true })
@@ -83,7 +80,7 @@ local global_opts = {
 }
 
 local global_mappings = {
-  ['<C-c><C-c>'] = { '<cmd>Sayonara<cr>', 'close buffer' },
+  ['<C-c><C-c>'] = { '<cmd>Bdelete<CR>', 'close buffer' },
   ['<Tab>'] = { '<cmd>TablineBufferNext<CR>', 'Jump to next buffer' },
   ['<S-Tab>'] = { '<cmd>TablineBufferPrevious<CR>', 'Jump to next buffer' },
 }
@@ -121,6 +118,7 @@ local mappings = {
     name = '+Windows',
     ['/'] = { '<cmd>split<CR>', 'Split window horizontally' },
     ['\\'] = { '<cmd>vsplit<CR>', 'Split window vertically' },
+    z = { '<cmd>call zoom#toggle()', 'Zoom Toggle' },
   },
 
   q = {
@@ -132,7 +130,7 @@ local mappings = {
 
   b = {
     name = '+Buffers',
-    d = { '<cmd>Sayonara<CR>', 'delete current buffer' },
+    d = { '<cmd>Bdelete<CR>', 'delete current buffer' },
     j = { '<cmd>TablineBufferNext<CR>', 'Next buffer' },
     k = { '<cmd>TablineBufferPrevious<CR>', 'Prev buffer' },
     w = { '<cmd>BufferWipeout<CR>', 'wipeout buffer' },
@@ -184,7 +182,7 @@ local mappings = {
   s = {
     name = 'Session',
     s = { ':SaveSession<CR>', 'Save Session' },
-    l = { ':silent! bufdo bd<CR>:silent! RestoreSession<CR>', 'Load Session' },
+    l = { ':silent! bufdo Bdelete<CR>:silent! RestoreSession<CR>', 'Load Session' },
   },
 
   n = {
@@ -243,10 +241,17 @@ local mappings = {
     x = { '<cmd>cclose<CR>', 'Close Quickfix' },
     s = { '<cmd>Telescope lsp_document_symbols<CR>', 'Document Symbols' },
     g = { '<cmd>lua require\'lspsaga.diagnostic\'.show_cursor_diagnostics()<CR>', 'Document Symbols' },
+    G = { '<cmd>edit ' .. vim.lsp.get_log_path(), 'Open LSP Log file' },
     S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'Workspace Symbols' },
   },
 
-  v = { name = 'Vim', e = { '<cmd>e $MYVIMRC<CR>' }, s = { '<cmd>luafile $MYVIMRC<CR>' }, z = { '<cmd>e ~/.zshrc<CR>' } },
+  v = {
+    name = 'Vim',
+    m = { ':TSHighlightCapturesUnderCursor<CR>', 'Show highlights under cursor' },
+    e = { '<cmd>e $MYVIMRC<CR>', 'Open VIMRC' },
+    s = { '<cmd>luafile $MYVIMRC<CR>', 'Source VIMRC' },
+    z = { '<cmd>e ~/.zshrc<CR>', 'Open ZSHRC' },
+  },
 }
 
 wk.register(mappings, opts)

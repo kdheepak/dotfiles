@@ -247,7 +247,7 @@ packer.startup({
       end,
     }
 
-    use { 'mhinz/vim-sayonara' }
+    use { 'moll/vim-bbye' }
 
     use 'folke/trouble.nvim'
     use {
@@ -424,15 +424,7 @@ packer.startup({
     use { 'rust-lang/vscode-rust', ft = 'rust' }
     use { 'jbyuki/nabla.nvim', ft = 'markdown' } -- Take your scentific notes in Neovim.
     -- use { 'glepnir/galaxyline.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
-    use {
-      'hoob3rt/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-      config = function()
-        -- vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
-        -- vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
-        -- vim.api.nvim_set_keymap('n', '<C-c><C-c>', ':bdelete<CR>', { noremap = true, silent = true })
-      end,
-    }
+    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
     use { 'jbyuki/venn.nvim', event = 'BufRead' } -- Draw ASCII diagrams in Neovim.
     use {
       'pwntester/octo.nvim',
