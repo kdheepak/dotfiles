@@ -34,7 +34,7 @@ function git_root()
 end
 
 local sections = {
-  lualine_a = { git_root, { 'filename', path = 1 } },
+  lualine_a = { { 'filename', path = 1 } },
   lualine_b = { 'branch' },
   lualine_c = {},
   lualine_x = {

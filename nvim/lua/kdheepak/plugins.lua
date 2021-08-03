@@ -225,6 +225,8 @@ packer.startup({
         require 'kdheepak/which-key'
       end,
     }
+    use { 'junegunn/fzf', run = ':call fzf#install()' }
+    use { 'junegunn/fzf.vim' }
     use {
       'ibhagwan/fzf-lua',
       requires = {

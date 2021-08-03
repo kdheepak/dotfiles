@@ -150,13 +150,17 @@ local mappings = {
     name = 'Git',
     j = { '<cmd>GitGutterNextHunk<CR>', 'Next Hunk' },
     k = { '<cmd>GitGutterPrevHunk<CR>', 'Prev Hunk' },
-    b = { '<cmd>Gblame<CR>', 'Blame' },
-    B = { '<cmd>lua require"gitsigns".blame_line(true)<CR>', 'Blame' },
-    p = { '<cmd>Gpush<CR>', 'Git Push' },
-    P = { '<cmd>Gpull<CR>', 'Git Pull' },
-    r = { '<cmd>Gremove<CR>', 'Git Remove' },
+    b = { '<cmd>lua require"gitsigns".blame_line(true)<CR>', 'Blame' },
+    B = { '<cmd>Git blame<CR>', 'Blame' },
+    p = { '<cmd>Git push<CR>', 'Git Push' },
+    P = { '<cmd>Git pull<CR>', 'Git Pull' },
+    r = { '<cmd>GRemove<CR>', 'Git Remove' },
     g = { '<cmd>LazyGit<CR>', 'Git Status' },
     o = { '<cmd>GBrowse<CR>', 'Open file in browser' },
+    s = { '<cmd>Git<cr>', 'Status' },
+    w = { '<cmd>Gwrite<cr>', 'Stage' },
+    d = { '<cmd>Gdiffsplit<cr>', 'Diff' },
+    D = { '<cmd>DiffviewOpen<cr>', 'Diff ALL' },
   },
 
   f = {
@@ -177,7 +181,11 @@ local mappings = {
     s = { ':lua require\'fzf-lua\'.lsp_workspace_symbols()<cr>', 'Workspace Symbols' },
   },
 
-  s = { name = 'Session', s = { ':SaveSession<CR>', 'Save Session' }, l = { ':RestoreSession', 'Load Session' } },
+  s = {
+    name = 'Session',
+    s = { ':SaveSession<CR>', 'Save Session' },
+    l = { ':silent! bufdo bd<CR>:silent! RestoreSession<CR>', 'Load Session' },
+  },
 
   n = {
     name = 'NerdTree',
@@ -239,7 +247,6 @@ local mappings = {
   },
 
   v = { name = 'Vim', e = { '<cmd>e $MYVIMRC<CR>' }, s = { '<cmd>luafile $MYVIMRC<CR>' }, z = { '<cmd>e ~/.zshrc<CR>' } },
-
 }
 
 wk.register(mappings, opts)
