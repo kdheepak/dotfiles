@@ -153,23 +153,36 @@ packer.startup({
       config = function()
         require('gitsigns').setup {
           signs = {
-            add = { hl = 'GitSignsAdd', text = '▎', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-            change = { hl = 'GitSignsChange', text = '▎', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+            add = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+            change = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
             delete = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             topdelete = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
           },
           numhl = false,
           linehl = false,
-          watch_index = { interval = 1000 },
+          keymaps = {
+            -- Default keymap options
+            noremap = true,
+
+            ['n ]c'] = { expr = true, '&diff ? \']c\' : \'<cmd>lua require"gitsigns.actions".next_hunk()<CR>\'' },
+            ['n [c'] = { expr = true, '&diff ? \'[c\' : \'<cmd>lua require"gitsigns.actions".prev_hunk()<CR>\'' },
+
+            -- Text objects
+            ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+            ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+          },
+          watch_index = { interval = 1000, follow_files = true },
           current_line_blame = false,
+          current_line_blame_delay = 1000,
+          current_line_blame_position = 'eol',
           sign_priority = 6,
-          update_debounce = 1000,
+          update_debounce = 100,
           status_formatter = nil, -- Use default
+          word_diff = false,
           use_decoration_api = true,
           use_internal_diff = true, -- If luajit is present
         }
-
       end,
     }
 
@@ -323,7 +336,13 @@ packer.startup({
     use 'kevinhwang91/nvim-bqf' -- The goal of nvim-bqf is to make Neovim's quickfix window better.
     use { 'tyru/open-browser.vim' } -- opens url in browser
     use { 'tyru/open-browser-github.vim', event = 'BufRead' } -- opens github repo or github issue in browser
-    use { 'rhysd/git-messenger.vim', event = 'BufRead' } -- reveal a hidden message from git under the cursor quickly
+    use {
+      'rhysd/git-messenger.vim',
+      event = 'BufRead',
+      config = function()
+        vim.g.git_messenger_no_default_mappings = true
+      end,
+    } -- reveal a hidden message from git under the cursor quickly
     use { 'tpope/vim-fugitive' } -- vim plugin for Git that is so awesome, it should be illegal
     use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
@@ -355,7 +374,35 @@ packer.startup({
     -- use 'yamatsum/nvim-cursorline'
     -- use { 'RRethy/vim-illuminate' }
     --  use 'junegunn/vim-easy-align' -- helps alignment
-    use { 'whiteinge/diffconflicts' }
+    use {
+      'whiteinge/diffconflicts',
+      config = function()
+        vim.cmd [[
+      " Disable one diff window during a three-way diff allowing you to cut out the
+      " noise of a three-way diff and focus on just the changes between two versions
+      " at a time. Inspired by Steve Losh's Splice
+      function! DiffToggle(window)
+        " Save the cursor position and turn on diff for all windows
+        let l:save_cursor = getpos('.')
+        windo :diffthis
+        " Turn off diff for the specified window (but keep scrollbind) and move
+        " the cursor to the left-most diff window
+        exe a:window . "wincmd w"
+        diffoff
+        set scrollbind
+        set cursorbind
+        exe a:window . "wincmd " . (a:window == 1 ? "l" : "h")
+        " Update the diff and restore the cursor position
+        diffupdate
+        call setpos('.', l:save_cursor)
+      endfunction
+      " Toggle diff view on the left, center, or right windows
+      nmap <silent> <leader>dl :call DiffToggle(1)<cr>
+      nmap <silent> <leader>dc :call DiffToggle(2)<cr>
+      nmap <silent> <leader>dr :call DiffToggle(3)<cr>
+      ]]
+      end,
+    }
     use { 'godlygeek/tabular', event = 'BufRead' } -- line up text
     use { 'tpope/vim-unimpaired', event = 'BufRead' } -- complementary pairs of mappings
     use { 'tpope/vim-abolish', event = 'BufRead' } -- convert camel to snake

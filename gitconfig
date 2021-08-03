@@ -10,7 +10,7 @@
 [push]
     default = simple
 [merge]
-    tool = vim_mergetool
+    tool = diffconflicts
     # Include summaries of merged commits in newly created merge commit messages
     log = true
     conflictstyle = diff3
@@ -19,7 +19,7 @@
 [mergetool "vimdiff"]
     cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [mergetool "diffconflicts"]
-    cmd = nvim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+    cmd = nvim -c DiffConflictsWithHistory \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
     trustExitCode = true
 [mergetool "nfugitive"]
     cmd = nvim -f -c "Gdiffsplit!" "$MERGED"
@@ -188,7 +188,7 @@
     templatedir = ~/gitrepos/dotfiles/git-templates
     defaultBranch = main
 [rerere]
-    enabled = true
+    enabled = false
 [github]
     user = kdheepak
 [commit]

@@ -234,6 +234,14 @@ function get_nextword_data() {
   curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
 }
 
+function c() {
+    url='https://www.google.com/complete/search?client=hp&hl=en&xhr=t'
+    # NB: user-agent must be specified to get back UTF-8 data!
+    curl -H 'user-agent: Mozilla/5.0' -sSG --data-urlencode "q=$*" "$url" |
+        jq -r .[1][][0] |
+        sed 's,</\?b>,,g'
+}
+
 alias gfap="gfa --prune"
 alias gsb='git status -sb'
 alias gst='git status -s'
