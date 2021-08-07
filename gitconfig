@@ -27,6 +27,9 @@
 [mergetool "vim_mergetool"]
     cmd = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
     trustExitCode = true
+[mergetool "mergetool-nvim"]
+    cmd = nvim -f -c "MergeToolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+    trustExitCode = true
 
 [diff]
     tool = vimdiff

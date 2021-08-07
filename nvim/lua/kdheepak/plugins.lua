@@ -254,6 +254,18 @@ packer.startup({
       end,
     }
     use {
+      '~/gitrepos/mergetool.nvim',
+      config = function()
+        require'mergetool'.setup {}
+      end,
+    }
+    use {
+      '~/gitrepos/moonshine.nvim',
+      config = function()
+        require 'moonshine'
+      end,
+    }
+    use {
       '~/gitrepos/tabline.nvim',
       config = function()
         require'tabline'.setup {}
@@ -344,6 +356,7 @@ packer.startup({
       end,
     } -- reveal a hidden message from git under the cursor quickly
     use { 'tpope/vim-fugitive' } -- vim plugin for Git that is so awesome, it should be illegal
+    use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
     use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
     use 'folke/lsp-colors.nvim'
@@ -496,7 +509,7 @@ packer.startup({
           open_mapping = [[<c-\><c-\>]],
           hide_numbers = true, -- hide the number column in toggleterm buffers
           shade_terminals = false,
-          start_in_insert = true,
+          start_in_insert = false,
           insert_mappings = true, -- whether or not the open mapping applies in insert mode
           persist_size = true,
           direction = 'float',

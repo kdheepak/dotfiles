@@ -6,30 +6,6 @@ vim.api.nvim_command([[
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
-
-function s:AddTerminalMappings()
-    echom &filetype
-    if &filetype ==# ''
-        tnoremap <buffer> <silent> <Esc> <C-\><C-n>
-        tnoremap <buffer> <silent> <C-\><Esc> <Esc>
-    endif
-endfunction
-
-augroup TermBuffer
-    autocmd!
-    autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
-    autocmd VimEnter * if !empty($NVIM_LISTEN_ADDRESS) && $NVIM_LISTEN_ADDRESS !=# v:servername
-        \ |let g:r=jobstart(['nc', '-U', $NVIM_LISTEN_ADDRESS],{'rpc':v:true})
-        \ |let g:f=fnameescape(expand('%:p'))
-        \ |noau bwipe
-        \ |call rpcrequest(g:r, "nvim_command", "edit ".g:f)
-        \ |call rpcrequest(g:r, "nvim_command", "call lib#SetNumberDisplay()")
-        \ |qa
-        \ |endif
-    " TermEnter is required here since otherwise fzf filetype is not set
-    autocmd TermEnter * call s:AddTerminalMappings()
-augroup END
-
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentGuidesDisable
