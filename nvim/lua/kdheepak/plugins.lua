@@ -210,13 +210,14 @@ packer.startup({
     --
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-lua/popup.nvim' }
-    -- use {
-    --   'nvim-telescope/telescope.nvim',
-    --   requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
-    --   config = function()
-    --     require 'kdheepak/telescope'
-    --   end,
-    -- }
+    use { 'nanotee/luv-vimdocs' }
+    use {
+      'nvim-telescope/telescope.nvim',
+      requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
+      -- config = function()
+      --   require 'kdheepak/telescope'
+      -- end,
+    }
     -- use 'tamago324/telescope-openbrowser.nvim'
     -- use 'nvim-telescope/telescope-github.nvim'
     -- use 'gbrlsnchs/telescope-lsp-handlers.nvim'
