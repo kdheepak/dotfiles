@@ -267,6 +267,21 @@ packer.startup({
       end,
     }
     use {
+      'mjlbach/babelfish.nvim',
+      config = function()
+        if pcall(require, 'nvim-treesitter.parsers') then
+          local parser_config = require'nvim-treesitter.parsers'.get_parser_configs()
+
+          parser_config.markdown = {
+            install_info = {
+              url = 'https://github.com/ikatyang/tree-sitter-markdown',
+              files = { 'src/parser.c', 'src/scanner.cc' },
+            },
+          }
+        end
+      end,
+    }
+    use {
       '~/gitrepos/tabline.nvim',
       config = function()
         require'tabline'.setup {}
