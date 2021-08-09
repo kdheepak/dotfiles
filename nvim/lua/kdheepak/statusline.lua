@@ -50,14 +50,14 @@ local sections = {
 require'lualine'.setup {
   extensions = { 'fzf', 'nvim-tree', 'fugitive', 'quickfix' },
   options = { theme = theme },
-  tabline = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = { require'tabline'.tabline_buffers },
-    lualine_x = { require'tabline'.tabline_tabs },
-    lualine_y = {},
-    lualine_z = {},
-  },
+  -- tabline = {
+  --   lualine_a = { 'mode' },
+  --   lualine_b = {},
+  --   lualine_c = { require'tabline'.tabline_buffers },
+  --   lualine_x = { require'tabline'.tabline_tabs },
+  --   lualine_y = {},
+  --   lualine_z = {},
+  -- },
   sections = vim.deepcopy(sections),
   inactive_sections = {
     lualine_a = {},
