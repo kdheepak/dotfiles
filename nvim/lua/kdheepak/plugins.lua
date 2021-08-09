@@ -284,7 +284,7 @@ packer.startup({
     use {
       '~/gitrepos/tabline.nvim',
       config = function()
-        require'tabline'.setup {}
+        require'tabline'.setup { enable = false }
       end,
     }
     use {
