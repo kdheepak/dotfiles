@@ -283,10 +283,11 @@ packer.startup({
     }
     use {
       '~/gitrepos/tabline.nvim',
-      config = function()
-        require'tabline'.setup {}
-      end,
+      -- config = function()
+      --   require'tabline'.setup {}
+      -- end,
     }
+    use { 'wsdjeg/luarefvim' }
     use {
       'samoshkin/vim-mergetool',
       config = function()
