@@ -373,6 +373,8 @@ packer.startup({
       end,
     } -- reveal a hidden message from git under the cursor quickly
     use { 'tpope/vim-fugitive' } -- vim plugin for Git that is so awesome, it should be illegal
+    use { 'rbong/vim-flog' }
+    use 'junegunn/gv.vim'
     use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
     use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
