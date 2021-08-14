@@ -18,18 +18,20 @@
     prompt = true
 [mergetool "vimdiff"]
     cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    trustExitCode = true
 [mergetool "diffconflicts"]
     cmd = nvim -c DiffConflictsWithHistory \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
     trustExitCode = true
+    hideResolved = false
 [mergetool "nfugitive"]
     cmd = nvim -f -c "Gdiffsplit!" "$MERGED"
     trustExitCode = true
 [mergetool "vim_mergetool"]
     cmd = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
     trustExitCode = true
-[mergetool "mergetool-nvim"]
-    cmd = nvim -f -c "MergeToolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
-    trustExitCode = true
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+    hideResolved = true
 
 [diff]
     tool = vimdiff
@@ -139,7 +141,7 @@
 [core]
 
     # Use custom `.gitignore` and `.gitattributes`
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
 
     # Treat spaces before tabs and all kinds of trailing whitespace as an error
@@ -192,6 +194,7 @@
     defaultBranch = main
 [rerere]
     enabled = true
+    autoupdate = true
 [github]
     user = kdheepak
 [commit]
