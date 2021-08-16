@@ -332,7 +332,7 @@ packer.startup({
       setup = function()
         vim.g.coq_settings = { ['keymap.jump_to_mark'] = '<C-s>' }
       end,
-      config = 'vim.cmd[[COQnow]]',
+      config = 'vim.cmd[[COQnow --shut-up]]',
     }
     -- use { 'ms-jpq/coq_nvim', { branch = 'coq' } }
     -- use { 'ms-jpq/coq.artifacts', { branch = 'artifacts' } }
