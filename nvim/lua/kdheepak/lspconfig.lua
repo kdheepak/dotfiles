@@ -76,18 +76,25 @@ local cmd = {
   'julia', '--project=' .. vim.fn.expand('~/.config/nvim/lsp-julia'), '--startup-file=no', '--history-file=no',
   vim.fn.expand('~/.config/nvim/lsp-julia/run.jl'),
 }
-lspconfig.julials.setup({
+
+local lsp = require 'lspconfig'
+require'packer'.loader 'coq_nvim coq.artifacts'
+local function coq_setup(name, config)
+  lsp[name].setup(require'coq'().lsp_ensure_capabilities(config))
+end
+
+coq_setup('julials', {
   on_attach = on_attach_vim,
   on_new_config = function(new_config, _)
     new_config.cmd = cmd
   end,
 })
-lspconfig.bashls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.ccls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.tsserver.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.jsonls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.nimls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.rust_analyzer.setup({
+coq_setup('bashls', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('ccls', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('tsserver', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('jsonls', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('nimls', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('rust_analyzer', {
   on_attach = on_attach_vim,
   capabilities = capabilities,
   settings = {
@@ -97,8 +104,8 @@ lspconfig.rust_analyzer.setup({
     },
   },
 })
-lspconfig.vimls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.cssls.setup({ on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('vimls', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('cssls', { on_attach = on_attach_vim, capabilities = capabilities })
 
 local system_name
 if vim.fn.has('mac') == 1 then
@@ -119,7 +126,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-lspconfig.sumneko_lua.setup({
+coq_setup('sumneko_lua', {
   capabilities = capabilities,
   on_attach = on_attach_vim,
   cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
@@ -144,10 +151,10 @@ lspconfig.sumneko_lua.setup({
     },
   },
 })
-lspconfig.html.setup({ on_attach = on_attach_vim, capabilities = capabilities })
-lspconfig.vuels.setup({ on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('html', { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup('vuels', { on_attach = on_attach_vim, capabilities = capabilities })
 
-lspconfig.pyright.setup { on_attach = on_attach_vim, capabilities = capabilities }
+coq_setup('pyright', { on_attach = on_attach_vim, capabilities = capabilities })
 
 require'lspconfig'.efm.setup {
   init_options = { documentFormatting = true },

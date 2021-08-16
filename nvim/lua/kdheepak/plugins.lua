@@ -57,19 +57,19 @@ packer.startup({
 
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview', ft = 'markdown' }
 
-    use {
-      'windwp/nvim-autopairs',
-      after = { 'nvim-compe' },
-      config = function()
-        require('nvim-autopairs').setup()
-        require('nvim-autopairs.completion.compe').setup({
-          map_cr = true, --  map <CR> on insert mode
-          map_complete = true, -- it will auto insert `(` after select function or method item
-        })
-        require('nvim-treesitter.configs').setup { autopairs = { enable = true } }
-      end,
-      event = 'BufRead',
-    }
+    -- use {
+    --   'windwp/nvim-autopairs',
+    --   -- after = { 'nvim-compe' },
+    --   config = function()
+    --     require('nvim-autopairs').setup()
+    --     require('nvim-autopairs.completion.compe').setup({
+    --       map_cr = true, --  map <CR> on insert mode
+    --       map_complete = true, -- it will auto insert `(` after select function or method item
+    --     })
+    --     require('nvim-treesitter.configs').setup { autopairs = { enable = true } }
+    --   end,
+    --   event = 'BufRead',
+    -- }
     use {
       'windwp/nvim-ts-autotag',
       config = function()
@@ -283,9 +283,9 @@ packer.startup({
     }
     use {
       '~/gitrepos/tabline.nvim',
-      -- config = function()
-      --   require'tabline'.setup {}
-      -- end,
+      config = function()
+        require'tabline'.setup { options = { always_show_tabline = true } }
+      end,
     }
     use { 'wsdjeg/luarefvim' }
     use {
@@ -325,17 +325,23 @@ packer.startup({
       end,
     }
     use {
-      'hrsh7th/nvim-compe',
-      config = function()
-        require 'kdheepak/compe'
+      'ms-jpq/coq_nvim',
+      branch = 'coq',
+      event = { 'InsertEnter' },
+      requires = { { 'ms-jpq/coq.artifacts', branch = 'artifacts' } },
+      setup = function()
+        vim.g.coq_settings = { ['keymap.jump_to_mark'] = '<C-s>' }
       end,
+      config = 'vim.cmd[[COQnow]]',
     }
+    -- use { 'ms-jpq/coq_nvim', { branch = 'coq' } }
+    -- use { 'ms-jpq/coq.artifacts', { branch = 'artifacts' } }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue', 'css' } }
-    use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
-    use { 'tamago324/compe-zsh', ft = 'zsh' }
+    -- use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
+    -- use { 'tamago324/compe-zsh', ft = 'zsh' }
     use { 'sblumentritt/cmake.vim', ft = 'cmake' }
     -- use { 'Gavinok/compe-nextword', event = 'BufRead' }
-    use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
+    -- use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
     use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
     use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
     use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
