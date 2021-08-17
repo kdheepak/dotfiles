@@ -59,7 +59,7 @@ packer.startup({
 
     -- use {
     --   'windwp/nvim-autopairs',
-    --   -- after = { 'nvim-compe' },
+    --   after = { 'nvim-compe' },
     --   config = function()
     --     require('nvim-autopairs').setup()
     --     require('nvim-autopairs.completion.compe').setup({
@@ -324,29 +324,69 @@ packer.startup({
         require('lsp-status').register_progress()
       end,
     }
-    use {
-      'ms-jpq/coq_nvim',
-      branch = 'coq',
-      event = { 'InsertEnter' },
-      requires = { { 'ms-jpq/coq.artifacts', branch = 'artifacts' } },
-      setup = function()
-        vim.g.coq_settings = { ['keymap.jump_to_mark'] = '<C-s>' }
-      end,
-      config = 'vim.cmd[[COQnow --shut-up]]',
-    }
-    -- use { 'ms-jpq/coq_nvim', { branch = 'coq' } }
-    -- use { 'ms-jpq/coq.artifacts', { branch = 'artifacts' } }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue', 'css' } }
-    -- use { 'FateXii/emmet-compe', ft = { 'html', 'vue', 'css' } }
-    -- use { 'tamago324/compe-zsh', ft = 'zsh' }
-    use { 'sblumentritt/cmake.vim', ft = 'cmake' }
-    -- use { 'Gavinok/compe-nextword', event = 'BufRead' }
-    -- use { 'GoldsteinE/compe-latex-symbols', event = 'BufRead' }
+
+    -- Snippets
+    use { 'L3MON4D3/LuaSnip' }
+    use {
+      'hrsh7th/nvim-cmp',
+      requires = {
+        { 'hrsh7th/vim-vsnip' }, { 'hrsh7th/cmp-vsnip' }, { 'hrsh7th/cmp-buffer' }, { 'hrsh7th/cmp-path' },
+        { 'hrsh7th/cmp-nvim-lsp' }, { 'onsails/lspkind-nvim' }, { 'saadparwaiz1/cmp_luasnip' },
+      },
+      config = function()
+        local cmp = require('cmp')
+        require('cmp_nvim_lsp').setup {}
+        local types = require('cmp.types')
+        local compare = require('cmp.config.compare')
+        cmp.setup {
+          -- You should change this example to your chosen snippet engine.
+          snippet = {
+            expand = function(args)
+              require('luasnip').lsp_expand(args.body)
+            end,
+          },
+          -- You must set mapping.
+          mapping = {
+            ['<C-p>'] = cmp.mapping.prev_item(),
+            ['<C-n>'] = cmp.mapping.next_item(),
+            ['<C-d>'] = cmp.mapping.scroll(-4),
+            ['<C-b>'] = cmp.mapping.scroll(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.close(),
+            ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+            ['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+              if vim.fn.pumvisible() == 1 then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+              elseif require'luasnip'.expand_or_jumpable() then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
+              else
+                fallback()
+              end
+            end),
+            ['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+              if vim.fn.pumvisible() == 1 then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+              elseif require'luasnip'.jumpable(-1) then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
+              else
+                fallback()
+              end
+            end),
+          },
+          -- You should specify your *installed* sources.
+          sources = { { name = 'nvim_lsp' }, { name = 'vsnip' }, { name = 'path' }, { name = 'buffer' } },
+        }
+      end,
+    }
     use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
     use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
     use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
 
     -- use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
+    use 'junegunn/vim-peekaboo'
+    use 'Yilin-Yang/vim-markbar'
+    use 'kshenoy/vim-signature'
 
     use { 'ggandor/lightspeed.nvim', event = 'BufRead' } -- use s and S to search
 

@@ -78,9 +78,9 @@ local cmd = {
 }
 
 local lsp = require 'lspconfig'
-require'packer'.loader 'coq_nvim coq.artifacts'
+-- require'packer'.loader 'coq_nvim coq.artifacts'
 local function coq_setup(name, config)
-  lsp[name].setup(require'coq'().lsp_ensure_capabilities(config))
+  lsp[name].setup(config)
 end
 
 coq_setup('julials', {
