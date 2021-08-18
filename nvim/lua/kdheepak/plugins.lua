@@ -279,8 +279,8 @@ packer.startup({
       },
       config = function()
         require'fzf-lua'.setup {
-          bat_theme = 'GitHub',
-          files = { actions = { ['ctrl-b'] = require'fzf-lua.actions'.file_open_in_background } },
+          fzf_args = '--color=dark',
+          previewers = { bat = { cmd = 'bat', args = '', config = '~/.config/bat/config' } },
         }
       end,
     }
@@ -452,9 +452,9 @@ packer.startup({
           git = { unstaged = '', staged = '✓', unmerged = '', renamed = '➜', untracked = '' },
           folder = { default = '', open = '', symlink = '' },
         }
-        vim.g.nvim_tree_auto_open = 1
-        vim.g.nvim_tree_auto_close = 1
-        vim.g.nvim_tree_quit_on_open = 1
+        vim.g.nvim_tree_auto_open = 0
+        vim.g.nvim_tree_auto_close = 0
+        vim.g.nvim_tree_quit_on_open = 0
         vim.g.nvim_tree_indent_markers = 1
         vim.g.nvim_tree_highlight_opened_files = 1
         vim.g.nvim_tree_disable_netrw = 1

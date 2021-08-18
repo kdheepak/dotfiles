@@ -28,7 +28,6 @@ augroup BgHighlight
     autocmd BufEnter * EnableStripWhitespaceOnSave
 augroup END
 
-
 let g:strip_whitespace_confirm=0
 let g:strip_only_modified_lines=1
 
