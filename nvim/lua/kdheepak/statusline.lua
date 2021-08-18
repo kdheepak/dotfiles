@@ -33,10 +33,14 @@ function git_root()
   return original_current_dir
 end
 
+local function VistaNearestMethodOrFunction()
+  return vim.b.vista_nearest_method_or_function or ''
+end
+
 local sections = {
   lualine_a = { { 'filename', path = 1 } },
   lualine_b = { 'branch' },
-  lualine_c = {},
+  lualine_c = { VistaNearestMethodOrFunction },
   lualine_x = {
     require('lsp-status').status_progress, { 'diagnostics', sources = { 'nvim_lsp' } }, 'encoding', 'fileformat',
     'filetype',

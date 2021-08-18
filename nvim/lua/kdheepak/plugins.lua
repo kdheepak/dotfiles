@@ -48,7 +48,9 @@ end
 
 local packer = require('packer')
 local use = packer.use
+
 packer.reset()
+packer.init { max_jobs = 8 }
 
 packer.startup({
   function()
@@ -180,7 +182,6 @@ packer.startup({
           update_debounce = 100,
           status_formatter = nil, -- Use default
           word_diff = false,
-          use_decoration_api = true,
           use_internal_diff = true, -- If luajit is present
         }
       end,
@@ -193,6 +194,35 @@ packer.startup({
       end,
     }
     use { 'kabouzeid/nvim-lspinstall' }
+
+    use 'liuchengxu/vista.vim' -- viewer and finder for lsp symbols
+    use { 'kosayoda/nvim-lightbulb', event = 'BufRead' }
+
+    use {
+      'ray-x/lsp_signature.nvim',
+      config = function()
+        require'lsp_signature'.setup {}
+      end,
+    }
+    use {
+      'ray-x/navigator.lua',
+      requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+      config = function()
+        require'navigator'.setup()
+      end,
+    }
+
+    use {
+      'nvim-lua/lsp-status.nvim',
+      config = function()
+        require('lsp-status').register_progress()
+      end,
+    }
+    use 'RishabhRD/popfix'
+    use 'RishabhRD/nvim-lsputils'
+
+    use 'folke/lsp-colors.nvim'
+
     --     use {
     --       'gelguy/wilder.nvim',
     --       config = function()
@@ -211,13 +241,13 @@ packer.startup({
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-lua/popup.nvim' }
     use { 'nanotee/luv-vimdocs' }
-    use {
-      'nvim-telescope/telescope.nvim',
-      requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
-      -- config = function()
-      --   require 'kdheepak/telescope'
-      -- end,
-    }
+    -- use {
+    --   'nvim-telescope/telescope.nvim',
+    --   requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
+    --   -- config = function()
+    --   --   require 'kdheepak/telescope'
+    --   -- end,
+    -- }
     -- use 'tamago324/telescope-openbrowser.nvim'
     -- use 'nvim-telescope/telescope-github.nvim'
     -- use 'gbrlsnchs/telescope-lsp-handlers.nvim'
@@ -300,30 +330,7 @@ packer.startup({
     use { 'aymericbeaumet/vim-symlink' }
 
     use 'folke/trouble.nvim'
-    use {
-      'glepnir/lspsaga.nvim',
-      config = function()
-        require('lspsaga').init_lsp_saga {
-          code_action_icon = '',
-          code_action_prompt = { enable = true, sign = true, sign_priority = 20, virtual_text = false },
-          code_action_keys = { quit = { 'q', '<ESC>' }, exec = '<CR>' },
-          border_style = 'round',
-        }
-        vim.cmd([[
-        autocmd CursorHold * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()
-        ]])
-      end,
-    }
 
-    use { 'onsails/lspkind-nvim' }
-    use { 'ray-x/lsp_signature.nvim' }
-
-    use {
-      'nvim-lua/lsp-status.nvim',
-      config = function()
-        require('lsp-status').register_progress()
-      end,
-    }
     use { 'mattn/emmet-vim', ft = { 'html', 'vue', 'css' } }
 
     -- Snippets
@@ -335,6 +342,52 @@ packer.startup({
         { 'hrsh7th/cmp-nvim-lsp' }, { 'onsails/lspkind-nvim' }, { 'saadparwaiz1/cmp_luasnip' },
       },
       config = function()
+
+        require('lspkind').init({
+          -- enables text annotations
+          --
+          -- default: true
+          with_text = true,
+
+          -- default symbol map
+          -- can be either 'default' or
+          -- 'codicons' for codicon preset (requires vscode-codicons font installed)
+          --
+          -- default: 'default'
+          preset = 'codicons',
+
+          -- override preset symbols
+          --
+          -- default: {}
+          symbol_map = {
+            Text = '',
+            Method = '',
+            Function = '',
+            Constructor = '',
+            Field = 'ﰠ',
+            Variable = '',
+            Class = 'ﴯ',
+            Interface = '',
+            Module = '',
+            Property = 'ﰠ',
+            Unit = '塞',
+            Value = '',
+            Enum = '',
+            Keyword = '',
+            Snippet = '',
+            Color = '',
+            File = '',
+            Reference = '',
+            Folder = '',
+            EnumMember = '',
+            Constant = '',
+            Struct = 'פּ',
+            Event = '',
+            Operator = '',
+            TypeParameter = '',
+          },
+        })
+
         local cmp = require('cmp')
         require('cmp_nvim_lsp').setup {}
         local types = require('cmp.types')
@@ -424,7 +477,6 @@ packer.startup({
     use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
     use { 'tpope/vim-rhubarb', event = 'BufRead' } -- vim plugin for github
     use { '~/gitrepos/lazygit.nvim', event = 'BufRead' } -- lazygit
-    use 'folke/lsp-colors.nvim'
     --  use 'bkad/CamelCaseMotion' -- motions for inside camel case
     use {
       'norcalli/nvim-colorizer.lua',
@@ -523,11 +575,10 @@ packer.startup({
     use { 'takac/vim-hardtime', event = 'BufRead' } -- vim hardtime
     use { 'chrisbra/unicode.vim', event = 'BufRead' } -- vim unicode helper
     use { 'posva/vim-vue', ft = { 'vue' } }
-    use 'nvim-lua/lsp_extensions.nvim'
-    use 'liuchengxu/vista.vim' -- viewer and finder for lsp symbols
-    use { 'kosayoda/nvim-lightbulb', event = 'BufRead' }
+
     use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } } -- a nicer Python indentation style for vim
     use { 'rust-lang/rust.vim', ft = { 'rust' } } -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+    use 'simrat39/rust-tools.nvim'
     use { 'JuliaEditorSupport/julia-vim' } -- julia support for vim
     use { 'kdheepak/gridlabd.vim', ft = 'gridlabd' } -- gridlabd syntax support
     use { 'zah/nim.vim', ft = 'nim' } -- syntax highlighting auto indent for nim in vim

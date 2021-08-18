@@ -25,9 +25,10 @@ augroup BgHighlight
     autocmd!
     autocmd WinEnter * set cursorline
     autocmd WinLeave * set nocursorline
+    autocmd BufEnter * EnableStripWhitespaceOnSave
 augroup END
 
-autocmd BufEnter * EnableStripWhitespaceOnSave
+
 let g:strip_whitespace_confirm=0
 let g:strip_only_modified_lines=1
 
