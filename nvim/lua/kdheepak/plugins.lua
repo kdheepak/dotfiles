@@ -342,8 +342,6 @@ packer.startup({
     use({
       "hrsh7th/nvim-cmp",
       requires = {
-        { "hrsh7th/vim-vsnip" },
-        { "hrsh7th/cmp-vsnip" },
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-path" },
         { "hrsh7th/cmp-nvim-lsp" },
@@ -404,11 +402,6 @@ packer.startup({
         local compare = require("cmp.config.compare")
         cmp.setup({
           -- You should change this example to your chosen snippet engine.
-          snippet = {
-            expand = function(args)
-              vim.fn["vsnip#anonymous"](args.body)
-            end,
-          },
           completion = { completeopt = "menu,menuone,noinsert" },
           -- You must set mapping.
           mapping = {
@@ -444,7 +437,6 @@ packer.startup({
           sources = {
             { name = "nvim_lsp" },
             { name = "calc" },
-            { name = "vsnip" },
             { name = "emoji" },
             { name = "path" },
             { name = "buffer" },
