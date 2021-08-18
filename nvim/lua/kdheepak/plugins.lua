@@ -189,10 +189,12 @@ packer.startup({
 
     use {
       'neovim/nvim-lspconfig',
+      requires = {'jose-elias-alvarez/null-ls.nvim'},
       config = function()
         require 'kdheepak/lspconfig'
       end,
     }
+
     use { 'kabouzeid/nvim-lspinstall' }
 
     use 'liuchengxu/vista.vim' -- viewer and finder for lsp symbols
@@ -339,7 +341,8 @@ packer.startup({
       'hrsh7th/nvim-cmp',
       requires = {
         { 'hrsh7th/vim-vsnip' }, { 'hrsh7th/cmp-vsnip' }, { 'hrsh7th/cmp-buffer' }, { 'hrsh7th/cmp-path' },
-        { 'hrsh7th/cmp-nvim-lsp' }, { 'onsails/lspkind-nvim' }, { 'saadparwaiz1/cmp_luasnip' },
+        { 'hrsh7th/cmp-nvim-lsp' }, { 'onsails/lspkind-nvim' }, { 'hrsh7th/cmp-calc' }, { 'hrsh7th/cmp-emoji' },
+        { '~/gitrepos/cmp-latex' },
       },
       config = function()
 
@@ -396,9 +399,10 @@ packer.startup({
           -- You should change this example to your chosen snippet engine.
           snippet = {
             expand = function(args)
-              require('luasnip').lsp_expand(args.body)
+              vim.fn['vsnip#anonymous'](args.body)
             end,
           },
+          completion = { completeopt = 'menu,menuone,noinsert' },
           -- You must set mapping.
           mapping = {
             ['<C-p>'] = cmp.mapping.prev_item(),
@@ -411,8 +415,6 @@ packer.startup({
             ['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
               if vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
-              elseif require'luasnip'.expand_or_jumpable() then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
               else
                 fallback()
               end
@@ -420,21 +422,25 @@ packer.startup({
             ['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
               if vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
-              elseif require'luasnip'.jumpable(-1) then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
               else
                 fallback()
               end
             end),
           },
+          formatting = {
+            format = function(entry, vim_item)
+              vim_item.kind = require'lspkind'.presets.default[vim_item.kind]
+              return vim_item
+            end,
+          },
           -- You should specify your *installed* sources.
-          sources = { { name = 'nvim_lsp' }, { name = 'vsnip' }, { name = 'path' }, { name = 'buffer' } },
+          sources = {
+            { name = 'nvim_lsp' }, { name = 'calc' }, { name = 'vsnip' }, { name = 'emoji' }, { name = 'path' },
+            { name = 'buffer' }, { name = 'latex' },
+          },
         }
       end,
     }
-    use { 'hrsh7th/vim-vsnip', event = 'BufRead' }
-    use { 'hrsh7th/vim-vsnip-integ', event = 'BufRead' }
-    use { 'rafamadriz/friendly-snippets', event = 'BufRead' }
 
     -- use { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
     use 'junegunn/vim-peekaboo'
