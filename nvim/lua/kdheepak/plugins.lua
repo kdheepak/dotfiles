@@ -345,13 +345,13 @@ packer.startup({
     use({ "mattn/emmet-vim", ft = { "html", "vue", "css" } })
 
     -- Snippets
-    use({ "L3MON4D3/LuaSnip" })
     use({
       "hrsh7th/nvim-cmp",
       requires = {
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-path" },
         { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-nvim-lua" },
         { "onsails/lspkind-nvim" },
         { "hrsh7th/cmp-calc" },
         { "hrsh7th/cmp-emoji" },
@@ -415,7 +415,8 @@ packer.startup({
           -- You should change this example to your chosen snippet engine.
           snippet = {
             expand = function(args)
-              vim.fn["vsnip#anonymous"](args.body)
+              local luasnip = require("luasnip")
+              luasnip.lsp_expand(args.body)
             end,
           },
           completion = {
@@ -462,17 +463,59 @@ packer.startup({
           -- You should specify your *installed* sources.
           sources = {
             { name = "nvim_lsp" },
+            { name = "nvim_lua" },
             { name = "calc" },
             { name = "emoji" },
             { name = "path" },
             { name = "vsnip" },
-            { name = "buffer" },
-            { name = "latex" },
+            {
+              name = "buffer",
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()()
+              end,
+            },
+            { name = "latex_symbols" },
           },
         })
         for index, value in ipairs(vim.lsp.protocol.CompletionItemKind) do
           cmp.lsp.CompletionItemKind[index] = value
         end
+      end,
+    })
+
+    use({
+      "L3MON4D3/LuaSnip",
+      config = function()
+        local luasnip = require("luasnip")
+
+        function t(str)
+          return vim.api.nvim_replace_termcodes(str, true, true, true)
+        end
+
+        _G.tab_complete = function()
+          if vim.fn.pumvisible() == 1 then
+            return t("<C-n>")
+          elseif luasnip.expand_or_jumpable() then
+            return t("<Plug>luasnip-expand-or-jump")
+          else
+            return t("<Tab>")
+          end
+        end
+
+        _G.s_tab_complete = function()
+          if vim.fn.pumvisible() == 1 then
+            return t("<C-p>")
+          elseif luasnip and luasnip.jumpable(-1) then
+            return t("<Plug>luasnip-jump-prev")
+          else
+            return t("<S-Tab>")
+          end
+        end
+
+        vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
+        vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
+        vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+        vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
       end,
     })
 

@@ -78,6 +78,7 @@ vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
+vim.o.formatoptions = "jql"
 -- Use a (usually) better diff algorithm.
 
 vim.g.VtrStripLeadingWhitespace = false
