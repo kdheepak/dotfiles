@@ -200,7 +200,14 @@ packer.startup({
     use({ "kabouzeid/nvim-lspinstall" })
 
     use("liuchengxu/vista.vim") -- viewer and finder for lsp symbols
-    use({ "kosayoda/nvim-lightbulb", event = "BufRead" })
+
+    use({
+      "kosayoda/nvim-lightbulb",
+      event = "BufRead",
+      config = function()
+        vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+      end,
+    })
 
     use({
       "ray-x/lsp_signature.nvim",
@@ -411,7 +418,13 @@ packer.startup({
               vim.fn["vsnip#anonymous"](args.body)
             end,
           },
-          completion = { completeopt = "menu,menuone,noinsert" },
+          completion = {
+            completeopt = "menu,menuone,noinsert,noselect",
+            autocomplete = {
+              types.cmp.TriggerEvent.TextChanged,
+            },
+            keyword_length = 3,
+          },
           -- You must set mapping.
           mapping = {
             ["<C-p>"] = cmp.mapping.prev_item(),
@@ -586,7 +599,18 @@ packer.startup({
     use({ "mbbill/undotree", event = "BufRead" }) -- visualizes undo history and makes it easier to browse and switch between different undo branches
     use({ "reedes/vim-wordy" }) -- uncover usage problems in your writing
     use("farmergreg/vim-lastplace") -- intelligently reopen files at your last edit position
-    use({ "ntpeters/vim-better-whitespace", event = "BufRead" }) -- causes all trailing whitespace characters to be highlighted
+    use({
+      "ntpeters/vim-better-whitespace",
+      event = "BufRead",
+      config = function()
+        vim.cmd([[
+          augroup StripWhitespace
+            autocmd!
+            autocmd BufEnter * EnableStripWhitespaceOnSave
+          augroup END
+        ]])
+      end,
+    }) -- causes all trailing whitespace characters to be highlighted
     use({ "dhruvasagar/vim-table-mode", event = "BufRead" }) -- automatic table creator & formatter allowing one to create neat tables as you type
     use({ "joom/latex-unicoder.vim", event = "BufRead" }) -- a plugin to type Unicode chars in Vim, using their LaTeX names
     use("editorconfig/editorconfig-vim") -- editorconfig plugin for vim
