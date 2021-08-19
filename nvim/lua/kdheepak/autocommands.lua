@@ -2,7 +2,7 @@ vim.cmd([[
 autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 ]])
 
-vim.api.nvim_command([[
+vim.cmd([[
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
@@ -22,10 +22,10 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd FileType gitcommit,gitrebase,gitconfig setl bufhidden=delete
 
 augroup BgHighlight
-    autocmd!
-    autocmd WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
-    autocmd BufEnter * EnableStripWhitespaceOnSave
+autocmd!
+autocmd WinEnter * set cursorline
+autocmd WinLeave * set nocursorline
+autocmd BufEnter * EnableStripWhitespaceOnSave
 augroup END
 
 let g:strip_whitespace_confirm=0

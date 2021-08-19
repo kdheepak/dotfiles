@@ -348,6 +348,9 @@ packer.startup({
         { "onsails/lspkind-nvim" },
         { "hrsh7th/cmp-calc" },
         { "hrsh7th/cmp-emoji" },
+        { "hrsh7th/cmp-vsnip" },
+        { "hrsh7th/vim-vsnip" },
+        { "rafamadriz/friendly-snippets" },
         { "~/gitrepos/cmp-latex" },
       },
       config = function()
@@ -400,8 +403,14 @@ packer.startup({
         require("cmp_nvim_lsp").setup({})
         local types = require("cmp.types")
         local compare = require("cmp.config.compare")
+
         cmp.setup({
           -- You should change this example to your chosen snippet engine.
+          snippet = {
+            expand = function(args)
+              vim.fn["vsnip#anonymous"](args.body)
+            end,
+          },
           completion = { completeopt = "menu,menuone,noinsert" },
           -- You must set mapping.
           mapping = {
@@ -412,16 +421,20 @@ packer.startup({
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<C-e>"] = cmp.mapping.close(),
             ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-            ["<Tab>"] = cmp.mapping.mode({ "i", "s" }, function(_, fallback)
+            ["<Tab>"] = cmp.mapping.mode({ "i", "s" }, function(core, fallback)
               if vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, true, true), "n")
+              elseif vim.fn.call("vsnip#available", { 1 }) == 1 then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>vsnip-expand-or-jump", true, true, true), "")
               else
                 fallback()
               end
             end),
-            ["<S-Tab>"] = cmp.mapping.mode({ "i", "s" }, function(_, fallback)
+            ["<S-Tab>"] = cmp.mapping.mode({ "i", "s" }, function(core, fallback)
               if vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, true, true), "n")
+              elseif vim.fn.call("vsnip#jumpable", { -1 }) == 1 then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>vsnip-jump-prev", true, true, true), "")
               else
                 fallback()
               end
@@ -439,10 +452,14 @@ packer.startup({
             { name = "calc" },
             { name = "emoji" },
             { name = "path" },
+            { name = "vsnip" },
             { name = "buffer" },
             { name = "latex" },
           },
         })
+        for index, value in ipairs(vim.lsp.protocol.CompletionItemKind) do
+          cmp.lsp.CompletionItemKind[index] = value
+        end
       end,
     })
 
@@ -769,7 +786,7 @@ packer.startup({
 require("kdheepak/statusline")
 require("kdheepak/settings")
 require("kdheepak/config")
-require("kdheepak/autocommands")
 require("kdheepak/keymappings")
+require("kdheepak/autocommands")
 
 return M
