@@ -79,8 +79,6 @@ vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
 vim.o.formatoptions = "jql"
--- Use a (usually) better diff algorithm.
-
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
 vim.g.VtrAppendNewline = true
