@@ -18,6 +18,7 @@ autocmd FileType gitcommit,gitrebase,gitconfig setl bufhidden=delete
 let g:strip_whitespace_confirm=0
 let g:strip_only_modified_lines=1
 
+set autoread
 autocmd FocusGained * silent! :checktime
 
 " autocmd! BufWritePost * make
