@@ -192,8 +192,7 @@ local mappings = {
 
   n = {
     name = "NerdTree",
-    n = { "<cmd>RnvimrToggle<CR>", "Open NERDTree" },
-    r = { "<cmd>RnvimrResize<CR>", "Refresh NERDTree" },
+    n = { "<cmd>NnnPicker<CR>", "Open NERDTree" },
   },
 
   d = {

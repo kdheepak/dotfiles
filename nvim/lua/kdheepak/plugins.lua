@@ -467,18 +467,9 @@ packer.startup({
     use({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- use s and S to search
 
     use({
-      "kevinhwang91/rnvimr",
+      "mcchrish/nnn.vim",
       config = function()
-        vim.g.rnvimr_enable_ex = true
-        vim.g.rnvimr_enable_picker = 1
-        vim.g.rnvimr_layout = {
-          relative = "editor",
-          width = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.columns)),
-          height = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.lines)),
-          col = vim.fn.float2nr(vim.fn.round(0.05 * vim.o.columns)),
-          row = vim.fn.float2nr(vim.fn.round(0.05 * vim.o.lines)),
-          style = "minimal",
-        }
+        vim.g["nnn#set_default_mappings"] = false
       end,
     })
 
