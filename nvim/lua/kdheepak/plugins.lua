@@ -378,7 +378,7 @@ packer.startup({
         nvim_compe.setup({
           enabled = true,
           autocomplete = true,
-          documentation = false,
+          documentation = true,
           debug = false,
           min_length = 1,
           preselect = "always",
@@ -443,13 +443,6 @@ packer.startup({
           return vim.fn["compe#confirm"](t("<CR>"))
         end
 
-        _G.escape_completion = function()
-          if vim.fn.pumvisible() == 0 or vim.fn.complete_info()["selected"] == -1 then
-            return t("<Esc>")
-          end
-          return t("<C-e>")
-        end
-
         map("i", "<CR>", "v:lua.enter_complete()", { expr = true })
 
         map("i", "<Tab>", "v:lua.tab_complete()", { noremap = false, expr = true })
@@ -460,7 +453,6 @@ packer.startup({
 
         map("i", "<C-u>", "compe#scroll({ 'delta': +4 })", { noremap = false, expr = true })
         map("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = false, expr = true })
-        map("i", "<Esc>", "v:lua.escape_completion()", { silent = true, expr = true })
 
         vim.o.completeopt = "menuone,noselect,noinsert"
       end,
