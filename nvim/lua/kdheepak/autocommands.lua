@@ -9,8 +9,6 @@ autocmd FileType gitcommit setlocal spell
 
 " Ensure comments don't go to beginning of line by default
 autocmd! FileType * setlocal nosmartindent
-" Disable autocomment
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " resize panes when host window is resized
 autocmd VimResized * wincmd =
 

@@ -382,7 +382,7 @@ packer.startup({
           documentation = true,
           debug = false,
           min_length = 1,
-          preselect = "disable",
+          preselect = "always",
           throttle_time = 80,
           source_timeout = 200,
           incomplete_delay = 400,
@@ -749,5 +749,19 @@ require("kdheepak/settings")
 require("kdheepak/config")
 require("kdheepak/keymappings")
 require("kdheepak/autocommands")
+
+vim.cmd([[
+
+function! g:Scriptnames_capture() abort
+  try
+    redir => out
+    exe 'silent! scriptnames'
+  finally
+    redir END
+  endtry
+  call writefile(split(out, "\n", 1), glob('scriptnames.log'), 'b')
+  return out
+endfunction
+]])
 
 return M

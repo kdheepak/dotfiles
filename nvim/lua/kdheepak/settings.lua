@@ -72,15 +72,12 @@ vim.o.cmdheight = cmdheight
 vim.o.winheight = cmdheight
 vim.o.winminheight = cmdheight
 vim.o.winminwidth = cmdheight * 2
-vim.o.completeopt = "menuone,noinsert,noselect,preview" --  Use the popup menu also when there is only one match.
 vim.o.shortmess = "filnxtToOfcI" --  Shut off completion and intro messages
 vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
-vim.schedule(function()
-  vim.o.formatoptions = "jql"
-end)
+vim.cmd("au FileType * set formatoptions=jql")
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
 vim.g.VtrAppendNewline = true
