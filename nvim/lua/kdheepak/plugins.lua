@@ -455,7 +455,7 @@ packer.startup({
         map("i", "<C-u>", "compe#scroll({ 'delta': +4 })", { noremap = false, expr = true })
         map("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = false, expr = true })
 
-        vim.o.completeopt = "menuone,noselect,noinsert"
+        vim.o.completeopt = "menuone,noinsert"
       end,
     })
 
