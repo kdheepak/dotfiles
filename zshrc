@@ -79,6 +79,9 @@ zinit ice lucid wait \
         multisrc:"shell/{key-bindings,completion}.zsh"
 zinit load "junegunn/fzf"
 
+zinit ice make as"command" mv"nnn -> nnn" pick"nnn"
+zinit light jarun/nnn
+
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma/zsh-diff-so-fancy
 
