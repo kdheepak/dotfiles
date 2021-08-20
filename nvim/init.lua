@@ -1,5 +1,5 @@
 -- For debugging purpose
-function _G.dump(...)
+function _G.P(...)
   local objects = vim.tbl_map(vim.inspect, { ... })
   print(unpack(objects))
 end
