@@ -77,7 +77,11 @@ vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
-vim.cmd("au FileType * set formatoptions=jql")
+vim.cmd([[
+autocmd BufWinEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd BufRead * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd BufNewFile * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+]])
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
 vim.g.VtrAppendNewline = true
