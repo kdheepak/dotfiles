@@ -359,6 +359,9 @@ packer.startup({
         { "GoldsteinE/compe-latex-symbols" },
         { "L3MON4D3/LuaSnip" },
         { "onsails/lspkind-nvim" },
+        { "hrsh7th/vim-vsnip" },
+        { "hrsh7th/vim-vsnip-integ" },
+        { "rafamadriz/friendly-snippets" },
       },
       config = function()
         require("lspkind").init({
@@ -382,7 +385,7 @@ packer.startup({
           documentation = true,
           debug = false,
           min_length = 1,
-          preselect = "always",
+          preselect = "disable",
           throttle_time = 80,
           source_timeout = 200,
           incomplete_delay = 400,
@@ -392,11 +395,11 @@ packer.startup({
             calc = true,
             spell = true,
             vsnip = true,
-            emoji = true,
+            emoji = false,
             buffer = true,
             nvim_lsp = true,
             nvim_lua = true,
-            latex_symbols = true,
+            latex_symbols = false,
           },
         })
 
@@ -417,9 +420,11 @@ packer.startup({
 
         _G.tab_complete = function()
           if vim.fn.pumvisible() == 1 then
-            return t("<Down>")
+            return t("<C-n>")
           elseif luasnip.expand_or_jumpable() then
             return t("<Plug>luasnip-expand-or-jump")
+          elseif vim.fn["vsnip#available"](1) == 1 then
+            return t("<Plug>(vsnip-expand-or-jump)")
           elseif check_back_space() then
             return t("<Tab>")
           else
@@ -429,9 +434,11 @@ packer.startup({
 
         _G.s_tab_complete = function()
           if vim.fn.pumvisible() == 1 then
-            return t("<Up>")
+            return t("<C-p>")
           elseif luasnip.jumpable(-1) then
             return t("<Plug>luasnip-jump-prev")
+          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+            return t("<Plug>(vsnip-jump-prev)")
           else
             return t("<S-Tab>")
           end
@@ -455,7 +462,7 @@ packer.startup({
         map("i", "<C-u>", "compe#scroll({ 'delta': +4 })", { noremap = false, expr = true })
         map("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = false, expr = true })
 
-        vim.o.completeopt = "menuone,noinsert"
+        vim.o.completeopt = "menuone,noselect"
       end,
     })
 
