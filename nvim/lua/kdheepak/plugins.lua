@@ -62,20 +62,20 @@ packer.startup({
 
     use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install", cmd = "MarkdownPreview", ft = "markdown" })
 
-    use({
-      "windwp/nvim-autopairs",
-      after = { "nvim-compe" },
-      config = function()
-        require("nvim-autopairs").setup()
-        require("nvim-autopairs.completion.compe").setup({
-          map_cr = true, --  map <CR> on insert mode
-          map_complete = true, -- it will auto insert `(` after select function or method item
-        })
-        require("nvim-treesitter.configs").setup({ autopairs = { enable = true } })
-      end,
-      event = "BufRead",
-    })
-
+    --     use({
+    --       "windwp/nvim-autopairs",
+    --       after = { "nvim-compe" },
+    --       config = function()
+    --         require("nvim-autopairs").setup()
+    --         require("nvim-autopairs.completion.compe").setup({
+    --           map_cr = true, --  map <CR> on insert mode
+    --           map_complete = true, -- it will auto insert `(` after select function or method item
+    --         })
+    --         require("nvim-treesitter.configs").setup({ autopairs = { enable = true } })
+    --       end,
+    --       event = "BufRead",
+    --     })
+    --
     use({
       "windwp/nvim-ts-autotag",
       config = function()
@@ -443,6 +443,13 @@ packer.startup({
           return vim.fn["compe#confirm"](t("<CR>"))
         end
 
+        _G.escape_completion = function()
+          if vim.fn.pumvisible() == 0 or vim.fn.complete_info()["selected"] == -1 then
+            return t("<Esc>")
+          end
+          return t("<C-e>")
+        end
+
         map("i", "<CR>", "v:lua.enter_complete()", { expr = true })
 
         map("i", "<Tab>", "v:lua.tab_complete()", { noremap = false, expr = true })
@@ -453,6 +460,7 @@ packer.startup({
 
         map("i", "<C-u>", "compe#scroll({ 'delta': +4 })", { noremap = false, expr = true })
         map("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = false, expr = true })
+        map("i", "<Esc>", "v:lua.escape_completion()", { silent = true, expr = true })
 
         vim.o.completeopt = "menuone,noselect,noinsert"
       end,
