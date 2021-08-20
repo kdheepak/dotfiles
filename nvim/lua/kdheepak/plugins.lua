@@ -416,7 +416,7 @@ packer.startup({
 
         _G.tab_complete = function()
           if vim.fn.pumvisible() == 1 then
-            return t("<C-n>")
+            return t("<Down>")
           elseif luasnip.expand_or_jumpable() then
             return t("<Plug>luasnip-expand-or-jump")
           elseif check_back_space() then
@@ -428,7 +428,7 @@ packer.startup({
 
         _G.s_tab_complete = function()
           if vim.fn.pumvisible() == 1 then
-            return t("<C-p>")
+            return t("<Up>")
           elseif luasnip.jumpable(-1) then
             return t("<Plug>luasnip-jump-prev")
           else
@@ -453,6 +453,8 @@ packer.startup({
 
         map("i", "<C-u>", "compe#scroll({ 'delta': +4 })", { noremap = false, expr = true })
         map("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = false, expr = true })
+
+        vim.o.completeopt = "menuone,noselect,noinsert"
       end,
     })
 
