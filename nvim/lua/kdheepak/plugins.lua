@@ -58,24 +58,25 @@ packer.init({ max_jobs = 8 })
 packer.startup({
   function()
     -- Packer can manage itself
+
     use("wbthomason/packer.nvim")
 
     use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install", cmd = "MarkdownPreview", ft = "markdown" })
 
-    --     use({
-    --       "windwp/nvim-autopairs",
-    --       after = { "nvim-compe" },
-    --       config = function()
-    --         require("nvim-autopairs").setup()
-    --         require("nvim-autopairs.completion.compe").setup({
-    --           map_cr = true, --  map <CR> on insert mode
-    --           map_complete = true, -- it will auto insert `(` after select function or method item
-    --         })
-    --         require("nvim-treesitter.configs").setup({ autopairs = { enable = true } })
-    --       end,
-    --       event = "BufRead",
-    --     })
-    --
+    use({
+      "windwp/nvim-autopairs",
+      after = { "nvim-compe" },
+      config = function()
+        require("nvim-autopairs").setup()
+        require("nvim-autopairs.completion.compe").setup({
+          map_cr = true, --  map <CR> on insert mode
+          map_complete = true, -- it will auto insert `(` after select function or method item
+        })
+        require("nvim-treesitter.configs").setup({ autopairs = { enable = true } })
+      end,
+      event = "BufRead",
+    })
+
     use({
       "windwp/nvim-ts-autotag",
       config = function()
@@ -381,7 +382,7 @@ packer.startup({
           documentation = true,
           debug = false,
           min_length = 1,
-          preselect = "always",
+          preselect = "disable",
           throttle_time = 80,
           source_timeout = 200,
           incomplete_delay = 400,

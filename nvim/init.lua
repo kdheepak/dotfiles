@@ -15,10 +15,10 @@ vim.g.loaded_remote_plugins = false
 
 vim.g.JuliaFormatter_always_launch_server = true
 
-require 'kdheepak/plugins'
+require("kdheepak/plugins")
 
 vim.notify = function(msg, log_level, _)
-  if msg:match('exit code') then
+  if msg:match("exit code") then
     return
   end
   if log_level == vim.log.levels.ERROR then

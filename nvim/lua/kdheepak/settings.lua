@@ -78,7 +78,9 @@ vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
-vim.o.formatoptions = "jql"
+vim.schedule(function()
+  vim.o.formatoptions = "jql"
+end)
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
 vim.g.VtrAppendNewline = true
