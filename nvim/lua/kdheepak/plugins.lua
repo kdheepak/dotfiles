@@ -17,17 +17,6 @@ function M.reload_config()
   vim.cmd(":PackerInstall")
 end
 
--- Need to replace this once lua api has vim modes
-vim.api.nvim_exec(
-  [[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost plugins.lua lua require'kdheepak/plugins'.reload_config()
-  augroup end
-]],
-  false
-)
-
 local packer = require("packer")
 local use = packer.use
 
