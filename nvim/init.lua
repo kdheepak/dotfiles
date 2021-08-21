@@ -1,8 +1,6 @@
 -- For debugging purpose
-function _G.P(...)
-  local objects = vim.tbl_map(vim.inspect, { ... })
-  print(unpack(objects))
-end
+
+require("kdheepak/utils")
 
 -- Disable some unused built-in Neovim plugins
 vim.g.loaded_man = false

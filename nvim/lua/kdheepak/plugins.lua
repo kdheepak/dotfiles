@@ -717,13 +717,6 @@ packer.startup({
       end,
     })
 
-    use({
-      "lithammer/nvim-diagnosticls",
-      config = function()
-        require("diagnosticls")
-      end,
-    })
-
     use("famiu/nvim-reload")
   end,
   config = { display = { open_fn = require("packer.util").float } },
