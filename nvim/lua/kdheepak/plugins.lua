@@ -740,24 +740,4 @@ packer.startup({
   config = { display = { open_fn = require("packer.util").float } },
 })
 
-require("kdheepak/statusline")
-require("kdheepak/settings")
-require("kdheepak/config")
-require("kdheepak/keymappings")
-require("kdheepak/autocommands")
-
-vim.cmd([[
-
-function! g:Scriptnames_capture() abort
-  try
-    redir => out
-    exe 'silent! scriptnames'
-  finally
-    redir END
-  endtry
-  call writefile(split(out, "\n", 1), glob('scriptnames.log'), 'b')
-  return out
-endfunction
-]])
-
 return M

@@ -15,7 +15,7 @@ vim.g.loaded_remote_plugins = false
 
 vim.g.JuliaFormatter_always_launch_server = true
 
-require("kdheepak/plugins")
+-- require("kdheepak/plugins")
 
 vim.notify = function(msg, log_level, _)
   if msg:match("exit code") then
@@ -27,3 +27,22 @@ vim.notify = function(msg, log_level, _)
     vim.api.nvim_echo({ { msg } }, true, {})
   end
 end
+
+require("kdheepak/statusline")
+require("kdheepak/settings")
+require("kdheepak/config")
+require("kdheepak/keymappings")
+require("kdheepak/autocommands")
+
+vim.cmd([[
+function! g:Scriptnames_capture() abort
+  try
+    redir => out
+    exe 'silent! scriptnames'
+  finally
+    redir END
+  endtry
+  call writefile(split(out, "\n", 1), glob('scriptnames.log'), 'b')
+  return out
+endfunction
+]])
