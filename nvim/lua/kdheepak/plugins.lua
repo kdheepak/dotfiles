@@ -10,6 +10,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 function M.reload_config()
+  require("plenary.reload").reload_module("kdheepak/statusline", true)
   vim.cmd("source ~/.config/nvim/init.lua")
   vim.cmd("source ~/.config/nvim/lua/kdheepak/plugins.lua")
   vim.cmd(":PackerCompile")
@@ -166,7 +167,7 @@ packer.startup({
       "neovim/nvim-lspconfig",
       requires = { "jose-elias-alvarez/null-ls.nvim" },
       config = function()
-        require("kdheepak/lspconfig")
+        require("kdheepak/plugins/lspconfig")
       end,
     })
 
@@ -233,7 +234,7 @@ packer.startup({
     use({
       "mfussenegger/nvim-dap",
       config = function()
-        require("kdheepak/debug")
+        require("kdheepak/plugins/debug")
       end,
     })
 
@@ -244,7 +245,7 @@ packer.startup({
     use({
       "folke/which-key.nvim",
       config = function()
-        require("kdheepak/which-key")
+        require("kdheepak/plugins/which-key")
       end,
     })
 
@@ -655,7 +656,7 @@ packer.startup({
 
     use({ "jbyuki/nabla.nvim", ft = "markdown" }) -- Take your scentific notes in Neovim.
 
-    use({ "hoob3rt/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
+    use({ "shadmansaleh/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
 
     use({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
 

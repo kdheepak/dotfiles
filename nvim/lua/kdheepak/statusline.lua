@@ -1,4 +1,4 @@
-require("plenary.reload").reload_module("lualine", true)
+-- require("plenary.reload").reload_module("lualine", true)
 
 local theme = {
   command = { a = { bg = "#14ce14", fg = "#ffffff" }, b = { bg = "#f6f8fa", fg = "#bc05bc" } },
@@ -54,6 +54,7 @@ local sections = {
 
 -- local tabline = require 'tabline'
 
+require("plenary.reload").reload_module("lualine", true)
 require("lualine").setup({
   extensions = { "fzf", "fugitive", "quickfix" },
   options = { theme = theme },
