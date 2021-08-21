@@ -28,27 +28,6 @@ vim.api.nvim_exec(
   false
 )
 
-local inspected_buffers = {}
--- this function is called b4 a buffer is opened, so we need to manually open the file and count the lines.
-function limit_by_line_count(max_lines)
-  local fname = vim.fn.expand("%:p")
-  local cache = inspected_buffers[fname]
-  if cache ~= nil then
-    return cache
-  end
-
-  max_lines = max_lines or 1000
-  local lines = 0
-  for _ in io.lines(fname) do
-    lines = lines + 1
-    if lines > max_lines then
-      break
-    end
-  end
-  inspected_buffers[fname] = (lines <= max_lines)
-  return inspected_buffers[fname]
-end
-
 local packer = require("packer")
 local use = packer.use
 
@@ -292,8 +271,8 @@ packer.startup({
       },
       config = function()
         require("fzf-lua").setup({
-          fzf_args = "--color=dark",
           previewers = { bat = { cmd = "bat", args = "", config = "~/.config/bat/config" } },
+          async_or_timeout = 3000,
         })
       end,
     })
@@ -349,7 +328,17 @@ packer.startup({
 
     use({ "aymericbeaumet/vim-symlink" })
 
-    use("folke/trouble.nvim")
+    use({
+      "folke/trouble.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        require("trouble").setup({
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        })
+      end,
+    })
 
     use({ "mattn/emmet-vim", ft = { "html", "vue", "css" } })
 
@@ -369,7 +358,7 @@ packer.startup({
           preset = "default",
         })
         -- Key mapping
-        function map(mode, key, result, opts)
+        local function map(mode, key, result, opts)
           opts = vim.tbl_extend("keep", opts or {}, {
             noremap = true,
             silent = true,
