@@ -1,15 +1,30 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.preselectSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = { "documentation", "detail", "additionalTextEdits" },
-}
-capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
+local function create_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.preselectSupport = true
+  capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = { "documentation", "detail", "additionalTextEdits" },
+  }
+  capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
+  capabilities.textDocument.codeAction = {
+    dynamicRegistration = true,
+    codeActionLiteralSupport = {
+      codeActionKind = {
+        valueSet = (function()
+          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+          table.sort(res)
+          return res
+        end)(),
+      },
+    },
+  }
+  return capabilities
+end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = false,
@@ -43,19 +58,6 @@ augroup END
 local lsp_status = require("lsp-status")
 lsp_status.register_progress()
 
-capabilities.textDocument.codeAction = {
-  dynamicRegistration = true,
-  codeActionLiteralSupport = {
-    codeActionKind = {
-      valueSet = (function()
-        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-        table.sort(res)
-        return res
-      end)(),
-    },
-  },
-}
-
 local lspconfig = require("lspconfig")
 local on_attach_vim = function(client, bufnr)
   require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
@@ -81,14 +83,6 @@ local on_attach_vim = function(client, bufnr)
   end
 end
 
-local cmd = {
-  "julia",
-  "--project=" .. vim.fn.expand("~/.config/nvim/lsp-julia"),
-  "--startup-file=no",
-  "--history-file=no",
-  vim.fn.expand("~/.config/nvim/lsp-julia/run.jl"),
-}
-
 local lsp = require("lspconfig")
 -- require'packer'.loader 'coq_nvim coq.artifacts'
 local function coq_setup(name, config)
@@ -100,18 +94,15 @@ coq_setup("julials", {
     client.resolved_capabilities.document_formatting = false
     on_attach_vim(client, bufnr)
   end,
-  on_new_config = function(new_config, _)
-    new_config.cmd = cmd
-  end,
 })
-coq_setup("bashls", { on_attach = on_attach_vim, capabilities = capabilities })
-coq_setup("ccls", { on_attach = on_attach_vim, capabilities = capabilities })
-coq_setup("tsserver", { on_attach = on_attach_vim, capabilities = capabilities })
-coq_setup("jsonls", { on_attach = on_attach_vim, capabilities = capabilities })
-coq_setup("nimls", { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup("bashls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("ccls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("tsserver", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("jsonls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("nimls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("rust_analyzer", {
   on_attach = on_attach_vim,
-  capabilities = capabilities,
+  capabilities = create_capabilities(),
   settings = {
     ["rust-analyzer"] = {
       cargo = { allFeatures = true, autoReload = true },
@@ -119,8 +110,8 @@ coq_setup("rust_analyzer", {
     },
   },
 })
-coq_setup("vimls", { on_attach = on_attach_vim, capabilities = capabilities })
-coq_setup("cssls", { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup("vimls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("cssls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 
 local system_name
 if vim.fn.has("mac") == 1 then
@@ -142,7 +133,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 coq_setup("sumneko_lua", {
-  capabilities = capabilities,
+  capabilities = create_capabilities(),
   on_attach = on_attach_vim,
   cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
   settings = {
@@ -166,15 +157,15 @@ coq_setup("sumneko_lua", {
     },
   },
 })
-coq_setup("html", { on_attach = on_attach_vim, capabilities = capabilities })
-coq_setup("vuels", { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup("html", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("vuels", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 
-coq_setup("pyright", { on_attach = on_attach_vim, capabilities = capabilities })
+coq_setup("pyright", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 
 local null_ls = require("null-ls")
 local builtins = null_ls.builtins
 local generator = null_ls.generator
-local formatter = null_ls.formatter
+-- local formatter = null_ls.formatter
 
 null_ls.config({
   sources = {
