@@ -1,3 +1,6 @@
+local augroup = require("kd/utils").augroup
+local autocmd = require("kd/utils").autocmd
+
 local function create_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -28,7 +31,7 @@ end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = false,
-  underline = true,
+  underline = false,
   signs = true,
   update_in_insert = false,
 })
@@ -47,13 +50,12 @@ vim.lsp.handlers["textDocument/implementation"] = require("lsputil.locations").i
 vim.lsp.handlers["textDocument/documentSymbol"] = require("lsputil.symbols").document_handler
 vim.lsp.handlers["workspace/symbol"] = require("lsputil.symbols").workspace_handler
 
-vim.cmd([[
-augroup LSPDiagVistaNearest
-  autocmd!
-  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-  autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics{focusable=false}
-augroup END
-]])
+augroup("LSPDiagVistaNearest", function()
+  autocmd("VimEnter", "*", "call vista#RunForNearestMethodOrFunction()")
+  autocmd("CursorHold", "*", function()
+    -- vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
+  end)
+end)
 
 local lsp_status = require("lsp-status")
 lsp_status.register_progress()

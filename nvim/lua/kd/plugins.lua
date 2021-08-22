@@ -32,13 +32,19 @@ packer.startup({
     use("wbthomason/packer.nvim")
 
     use({
-      "iamcco/markdown-preview.nvim",
-      run = "cd app && yarn install",
-      cmd = "MarkdownPreview",
-      ft = "markdown",
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
       config = function()
-        vim.g.mkdp_auto_start = 0
+        require("nvim-treesitter.configs").setup({
+          ensure_installed = "maintained",
+          autotag = { enable = true },
+          highlight = { enable = true },
+          incremental_selection = { enable = true },
+          textobjects = { enable = true },
+          indent = { enable = true },
+        })
       end,
+      requires = { { "nvim-treesitter/playground" } },
     })
 
     use({
@@ -60,6 +66,7 @@ packer.startup({
       config = function()
         require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
       end,
+      event = "BufRead",
     })
 
     use({
@@ -67,22 +74,7 @@ packer.startup({
       config = function()
         require("nvim-treesitter.configs").setup({ context_commentstring = { enable = true } })
       end,
-    })
-
-    use({
-      "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
-      config = function()
-        require("nvim-treesitter.configs").setup({
-          ensure_installed = "maintained",
-          autotag = { enable = true },
-          highlight = { enable = true },
-          incremental_selection = { enable = true },
-          textobjects = { enable = true },
-          indent = { enable = true },
-        })
-      end,
-      requires = { { "nvim-treesitter/playground" } },
+      event = "BufRead",
     })
 
     use({
@@ -125,6 +117,7 @@ packer.startup({
           },
         })
       end,
+      event = "BufRead",
     })
 
     use({
@@ -132,6 +125,7 @@ packer.startup({
       config = function()
         require("nvim_comment").setup()
       end,
+      event = "BufRead",
     })
 
     use({
@@ -159,36 +153,44 @@ packer.startup({
             ["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
             ["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
           },
-          watch_index = { interval = 1000, follow_files = true },
-          current_line_blame = false,
-          current_line_blame_delay = 1000,
-          current_line_blame_position = "eol",
-          sign_priority = 6,
-          update_debounce = 100,
-          status_formatter = nil, -- load default
-          word_diff = false,
         })
       end,
+      event = "BufRead",
     })
 
     use({
       "neovim/nvim-lspconfig",
-      requires = { "jose-elias-alvarez/null-ls.nvim" },
+      requires = {
+        { "jose-elias-alvarez/null-ls.nvim" },
+        { "RishabhRD/popfix" },
+        { "RishabhRD/nvim-lsputils" },
+        {
+          "nvim-lua/lsp-status.nvim",
+          config = function()
+            require("lsp-status").register_progress()
+          end,
+        },
+        { "folke/lsp-colors.nvim" },
+      },
       config = function()
-        require("kd/plugins/lspconfig")
+        require("kd/plugins/lsp")
       end,
     })
 
-    use({ "kabouzeid/nvim-lspinstall" })
+    use({ "kabouzeid/nvim-lspinstall", event = "BufRead" })
 
-    use("liuchengxu/vista.vim") -- viewer and finder for lsp symbols
+    use({ "liuchengxu/vista.vim", event = "BufRead" }) -- viewer and finder for lsp symbols
 
     use({
       "kosayoda/nvim-lightbulb",
-      event = "BufRead",
       config = function()
-        vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+        local augroup = require("kd/utils").augroup
+        local autocmd = require("kd/utils").autocmd
+        augroup("KDLightbulb", function()
+          autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
+        end)
       end,
+      event = "BufRead",
     })
 
     use({
@@ -196,6 +198,7 @@ packer.startup({
       config = function()
         require("lsp_signature").setup({})
       end,
+      event = "BufRead",
     })
 
     use({
@@ -204,26 +207,14 @@ packer.startup({
       config = function()
         require("navigator").setup()
       end,
+      event = "BufRead",
     })
-
-    use({
-      "nvim-lua/lsp-status.nvim",
-      config = function()
-        require("lsp-status").register_progress()
-      end,
-    })
-
-    use("RishabhRD/popfix")
-
-    use("RishabhRD/nvim-lsputils")
-
-    use("folke/lsp-colors.nvim")
 
     use({ "nvim-lua/plenary.nvim" })
 
     use({ "nvim-lua/popup.nvim" })
 
-    use({ "nanotee/luv-vimdocs" })
+    use({ "nanotee/luv-vimdocs", event = "BufRead" })
 
     -- load {
     --   'nvim-telescope/telescope.nvim',
@@ -237,7 +228,7 @@ packer.startup({
     -- load 'gbrlsnchs/telescope-lsp-handlers.nvim'
     -- load 'nvim-telescope/telescope-dap.nvim'
 
-    use("Pocco81/DAPInstall.nvim")
+    use({ "Pocco81/DAPInstall.nvim", event = "BufRead" })
 
     use({
       "mfussenegger/nvim-dap",
@@ -286,22 +277,6 @@ packer.startup({
       "~/gitrepos/moonshine.nvim",
       config = function()
         require("moonshine")
-      end,
-    })
-
-    use({
-      "mjlbach/babelfish.nvim",
-      config = function()
-        if pcall(require, "nvim-treesitter.parsers") then
-          local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-          parser_config.markdown = {
-            install_info = {
-              url = "https://github.com/ikatyang/tree-sitter-markdown",
-              files = { "src/parser.c", "src/scanner.cc" },
-            },
-          }
-        end
       end,
     })
 
@@ -588,9 +563,8 @@ packer.startup({
       "ntpeters/vim-better-whitespace",
       event = "BufRead",
       config = function()
-        local utils = require("kd/utils")
-        local augroup = utils.augroup
-        local autocmd = utils.autocmd
+        local augroup = require("kd/utils").augroup
+        local autocmd = require("kd/utils").autocmd
         augroup("StripWhitespace", function()
           autocmd("BufEnter", "*", "EnableStripWhitespaceOnSave")
         end)
@@ -601,23 +575,9 @@ packer.startup({
 
     use({ "dhruvasagar/vim-table-mode", event = "BufRead" }) -- automatic table creator & formatter allowing one to create neat tables as you type
 
-    use({
-      "joom/latex-unicoder.vim",
-      event = "BufRead",
-      config = function()
-        -- TODO: add shortcut to transform string
-        vim.g.unicoder_cancel_normal = true
-        vim.g.unicoder_cancel_insert = true
-        vim.g.unicoder_cancel_visual = true
-        vim.g.unicoder_no_map = true
-      end,
-    }) -- a plugin to type Unicode chars in Vim, using their LaTeX names
-
     use("editorconfig/editorconfig-vim") -- editorconfig plugin for vim
 
     use({ "osyo-manga/vim-anzu", event = "BufRead" }) -- show total number of matches and current match number
-
-    use({ "jeffkreeftmeijer/vim-numbertoggle", event = "BufRead" })
 
     use({ "haya14busa/vim-asterisk", event = "BufRead" }) -- asterisk.vim provides improved search * motions
 
@@ -649,6 +609,16 @@ packer.startup({
     use({ "zah/nim.vim", ft = "nim" }) -- syntax highlighting auto indent for nim in vim
 
     use({ "gpanders/vim-medieval", ft = "markdown" }) -- evaluate markdown code blocks within vim
+
+    use({
+      "iamcco/markdown-preview.nvim",
+      run = "cd app && yarn install",
+      cmd = "MarkdownPreview",
+      ft = "markdown",
+      config = function()
+        vim.g.mkdp_auto_start = 0
+      end,
+    })
 
     use({
       "plasticboy/vim-markdown",
