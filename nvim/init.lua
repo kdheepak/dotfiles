@@ -15,8 +15,6 @@ vim.g.JuliaFormatter_always_launch_server = true
 
 require("kdheepak/plugins")
 
-require("kdheepak/statusline")
-
 require("kdheepak/config")
 
 vim.cmd([[

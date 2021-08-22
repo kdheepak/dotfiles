@@ -12,7 +12,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 function M.reload_config()
-  require("plenary.reload").reload_module("kdheepak/statusline", true)
+  require("plenary.reload").reload_module("kdheepak/plugins/lualine", true)
   vim.cmd("source ~/.config/nvim/init.lua")
   vim.cmd("source ~/.config/nvim/lua/kdheepak/plugins.lua")
   vim.cmd(":PackerCompile")
@@ -692,7 +692,13 @@ packer.startup({
 
     use({ "jbyuki/nabla.nvim", ft = "markdown" }) -- Take your scentific notes in Neovim.
 
-    use({ "shadmansaleh/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
+    use({
+      "shadmansaleh/lualine.nvim",
+      config = function()
+        require("kdheepak/plugins/lualine")
+      end,
+      requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    })
 
     use({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
 

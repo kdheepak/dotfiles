@@ -76,4 +76,3 @@ require("lualine").setup({
     lualine_z = {},
   },
 })
-require("tabline").setup({ enable = false })
