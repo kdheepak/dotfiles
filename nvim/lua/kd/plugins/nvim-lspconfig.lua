@@ -36,13 +36,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   update_in_insert = false,
 })
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  -- Use a sharp border with `FloatBorder` highlights
-  border = "single",
-})
-
-vim.lsp.handlers["textDocument/codeAction"] = require("lsputil.codeAction").code_action_handler
 vim.lsp.handlers["textDocument/references"] = require("lsputil.locations").references_handler
+vim.lsp.handlers["textDocument/codeAction"] = require("lsputil.codeAction").code_action_handler
 vim.lsp.handlers["textDocument/definition"] = require("lsputil.locations").definition_handler
 vim.lsp.handlers["textDocument/declaration"] = require("lsputil.locations").declaration_handler
 vim.lsp.handlers["textDocument/typeDefinition"] = require("lsputil.locations").typeDefinition_handler
@@ -62,7 +57,7 @@ lsp_status.register_progress()
 
 local lspconfig = require("lspconfig")
 local on_attach_vim = function(client, bufnr)
-  require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
+  -- require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
   require("lsp-status").on_attach(client)
   -- require'illuminate'.on_attach(client)
   local function buf_set_keymap(...)
