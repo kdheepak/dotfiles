@@ -24,18 +24,17 @@ local packer = require("packer")
 local use = packer.use
 
 local load = function(use_table)
-  use(use_table)
-  -- if type(use_table) == "string" then
-  --   use(use_table)
-  -- else
-  --   local index = use_table[1]:match("^.*()/")
-  --   local plugin_name = string.sub(use_table[1], index + 1)
-  --   local plugin_file = vim.fn.stdpath("config") .. "/lua/plugins/" .. plugin_name .. ".lua"
-  --   if vim.fn.filereadable(plugin_file) then
-  --     -- use_table.config = "require('plugins.' .. '" .. plugin_name .. "')"
-  --   end
-  --   use(use_table)
-  -- end
+  if type(use_table) == "string" then
+    use(use_table)
+  else
+    local index = use_table[1]:match("^.*()/")
+    local plugin_name = string.sub(use_table[1], index + 1)
+    local plugin_file = vim.fn.stdpath("config") .. "/lua/plugins/" .. plugin_name .. ".lua"
+    if vim.fn.filereadable(plugin_file) then
+      -- use_table.config = "require('plugins.' .. '" .. plugin_name .. "')"
+    end
+    use(use_table)
+  end
 end
 
 packer.reset()
