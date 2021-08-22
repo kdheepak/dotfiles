@@ -171,9 +171,10 @@ packer.startup({
           end,
         },
         { "folke/lsp-colors.nvim" },
+        { "simrat39/rust-tools.nvim" },
       },
       config = function()
-        require("kd/plugins/lsp")
+        require("kd/plugins/nvim-lspconfig")
       end,
     })
 
@@ -216,30 +217,15 @@ packer.startup({
 
     use({ "nanotee/luv-vimdocs", event = "BufRead" })
 
-    -- load {
-    --   'nvim-telescope/telescope.nvim',
-    --   requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
-    --   -- config = function()
-    --   --   require 'kd/telescope'
-    --   -- end,
-    -- }
-    -- load 'tamago324/telescope-openbrowser.nvim'
-    -- load 'nvim-telescope/telescope-github.nvim'
-    -- load 'gbrlsnchs/telescope-lsp-handlers.nvim'
-    -- load 'nvim-telescope/telescope-dap.nvim'
-
     use({ "Pocco81/DAPInstall.nvim", event = "BufRead" })
 
     use({
       "mfussenegger/nvim-dap",
+      requires = { { "theHamsta/nvim-dap-virtual-text", "mfussenegger/nvim-dap-python" } },
       config = function()
         require("kd/plugins/debug")
       end,
     })
-
-    use("theHamsta/nvim-dap-virtual-text")
-
-    use("mfussenegger/nvim-dap-python")
 
     use({
       "folke/which-key.nvim",
@@ -305,11 +291,7 @@ packer.startup({
       "folke/trouble.nvim",
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
-        require("trouble").setup({
-          -- your configuration comes here
-          -- or leave it empty to load the default settings
-          -- refer to the configuration section below
-        })
+        require("trouble").setup({})
       end,
     })
 
@@ -326,163 +308,62 @@ packer.startup({
         { "rafamadriz/friendly-snippets" },
       },
       config = function()
-        require("lspkind").init({
-          with_text = true,
-          preset = "default",
-        })
-        -- Key mapping
-        local function map(mode, key, result, opts)
-          opts = vim.tbl_extend("keep", opts or {}, {
-            noremap = true,
-            silent = true,
-            expr = false,
-          })
-          vim.api.nvim_set_keymap(mode, key, result, opts)
-        end
-
-        local nvim_compe = require("compe")
-        nvim_compe.setup({
-          enabled = true,
-          autocomplete = true,
-          documentation = true,
-          debug = false,
-          min_length = 1,
-          preselect = "disable",
-          throttle_time = 80,
-          source_timeout = 200,
-          incomplete_delay = 400,
-          allow_prefix_unmatch = false,
-          source = {
-            path = true,
-            calc = true,
-            spell = true,
-            vsnip = true,
-            emoji = false,
-            buffer = true,
-            nvim_lsp = true,
-            nvim_lua = true,
-            latex_symbols = false,
-          },
-        })
-
-        local t = function(str)
-          return vim.api.nvim_replace_termcodes(str, true, true, true)
-        end
-
-        local luasnip = require("luasnip")
-
-        local check_back_space = function()
-          local col = vim.fn.col(".") - 1
-          if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-            return true
-          else
-            return false
-          end
-        end
-
-        _G.tab_complete = function()
-          if vim.fn.pumvisible() == 1 then
-            return t("<C-n>")
-          elseif luasnip.expand_or_jumpable() then
-            return t("<Plug>luasnip-expand-or-jump")
-          elseif vim.fn["vsnip#available"](1) == 1 then
-            return t("<Plug>(vsnip-expand-or-jump)")
-          elseif check_back_space() then
-            return t("<Tab>")
-          else
-            return vim.fn["compe#complete"]()
-          end
-        end
-
-        _G.s_tab_complete = function()
-          if vim.fn.pumvisible() == 1 then
-            return t("<C-p>")
-          elseif luasnip.jumpable(-1) then
-            return t("<Plug>luasnip-jump-prev")
-          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-            return t("<Plug>(vsnip-jump-prev)")
-          else
-            return t("<S-Tab>")
-          end
-        end
-
-        _G.enter_complete = function()
-          if luasnip.choice_active() then
-            return t("<Plug>luasnip-next-choice")
-          end
-          return vim.fn["compe#confirm"](t("<CR>"))
-        end
-
-        map("i", "<CR>", "v:lua.enter_complete()", { expr = true })
-
-        map("i", "<Tab>", "v:lua.tab_complete()", { noremap = false, expr = true })
-        map("s", "<Tab>", "v:lua.tab_complete()", { noremap = false, expr = true })
-
-        map("i", "<S-Tab>", "v:lua.s_tab_complete()", { noremap = false, expr = true })
-        map("s", "<S-Tab>", "v:lua.s_tab_complete()", { noremap = false, expr = true })
-
-        map("i", "<C-u>", "compe#scroll({ 'delta': +4 })", { noremap = false, expr = true })
-        map("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = false, expr = true })
-
-        vim.o.completeopt = "menuone,noselect"
+        require("kd/plugins/nvim-compe")
       end,
     })
 
-    -- load { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
+    use({ "junegunn/vim-peekaboo", event = "BufRead" })
 
-    use("junegunn/vim-peekaboo")
+    use({ "Yilin-Yang/vim-markbar", event = "BufRead" })
 
-    use("Yilin-Yang/vim-markbar")
-
-    use("kshenoy/vim-signature")
+    use({ "kshenoy/vim-signature", event = "BufRead" })
 
     use({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- load s and S to search
 
+    use("kevinhwang91/nvim-bqf") -- The goal of nvim-bqf is to make Neovim's quickfix window better.
     use({
-      "mcchrish/nnn.vim",
+      "kevinhwang91/rnvimr",
       config = function()
-        vim.g["nnn#set_default_mappings"] = false
+        vim.g.rnvimr_enable_ex = 1
+        vim.g.rnvimr_enable_picker = 1
       end,
     })
 
-    use("kevinhwang91/nvim-bqf") -- The goal of nvim-bqf is to make Neovim's quickfix window better.
-
-    use({ "tyru/open-browser.vim" }) -- opens url in browser
-
-    use({ "tyru/open-browser-github.vim", event = "BufRead" }) -- opens github repo or github issue in browser
+    use({ "tyru/open-browser-github.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
 
     use({
       "rhysd/git-messenger.vim",
-      event = "BufRead",
       config = function()
         vim.g.git_messenger_no_default_mappings = true
       end,
+      event = "BufRead",
     }) -- reveal a hidden message from git under the cursor quickly
 
-    use({ "tpope/vim-fugitive" }) -- vim plugin for Git that is so awesome, it should be illegal
+    use({ "tpope/vim-fugitive", event = "BufRead" }) -- vim plugin for Git that is so awesome, it should be illegal
 
-    use({ "rbong/vim-flog" })
+    use({ "rbong/vim-flog", event = "BufRead" })
 
-    use("junegunn/gv.vim")
+    use({ "junegunn/gv.vim", event = "BufRead" })
 
-    use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+    use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim", event = "BufRead" })
 
     use({ "tpope/vim-rhubarb", event = "BufRead" }) -- vim plugin for github
 
-    use({ "~/gitrepos/lazygit.nvim", event = "BufRead" }) -- lazygit
+    use({ "~/gitrepos/lazygit.nvim", cmd = "LazyGit" }) -- lazygit
 
     use({
       "norcalli/nvim-colorizer.lua",
       config = function()
         require("colorizer").setup()
       end,
+      event = "BufRead",
     })
 
-    use({ "euclidianAce/BetterLua.vim" })
+    use({ "euclidianAce/BetterLua.vim", event = "BufRead" })
 
-    use({ "bfredl/nvim-luadev" })
+    use({ "bfredl/nvim-luadev", event = "BufRead" })
 
-    use("itchyny/vim-cursorword") -- underlines the word under the cursor
+    use({ "itchyny/vim-cursorword", event = "BufRead" }) -- underlines the word under the cursor
 
     use({
       "whiteinge/diffconflicts",
@@ -512,9 +393,9 @@ packer.startup({
           nmap <silent> <leader>dl :call DiffToggle(1)<cr>
           nmap <silent> <leader>dc :call DiffToggle(2)<cr>
           nmap <silent> <leader>dr :call DiffToggle(3)<cr>
-
         ]])
       end,
+      event = "BufRead",
     })
 
     use({ "godlygeek/tabular", event = "BufRead" }) -- line up text
@@ -549,19 +430,18 @@ packer.startup({
 
     use({ "Konfekt/vim-CtrlXA", event = "BufRead" }) -- Increment and decrement and toggle keywords
 
-    use({ "dhruvasagar/vim-zoom" }) -- toggle zoom of current window within the current tab
+    use({ "dhruvasagar/vim-zoom", event = "BufRead" }) -- toggle zoom of current window within the current tab
 
-    use({ "kana/vim-niceblock" }) -- makes blockwise Visual mode more loadful and intuitive
+    use({ "kana/vim-niceblock", event = "BufRead" }) -- makes blockwise Visual mode more loadful and intuitive
 
     use({ "mbbill/undotree", event = "BufRead" }) -- visualizes undo history and makes it easier to browse and switch between different undo branches
 
-    use({ "reedes/vim-wordy" }) -- uncover usage problems in your writing
+    use({ "reedes/vim-wordy", event = "BufRead" }) -- uncover usage problems in your writing
 
     use("farmergreg/vim-lastplace") -- intelligently reopen files at your last edit position
 
     use({
       "ntpeters/vim-better-whitespace",
-      event = "BufRead",
       config = function()
         local augroup = require("kd/utils").augroup
         local autocmd = require("kd/utils").autocmd
@@ -571,6 +451,7 @@ packer.startup({
         vim.g.strip_whitespace_confirm = 0
         vim.g.strip_only_modified_lines = 1
       end,
+      event = "BufRead",
     }) -- caloads all trailing whitespace characters to be highlighted
 
     use({ "dhruvasagar/vim-table-mode", event = "BufRead" }) -- automatic table creator & formatter allowing one to create neat tables as you type
@@ -599,8 +480,6 @@ packer.startup({
     use({ "Vimjas/vim-python-pep8-indent", ft = { "python" } }) -- a nicer Python indentation style for vim
 
     use({ "rust-lang/rust.vim", ft = { "rust" } }) -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
-
-    use("simrat39/rust-tools.nvim")
 
     use({ "JuliaEditorSupport/julia-vim" }) -- julia support for vim
 
@@ -647,15 +526,13 @@ packer.startup({
 
     use({ "bfredl/nvim-ipy", ft = "python" })
 
-    use({ "~/gitrepos/JuliaFormatter.vim" }) -- formatter for Julia
+    use({ "~/gitrepos/JuliaFormatter.vim", ft = "Julia" }) -- formatter for Julia
 
-    use({ "sindrets/diffview.nvim" })
-
-    use({ "christoomey/vim-conflicted" })
+    use({ "sindrets/diffview.nvim", event = "BufRead" })
 
     use({ "jbyuki/one-small-step-for-vimkind", ft = "lua" })
 
-    use({ "npxbr/glow.nvim", branch = "main", run = ":GlowInstall" })
+    use({ "npxbr/glow.nvim", branch = "main", run = ":GlowInstall", ft = "markdown" })
 
     use({ "rust-lang/vscode-rust", ft = "rust" })
 
@@ -696,6 +573,7 @@ packer.startup({
           float_opts = { border = "curved" },
         })
       end,
+      event = "BufRead",
     })
 
     -- colorschemes
@@ -712,10 +590,12 @@ packer.startup({
           colors = { lsp = { referenceText = nil } },
         })
       end,
+      event = "BufRead",
     })
 
     use({
       "jghauser/mkdir.nvim",
+      event = "BufRead",
     })
 
     use({
@@ -723,9 +603,10 @@ packer.startup({
       config = function()
         require("Navigator").setup()
       end,
+      event = "BufRead",
     })
 
-    use("famiu/nvim-reload")
+    use({ "famiu/nvim-reload" })
   end,
   config = { display = { open_fn = require("packer.util").float } },
 })
