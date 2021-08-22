@@ -172,6 +172,19 @@ packer.startup({
         },
         { "folke/lsp-colors.nvim" },
         { "simrat39/rust-tools.nvim" },
+        {
+          "ray-x/lsp_signature.nvim",
+          config = function()
+            require("lsp_signature").setup({})
+          end,
+        },
+        {
+          "ray-x/navigator.lua",
+          requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+          config = function()
+            -- require("navigator").setup()
+          end,
+        },
       },
       config = function()
         require("kd/plugins/nvim-lspconfig")
@@ -188,14 +201,6 @@ packer.startup({
         augroup("KDLightbulb", function()
           autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
         end)
-      end,
-      event = "BufRead",
-    })
-
-    use({
-      "ray-x/lsp_signature.nvim",
-      config = function()
-        require("lsp_signature").setup({})
       end,
       event = "BufRead",
     })
