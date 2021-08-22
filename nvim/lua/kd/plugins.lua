@@ -23,7 +23,7 @@ local packer = require("packer")
 local use = packer.use
 
 packer.reset()
-packer.init({ max_jobs = 8 })
+packer.init({ max_jobs = 16 })
 
 packer.startup({
   function()
@@ -179,8 +179,6 @@ packer.startup({
     })
 
     use({ "kabouzeid/nvim-lspinstall", event = "BufRead" })
-
-    use({ "liuchengxu/vista.vim", event = "BufRead" }) -- viewer and finder for lsp symbols
 
     use({
       "kosayoda/nvim-lightbulb",
@@ -543,7 +541,7 @@ packer.startup({
       config = function()
         require("kd/plugins/lualine")
       end,
-      requires = { "kyazdani42/nvim-web-devicons", opt = true },
+      requires = { { "kyazdani42/nvim-web-devicons", opt = true }, { "liuchengxu/vista.vim" } },
     })
 
     use({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
@@ -590,7 +588,7 @@ packer.startup({
           colors = { lsp = { referenceText = nil } },
         })
       end,
-      event = "BufRead",
+      event = "VimEnter",
     })
 
     use({
