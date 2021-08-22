@@ -725,8 +725,7 @@ packer.startup({
 
     -- colorschemes
     use({
-      "kdheepak/github-nvim-theme",
-      branch = "fix-bar-bar-colors",
+      "projekt0n/github-nvim-theme",
       config = function()
         vim.g.termguicolors = true
         require("github-theme").setup({
