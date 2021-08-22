@@ -40,48 +40,29 @@ packer.startup({
           autotag = { enable = true },
           highlight = { enable = true },
           incremental_selection = { enable = true },
-          textobjects = { enable = true },
           indent = { enable = true },
-        })
-      end,
-      requires = { { "nvim-treesitter/playground" } },
-    })
-
-    use({
-      "windwp/nvim-autopairs",
-      after = { "nvim-compe" },
-      config = function()
-        require("nvim-autopairs").setup()
-        require("nvim-autopairs.completion.compe").setup({
-          map_cr = true, --  map <CR> on insert mode
-          map_complete = true, -- it will auto insert `(` after select function or method item
-        })
-        require("nvim-treesitter.configs").setup({ autopairs = { enable = true } })
-      end,
-      event = "BufRead",
-    })
-
-    use({
-      "windwp/nvim-ts-autotag",
-      config = function()
-        require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
-      end,
-      event = "BufRead",
-    })
-
-    use({
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      config = function()
-        require("nvim-treesitter.configs").setup({ context_commentstring = { enable = true } })
-      end,
-      event = "BufRead",
-    })
-
-    use({
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      config = function()
-        require("nvim-treesitter.configs").setup({
+          refactor = {
+            highlight_definitions = { enable = true },
+            highlight_current_scope = { enable = false },
+            smart_rename = {
+              enable = true,
+              keymaps = {
+                smart_rename = "grr",
+              },
+            },
+            navigation = {
+              enable = true,
+              keymaps = {
+                goto_definition = "gnd",
+                list_definitions = "gnD",
+                list_definitions_toc = "gO",
+                goto_next_usage = "<a-*>",
+                goto_previous_usage = "<a-#>",
+              },
+            },
+          },
           textobjects = {
+            enable = true,
             select = {
               enable = true,
               -- Automatically jump forward to textobj, similar to targets.vim
@@ -92,6 +73,11 @@ packer.startup({
                 ["if"] = "@function.inner",
                 ["ac"] = "@class.outer",
                 ["ic"] = "@class.inner",
+              },
+              lsp_interop = {
+                enable = true,
+                border = "none",
+                peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
               },
             },
             swap = {
@@ -107,17 +93,29 @@ packer.startup({
               goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
               goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
             },
-            textobjects = {
-              lsp_interop = {
-                enable = true,
-                border = "none",
-                peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
-              },
-            },
           },
+          autopairs = { enable = true },
+          context_commentstring = { enable = true },
         })
       end,
-      event = "BufRead",
+      requires = {
+        { "nvim-treesitter/playground" },
+        { "nvim-treesitter/nvim-treesitter-refactor" },
+        { "nvim-treesitter/nvim-treesitter-textobjects" },
+        {
+          "windwp/nvim-autopairs",
+          after = { "nvim-compe" },
+          config = function()
+            require("nvim-autopairs").setup()
+            require("nvim-autopairs.completion.compe").setup({
+              map_cr = true, --  map <CR> on insert mode
+              map_complete = true, -- it will auto insert `(` after select function or method item
+            })
+          end,
+        },
+        { "windwp/nvim-ts-autotag" },
+        { "JoosepAlviste/nvim-ts-context-commentstring" },
+      },
     })
 
     use({
