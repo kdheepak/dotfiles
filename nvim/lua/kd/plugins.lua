@@ -1,5 +1,4 @@
 M = {}
-local V = require("kdheepak/utils")
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -12,9 +11,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 function M.reload_config()
-  require("plenary.reload").reload_module("kdheepak/plugins/lualine", true)
+  require("plenary.reload").reload_module("kd/plugins/lualine", true)
   vim.cmd("source ~/.config/nvim/init.lua")
-  vim.cmd("source ~/.config/nvim/lua/kdheepak/plugins.lua")
+  vim.cmd("source ~/.config/nvim/lua/kd/plugins.lua")
   vim.cmd(":PackerCompile")
   vim.cmd(":PackerClean")
   vim.cmd(":PackerInstall")
@@ -176,7 +175,7 @@ packer.startup({
       "neovim/nvim-lspconfig",
       requires = { "jose-elias-alvarez/null-ls.nvim" },
       config = function()
-        require("kdheepak/plugins/lspconfig")
+        require("kd/plugins/lspconfig")
       end,
     })
 
@@ -230,7 +229,7 @@ packer.startup({
     --   'nvim-telescope/telescope.nvim',
     --   requires = { 'nvim-telescope/telescope-fzy-native.nvim' },
     --   -- config = function()
-    --   --   require 'kdheepak/telescope'
+    --   --   require 'kd/telescope'
     --   -- end,
     -- }
     -- load 'tamago324/telescope-openbrowser.nvim'
@@ -243,7 +242,7 @@ packer.startup({
     use({
       "mfussenegger/nvim-dap",
       config = function()
-        require("kdheepak/plugins/debug")
+        require("kd/plugins/debug")
       end,
     })
 
@@ -254,7 +253,7 @@ packer.startup({
     use({
       "folke/which-key.nvim",
       config = function()
-        require("kdheepak/plugins/which-key")
+        require("kd/plugins/which-key")
       end,
     })
 
@@ -589,7 +588,7 @@ packer.startup({
       "ntpeters/vim-better-whitespace",
       event = "BufRead",
       config = function()
-        local utils = require("kdheepak/utils")
+        local utils = require("kd/utils")
         local augroup = utils.augroup
         local autocmd = utils.autocmd
         augroup("StripWhitespace", function()
@@ -695,7 +694,7 @@ packer.startup({
     use({
       "shadmansaleh/lualine.nvim",
       config = function()
-        require("kdheepak/plugins/lualine")
+        require("kd/plugins/lualine")
       end,
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
     })

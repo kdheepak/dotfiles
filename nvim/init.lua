@@ -1,6 +1,6 @@
 -- For debugging purpose
 
-require("kdheepak/utils")
+require("kd/utils")
 
 -- Disable some unused built-in Neovim plugins
 vim.g.loaded_man = false
@@ -13,9 +13,9 @@ vim.g.loaded_remote_plugins = false
 
 vim.g.JuliaFormatter_always_launch_server = true
 
-require("kdheepak/plugins")
+require("kd/plugins")
 
-require("kdheepak/config")
+require("kd/config")
 
 vim.cmd([[
 function! g:Scriptnames_capture() abort
@@ -29,13 +29,3 @@ function! g:Scriptnames_capture() abort
   return out
 endfunction
 ]])
-
-vim.api.nvim_exec(
-  [[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost plugins.lua lua require'kdheepak/plugins'.reload_config()
-  augroup end
-]],
-  false
-)

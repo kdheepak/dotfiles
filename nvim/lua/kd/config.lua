@@ -1,4 +1,4 @@
-local utils = require("kdheepak/utils")
+local utils = require("kd/utils")
 local augroup = utils.augroup
 local autocmd = utils.autocmd
 
@@ -115,6 +115,8 @@ augroup("KDAutocmds", function()
   autocmd("TextYankPost", "*", function()
     require("vim.highlight").on_yank({ higroup = "Search", timeout = 500 })
   end)
+
+  autocmd("BufWritePost", "plugins.lua", require("kd/plugins").reload_config)
 end)
 
 -- mappings
