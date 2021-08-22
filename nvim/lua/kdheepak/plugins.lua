@@ -23,20 +23,6 @@ end
 local packer = require("packer")
 local use = packer.use
 
-local load = function(use_table)
-  if type(use_table) == "string" then
-    use(use_table)
-  else
-    local index = use_table[1]:match("^.*()/")
-    local plugin_name = string.sub(use_table[1], index + 1)
-    local plugin_file = vim.fn.stdpath("config") .. "/lua/plugins/" .. plugin_name .. ".lua"
-    if vim.fn.filereadable(plugin_file) then
-      -- use_table.config = "require('plugins.' .. '" .. plugin_name .. "')"
-    end
-    use(use_table)
-  end
-end
-
 packer.reset()
 packer.init({ max_jobs = 8 })
 
@@ -44,9 +30,9 @@ packer.startup({
   function()
     -- Packer can manage itself
 
-    load("wbthomason/packer.nvim")
+    use("wbthomason/packer.nvim")
 
-    load({
+    use({
       "iamcco/markdown-preview.nvim",
       run = "cd app && yarn install",
       cmd = "MarkdownPreview",
@@ -56,7 +42,7 @@ packer.startup({
       end,
     })
 
-    load({
+    use({
       "windwp/nvim-autopairs",
       after = { "nvim-compe" },
       config = function()
@@ -70,21 +56,21 @@ packer.startup({
       event = "BufRead",
     })
 
-    load({
+    use({
       "windwp/nvim-ts-autotag",
       config = function()
         require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
       end,
     })
 
-    load({
+    use({
       "JoosepAlviste/nvim-ts-context-commentstring",
       config = function()
         require("nvim-treesitter.configs").setup({ context_commentstring = { enable = true } })
       end,
     })
 
-    load({
+    use({
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = function()
@@ -100,7 +86,7 @@ packer.startup({
       requires = { { "nvim-treesitter/playground" } },
     })
 
-    load({
+    use({
       "nvim-treesitter/nvim-treesitter-textobjects",
       config = function()
         require("nvim-treesitter.configs").setup({
@@ -142,14 +128,14 @@ packer.startup({
       end,
     })
 
-    load({
+    use({
       "terrortylor/nvim-comment",
       config = function()
         require("nvim_comment").setup()
       end,
     })
 
-    load({
+    use({
       "lewis6991/gitsigns.nvim",
       requires = { "nvim-lua/plenary.nvim" },
       config = function()
@@ -182,12 +168,11 @@ packer.startup({
           update_debounce = 100,
           status_formatter = nil, -- load default
           word_diff = false,
-          load_internal_diff = true, -- If luajit is present
         })
       end,
     })
 
-    load({
+    use({
       "neovim/nvim-lspconfig",
       requires = { "jose-elias-alvarez/null-ls.nvim" },
       config = function()
@@ -195,11 +180,11 @@ packer.startup({
       end,
     })
 
-    load({ "kabouzeid/nvim-lspinstall" })
+    use({ "kabouzeid/nvim-lspinstall" })
 
-    load("liuchengxu/vista.vim") -- viewer and finder for lsp symbols
+    use("liuchengxu/vista.vim") -- viewer and finder for lsp symbols
 
-    load({
+    use({
       "kosayoda/nvim-lightbulb",
       event = "BufRead",
       config = function()
@@ -207,14 +192,14 @@ packer.startup({
       end,
     })
 
-    load({
+    use({
       "ray-x/lsp_signature.nvim",
       config = function()
         require("lsp_signature").setup({})
       end,
     })
 
-    load({
+    use({
       "ray-x/navigator.lua",
       requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
       config = function()
@@ -222,24 +207,24 @@ packer.startup({
       end,
     })
 
-    load({
+    use({
       "nvim-lua/lsp-status.nvim",
       config = function()
         require("lsp-status").register_progress()
       end,
     })
 
-    load("RishabhRD/popfix")
+    use("RishabhRD/popfix")
 
-    load("RishabhRD/nvim-lsputils")
+    use("RishabhRD/nvim-lsputils")
 
-    load("folke/lsp-colors.nvim")
+    use("folke/lsp-colors.nvim")
 
-    load({ "nvim-lua/plenary.nvim" })
+    use({ "nvim-lua/plenary.nvim" })
 
-    load({ "nvim-lua/popup.nvim" })
+    use({ "nvim-lua/popup.nvim" })
 
-    load({ "nanotee/luv-vimdocs" })
+    use({ "nanotee/luv-vimdocs" })
 
     -- load {
     --   'nvim-telescope/telescope.nvim',
@@ -253,31 +238,31 @@ packer.startup({
     -- load 'gbrlsnchs/telescope-lsp-handlers.nvim'
     -- load 'nvim-telescope/telescope-dap.nvim'
 
-    load("Pocco81/DAPInstall.nvim")
+    use("Pocco81/DAPInstall.nvim")
 
-    load({
+    use({
       "mfussenegger/nvim-dap",
       config = function()
         require("kdheepak/plugins/debug")
       end,
     })
 
-    load("theHamsta/nvim-dap-virtual-text")
+    use("theHamsta/nvim-dap-virtual-text")
 
-    load("mfussenegger/nvim-dap-python")
+    use("mfussenegger/nvim-dap-python")
 
-    load({
+    use({
       "folke/which-key.nvim",
       config = function()
         require("kdheepak/plugins/which-key")
       end,
     })
 
-    load({ "junegunn/fzf", run = ":call fzf#install()" })
+    use({ "junegunn/fzf", run = ":call fzf#install()" })
 
-    load({ "junegunn/fzf.vim" })
+    use({ "junegunn/fzf.vim" })
 
-    load({
+    use({
       "ibhagwan/fzf-lua",
       requires = {
         "kyazdani42/nvim-web-devicons", -- optional for icons
@@ -291,21 +276,21 @@ packer.startup({
       end,
     })
 
-    load({
+    use({
       "~/gitrepos/mergetool.nvim",
       config = function()
         require("mergetool").setup({})
       end,
     })
 
-    load({
+    use({
       "~/gitrepos/moonshine.nvim",
       config = function()
         require("moonshine")
       end,
     })
 
-    load({
+    use({
       "mjlbach/babelfish.nvim",
       config = function()
         if pcall(require, "nvim-treesitter.parsers") then
@@ -321,16 +306,16 @@ packer.startup({
       end,
     })
 
-    load({
+    use({
       "~/gitrepos/tabline.nvim",
       config = function()
         require("tabline").setup({ options = { always_show_tabline = true } })
       end,
     })
 
-    load({ "wsdjeg/luarefvim" })
+    use({ "wsdjeg/luarefvim" })
 
-    load({
+    use({
       "samoshkin/vim-mergetool",
       config = function()
         vim.g.mergetool_layout = "mr"
@@ -338,11 +323,11 @@ packer.startup({
       end,
     })
 
-    load({ "moll/vim-bbye" })
+    use({ "moll/vim-bbye" })
 
-    load({ "aymericbeaumet/vim-symlink" })
+    use({ "aymericbeaumet/vim-symlink" })
 
-    load({
+    use({
       "folke/trouble.nvim",
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
@@ -354,9 +339,9 @@ packer.startup({
       end,
     })
 
-    load({ "mattn/emmet-vim", ft = { "html", "vue", "css" } })
+    use({ "mattn/emmet-vim", ft = { "html", "vue", "css" } })
 
-    load({
+    use({
       "hrsh7th/nvim-compe",
       requires = {
         { "GoldsteinE/compe-latex-symbols" },
@@ -471,28 +456,28 @@ packer.startup({
 
     -- load { 'tversteeg/registers.nvim', event = 'BufRead' } -- Show register content when you try to access it in NeoVim.
 
-    load("junegunn/vim-peekaboo")
+    use("junegunn/vim-peekaboo")
 
-    load("Yilin-Yang/vim-markbar")
+    use("Yilin-Yang/vim-markbar")
 
-    load("kshenoy/vim-signature")
+    use("kshenoy/vim-signature")
 
-    load({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- load s and S to search
+    use({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- load s and S to search
 
-    load({
+    use({
       "mcchrish/nnn.vim",
       config = function()
         vim.g["nnn#set_default_mappings"] = false
       end,
     })
 
-    load("kevinhwang91/nvim-bqf") -- The goal of nvim-bqf is to make Neovim's quickfix window better.
+    use("kevinhwang91/nvim-bqf") -- The goal of nvim-bqf is to make Neovim's quickfix window better.
 
-    load({ "tyru/open-browser.vim" }) -- opens url in browser
+    use({ "tyru/open-browser.vim" }) -- opens url in browser
 
-    load({ "tyru/open-browser-github.vim", event = "BufRead" }) -- opens github repo or github issue in browser
+    use({ "tyru/open-browser-github.vim", event = "BufRead" }) -- opens github repo or github issue in browser
 
-    load({
+    use({
       "rhysd/git-messenger.vim",
       event = "BufRead",
       config = function()
@@ -500,32 +485,32 @@ packer.startup({
       end,
     }) -- reveal a hidden message from git under the cursor quickly
 
-    load({ "tpope/vim-fugitive" }) -- vim plugin for Git that is so awesome, it should be illegal
+    use({ "tpope/vim-fugitive" }) -- vim plugin for Git that is so awesome, it should be illegal
 
-    load({ "rbong/vim-flog" })
+    use({ "rbong/vim-flog" })
 
-    load("junegunn/gv.vim")
+    use("junegunn/gv.vim")
 
-    load({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+    use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
 
-    load({ "tpope/vim-rhubarb", event = "BufRead" }) -- vim plugin for github
+    use({ "tpope/vim-rhubarb", event = "BufRead" }) -- vim plugin for github
 
-    load({ "~/gitrepos/lazygit.nvim", event = "BufRead" }) -- lazygit
+    use({ "~/gitrepos/lazygit.nvim", event = "BufRead" }) -- lazygit
 
-    load({
+    use({
       "norcalli/nvim-colorizer.lua",
       config = function()
         require("colorizer").setup()
       end,
     })
 
-    load({ "euclidianAce/BetterLua.vim" })
+    use({ "euclidianAce/BetterLua.vim" })
 
-    load({ "bfredl/nvim-luadev" })
+    use({ "bfredl/nvim-luadev" })
 
-    load("itchyny/vim-cursorword") -- underlines the word under the cursor
+    use("itchyny/vim-cursorword") -- underlines the word under the cursor
 
-    load({
+    use({
       "whiteinge/diffconflicts",
       config = function()
         vim.cmd([[
@@ -558,19 +543,19 @@ packer.startup({
       end,
     })
 
-    load({ "godlygeek/tabular", event = "BufRead" }) -- line up text
+    use({ "godlygeek/tabular", event = "BufRead" }) -- line up text
 
-    load({ "tpope/vim-unimpaired", event = "BufRead" }) -- complementary pairs of mappings
+    use({ "tpope/vim-unimpaired", event = "BufRead" }) -- complementary pairs of mappings
 
-    load({ "tpope/vim-abolish", event = "BufRead" }) -- convert camel to snake
+    use({ "tpope/vim-abolish", event = "BufRead" }) -- convert camel to snake
 
-    load({ "tpope/vim-surround", event = "BufRead" }) -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
+    use({ "tpope/vim-surround", event = "BufRead" }) -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 
-    load({ "tpope/vim-repeat", event = "BufRead" }) -- repeat.vim remaps . in a way that plugins can tap into it.
+    use({ "tpope/vim-repeat", event = "BufRead" }) -- repeat.vim remaps . in a way that plugins can tap into it.
 
-    load({ "vim-utils/vim-vertical-move", event = "BufRead" })
+    use({ "vim-utils/vim-vertical-move", event = "BufRead" })
 
-    load({
+    use({
       "rmagatti/auto-session",
       config = function()
         local opts = { auto_session_enabled = false, auto_save_enabled = false, auto_restore_enabled = false }
@@ -578,29 +563,29 @@ packer.startup({
       end,
     })
 
-    load({ "tpope/vim-jdaddy", event = "BufRead" }) -- mappings for working with json in vim
+    use({ "tpope/vim-jdaddy", event = "BufRead" }) -- mappings for working with json in vim
 
-    load({ "tpope/vim-speeddating", event = "BufRead" }) -- Tools for working with dates
+    use({ "tpope/vim-speeddating", event = "BufRead" }) -- Tools for working with dates
 
-    load({ "tpope/vim-eunuch", event = "BufRead" }) -- vim sugar for UNIX shell commands like :Rename
+    use({ "tpope/vim-eunuch", event = "BufRead" }) -- vim sugar for UNIX shell commands like :Rename
 
-    load({ "tpope/vim-sleuth", event = "BufRead" }) -- This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
+    use({ "tpope/vim-sleuth", event = "BufRead" }) -- This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
 
-    load({ "inkarkat/vim-visualrepeat", event = "BufRead" }) -- repetition of vim built-in normal mode commands via . for visual mode
+    use({ "inkarkat/vim-visualrepeat", event = "BufRead" }) -- repetition of vim built-in normal mode commands via . for visual mode
 
-    load({ "Konfekt/vim-CtrlXA", event = "BufRead" }) -- Increment and decrement and toggle keywords
+    use({ "Konfekt/vim-CtrlXA", event = "BufRead" }) -- Increment and decrement and toggle keywords
 
-    load({ "dhruvasagar/vim-zoom" }) -- toggle zoom of current window within the current tab
+    use({ "dhruvasagar/vim-zoom" }) -- toggle zoom of current window within the current tab
 
-    load({ "kana/vim-niceblock" }) -- makes blockwise Visual mode more loadful and intuitive
+    use({ "kana/vim-niceblock" }) -- makes blockwise Visual mode more loadful and intuitive
 
-    load({ "mbbill/undotree", event = "BufRead" }) -- visualizes undo history and makes it easier to browse and switch between different undo branches
+    use({ "mbbill/undotree", event = "BufRead" }) -- visualizes undo history and makes it easier to browse and switch between different undo branches
 
-    load({ "reedes/vim-wordy" }) -- uncover usage problems in your writing
+    use({ "reedes/vim-wordy" }) -- uncover usage problems in your writing
 
-    load("farmergreg/vim-lastplace") -- intelligently reopen files at your last edit position
+    use("farmergreg/vim-lastplace") -- intelligently reopen files at your last edit position
 
-    load({
+    use({
       "ntpeters/vim-better-whitespace",
       event = "BufRead",
       config = function()
@@ -615,78 +600,103 @@ packer.startup({
       end,
     }) -- caloads all trailing whitespace characters to be highlighted
 
-    load({ "dhruvasagar/vim-table-mode", event = "BufRead" }) -- automatic table creator & formatter allowing one to create neat tables as you type
+    use({ "dhruvasagar/vim-table-mode", event = "BufRead" }) -- automatic table creator & formatter allowing one to create neat tables as you type
 
-    load({ "joom/latex-unicoder.vim", event = "BufRead" }) -- a plugin to type Unicode chars in Vim, using their LaTeX names
+    use({
+      "joom/latex-unicoder.vim",
+      event = "BufRead",
+      config = function()
+        -- TODO: add shortcut to transform string
+        vim.g.unicoder_cancel_normal = true
+        vim.g.unicoder_cancel_insert = true
+        vim.g.unicoder_cancel_visual = true
+        vim.g.unicoder_no_map = true
+      end,
+    }) -- a plugin to type Unicode chars in Vim, using their LaTeX names
 
-    load("editorconfig/editorconfig-vim") -- editorconfig plugin for vim
+    use("editorconfig/editorconfig-vim") -- editorconfig plugin for vim
 
-    load({ "osyo-manga/vim-anzu", event = "BufRead" }) -- show total number of matches and current match number
+    use({ "osyo-manga/vim-anzu", event = "BufRead" }) -- show total number of matches and current match number
 
-    load({ "jeffkreeftmeijer/vim-numbertoggle", event = "BufRead" })
+    use({ "jeffkreeftmeijer/vim-numbertoggle", event = "BufRead" })
 
-    load({ "haya14busa/vim-asterisk", event = "BufRead" }) -- asterisk.vim provides improved search * motions
+    use({ "haya14busa/vim-asterisk", event = "BufRead" }) -- asterisk.vim provides improved search * motions
 
-    load({ "segeljakt/vim-isotope", event = "BufRead" }) -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
+    use({ "segeljakt/vim-isotope", event = "BufRead" }) -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 
-    load({ "sedm0784/vim-you-autocorrect", event = "BufRead" }) -- Automatic autocorrect
+    use({ "sedm0784/vim-you-autocorrect", event = "BufRead" }) -- Automatic autocorrect
 
-    load({ "inkarkat/vim-ingo-library", event = "BufRead" }) -- Spellcheck dependency
+    use({ "inkarkat/vim-ingo-library", event = "BufRead" }) -- Spellcheck dependency
 
-    load({ "inkarkat/vim-spellcheck", event = "BufRead" }) -- Add vim spell check errors to quicklist
+    use({ "inkarkat/vim-spellcheck", event = "BufRead" }) -- Add vim spell check errors to quicklist
 
     -- load 'beloglazov/vim-online-thesaurus'
-    load({ "takac/vim-hardtime", event = "BufRead" }) -- vim hardtime
+    use({ "takac/vim-hardtime", event = "BufRead" }) -- vim hardtime
 
-    load({ "chrisbra/unicode.vim", event = "BufRead" }) -- vim unicode helper
+    use({ "chrisbra/unicode.vim", event = "BufRead" }) -- vim unicode helper
 
-    load({ "posva/vim-vue", ft = { "vue" } })
+    use({ "posva/vim-vue", ft = { "vue" } })
 
-    load({ "Vimjas/vim-python-pep8-indent", ft = { "python" } }) -- a nicer Python indentation style for vim
+    use({ "Vimjas/vim-python-pep8-indent", ft = { "python" } }) -- a nicer Python indentation style for vim
 
-    load({ "rust-lang/rust.vim", ft = { "rust" } }) -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
+    use({ "rust-lang/rust.vim", ft = { "rust" } }) -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 
-    load("simrat39/rust-tools.nvim")
+    use("simrat39/rust-tools.nvim")
 
-    load({ "JuliaEditorSupport/julia-vim" }) -- julia support for vim
+    use({ "JuliaEditorSupport/julia-vim" }) -- julia support for vim
 
-    load({ "kdheepak/gridlabd.vim", ft = "gridlabd" }) -- gridlabd syntax support
+    use({ "kdheepak/gridlabd.vim", ft = "gridlabd" }) -- gridlabd syntax support
 
-    load({ "zah/nim.vim", ft = "nim" }) -- syntax highlighting auto indent for nim in vim
+    use({ "zah/nim.vim", ft = "nim" }) -- syntax highlighting auto indent for nim in vim
 
-    load({ "gpanders/vim-medieval", ft = "markdown" }) -- evaluate markdown code blocks within vim
+    use({ "gpanders/vim-medieval", ft = "markdown" }) -- evaluate markdown code blocks within vim
 
-    load({ "plasticboy/vim-markdown", ft = "markdown" }) -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
+    use({
+      "plasticboy/vim-markdown",
+      ft = "markdown",
+      config = function()
+        vim.g.vim_markdown_emphasis_multiline = false
+        vim.g.vim_markdown_folding_disabled = true
+        vim.g.tex_conceal = ""
+        vim.g.vim_markdown_math = true
+        vim.g.vim_markdown_frontmatter = true
+        vim.g.vim_markdown_strikethrough = true
+        vim.g.vim_markdown_fenced_languages = { "julia=jl", "python=py" }
+        vim.g.latex_to_unicode_auto = true
+        vim.g.latex_to_unicode_tab = false
+        vim.g.latex_to_unicode_cmd_mapping = { "<C-j>" }
+      end,
+    }) -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 
-    load({ "kana/vim-textobj-loadr", event = "BufRead" })
+    use({ "kana/vim-textobj-user", event = "BufRead" })
 
-    load({ "kana/vim-textobj-line", event = "BufRead" })
+    use({ "kana/vim-textobj-line", event = "BufRead" })
 
-    load({ "GCBallesteros/vim-textobj-hydrogen", ft = { "ipynb", "python", "markdown" } })
+    use({ "GCBallesteros/vim-textobj-hydrogen", ft = { "ipynb", "python", "markdown" } })
 
-    load({ "GCBallesteros/jupytext.vim", ft = { "ipynb", "python", "markdown" } })
+    use({ "GCBallesteros/jupytext.vim", ft = { "ipynb", "python", "markdown" } })
 
-    load({ "bfredl/nvim-ipy", ft = "python" })
+    use({ "bfredl/nvim-ipy", ft = "python" })
 
-    load({ "~/gitrepos/JuliaFormatter.vim" }) -- formatter for Julia
+    use({ "~/gitrepos/JuliaFormatter.vim" }) -- formatter for Julia
 
-    load({ "sindrets/diffview.nvim" })
+    use({ "sindrets/diffview.nvim" })
 
-    load({ "christoomey/vim-conflicted" })
+    use({ "christoomey/vim-conflicted" })
 
-    load({ "jbyuki/one-small-step-for-vimkind", ft = "lua" })
+    use({ "jbyuki/one-small-step-for-vimkind", ft = "lua" })
 
-    load({ "npxbr/glow.nvim", branch = "main", run = ":GlowInstall" })
+    use({ "npxbr/glow.nvim", branch = "main", run = ":GlowInstall" })
 
-    load({ "rust-lang/vscode-rust", ft = "rust" })
+    use({ "rust-lang/vscode-rust", ft = "rust" })
 
-    load({ "jbyuki/nabla.nvim", ft = "markdown" }) -- Take your scentific notes in Neovim.
+    use({ "jbyuki/nabla.nvim", ft = "markdown" }) -- Take your scentific notes in Neovim.
 
-    load({ "shadmansaleh/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
+    use({ "shadmansaleh/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
 
-    load({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
+    use({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
 
-    load({
+    use({
       "pwntester/octo.nvim",
       config = function()
         require("octo").setup()
@@ -694,7 +704,7 @@ packer.startup({
       event = "BufRead",
     })
 
-    load({
+    use({
       "akinsho/nvim-toggleterm.lua",
       config = function()
         require("toggleterm").setup({
@@ -714,7 +724,7 @@ packer.startup({
     })
 
     -- colorschemes
-    load({
+    use({
       "kdheepak/github-nvim-theme",
       branch = "fix-bar-bar-colors",
       config = function()
@@ -730,18 +740,18 @@ packer.startup({
       end,
     })
 
-    load({
-      "jghaloadr/mkdir.nvim",
+    use({
+      "jghauser/mkdir.nvim",
     })
 
-    load({
+    use({
       "numToStr/Navigator.nvim",
       config = function()
         require("Navigator").setup()
       end,
     })
 
-    load("famiu/nvim-reload")
+    use("famiu/nvim-reload")
   end,
   config = { display = { open_fn = require("packer.util").float } },
 })

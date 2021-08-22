@@ -15,21 +15,9 @@ vim.g.JuliaFormatter_always_launch_server = true
 
 require("kdheepak/plugins")
 
-vim.notify = function(msg, log_level, _)
-  if msg:match("exit code") then
-    return
-  end
-  if log_level == vim.log.levels.ERROR then
-    vim.api.nvim_err_writeln(msg)
-  else
-    vim.api.nvim_echo({ { msg } }, true, {})
-  end
-end
-
 require("kdheepak/statusline")
-require("kdheepak/settings")
+
 require("kdheepak/config")
-require("kdheepak/keymappings")
 
 vim.cmd([[
 function! g:Scriptnames_capture() abort
