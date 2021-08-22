@@ -200,15 +200,6 @@ packer.startup({
       event = "BufRead",
     })
 
-    use({
-      "ray-x/navigator.lua",
-      requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-      config = function()
-        require("navigator").setup()
-      end,
-      event = "BufRead",
-    })
-
     use({ "nvim-lua/plenary.nvim" })
 
     use({ "nvim-lua/popup.nvim" })
