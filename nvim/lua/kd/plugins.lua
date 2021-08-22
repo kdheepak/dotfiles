@@ -449,7 +449,13 @@ packer.startup({
 
     use({ "osyo-manga/vim-anzu", event = "BufRead" }) -- show total number of matches and current match number
 
-    use({ "haya14busa/vim-asterisk", event = "BufRead" }) -- asterisk.vim provides improved search * motions
+    use({
+      "haya14busa/vim-asterisk",
+      event = "BufRead",
+      config = function()
+        vim.g["asterisk#keeppos"] = 1
+      end,
+    }) -- asterisk.vim provides improved search * motions
 
     use({ "segeljakt/vim-isotope", event = "BufRead" }) -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 
@@ -476,7 +482,13 @@ packer.startup({
 
     use({ "zah/nim.vim", ft = "nim" }) -- syntax highlighting auto indent for nim in vim
 
-    use({ "gpanders/vim-medieval", ft = "markdown" }) -- evaluate markdown code blocks within vim
+    use({
+      "gpanders/vim-medieval",
+      ft = "markdown",
+      config = function()
+        vim.g.medieval_langs = { "python=python3", "julia", "sh", "console=bash" }
+      end,
+    }) -- evaluate markdown code blocks within vim
 
     use({
       "iamcco/markdown-preview.nvim",

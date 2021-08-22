@@ -8,6 +8,7 @@ local vnoremap = utils.vnoremap
 local inoremap = utils.inoremap
 local map = utils.map
 local nmap = utils.nmap
+local command = utils.command
 
 -- settings
 
@@ -174,6 +175,10 @@ noremap("gh", "^")
 noremap("gl", "$")
 noremap("ga", "<C-^>")
 
+-- move through wrapped lines
+nnoremap("j", "gj")
+nnoremap("k", "gk")
+
 -- Navigate jump list
 nnoremap("g,", "<C-o>")
 nnoremap("g.", "<C-i>")
@@ -239,25 +244,30 @@ inoremap("<C-u>", "<C-<C-O>:call unicode#Fuzzy()<CR>")
 -- Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
 nnoremap("<CR>", [[{-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()]], { expr = true })
 
+nnoremap("<space>", "<nop>", { silent = true })
+
+-- search visually selected text (consistent `*` behaviour)
+vnoremap("*", [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], { silent = true })
+
+command("W", "w")
+command("Q", "q", { bang = true })
+command("Qa", "qa", { bang = true })
+
+command(
+  "Glg",
+  "Git! log --graph --pretty=format:'%h - (%ad)%d %s <%an>' --abbrev-commit --date=local <args>",
+  { nargs = "*" }
+)
+
 vim.api.nvim_exec(
   [[
-
 " allow W, Q to be used instead of w and q
-command! W w
-command! -bang Q q
-command! -bang Qa qa
 
 let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 
-let g:prettier#config#prose_wrap = 'always'
-
-let g:asterisk#keeppos = 1
-
-let g:medieval_langs = ['python=python3', 'julia', 'sh', 'console=bash']
 nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
 let g:slime_target = "neovim"
 
-command -nargs=* Glg Git! log --graph --pretty=format:'\%h - (\%ad)\%d \%s <\%an>' --abbrev-commit --date=local <args>
 syn match gitLgLine     /^[_\*|\/\\ ]\+\(\<\x\{4,40\}\>.*\)\?$/
 
 syn match gitLgHead     /^[_\*|\/\\ ]\+\(\<\x\{4,40\}\> - ([^)]\+)\( ([^)]\+)\)\? \)\?/ contained containedin=gitLgLine
@@ -282,30 +292,3 @@ hi def link gitLgIdentity gitIdentity
 ]],
   false
 )
-
-vim.api.nvim_set_keymap("n", "<space>", "<nop>", { noremap = true, silent = true })
-
--- -- clear highlights
--- vim.api.nvim_set_keymap('n', '<leader><leader>', ':noh<cr>', { noremap = true, silent = true })
-
--- simplify split movements
-vim.api.nvim_set_keymap("n", "<c-h>", "<c-w><c-h>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-j>", "<c-w><c-j>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-k>", "<c-w><c-k>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-l>", "<c-w><c-l>", { noremap = true, silent = true })
-
--- move through wrapped lines
-vim.api.nvim_set_keymap("n", "j", "gj", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "k", "gk", { noremap = true, silent = true })
-
--- reselect after visual indent
-vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
-
--- search visually selected text (consistent `*` behaviour)
-vim.api.nvim_set_keymap("n", "*", [[*N]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "*", [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], { noremap = true, silent = true })
-
--- bubble lines
-vim.api.nvim_set_keymap("x", "J", ":move '>+1<cr>gv=gv", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("x", "K", ":move '<-2<cr>gv=gv", { noremap = true, silent = true })
