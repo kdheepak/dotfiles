@@ -9,6 +9,8 @@ local inoremap = utils.inoremap
 local map = utils.map
 local nmap = utils.nmap
 local command = utils.command
+local syntax = utils.syntax
+local highlight = utils.highlight
 
 -- settings
 
@@ -249,6 +251,7 @@ nnoremap("<space>", "<nop>", { silent = true })
 -- search visually selected text (consistent `*` behaviour)
 vnoremap("*", [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], { silent = true })
 
+-- allow W, Q to be used instead of w and q
 command("W", "w")
 command("Q", "q", { bang = true })
 command("Qa", "qa", { bang = true })
@@ -259,36 +262,43 @@ command(
   { nargs = "*" }
 )
 
+syntax("match", "gitLgLine", [[/^[_\*|\/\\ ]\+\(\<\x\{4,40\}\>.*\)\?$/]])
+
+syntax(
+  "match",
+  "gitLgHead",
+  [[/^[_\*|\/\\ ]\+\(\<\x\{4,40\}\> - ([^)]\+)\( ([^)]\+)\)\? \)\?/ contained containedin=gitLgLine]]
+)
+
+syntax(
+  "match",
+  "gitLgDate",
+  [[/(\u\l\l \u\l\l \d\=\d \d\d:\d\d:\d\d \d\d\d\d)/ contained containedin=gitLgHead nextgroup=gitLgRefs skipwhite]]
+)
+
+syntax("match", "gitLgRefs", [[/([^)]*)/ contained containedin=gitLgHead]])
+
+syntax(
+  "match",
+  "gitLgGraph",
+  [[/^[_\*|\/\\ ]\+/ contained containedin=gitLgHead,gitLgCommit nextgroup=gitHashAbbrev skipwhite]]
+)
+
+syntax("match", "gitLgCommit", [[/^[^-]\+- / contained containedin=gitLgHead nextgroup=gitLgDate skipwhite]])
+
+syntax("match", "gitLgIdentity", [[/<[^>]*>$/ contained containedin=gitLgLine]])
+
+highlight("default", "link", "gitLgGraph", "Comment")
+
+highlight("default", "link", "gitLgDate", "gitDate")
+
+highlight("default", "link", "gitLgRefs", "gitReference")
+
+highlight("default", "link", "gitLgIdentity", "gitIdentity")
+
 vim.api.nvim_exec(
   [[
-" allow W, Q to be used instead of w and q
-
 let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-
-nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
-let g:slime_target = "neovim"
-
-syn match gitLgLine     /^[_\*|\/\\ ]\+\(\<\x\{4,40\}\>.*\)\?$/
-
-syn match gitLgHead     /^[_\*|\/\\ ]\+\(\<\x\{4,40\}\> - ([^)]\+)\( ([^)]\+)\)\? \)\?/ contained containedin=gitLgLine
-
-syn match gitLgDate     /(\u\l\l \u\l\l \d\=\d \d\d:\d\d:\d\d \d\d\d\d)/ contained containedin=gitLgHead nextgroup=gitLgRefs skipwhite
-
-syn match gitLgRefs     /([^)]*)/ contained containedin=gitLgHead
-
-syn match gitLgGraph    /^[_\*|\/\\ ]\+/ contained containedin=gitLgHead,gitLgCommit nextgroup=gitHashAbbrev skipwhite
-
-syn match gitLgCommit   /^[^-]\+- / contained containedin=gitLgHead nextgroup=gitLgDate skipwhite
-
-syn match gitLgIdentity /<[^>]*>$/ contained containedin=gitLgLine
-
-hi def link gitLgGraph    Comment
-
-hi def link gitLgDate     gitDate
-
-hi def link gitLgRefs     gitReference
-
-hi def link gitLgIdentity gitIdentity
 ]],
   false
 )

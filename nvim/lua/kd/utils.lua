@@ -277,6 +277,51 @@ function M.range(lower, upper)
   return result
 end
 
+function M.syntax(item, ...)
+  local t = { ... }
+  local expansion = ""
+  for _, s in ipairs(t) do
+    expansion = expansion .. " " .. s
+  end
+  vim.cmd("syntax " .. item .. " " .. expansion)
+end
+
+function M.highlight(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
+  if group == "default" and guifg == "link" then
+    local lhs = guibg
+    local rhs = ctermfg
+    vim.cmd("highlight def link " .. lhs .. " " .. rhs)
+  else
+    attr = attr or ""
+    guisp = guisp or ""
+
+    local command = ""
+
+    if guifg ~= "" then
+      command = command .. " guifg=#" .. guifg
+    end
+    if guibg ~= "" then
+      command = command .. " guibg=#" .. guibg
+    end
+    if ctermfg ~= "" then
+      command = command .. " ctermfg=" .. ctermfg
+    end
+    if ctermbg ~= "" then
+      command = command .. " ctermbg=" .. ctermbg
+    end
+    if attr ~= "" then
+      command = command .. " gui=" .. attr .. " cterm=" .. attr
+    end
+    if guisp ~= "" then
+      command = command .. " guisp=#" .. guisp
+    end
+
+    if command ~= "" then
+      vim.cmd("highlight " .. group .. command)
+    end
+  end
+end
+
 _G.command = M.command
 _G.cnoremap = M.cnoremap
 _G.inoremap = M.inoremap
@@ -298,5 +343,7 @@ _G.autocmd = M.autocmd
 _G.T = M.T
 _G.P = M.P
 _G.setlocal = M.setlocal
+_G.syntax = M.syntax
+_G.highlight = M.highlight
 
 return M
