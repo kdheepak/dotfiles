@@ -244,8 +244,6 @@ let g:medieval_langs = ['python=python3', 'julia', 'sh', 'console=bash']
 nnoremap <buffer> Z! :<C-U>EvalBlock<CR>
 let g:slime_target = "neovim"
 
-autocmd FileType julia setlocal commentstring=#\ %s
-
 " Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
 nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
