@@ -1,8 +1,8 @@
 local M = {}
 
-local kdheepak = { g = {}, utils = M }
+_G.kd = { g = {} }
 
-local function augroup(name, callback)
+function M.augroup(name, callback)
   vim.cmd("augroup " .. name)
   vim.cmd("autocmd!")
   callback()
@@ -31,16 +31,16 @@ function M.get_key_for_fn(fn, storage)
   return key
 end
 
-kdheepak.g.autocommand_callbacks = {}
+kd.g.autocommand_callbacks = {}
 
 -- Wrapper for simple autocmd use cases. `cmd` may be a string or a Lua function.
-local function autocmd(name, pattern, cmd, opts)
+function M.autocmd(name, pattern, cmd, opts)
   opts = opts or {}
   local cmd_type = type(cmd)
   if cmd_type == "function" then
-    local key = M.get_key_for_fn(cmd, kdheepak.g.autocommand_callbacks)
-    kdheepak.g.autocommand_callbacks[key] = cmd
-    cmd = "lua kdheepak.g.autocommand_callbacks." .. key .. "()"
+    local key = M.get_key_for_fn(cmd, kd.g.autocommand_callbacks)
+    kd.g.autocommand_callbacks[key] = cmd
+    cmd = "lua kd.g.autocommand_callbacks." .. key .. "()"
   elseif cmd_type ~= "string" then
     error("autocmd(): unsupported cmd type: " .. cmd_type)
   end
@@ -48,16 +48,16 @@ local function autocmd(name, pattern, cmd, opts)
   vim.cmd("autocmd" .. bang .. " " .. name .. " " .. pattern .. " " .. cmd)
 end
 
-kdheepak.g.map_callbacks = {}
+kd.g.map_callbacks = {}
 
-local map = function(mode, lhs, rhs, opts)
+function M.map(mode, lhs, rhs, opts)
   opts = opts or {}
   local rhs_type = type(rhs)
   local key
   if rhs_type == "function" then
-    key = get_key_for_fn(rhs, kdheepak.g.map_callbacks)
-    kdheepak.g.map_callbacks[key] = rhs
-    rhs = "v:lua.kdheepak.g.map_callbacks." .. key .. "()"
+    key = M.get_key_for_fn(rhs, kd.g.map_callbacks)
+    kd.g.map_callbacks[key] = rhs
+    rhs = "v:lua.kd.g.map_callbacks." .. key .. "()"
   elseif rhs_type ~= "string" then
     error("map(): unsupported rhs type: " .. rhs_type)
   end
@@ -76,75 +76,75 @@ local map = function(mode, lhs, rhs, opts)
       else
         vim.api.nvim_del_keymap(mode, lhs)
       end
-      kdheepak.g.map_callbacks[key] = nil
+      kd.g.map_callbacks[key] = nil
     end,
   }
 end
 
-local function cnoremap(lhs, rhs, opts)
+function M.cnoremap(lhs, rhs, opts)
   opts = opts or {}
-  map("c", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map("c", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
-local function inoremap(lhs, rhs, opts)
+function M.inoremap(lhs, rhs, opts)
   opts = opts or {}
-  map("i", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map("i", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
-local function nnoremap(lhs, rhs, opts)
+function M.nnoremap(lhs, rhs, opts)
   opts = opts or {}
-  map("n", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map("n", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
-local function xnoremap(lhs, rhs, opts)
+function M.xnoremap(lhs, rhs, opts)
   opts = opts or {}
-  map("x", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map("x", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
-local function snoremap(lhs, rhs, opts)
+function M.snoremap(lhs, rhs, opts)
   opts = opts or {}
-  map("s", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map("s", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
-local function noremap(lhs, rhs, opts)
+function M.noremap(lhs, rhs, opts)
   opts = opts or {}
-  map("", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map("", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
-local function cmap(lhs, rhs, opts)
+function M.cmap(lhs, rhs, opts)
   opts = opts or {}
-  map("c", lhs, rhs, opts)
+  M.map("c", lhs, rhs, opts)
 end
 
-local function imap(lhs, rhs, opts)
+function M.imap(lhs, rhs, opts)
   opts = opts or {}
-  map("i", lhs, rhs, opts)
+  M.map("i", lhs, rhs, opts)
 end
 
-local function nmap(lhs, rhs, opts)
+function M.nmap(lhs, rhs, opts)
   opts = opts or {}
-  map("n", lhs, rhs, opts)
+  M.map("n", lhs, rhs, opts)
 end
 
-local function xmap(lhs, rhs, opts)
+function M.xmap(lhs, rhs, opts)
   opts = opts or {}
-  map("x", lhs, rhs, opts)
+  M.map("x", lhs, rhs, opts)
 end
 
-local function smap(lhs, rhs, opts)
+function M.smap(lhs, rhs, opts)
   opts = opts or {}
-  map("s", lhs, rhs, opts)
+  M.map("s", lhs, rhs, opts)
 end
 
-kdheepak.g.command_callbacks = {}
+kd.g.command_callbacks = {}
 
-local function command(name, repl, opts)
+function M.command(name, repl, opts)
   opts = opts or {}
   local repl_type = type(repl)
   if repl_type == "function" then
-    local key = get_key_for_fn(repl, kdheepak.g.command_callbacks)
-    kdheepak.g.command_callbacks[key] = repl
-    repl = "lua kdheepak.g.command_callbacks." .. key .. "()"
+    local key = M.get_key_for_fn(repl, kd.g.command_callbacks)
+    kd.g.command_callbacks[key] = repl
+    repl = "lua kd.g.command_callbacks." .. key .. "()"
   elseif repl_type ~= "string" then
     error("command(): unsupported repl type: " .. repl_type)
   end
@@ -164,11 +164,11 @@ local function command(name, repl, opts)
   vim.cmd(prefix .. " " .. name .. " " .. repl)
 end
 
-local function T(str)
+function M.T(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-local function P(...)
+function M.P(...)
   local objects = vim.tbl_map(vim.inspect, { ... })
   print(unpack(objects))
 end
@@ -211,7 +211,7 @@ function M.join(tbl, delimiter)
   return result
 end
 
-local setlocal = function(name, ...)
+function M.setlocal(name, ...)
   local args = { ... }
   local operator = nil
   local value = nil
@@ -262,23 +262,22 @@ function M.range(lower, upper)
   return result
 end
 
-_G.command = command
-_G.cnoremap = cnoremap
-_G.inoremap = inoremap
-_G.nnoremap = nnoremap
-_G.xnoremap = xnoremap
-_G.snoremap = snoremap
-_G.noremap = noremap
-_G.cmap = cmap
-_G.imap = imap
-_G.nmap = nmap
-_G.xmap = xmap
-_G.smap = smap
-_G.augroup = augroup
-_G.autocmd = autocmd
-_G.kdheepak = kdheepak
-_G.T = T
-_G.P = P
-_G.setlocal = setlocal
+_G.command = M.command
+_G.cnoremap = M.cnoremap
+_G.inoremap = M.inoremap
+_G.nnoremap = M.nnoremap
+_G.xnoremap = M.xnoremap
+_G.snoremap = M.snoremap
+_G.noremap = M.noremap
+_G.cmap = M.cmap
+_G.imap = M.imap
+_G.nmap = M.nmap
+_G.xmap = M.xmap
+_G.smap = M.smap
+_G.augroup = M.augroup
+_G.autocmd = M.autocmd
+_G.T = M.T
+_G.P = M.P
+_G.setlocal = M.setlocal
 
 return M

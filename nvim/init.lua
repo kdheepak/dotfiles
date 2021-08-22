@@ -30,7 +30,6 @@ require("kdheepak/statusline")
 require("kdheepak/settings")
 require("kdheepak/config")
 require("kdheepak/keymappings")
-require("kdheepak/autocommands")
 
 vim.cmd([[
 function! g:Scriptnames_capture() abort

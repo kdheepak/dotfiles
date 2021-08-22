@@ -1,3 +1,5 @@
+local utils = require("kdheepak/utils")
+
 vim.cmd("syntax enable")
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
@@ -82,6 +84,7 @@ autocmd BufWinEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=
 autocmd BufRead * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufNewFile * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 ]])
+vim.o.autoread = true
 vim.g.VtrStripLeadingWhitespace = false
 vim.g.VtrClearEmptyLines = false
 vim.g.VtrAppendNewline = true
@@ -103,14 +106,23 @@ vim.g.unicoder_cancel_insert = true
 vim.g.unicoder_cancel_visual = true
 vim.g.unicoder_no_map = true
 
-vim.g.mkdp_auto_start = 0
-
 vim.g.python3_host_prog = vim.fn.expand("~/miniconda3/bin/python3")
 
-vim.g.mergetool_layout = "bmr"
-vim.g.mergetool_prefer_revision = "local"
+augroup("KDAutocmds", function()
+  autocmd("InsertLeave", "*", "set nopaste")
+  autocmd("TextYankPost", "*", "silent! lua require'vim.highlight'.on_yank {higroup='Search', timeout=500}")
+  autocmd("BufRead,BufNewFile", "*.md", "setlocal spell")
+  autocmd("FileType", "gitcommit", "setlocal spell")
+  autocmd("FileType", "*", "setlocal nosmartindent") -- Ensure comments don't go to beginning of line by default
+  autocmd("VimResized", "*", "wincmd =") -- resize panes when host window is resized
+  autocmd("FileType", "json", "syntax match Comment +//.+$+")
+  autocmd("FileType", "gitcommit,gitrebase,gitconfig", "setl bufhidden=delete")
+end)
 
-vim.g.camelcasemotion_key = ","
+vim.cmd([[
 
-vim.g.clever_f_across_no_line = 1
-vim.g.clever_f_fix_key_direction = 1
+autocmd FocusGained * silent! :checktime
+
+" autocmd! BufWritePost * make
+
+]])
