@@ -50,7 +50,7 @@ end
 
 kd.g.map_callbacks = {}
 
-function M.map(mode, lhs, rhs, opts)
+function M._map(mode, lhs, rhs, opts)
   opts = opts or {}
   local rhs_type = type(rhs)
   local key
@@ -83,57 +83,72 @@ end
 
 function M.cnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("c", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.inoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("i", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.imap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.nnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("n", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.nmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+end
+
+function M.vnoremap(lhs, rhs, opts)
+  opts = opts or {}
+  M.vmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.xnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("x", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.xmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.snoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("s", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.smap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.noremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("", lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  M.map(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.cmap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("c", lhs, rhs, opts)
+  M._map("c", lhs, rhs, opts)
 end
 
 function M.imap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("i", lhs, rhs, opts)
+  M._map("i", lhs, rhs, opts)
 end
 
 function M.nmap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("n", lhs, rhs, opts)
+  M._map("n", lhs, rhs, opts)
 end
 
 function M.xmap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("x", lhs, rhs, opts)
+  M._map("x", lhs, rhs, opts)
 end
 
 function M.smap(lhs, rhs, opts)
   opts = opts or {}
-  M.map("s", lhs, rhs, opts)
+  M._map("s", lhs, rhs, opts)
+end
+
+function M.vmap(lhs, rhs, opts)
+  opts = opts or {}
+  M._map("v", lhs, rhs, opts)
+end
+
+function M.map(lhs, rhs, opts)
+  opts = opts or {}
+  M._map("", lhs, rhs, opts)
 end
 
 kd.g.command_callbacks = {}
@@ -266,14 +281,18 @@ _G.command = M.command
 _G.cnoremap = M.cnoremap
 _G.inoremap = M.inoremap
 _G.nnoremap = M.nnoremap
+_G.vnoremap = M.vnoremap
 _G.xnoremap = M.xnoremap
 _G.snoremap = M.snoremap
 _G.noremap = M.noremap
+_G._map = M._map
+_G.map = M.map
 _G.cmap = M.cmap
 _G.imap = M.imap
 _G.nmap = M.nmap
 _G.xmap = M.xmap
 _G.smap = M.smap
+_G.vmap = M.vmap
 _G.augroup = M.augroup
 _G.autocmd = M.autocmd
 _G.T = M.T
