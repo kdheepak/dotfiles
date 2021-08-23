@@ -68,7 +68,7 @@ Mode.update_status = function()
 end
 
 local sections = {
-  lualine_a = { { "filename", path = 1 } },
+  lualine_a = { { "filename" } },
   lualine_b = { "branch" },
   lualine_c = { VistaNearestMethodOrFunction },
   lualine_x = {
