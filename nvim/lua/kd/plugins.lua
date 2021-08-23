@@ -99,6 +99,12 @@ packer.startup({
         })
       end,
       requires = {
+        {
+          "romgrk/nvim-treesitter-context",
+          config = function()
+            require("treesitter-context").setup({})
+          end,
+        },
         { "nvim-treesitter/playground" },
         { "nvim-treesitter/nvim-treesitter-refactor" },
         { "nvim-treesitter/nvim-treesitter-textobjects" },
@@ -620,6 +626,14 @@ packer.startup({
     })
 
     use({ "famiu/nvim-reload" })
+
+    use({
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup({})
+      end,
+    })
   end,
   config = { display = { open_fn = require("packer.util").float } },
 })
