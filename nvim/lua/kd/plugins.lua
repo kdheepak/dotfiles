@@ -634,6 +634,12 @@ packer.startup({
         require("todo-comments").setup({})
       end,
     })
+    use({
+      "nacro90/numb.nvim",
+      config = function()
+        require("numb").setup()
+      end,
+    })
   end,
   config = { display = { open_fn = require("packer.util").float } },
 })
