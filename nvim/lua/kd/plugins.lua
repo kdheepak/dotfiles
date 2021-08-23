@@ -539,7 +539,7 @@ packer.startup({
 
     use({ "bfredl/nvim-ipy", ft = "python" })
 
-    use({ "~/gitrepos/JuliaFormatter.vim", ft = "Julia" }) -- formatter for Julia
+    use({ "~/gitrepos/JuliaFormatter.vim", ft = "Julia", module_pattern = "juliaformatter" }) -- formatter for Julia
 
     use({ "sindrets/diffview.nvim", event = "BufRead" })
 

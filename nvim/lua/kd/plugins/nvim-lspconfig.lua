@@ -86,12 +86,7 @@ local function coq_setup(name, config)
   lsp[name].setup(config)
 end
 
-coq_setup("julials", {
-  on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
-    on_attach_vim(client, bufnr)
-  end,
-})
+coq_setup("julials", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("bashls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("ccls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("tsserver", { on_attach = on_attach_vim, capabilities = create_capabilities() })
@@ -162,7 +157,6 @@ coq_setup("pyright", { on_attach = on_attach_vim, capabilities = create_capabili
 local null_ls = require("null-ls")
 local builtins = null_ls.builtins
 local generator = null_ls.generator
--- local formatter = null_ls.formatter
 
 null_ls.config({
   sources = {
