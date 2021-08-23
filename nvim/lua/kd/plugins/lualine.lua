@@ -37,6 +37,36 @@ local function VistaNearestMethodOrFunction()
   return vim.b.vista_nearest_method_or_function or ""
 end
 
+local Mode = require("lualine.component"):new()
+local get_mode = require("lualine.utils.mode").get_mode
+
+Mode.update_status = function()
+  local m = vim.fn.complete_info().mode
+  local t = {
+    keyword = "Keyword",
+    ctrl_x = "CTRL-X",
+    whole_line = "Whole Lines",
+    files = "File Names",
+    tags = "Tags",
+    path_defines = "Definition Completion",
+    path_patterns = "Include Completion",
+    dictionary = "Dictionary",
+    thesaurus = "Thesaurus",
+    cmdline = "Vim Command",
+    omni = "Omni completion",
+    spell = "Spelling suggestions",
+    eval = "Complete Completion",
+    unknown = get_mode(),
+  }
+  t["function"] = "User Defined Completion"
+
+  if t[m] == nil then
+    return get_mode()
+  else
+    return t[m]
+  end
+end
+
 local sections = {
   lualine_a = { { "filename", path = 1 } },
   lualine_b = { "branch" },
@@ -49,7 +79,7 @@ local sections = {
     "filetype",
   },
   lualine_y = { "progress" },
-  lualine_z = { "location", "mode" },
+  lualine_z = { "location", Mode.update_status },
 }
 
 -- local tabline = require 'tabline'
