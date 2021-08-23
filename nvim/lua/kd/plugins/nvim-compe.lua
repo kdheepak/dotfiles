@@ -15,7 +15,7 @@ end
 local nvim_compe = require("compe")
 nvim_compe.setup({
   enabled = true,
-  autocomplete = true,
+  autocomplete = false,
   documentation = true,
   debug = false,
   min_length = 1,
@@ -53,14 +53,14 @@ local check_back_space = function()
 end
 
 _G.tab_complete = function()
-  if check_back_space() then
-    return t("<Tab>")
-  elseif vim.fn.pumvisible() == 1 then
+  if vim.fn.pumvisible() == 1 then
     return t("<C-n>")
   elseif luasnip.expand_or_jumpable() then
     return t("<Plug>luasnip-expand-or-jump")
   elseif vim.fn["vsnip#available"](1) == 1 then
     return t("<Plug>(vsnip-expand-or-jump)")
+  elseif check_back_space() then
+    return t("<Tab>")
   else
     return vim.fn["compe#complete"]()
   end
