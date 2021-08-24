@@ -2,6 +2,7 @@ local T = require("kd/utils").T
 
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+local lspkind = require("lspkind")
 
 cmp.setup({
   -- You should change this example to your chosen snippet engine.
@@ -46,9 +47,40 @@ cmp.setup({
     end),
   },
 
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.kind = lspkind.presets.default[vim_item.kind] .. " " .. vim_item.kind
+      vim_item.menu = ({
+        nvim_lsp = "[L]",
+        emoji = "[E]",
+        path = "[F]",
+        calc = "[C]",
+        vsnip = "[S]",
+        buffer = "[B]",
+      })[entry.source.name]
+      vim_item.dup = ({
+        buffer = 1,
+        path = 1,
+        nvim_lsp = 0,
+      })[entry.source.name] or 0
+      return vim_item
+    end,
+  },
+
   -- You should specify your *installed* sources.
   sources = {
-    { name = "buffer" },
+    {
+      name = "buffer",
+      opts = {
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            bufs[vim.api.nvim_win_get_buf(win)] = true
+          end
+          return vim.tbl_keys(bufs)
+        end,
+      },
+    },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
     { name = "luasnip" },
