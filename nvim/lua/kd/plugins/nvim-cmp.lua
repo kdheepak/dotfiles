@@ -3,6 +3,7 @@ local T = require("kd/utils").T
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
+local check_back_space = require("kd/utils").check_back_space
 
 cmp.setup({
   -- You should change this example to your chosen snippet engine.
@@ -22,7 +23,7 @@ cmp.setup({
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
+      behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
     ["<Tab>"] = cmp.mapping.mode({ "i", "s" }, function(_, fallback)
