@@ -15,7 +15,7 @@ cmp.setup({
   },
 
   completion = {
-    completeopt = "menu,menuone,noinsert",
+    completeopt = "menu,menuone,noselect",
   },
 
   -- You must set mapping.
@@ -31,18 +31,21 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
-    ["<Tab>"] = function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T("<C-n>"), "n")
-        -- elseif check_backspace() then
-        -- return vim.fn.feedkeys(T("<Tab>"))
       elseif luasnip.expand_or_jumpable() then
         vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
+      elseif check_backspace() then
+        vim.fn.feedkeys(T("<Tab>"), "n")
       else
         fallback()
       end
-    end,
-    ["<S-Tab>"] = function(_, fallback)
+    end, {
+      "i",
+      "s",
+    }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T("<C-p>"), "n")
       elseif luasnip.jumpable(-1) then
@@ -50,7 +53,10 @@ cmp.setup({
       else
         fallback()
       end
-    end,
+    end, {
+      "i",
+      "s",
+    }),
   },
 
   formatting = {
