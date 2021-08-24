@@ -15,8 +15,8 @@ function M.reload_config()
   vim.cmd("source ~/.config/nvim/init.lua")
   vim.cmd("source ~/.config/nvim/lua/kd/plugins.lua")
   vim.cmd(":PackerCompile")
-  vim.cmd(":PackerClean")
-  vim.cmd(":PackerInstall")
+  -- vim.cmd(":PackerClean")
+  -- vim.cmd(":PackerInstall")
 end
 
 local packer = require("packer")
@@ -189,24 +189,22 @@ packer.startup({
             -- require("navigator").setup()
           end,
         },
+        {
+          "kosayoda/nvim-lightbulb",
+          config = function()
+            local augroup = require("kd/utils").augroup
+            local autocmd = require("kd/utils").autocmd
+            augroup("KDLightbulb", function()
+              autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
+            end)
+          end,
+          event = "BufRead",
+        },
+        { "kabouzeid/nvim-lspinstall", event = "BufRead" },
       },
       config = function()
         require("kd/plugins/nvim-lspconfig")
       end,
-    })
-
-    use({ "kabouzeid/nvim-lspinstall", event = "BufRead" })
-
-    use({
-      "kosayoda/nvim-lightbulb",
-      config = function()
-        local augroup = require("kd/utils").augroup
-        local autocmd = require("kd/utils").autocmd
-        augroup("KDLightbulb", function()
-          autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
-        end)
-      end,
-      event = "BufRead",
     })
 
     use({ "nvim-lua/plenary.nvim" })
@@ -261,13 +259,6 @@ packer.startup({
       "~/gitrepos/moonshine.nvim",
       config = function()
         require("moonshine")
-      end,
-    })
-
-    use({
-      "~/gitrepos/tabline.nvim",
-      config = function()
-        require("tabline").setup({ options = { always_show_tabline = true } })
       end,
     })
 
@@ -332,6 +323,7 @@ packer.startup({
     use({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- load s and S to search
 
     use("kevinhwang91/nvim-bqf") -- The goal of nvim-bqf is to make Neovim's quickfix window better.
+
     use({
       "kevinhwang91/rnvimr",
       config = function()
@@ -452,7 +444,7 @@ packer.startup({
 
     use({ "dhruvasagar/vim-zoom", event = "BufRead" }) -- toggle zoom of current window within the current tab
 
-    use({ "kana/vim-niceblock", event = "BufRead" }) -- makes blockwise Visual mode more loadful and intuitive
+    -- use({ "kana/vim-niceblock", event = "BufRead" }) -- makes blockwise Visual mode more loadful and intuitive
 
     use({ "mbbill/undotree", event = "BufRead" }) -- visualizes undo history and makes it easier to browse and switch between different undo branches
 
@@ -575,7 +567,16 @@ packer.startup({
       config = function()
         require("kd/plugins/lualine")
       end,
-      requires = { { "kyazdani42/nvim-web-devicons", opt = true }, { "liuchengxu/vista.vim" } },
+      requires = {
+        {
+          "~/gitrepos/tabline.nvim",
+          config = function()
+            require("tabline").setup({ options = { always_show_tabline = true } })
+          end,
+        },
+        { "kyazdani42/nvim-web-devicons", opt = true },
+        { "liuchengxu/vista.vim" },
+      },
     })
 
     use({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
