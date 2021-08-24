@@ -300,7 +300,12 @@ packer.startup({
       requires = {
         { "hrsh7th/cmp-nvim-lsp" },
         { "saadparwaiz1/cmp_luasnip" },
-        { "L3MON4D3/LuaSnip" },
+        {
+          "L3MON4D3/LuaSnip",
+          config = function()
+            require("luasnip").config.setup({ history = true })
+          end,
+        },
         { "hrsh7th/cmp-vsnip" },
         { "hrsh7th/vim-vsnip" },
         { "hrsh7th/vim-vsnip-integ" },

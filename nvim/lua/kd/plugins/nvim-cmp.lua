@@ -3,14 +3,14 @@ local T = require("kd/utils").T
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
-local check_back_space = require("kd/utils").check_back_space
+local check_backspace = require("kd/utils").check_backspace
 
 cmp.setup({
+
   -- You should change this example to your chosen snippet engine.
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-      -- vim.fn['vsnip#anonymous'](args.body)
+      return require("luasnip").lsp_expand(args.body)
     end,
   },
 
@@ -26,13 +26,13 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
-    ["<Tab>"] = cmp.mapping.mode({ "i", "s" }, function(_, fallback)
+    ["<Tab>"] = cmp.mapping.mode({ "i", "s" }, function(core, fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T("<C-n>"), "n")
       elseif luasnip.expand_or_jumpable() then
         vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
-      elseif check_back_space() then
-        return vim.fn.feedkeys(T("<Tab>"))
+      elseif not check_backspace() then
+        cmp.mapping.complete()(core, fallback)
       else
         fallback()
       end
