@@ -322,6 +322,15 @@ function M.highlight(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
   end
 end
 
+M.check_back_space = function()
+  local col = vim.fn.col(".") - 1
+  if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+    return true
+  else
+    return false
+  end
+end
+
 _G.command = M.command
 _G.cnoremap = M.cnoremap
 _G.inoremap = M.inoremap
