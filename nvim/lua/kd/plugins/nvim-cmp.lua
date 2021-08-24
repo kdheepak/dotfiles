@@ -14,6 +14,10 @@ cmp.setup({
     end,
   },
 
+  completion = {
+    completeopt = "menu,menuone,noinsert",
+  },
+
   -- You must set mapping.
   mapping = {
     ["<C-p>"] = cmp.mapping.prev_item(),
@@ -22,6 +26,7 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
+    ["<ESC>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -70,6 +75,13 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "nvim_lua" },
+    { name = "emoji" },
+    { name = "calc" },
+    { name = "path" },
+    { name = "latex_symbols" },
     {
       name = "buffer",
       opts = {
@@ -82,14 +94,5 @@ cmp.setup({
         end,
       },
     },
-    { name = "nvim_lsp" },
-    { name = "nvim_lua" },
-    { name = "luasnip" },
-    { name = "emoji" },
-    { name = "calc" },
-    { name = "path" },
-    { name = "latex_symbols" },
   },
 })
-
-vim.o.completeopt = "menuone,noselect"
