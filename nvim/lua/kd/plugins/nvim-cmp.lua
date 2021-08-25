@@ -16,6 +16,7 @@ cmp.setup({
 
   completion = {
     completeopt = "menu,menuone,noselect",
+    autocomplete = {},
   },
 
   -- You must set mapping.
@@ -39,7 +40,7 @@ cmp.setup({
       elseif check_backspace() then
         vim.fn.feedkeys(T("<Tab>"), "n")
       else
-        fallback()
+        vim.fn.feedkeys(T("<C-Space>"))
       end
     end, {
       "i",
