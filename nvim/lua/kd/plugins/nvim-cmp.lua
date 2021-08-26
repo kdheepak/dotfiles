@@ -71,7 +71,7 @@ cmp.setup({
         vsnip = "[S]",
         luasnip = "[S]",
         buffer = "[B]",
-        latex_symbols = "[☕]",
+        latex_symbols = "[λ]",
       })[entry.source.name]
       return vim_item
     end,
