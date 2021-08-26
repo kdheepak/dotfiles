@@ -62,20 +62,17 @@ cmp.setup({
 
   formatting = {
     format = function(entry, vim_item)
-      vim_item.kind = lspkind.presets.default[vim_item.kind] .. " " .. vim_item.kind
+      vim_item.kind = lspkind.presets.default[vim_item.kind]
       vim_item.menu = ({
         nvim_lsp = "[L]",
         emoji = "[E]",
         path = "[F]",
         calc = "[C]",
         vsnip = "[S]",
+        luasnip = "[S]",
         buffer = "[B]",
+        latex_symbols = "[☕]",
       })[entry.source.name]
-      vim_item.dup = ({
-        buffer = 1,
-        path = 1,
-        nvim_lsp = 0,
-      })[entry.source.name] or 0
       return vim_item
     end,
   },
