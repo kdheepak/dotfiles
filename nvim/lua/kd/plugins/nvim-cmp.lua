@@ -4,6 +4,8 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 local check_backspace = require("kd/utils").check_backspace
+local augroup = require("kd/utils").augroup
+local autocmd = require("kd/utils").autocmd
 
 cmp.setup({
 
@@ -34,12 +36,12 @@ cmp.setup({
       local expandable = luasnip.expand_or_jumpable()
       if vim.fn.pumvisible() == 1 then
         local not_selected = vim.fn.complete_info({ "selected" }).selected == -1
-        print(vim.fn.complete_info({ "selected" }).selected == -1)
         if not_selected then
           if expandable then
             vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
           else
             vim.fn.feedkeys(T("<C-e>")) -- close cmp
+            fallback()
           end
         else -- normal completion
           cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })(fallback)
@@ -123,4 +125,13 @@ cmp.setup({
 
 vim.schedule(function()
   vim.o.completeopt = "menu,menuone,noselect"
+end)
+
+augroup("KDLuaSnip", function()
+  autocmd("InsertLeave", "*", function()
+    local expandable = luasnip.expand_or_jumpable()
+    if expandable then
+      vim.cmd("LuaSnipUnlinkCurrent")
+    end
+  end)
 end)
