@@ -15,6 +15,7 @@ cmp.setup({
   },
 
   completion = {
+    completeopt = "menu,menuone,noselect",
     get_trigger_characters = function(trigger_characters)
       return vim.tbl_filter(function(char)
         return char ~= " "
@@ -28,9 +29,28 @@ cmp.setup({
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
-    ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping(function(fallback)
+      local expandable = luasnip.expand_or_jumpable()
+      if vim.fn.pumvisible() == 1 then
+        local not_selected = vim.fn.complete_info({ "selected" }).selected == -1
+        print(vim.fn.complete_info({ "selected" }).selected == -1)
+        if not_selected then
+          if expandable then
+            vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
+          else
+            vim.fn.feedkeys(T("<C-e>")) -- close cmp
+          end
+        else -- normal completion
+          cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })(fallback)
+        end
+      elseif expandable then -- there's no popup, but the entered text is an expandable snippet
+        vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
+      else
+        fallback() -- fallback to a normal `<CR>`
+      end
+    end, {
+      "i",
     }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
@@ -100,3 +120,7 @@ cmp.setup({
     },
   },
 })
+
+vim.schedule(function()
+  vim.o.completeopt = "menu,menuone,noselect"
+end)
