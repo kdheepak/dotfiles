@@ -110,10 +110,10 @@ packer.startup({
         { "nvim-treesitter/nvim-treesitter-textobjects" },
         {
           "windwp/nvim-autopairs",
-          after = { "nvim-cmp" },
+          after = { "nvim-compe" },
           config = function()
             require("nvim-autopairs").setup()
-            require("nvim-autopairs.completion.cmp").setup({
+            require("nvim-autopairs.completion.compe").setup({
               map_cr = true, --  map <CR> on insert mode
               map_complete = true, -- it will auto insert `(` after select function or method item
             })
@@ -287,30 +287,22 @@ packer.startup({
     use({ "mattn/emmet-vim", ft = { "html", "vue", "css" } })
 
     use({
-      "hrsh7th/nvim-cmp",
+      "hrsh7th/nvim-compe",
       requires = {
-        { "hrsh7th/cmp-nvim-lsp" },
-        { "saadparwaiz1/cmp_luasnip" },
         {
           "L3MON4D3/LuaSnip",
           config = function()
             require("luasnip").config.setup({ history = true })
           end,
         },
-        { "hrsh7th/cmp-vsnip" },
         { "hrsh7th/vim-vsnip" },
+        { "GoldsteinE/compe-latex-symbols" },
         { "hrsh7th/vim-vsnip-integ" },
         { "rafamadriz/friendly-snippets" },
         { "onsails/lspkind-nvim" },
-        { "hrsh7th/cmp-buffer" },
-        { "hrsh7th/cmp-nvim-lua" },
-        { "hrsh7th/cmp-path" },
-        { "hrsh7th/cmp-emoji" },
-        { "hrsh7th/cmp-calc" },
-        { "kdheepak/cmp-latex-symbols" },
       },
       config = function()
-        require("kd/plugins/nvim-cmp")
+        require("kd/plugins/nvim-compe")
       end,
     })
 

@@ -15,7 +15,7 @@ end
 local nvim_compe = require("compe")
 nvim_compe.setup({
   enabled = true,
-  autocomplete = false,
+  autocomplete = true,
   documentation = true,
   debug = false,
   min_length = 1,
@@ -37,20 +37,10 @@ nvim_compe.setup({
   },
 })
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+local t = require("kd/utils").T
+local check_back_space = require("kd/utils").check_backspace
 
 local luasnip = require("luasnip")
-
-local check_back_space = function()
-  local col = vim.fn.col(".") - 1
-  if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-    return true
-  else
-    return false
-  end
-end
 
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
