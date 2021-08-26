@@ -108,17 +108,6 @@ packer.startup({
         { "nvim-treesitter/playground" },
         { "nvim-treesitter/nvim-treesitter-refactor" },
         { "nvim-treesitter/nvim-treesitter-textobjects" },
-        -- {
-        --   "windwp/nvim-autopairs",
-        --   after = { "nvim-cmp" },
-        --   config = function()
-        --     require("nvim-autopairs").setup()
-        --     -- require("nvim-autopairs.completion.cmp").setup({
-        --     --   map_cr = true, --  map <CR> on insert mode
-        --     --   map_complete = true, -- it will auto insert `(` after select function or method item
-        --     -- })
-        --   end,
-        -- },
         { "windwp/nvim-ts-autotag" },
         { "JoosepAlviste/nvim-ts-context-commentstring" },
       },
@@ -308,6 +297,12 @@ packer.startup({
         { "hrsh7th/cmp-emoji" },
         { "hrsh7th/cmp-calc" },
         { "kdheepak/cmp-latex-symbols" },
+        {
+          "windwp/nvim-autopairs",
+          config = function()
+            require("nvim-autopairs").setup()
+          end,
+        },
       },
       config = function()
         require("kd/plugins/nvim-cmp")

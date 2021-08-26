@@ -6,6 +6,16 @@ local lspkind = require("lspkind")
 local check_backspace = require("kd/utils").check_backspace
 local augroup = require("kd/utils").augroup
 local autocmd = require("kd/utils").autocmd
+local nnoremap = require("kd/utils").nnoremap
+local npairs = require("nvim-autopairs")
+
+nnoremap("<CR>", function()
+  if vim.fn.pumvisible() ~= 0 then
+    return npairs.esc("<cr>")
+  else
+    return npairs.autopairs_cr()
+  end
+end)
 
 cmp.setup({
 
@@ -34,8 +44,10 @@ cmp.setup({
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping(function(fallback)
       local expandable = luasnip.expand_or_jumpable()
+      print("expandable: ", expandable)
       if vim.fn.pumvisible() == 1 then
         local not_selected = vim.fn.complete_info({ "selected" }).selected == -1
+        print("not_selected: ", not_selected)
         if not_selected then
           if expandable then
             vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
