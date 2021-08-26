@@ -86,7 +86,13 @@ local function coq_setup(name, config)
   lsp[name].setup(config)
 end
 
-coq_setup("julials", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+coq_setup("julials", {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    on_attach_vim(client, bufnr)
+  end,
+  capabilities = create_capabilities(),
+})
 coq_setup("bashls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("ccls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("tsserver", { on_attach = on_attach_vim, capabilities = create_capabilities() })
