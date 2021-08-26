@@ -14,6 +14,13 @@ cmp.setup({
     end,
   },
 
+  completion = {
+    get_trigger_characters = function(trigger_characters)
+      return vim.tbl_filter(function(char)
+        return char ~= " "
+      end, trigger_characters)
+    end,
+  },
   -- You must set mapping.
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -25,13 +32,13 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
-    ["<tab>"] = cmp.mapping(function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T("<C-n>"), "n")
       elseif luasnip.expand_or_jumpable() then
         vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
       elseif check_backspace() then
-        vim.fn.feedkeys(T("<tab>"), "n")
+        vim.fn.feedkeys(T("<Tab>"), "n")
       else
         fallback()
       end
