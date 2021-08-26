@@ -300,7 +300,20 @@ packer.startup({
         {
           "windwp/nvim-autopairs",
           config = function()
-            require("nvim-autopairs").setup()
+            local nnoremap = require("kd/utils").nnoremap
+            local npairs = require("nvim-autopairs")
+            local Rule = require("nvim-autopairs.rule")
+            local ts_conds = require("nvim-autopairs.ts-conds")
+
+            npairs.setup()
+
+            nnoremap("<CR>", function()
+              if vim.fn.pumvisible() ~= 0 then
+                return npairs.esc("<cr>")
+              else
+                return npairs.autopairs_cr()
+              end
+            end)
           end,
         },
       },

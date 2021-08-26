@@ -6,16 +6,6 @@ local lspkind = require("lspkind")
 local check_backspace = require("kd/utils").check_backspace
 local augroup = require("kd/utils").augroup
 local autocmd = require("kd/utils").autocmd
-local nnoremap = require("kd/utils").nnoremap
-local npairs = require("nvim-autopairs")
-
-nnoremap("<CR>", function()
-  if vim.fn.pumvisible() ~= 0 then
-    return npairs.esc("<cr>")
-  else
-    return npairs.autopairs_cr()
-  end
-end)
 
 cmp.setup({
 
