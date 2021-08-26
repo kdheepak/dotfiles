@@ -307,13 +307,13 @@ packer.startup({
 
             npairs.setup()
 
-            nnoremap("<CR>", function()
-              if vim.fn.pumvisible() ~= 0 then
-                return npairs.esc("<cr>")
-              else
-                return npairs.autopairs_cr()
-              end
-            end)
+            -- nnoremap("<CR>", function()
+            --   if vim.fn.pumvisible() ~= 0 then
+            --     return npairs.esc("<cr>")
+            --   else
+            --     return npairs.autopairs_cr()
+            --   end
+            -- end)
           end,
         },
       },

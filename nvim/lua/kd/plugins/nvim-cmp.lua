@@ -42,7 +42,6 @@ cmp.setup({
           if expandable then
             vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
           else
-            vim.fn.feedkeys(T("<C-e>")) -- close cmp
             fallback()
           end
         else -- normal completion

@@ -41,48 +41,30 @@ vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-local opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
-
 vim.api.nvim_set_keymap("n", "<leader>w", [[<C-w>]], { noremap = true })
 
--- no hl
-vim.api.nvim_set_keymap("n", "<Leader><Leader>", ":nohlsearch<CR>", { noremap = true, silent = true })
-
--- inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
-local global_opts = {
+wk.register({
+  -- ["<C-c><C-c>"] = { "<cmd>Bdelete<CR>", "close buffer" },
+  ["<Tab>"] = { "<cmd>TablineBufferNext<CR>", "Jump to next buffer" },
+  ["<S-Tab>"] = { "<cmd>TablineBufferPrevious<CR>", "Jump to next buffer" },
+  ["<Leader><Leader>"] = { ":nohlsearch<CR>", "Clear Highlighting" },
+}, {
   mode = "n", -- normal mode
   buffer = nil, -- global mappings. specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
   nowait = false, -- use `nowait` when creating keymaps
-}
+})
 
-local global_mappings = {
-  ["<C-c><C-c>"] = { "<cmd>Bdelete<CR>", "close buffer" },
-  ["<Tab>"] = { "<cmd>TablineBufferNext<CR>", "Jump to next buffer" },
-  ["<S-Tab>"] = { "<cmd>TablineBufferPrevious<CR>", "Jump to next buffer" },
-}
-
-wk.register(global_mappings, global_opts)
-
-local visual_mappings = {
+wk.register({
   p = { '"+p', "Paste from clipboard" },
   P = { '"+P', "Paste from clipboard (before)" },
   y = { '"+y', "Yank to clipboard" },
   Y = { '"+Y', "Yank line to clipboard" },
   d = { '"+ygvd', "Cut line to clipboard" },
   g = { name = "Git", o = { "<cmd>'<,'>GBrowse<CR>", "Open file in browser" } },
-}
-
-wk.register(visual_mappings, {
+  f = { name = "Find", w = { ":lua require'fzf-lua'.grep_visual()<CR>", "Grep Visual" } },
+}, {
   mode = "v", -- NORMAL mode
   prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -257,6 +239,15 @@ local mappings = {
     s = { "<cmd>luafile $MYVIMRC<CR>", "Source VIMRC" },
     z = { "<cmd>e ~/.zshrc<CR>", "Open ZSHRC" },
   },
+}
+
+local opts = {
+  mode = "n", -- NORMAL mode
+  prefix = "<leader>",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
 }
 
 wk.register(mappings, opts)
