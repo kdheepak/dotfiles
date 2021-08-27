@@ -233,6 +233,9 @@ packer.startup({
         require("fzf-lua").setup({
           previewers = { bat = { cmd = "bat", args = "", config = "~/.config/bat/config" } },
           async_or_timeout = 3000,
+          grep = {
+            rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --sort-files -g '!{.git,node_modules}/*'",
+          },
         })
       end,
     })
