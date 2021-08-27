@@ -36,6 +36,53 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   update_in_insert = false,
 })
 
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+local diagnostic_cache = {}
+
+local orig_set_signs = vim.lsp.diagnostic.set_signs
+local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
+  if not diagnostics then
+    diagnostics = diagnostic_cache[bufnr][client_id]
+  end
+
+  if not diagnostics then
+    return
+  end
+
+  if diagnostic_cache[bufnr] == nil then
+    diagnostic_cache[bufnr] = {}
+  end
+
+  diagnostic_cache[bufnr][client_id] = diagnostics
+
+  local max_severity_per_line = {}
+  for _, d in pairs(diagnostics) do
+    if max_severity_per_line[d.range.start.line] then
+      local current_d = max_severity_per_line[d.range.start.line]
+      if d.severity < current_d.severity then
+        max_severity_per_line[d.range.start.line] = d
+      end
+    else
+      max_severity_per_line[d.range.start.line] = d
+    end
+  end
+
+  local filtered_diagnostics = {}
+  for _, v in pairs(max_severity_per_line) do
+    table.insert(filtered_diagnostics, v)
+  end
+
+  orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
+end
+
+vim.lsp.diagnostic.set_signs = set_signs_limited
+
 vim.lsp.handlers["textDocument/references"] = require("lsputil.locations").references_handler
 vim.lsp.handlers["textDocument/codeAction"] = require("lsputil.codeAction").code_action_handler
 vim.lsp.handlers["textDocument/definition"] = require("lsputil.locations").definition_handler

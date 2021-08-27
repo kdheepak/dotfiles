@@ -178,17 +178,17 @@ packer.startup({
             -- require("navigator").setup()
           end,
         },
-        {
-          "kosayoda/nvim-lightbulb",
-          config = function()
-            local augroup = require("kd/utils").augroup
-            local autocmd = require("kd/utils").autocmd
-            augroup("KDLightbulb", function()
-              autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
-            end)
-          end,
-          event = "BufRead",
-        },
+        -- {
+        --   "kosayoda/nvim-lightbulb",
+        --   config = function()
+        --     local augroup = require("kd/utils").augroup
+        --     local autocmd = require("kd/utils").autocmd
+        --     augroup("KDLightbulb", function()
+        --       autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
+        --     end)
+        --   end,
+        --   event = "BufRead",
+        -- },
         { "kabouzeid/nvim-lspinstall", event = "BufRead" },
       },
       config = function()
@@ -325,9 +325,11 @@ packer.startup({
       end,
     })
 
-    use({ "junegunn/vim-peekaboo", event = "BufRead" })
+    use({ "~/gitrepos/panvimdoc", event = "BufRead" })
 
-    use({ "Yilin-Yang/vim-markbar", event = "BufRead" })
+    -- use({ "junegunn/vim-peekaboo", event = "BufRead" })
+
+    -- use({ "Yilin-Yang/vim-markbar", event = "BufRead" })
 
     use({ "kshenoy/vim-signature", event = "BufRead" })
 
