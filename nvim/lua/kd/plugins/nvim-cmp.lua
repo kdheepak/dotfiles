@@ -34,10 +34,8 @@ cmp.setup({
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping(function(fallback)
       local expandable = luasnip.expand_or_jumpable()
-      print("expandable: ", expandable)
       if vim.fn.pumvisible() == 1 then
         local not_selected = vim.fn.complete_info({ "selected" }).selected == -1
-        print("not_selected: ", not_selected)
         if not_selected then
           if expandable then
             vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
