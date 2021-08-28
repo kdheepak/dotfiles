@@ -68,18 +68,15 @@ Mode.update_status = function()
 end
 
 local sections = {
-  lualine_a = { { "filename" } },
+  lualine_a = { git_root, { "filename" } },
   lualine_b = { "branch" },
   lualine_c = { VistaNearestMethodOrFunction },
   lualine_x = {
     require("lsp-status").status_progress,
     { "diagnostics", sources = { "nvim_lsp" } },
-    "encoding",
-    "fileformat",
-    "filetype",
   },
   lualine_y = { "progress" },
-  lualine_z = { "location", Mode.update_status },
+  lualine_z = { Mode.update_status },
 }
 
 -- local tabline = require 'tabline'
@@ -102,7 +99,7 @@ require("lualine").setup({
     lualine_b = { git_root, { "filename", path = 1 } },
     lualine_c = {},
     lualine_x = {},
-    lualine_y = { "location", "mode" },
+    lualine_y = { "progress", "mode" },
     lualine_z = {},
   },
 })

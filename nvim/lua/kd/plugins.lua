@@ -475,7 +475,13 @@ packer.startup({
 
     use({ "rust-lang/rust.vim", ft = { "rust" } }) -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 
-    use({ "JuliaEditorSupport/julia-vim" }) -- julia support for vim
+    use({
+      "JuliaEditorSupport/julia-vim",
+      ft = { "julia" },
+      config = function()
+        vim.g.latex_to_unicode_tab = "off"
+      end,
+    }) -- julia support for vim
 
     use({ "kdheepak/gridlabd.vim", ft = "gridlabd" }) -- gridlabd syntax support
 

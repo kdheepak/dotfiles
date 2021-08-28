@@ -86,7 +86,7 @@ local mappings = {
     name = "+Windows",
     ["/"] = { "<cmd>split<CR>", "Split window horizontally" },
     ["\\"] = { "<cmd>vsplit<CR>", "Split window vertically" },
-    z = { "<cmd>call zoom#toggle()", "Zoom Toggle" },
+    z = { "<cmd>call zoom#toggle()<CR>", "Zoom Toggle" },
   },
 
   q = {

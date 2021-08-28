@@ -122,6 +122,12 @@ augroup("KDAutocmds", function()
 
   autocmd("BufNewFile", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o")
 
+  autocmd("BufWinEnter", "*", "setlocal wrap")
+
+  autocmd("BufRead", "*", "setlocal wrap")
+
+  autocmd("BufNewFile", "*", "setlocal wrap")
+
   autocmd("TextYankPost", "*", function()
     require("vim.highlight").on_yank({ higroup = "Search", timeout = 500 })
   end)
