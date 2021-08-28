@@ -37,88 +37,80 @@ packer.startup({
       config = function()
         require("nvim-treesitter.configs").setup({
           ensure_installed = "maintained",
-          autotag = { enable = true },
+          -- autotag = { enable = true },
           highlight = { enable = true },
-          incremental_selection = { enable = true },
-          indent = { enable = true },
-          refactor = {
-            highlight_definitions = { enable = true },
-            highlight_current_scope = { enable = false },
-            smart_rename = {
-              enable = true,
-              keymaps = {
-                smart_rename = "grr",
-              },
-            },
-            navigation = {
-              enable = true,
-              keymaps = {
-                goto_definition = "gnd",
-                list_definitions = "gnD",
-                list_definitions_toc = "gO",
-                goto_next_usage = "<a-*>",
-                goto_previous_usage = "<a-#>",
-              },
-            },
-          },
-          textobjects = {
-            enable = true,
-            select = {
-              enable = true,
-              -- Automatically jump forward to textobj, similar to targets.vim
-              lookahead = true,
-              keymaps = {
-                -- You can load the capture groups defined in textobjects.scm
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-              },
-              lsp_interop = {
-                enable = true,
-                border = "none",
-                peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
-              },
-            },
-            swap = {
-              enable = true,
-              swap_next = { ["<leader>a"] = "@parameter.inner" },
-              swap_previous = { ["<leader>A"] = "@parameter.inner" },
-            },
-            move = {
-              enable = true,
-              set_jumps = true, -- whether to set jumps in the jumplist
-              goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
-              goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
-              goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
-              goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
-            },
-          },
-          autopairs = { enable = true },
-          context_commentstring = { enable = true },
+          -- incremental_selection = { enable = true },
+          -- indent = { enable = true },
+          -- refactor = {
+          --   highlight_definitions = { enable = true },
+          --   highlight_current_scope = { enable = false },
+          --   smart_rename = {
+          --     enable = true,
+          --     keymaps = {
+          --       smart_rename = "grr",
+          --     },
+          --   },
+          --   navigation = {
+          --     enable = true,
+          --     keymaps = {
+          --       goto_definition = "gnd",
+          --       list_definitions = "gnD",
+          --       list_definitions_toc = "gO",
+          --       goto_next_usage = "<a-*>",
+          --       goto_previous_usage = "<a-#>",
+          --     },
+          --   },
+          -- },
+          -- textobjects = {
+          --   enable = true,
+          --   select = {
+          --     enable = true,
+          --     -- Automatically jump forward to textobj, similar to targets.vim
+          --     lookahead = true,
+          --     keymaps = {
+          --       -- You can load the capture groups defined in textobjects.scm
+          --       ["af"] = "@function.outer",
+          --       ["if"] = "@function.inner",
+          --       ["ac"] = "@class.outer",
+          --       ["ic"] = "@class.inner",
+          --     },
+          --     lsp_interop = {
+          --       enable = true,
+          --       border = "none",
+          --       peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
+          --     },
+          --   },
+          --   swap = {
+          --     enable = true,
+          --     swap_next = { ["<leader>a"] = "@parameter.inner" },
+          --     swap_previous = { ["<leader>A"] = "@parameter.inner" },
+          --   },
+          --   move = {
+          --     enable = true,
+          --     set_jumps = true, -- whether to set jumps in the jumplist
+          --     goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
+          --     goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
+          --     goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
+          --     goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+          --   },
+          -- },
+          -- autopairs = { enable = true },
+          -- context_commentstring = { enable = true },
         })
       end,
       requires = {
-        {
-          "romgrk/nvim-treesitter-context",
-          config = function()
-            require("treesitter-context").setup({})
-          end,
-        },
-        { "nvim-treesitter/playground" },
-        { "nvim-treesitter/nvim-treesitter-refactor" },
-        { "nvim-treesitter/nvim-treesitter-textobjects" },
-        { "windwp/nvim-ts-autotag" },
-        { "JoosepAlviste/nvim-ts-context-commentstring" },
+        -- {
+        --   "romgrk/nvim-treesitter-context",
+        --   config = function()
+        --     require("treesitter-context").setup({})
+        --   end,
+        -- },
+        -- { "nvim-treesitter/playground" },
+        -- { "nvim-treesitter/nvim-treesitter-refactor" },
+        -- { "nvim-treesitter/nvim-treesitter-textobjects" },
+        -- { "windwp/nvim-ts-autotag" },
+        -- { "JoosepAlviste/nvim-ts-context-commentstring" },
       },
-    })
-
-    use({
-      "terrortylor/nvim-comment",
-      config = function()
-        require("nvim_comment").setup()
-      end,
-      event = "BufRead",
     })
 
     use({
@@ -200,17 +192,9 @@ packer.startup({
 
     use({ "nvim-lua/popup.nvim" })
 
-    use({ "nanotee/luv-vimdocs", event = "BufRead" })
+    use({ "nanotee/luv-vimdocs", ft = "lua" })
 
-    use({ "Pocco81/DAPInstall.nvim", event = "BufRead" })
-
-    use({
-      "mfussenegger/nvim-dap",
-      requires = { { "theHamsta/nvim-dap-virtual-text", "mfussenegger/nvim-dap-python" } },
-      config = function()
-        require("kd/plugins/debug")
-      end,
-    })
+    use({ "wsdjeg/luarefvim", ft = "lua" })
 
     use({
       "folke/which-key.nvim",
@@ -237,30 +221,6 @@ packer.startup({
             rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --sort-files -g '!{.git,node_modules}/*'",
           },
         })
-      end,
-    })
-
-    use({
-      "~/gitrepos/mergetool.nvim",
-      config = function()
-        require("mergetool").setup({})
-      end,
-    })
-
-    use({
-      "~/gitrepos/moonshine.nvim",
-      config = function()
-        require("moonshine")
-      end,
-    })
-
-    use({ "wsdjeg/luarefvim" })
-
-    use({
-      "samoshkin/vim-mergetool",
-      config = function()
-        vim.g.mergetool_layout = "mr"
-        vim.g.mergetool_prefer_revision = "local"
       end,
     })
 
@@ -327,11 +287,15 @@ packer.startup({
 
     use({ "~/gitrepos/panvimdoc", event = "BufRead" })
 
-    -- use({ "junegunn/vim-peekaboo", event = "BufRead" })
-
-    -- use({ "Yilin-Yang/vim-markbar", event = "BufRead" })
-
     use({ "kshenoy/vim-signature", event = "BufRead" })
+
+    use({
+      "terrortylor/nvim-comment",
+      event = "BufRead",
+      config = function()
+        require("nvim_comment").setup()
+      end,
+    })
 
     use({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- load s and S to search
 

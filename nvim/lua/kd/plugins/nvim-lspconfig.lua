@@ -230,6 +230,7 @@ coq_setup("sumneko_lua", {
     },
   },
 })
+
 coq_setup("html", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 coq_setup("vuels", { on_attach = on_attach_vim, capabilities = create_capabilities() })
 
