@@ -478,8 +478,10 @@ packer.startup({
     use({
       "JuliaEditorSupport/julia-vim",
       ft = { "julia" },
+      fn = { "LaTeXToUnicode#Refresh" },
       config = function()
         vim.g.latex_to_unicode_tab = "off"
+        vim.g.latex_to_unicode_auto = 0
       end,
     }) -- julia support for vim
 
@@ -516,9 +518,6 @@ packer.startup({
         vim.g.vim_markdown_frontmatter = true
         vim.g.vim_markdown_strikethrough = true
         vim.g.vim_markdown_fenced_languages = { "julia=jl", "python=py" }
-        vim.g.latex_to_unicode_auto = true
-        vim.g.latex_to_unicode_tab = false
-        vim.g.latex_to_unicode_cmd_mapping = { "<C-j>" }
       end,
     }) -- Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
 
@@ -537,8 +536,6 @@ packer.startup({
     use({ "sindrets/diffview.nvim", event = "BufRead" })
 
     use({ "jbyuki/one-small-step-for-vimkind", ft = "lua" })
-
-    use({ "npxbr/glow.nvim", branch = "main", run = ":GlowInstall", ft = "markdown" })
 
     use({ "rust-lang/vscode-rust", ft = "rust" })
 
