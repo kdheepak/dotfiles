@@ -203,6 +203,37 @@ packer.startup({
     use("mfussenegger/nvim-dap")
 
     use({
+      "kevinhwang91/nvim-hlslens",
+      event = "BufRead",
+      requires = {
+        {
+          "haya14busa/vim-asterisk",
+          config = function()
+            vim.g["asterisk#keeppos"] = 1
+          end,
+        }, -- asterisk.vim provides improved search * motions
+      },
+      config = function()
+        local noremap = require("kd/utils").noremap
+        local map = require("kd/utils").map
+        noremap(
+          "n",
+          "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>zzzv",
+          { silent = true }
+        )
+        noremap(
+          "N",
+          "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zzzv",
+          { silent = true }
+        )
+        map("*", "<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>zzzv")
+        map("#", "<Plug>(asterisk-z#)<Cmd>lua require('hlslens').start()<CR>zzzv")
+        map("g*", "<Plug>(asterisk-gz*)<Cmd>lua require('hlslens').start()<CR>zzzv")
+        map("g#", "<Plug>(asterisk-gz#)<Cmd>lua require('hlslens').start()<CR>zzzv")
+      end,
+    })
+
+    use({
       "nvim-telescope/telescope.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
@@ -432,16 +463,6 @@ packer.startup({
     use({ "dhruvasagar/vim-table-mode", event = "BufRead" }) -- automatic table creator & formatter allowing one to create neat tables as you type
 
     use("editorconfig/editorconfig-vim") -- editorconfig plugin for vim
-
-    use({ "osyo-manga/vim-anzu", event = "BufRead" }) -- show total number of matches and current match number
-
-    use({
-      "haya14busa/vim-asterisk",
-      event = "BufRead",
-      config = function()
-        vim.g["asterisk#keeppos"] = 1
-      end,
-    }) -- asterisk.vim provides improved search * motions
 
     use({ "segeljakt/vim-isotope", event = "BufRead" }) -- insert characters such as ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗˢ, u͟n͟d͟e͟r͟l͟i͟n͟e͟, s̶t̶r̶i̶k̶e̶t̶h̶r̶o̶u̶g̶h̶, 𝐒𝐄𝐑𝐈𝐅-𝐁𝐎𝐋𝐃, 𝐒𝐄𝐑𝐈𝐅-𝐈𝐓𝐀𝐋𝐈𝐂, 𝔉ℜ𝔄𝔎𝔗𝔘ℜ, 𝔻𝕆𝕌𝔹𝕃𝔼-𝕊𝕋ℝ𝕌ℂ𝕂, ᴙƎVƎᴙꙄƎD, INΛƎᴚ⊥Ǝᗡ, ⒸⒾⓇⒸⓁⒺⒹ,
 

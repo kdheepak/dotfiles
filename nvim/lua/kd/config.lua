@@ -238,13 +238,6 @@ inoremap("<C-CR>", "<C-O>O")
 nnoremap("<c-,>", "<C-W><")
 nnoremap("<c-.>", "<C-W>>")
 
--- make searching with * use vim-asterisk
-map("*", "<Plug>(asterisk-z*)zzzv")
-map("#", "<Plug>(asterisk-gz*)zzzv")
-map("g#", "<Plug>(asterisk-gz#)zzzv")
-nmap("n", "<Plug>(anzu-n-with-echo)zzzv")
-nmap("N", "<Plug>(anzu-N-with-echo)zzzv")
-
 inoremap("<C-u>", "<C-<C-O>:call unicode#Fuzzy()<CR>")
 
 -- Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
