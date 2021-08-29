@@ -176,8 +176,15 @@ packer.startup({
     use({
       "ibhagwan/fzf-lua",
       requires = {
-        "kyazdani42/nvim-web-devicons", -- optional for icons
-        "vijaymarupudi/nvim-fzf",
+        { "kyazdani42/nvim-web-devicons" },
+        { "vijaymarupudi/nvim-fzf" },
+        {
+          "folke/todo-comments.nvim",
+          requires = "nvim-lua/plenary.nvim",
+          config = function()
+            require("todo-comments").setup({})
+          end,
+        },
       },
       config = function()
         require("fzf-lua").setup({
@@ -187,6 +194,7 @@ packer.startup({
             rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --sort-files -g '!{.git,node_modules}/*'",
           },
         })
+        require("kd/plugins/fzf-lua")
       end,
     })
 
@@ -573,13 +581,6 @@ packer.startup({
 
     use({ "famiu/nvim-reload" })
 
-    use({
-      "folke/todo-comments.nvim",
-      requires = "nvim-lua/plenary.nvim",
-      config = function()
-        require("todo-comments").setup({})
-      end,
-    })
     use({
       "nacro90/numb.nvim",
       config = function()

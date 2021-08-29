@@ -57,7 +57,7 @@ function M._map(mode, lhs, rhs, opts)
   if rhs_type == "function" then
     key = M.get_key_for_fn(rhs, kd.g.map_callbacks)
     kd.g.map_callbacks[key] = rhs
-    rhs = "v:lua.kd.g.map_callbacks." .. key .. "()"
+    rhs = ":lua kd.g.map_callbacks." .. key .. "()<CR>"
   elseif rhs_type ~= "string" then
     error("map(): unsupported rhs type: " .. rhs_type)
   end
