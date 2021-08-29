@@ -37,79 +37,51 @@ packer.startup({
       config = function()
         require("nvim-treesitter.configs").setup({
           ensure_installed = "maintained",
-          -- autotag = { enable = true },
+          autotag = { enable = true },
           highlight = { enable = true },
-          -- incremental_selection = { enable = true },
-          -- indent = { enable = true },
-          -- refactor = {
-          --   highlight_definitions = { enable = true },
-          --   highlight_current_scope = { enable = false },
-          --   smart_rename = {
-          --     enable = true,
-          --     keymaps = {
-          --       smart_rename = "grr",
-          --     },
-          --   },
-          --   navigation = {
-          --     enable = true,
-          --     keymaps = {
-          --       goto_definition = "gnd",
-          --       list_definitions = "gnD",
-          --       list_definitions_toc = "gO",
-          --       goto_next_usage = "<a-*>",
-          --       goto_previous_usage = "<a-#>",
-          --     },
-          --   },
-          -- },
-          -- textobjects = {
-          --   enable = true,
-          --   select = {
-          --     enable = true,
-          --     -- Automatically jump forward to textobj, similar to targets.vim
-          --     lookahead = true,
-          --     keymaps = {
-          --       -- You can load the capture groups defined in textobjects.scm
-          --       ["af"] = "@function.outer",
-          --       ["if"] = "@function.inner",
-          --       ["ac"] = "@class.outer",
-          --       ["ic"] = "@class.inner",
-          --     },
-          --     lsp_interop = {
-          --       enable = true,
-          --       border = "none",
-          --       peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
-          --     },
-          --   },
-          --   swap = {
-          --     enable = true,
-          --     swap_next = { ["<leader>a"] = "@parameter.inner" },
-          --     swap_previous = { ["<leader>A"] = "@parameter.inner" },
-          --   },
-          --   move = {
-          --     enable = true,
-          --     set_jumps = true, -- whether to set jumps in the jumplist
-          --     goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
-          --     goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
-          --     goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
-          --     goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
-          --   },
-          -- },
-          -- autopairs = { enable = true },
-          -- context_commentstring = { enable = true },
+          indent = { enable = true },
+          textobjects = {
+            enable = true,
+            select = {
+              enable = true,
+              -- Automatically jump forward to textobj, similar to targets.vim
+              lookahead = true,
+              keymaps = {
+                -- You can load the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+              },
+              lsp_interop = {
+                enable = true,
+                border = "none",
+                peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
+              },
+            },
+            swap = {
+              enable = true,
+              swap_next = { ["<leader>a"] = "@parameter.inner" },
+              swap_previous = { ["<leader>A"] = "@parameter.inner" },
+            },
+            move = {
+              enable = true,
+              set_jumps = true, -- whether to set jumps in the jumplist
+              goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
+              goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
+              goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
+              goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+            },
+          },
+          autopairs = { enable = true },
+          context_commentstring = { enable = true },
         })
       end,
       requires = {
-        -- {
-        --   "romgrk/nvim-treesitter-context",
-        --   config = function()
-        --     require("treesitter-context").setup({})
-        --   end,
-        -- },
         -- { "nvim-treesitter/playground" },
-        -- { "nvim-treesitter/nvim-treesitter-refactor" },
-        -- { "nvim-treesitter/nvim-treesitter-textobjects" },
-        -- { "windwp/nvim-ts-autotag" },
-        -- { "JoosepAlviste/nvim-ts-context-commentstring" },
+        { "nvim-treesitter/nvim-treesitter-textobjects" },
+        { "windwp/nvim-ts-autotag" },
+        { "JoosepAlviste/nvim-ts-context-commentstring" },
       },
     })
 
@@ -164,23 +136,17 @@ packer.startup({
           end,
         },
         {
-          "ray-x/navigator.lua",
-          requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+          "kosayoda/nvim-lightbulb",
           config = function()
-            -- require("navigator").setup()
+            vim.fn.sign_define("LightBulbSign", { text = "", texthl = "String", linehl = "", numhl = "" })
+            local augroup = require("kd/utils").augroup
+            local autocmd = require("kd/utils").autocmd
+            augroup("KDLightbulb", function()
+              autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
+            end)
           end,
+          event = "BufRead",
         },
-        -- {
-        --   "kosayoda/nvim-lightbulb",
-        --   config = function()
-        --     local augroup = require("kd/utils").augroup
-        --     local autocmd = require("kd/utils").autocmd
-        --     augroup("KDLightbulb", function()
-        --       autocmd("CursorHold,CursorHoldI", "*", require("nvim-lightbulb").update_lightbulb)
-        --     end)
-        --   end,
-        --   event = "BufRead",
-        -- },
         { "kabouzeid/nvim-lspinstall", event = "BufRead" },
       },
       config = function()
@@ -263,20 +229,7 @@ packer.startup({
         {
           "windwp/nvim-autopairs",
           config = function()
-            local nnoremap = require("kd/utils").nnoremap
-            local npairs = require("nvim-autopairs")
-            local Rule = require("nvim-autopairs.rule")
-            local ts_conds = require("nvim-autopairs.ts-conds")
-
-            npairs.setup()
-
-            -- nnoremap("<CR>", function()
-            --   if vim.fn.pumvisible() ~= 0 then
-            --     return npairs.esc("<cr>")
-            --   else
-            --     return npairs.autopairs_cr()
-            --   end
-            -- end)
+            require("nvim-autopairs").setup()
           end,
         },
       },

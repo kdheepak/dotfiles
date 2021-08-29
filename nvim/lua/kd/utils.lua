@@ -65,6 +65,8 @@ function M._map(mode, lhs, rhs, opts)
   opts.buffer = nil
   if buffer == true then
     vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
+  elseif buffer ~= nil then
+    vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
   else
     vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
   end

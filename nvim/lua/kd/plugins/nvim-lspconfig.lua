@@ -1,5 +1,7 @@
 local augroup = require("kd/utils").augroup
 local autocmd = require("kd/utils").autocmd
+local nnoremap = require("kd/utils").nnoremap
+local vnoremap = require("kd/utils").vnoremap
 
 local function create_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -35,34 +37,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   signs = true,
   update_in_insert = false,
 })
-
-vim.lsp.protocol.CompletionItemKind = {
-  "   (Text) ",
-  "   (Method)",
-  "   (Function)",
-  "   (Constructor)",
-  " ﴲ  (Field)",
-  "   (Variable)",
-  "   (Class)",
-  " ﰮ  (Interface)",
-  "   (Module)",
-  " 襁 (Property)",
-  "   (Unit)",
-  "   (Value)",
-  " 練 (Enum)",
-  "   (Keyword)",
-  "   (Snippet)",
-  "   (Color)",
-  "   (File)",
-  "   (Reference)",
-  "   (Folder)",
-  "   (EnumMember)",
-  " ﲀ  (Constant)",
-  " ﳤ  (Struct)",
-  "   (Event)",
-  "   (Operator)",
-  "   (TypeParameter)",
-}
 
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
@@ -131,50 +105,42 @@ local lsp_status = require("lsp-status")
 lsp_status.register_progress()
 
 local lspconfig = require("lspconfig")
-local on_attach_vim = function(client, bufnr)
-  -- require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
+
+local function on_attach_vim(client, bufnr)
+  require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
   require("lsp-status").on_attach(client)
-  -- require'illuminate'.on_attach(client)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
 
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- Mappings.
-  local opts = { noremap = true, silent = true }
+  local opts = { silent = true, buffer = bufnr }
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    vnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 end
 
-local lsp = require("lspconfig")
 -- require'packer'.loader 'coq_nvim coq.artifacts'
-local function coq_setup(name, config)
-  lsp[name].setup(config)
+local function lsp_setup(name, config)
+  if config.on_attach == nil then
+    config.on_attach = on_attach_vim
+  end
+  lspconfig[name].setup(config)
 end
 
-coq_setup("julials", {
+lsp_setup("julials", {
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
     on_attach_vim(client, bufnr)
   end,
   capabilities = create_capabilities(),
 })
-coq_setup("bashls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("ccls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("tsserver", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("jsonls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("nimls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("rust_analyzer", {
-  on_attach = on_attach_vim,
+lsp_setup("bashls", { capabilities = create_capabilities() })
+lsp_setup("ccls", { capabilities = create_capabilities() })
+lsp_setup("tsserver", { capabilities = create_capabilities() })
+lsp_setup("jsonls", { capabilities = create_capabilities() })
+lsp_setup("nimls", { capabilities = create_capabilities() })
+lsp_setup("rust_analyzer", {
   capabilities = create_capabilities(),
   settings = {
     ["rust-analyzer"] = {
@@ -183,8 +149,8 @@ coq_setup("rust_analyzer", {
     },
   },
 })
-coq_setup("vimls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("cssls", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+lsp_setup("vimls", { capabilities = create_capabilities() })
+lsp_setup("cssls", { capabilities = create_capabilities() })
 
 local system_name
 if vim.fn.has("mac") == 1 then
@@ -205,9 +171,8 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-coq_setup("sumneko_lua", {
+lsp_setup("sumneko_lua", {
   capabilities = create_capabilities(),
-  on_attach = on_attach_vim,
   cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
   settings = {
     Lua = {
@@ -231,10 +196,10 @@ coq_setup("sumneko_lua", {
   },
 })
 
-coq_setup("html", { on_attach = on_attach_vim, capabilities = create_capabilities() })
-coq_setup("vuels", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+lsp_setup("html", { capabilities = create_capabilities() })
+lsp_setup("vuels", { capabilities = create_capabilities() })
 
-coq_setup("pyright", { on_attach = on_attach_vim, capabilities = create_capabilities() })
+lsp_setup("pyright", { capabilities = create_capabilities() })
 
 local null_ls = require("null-ls")
 local builtins = null_ls.builtins
