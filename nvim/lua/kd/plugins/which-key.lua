@@ -74,6 +74,9 @@ wk.register({
 })
 
 local mappings = {
+  [":"] = { ":Telescope commands<CR>", "commands" },
+  [";"] = { ":Telescope commands<CR>", "commands" },
+
   p = { '"+p', "Paste from clipboard" },
   P = { '"+P', "Paste from clipboard (before)" },
   y = { '"+y', "Yank to clipboard" },
@@ -147,6 +150,29 @@ local mappings = {
     hp = { '<cmd>lua require"gitsigns".preview_hunk()<CR>', "Preview Hunk" },
     hb = { '<cmd>lua require"gitsigns".blame_line(true)<CR>', "Blame line" },
   },
+
+  --   f = {
+  --     name = "Telescope",
+  --     b = { ":Telescope buffers<CR>", "Buffers" },
+  --     F = { ":Telescope current_buffer_fuzzy_find<CR>", "Grep Current Buffer" },
+  --     a = { ":Telescope lsp_code_actions<CR>", "lsp-code-actions" },
+  --     A = { ":Telescope lsp_range_code_actions<CR>", "lsp-range-code-actions" },
+  --     d = { ":Telescope lsp_definitions<CR>", "lsp-definitions" },
+  --     l = { ":Telescope lsp_document_diagnostics<CR>", "lsp-document-diagnostics" },
+  --     L = { ":Telescope lsp_workspace_diagnostics<CR>", "lsp-workspace-diagnostics" },
+  --     r = { ":Telescope lsp_references<CR>", "lsp-references" },
+  --     q = { ":lua require'fzf-lua'.quickfix()<CR>", "Quick Fix" },
+  --     v = { ":lua require'fzf-lua'.grep_visual()<CR>", "Grep Visual" },
+  --     w = { ":lua require'fzf-lua'.grep_cword()<CR>", "Grep Cursor Word" },
+  --     g = { ":lua require'fzf-lua'.live_grep()<CR>", "Grep Live" },
+  --     f = { ":lua require'fzf-lua'.files()<CR>", "Files" },
+  --     h = { ":lua require'fzf-lua'.help_tags()<CR>", "Help" },
+  --     M = { ":lua require'fzf-lua'.man_pages()<CR>", "Man" },
+  --     m = { ":lua require'fzf-lua'.marks()<CR>", "Marks" },
+  --     t = { ":Telescope treesitter<CR>", "treesitter-symbols" },
+  --     s = { ":Telescope lsp_document_symbols<CR>", "lsp-document-symbols" },
+  --     S = { ":Telescope lsp_workspace_symbols<CR>", "lsp-workspace-symbols" },
+  --   },
 
   f = {
     name = "Find",

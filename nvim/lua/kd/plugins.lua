@@ -169,6 +169,8 @@ packer.startup({
       end,
     })
 
+    use("GutenYe/json5.vim")
+
     use({ "junegunn/fzf", run = ":call fzf#install()" })
 
     use({ "junegunn/fzf.vim" })
@@ -197,6 +199,32 @@ packer.startup({
         require("kd/plugins/fzf-lua")
       end,
     })
+
+    use("mfussenegger/nvim-dap")
+
+    use({
+      "nvim-telescope/telescope.nvim",
+      requires = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+        { "nvim-telescope/telescope-github.nvim" },
+        { "nvim-telescope/telescope-packer.nvim" },
+        { "nvim-telescope/telescope-fzf-writer.nvim" },
+        { "xiyaowong/telescope-emoji.nvim" },
+        { "nvim-telescope/telescope-symbols.nvim" },
+        { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+        { "tamago324/telescope-openbrowser.nvim" },
+        { "crispgm/telescope-heading.nvim" },
+        { "nvim-telescope/telescope-dap.nvim" },
+      },
+      config = function()
+        require("kd/plugins/telescope")
+      end,
+    })
+
+    use({ "tyru/open-browser-github.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
+
+    use({ "vitalk/vim-shebang" })
 
     use({ "moll/vim-bbye" })
 
@@ -277,8 +305,6 @@ packer.startup({
         }
       end,
     })
-
-    use({ "tyru/open-browser-github.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
 
     use({
       "rhysd/git-messenger.vim",

@@ -110,8 +110,6 @@ augroup("KDAutocmds", function()
 
   autocmd("VimResized", "*", "wincmd =") -- resize panes when host window is resized
 
-  autocmd("FileType", "json", "syntax match Comment +//.+$+")
-
   autocmd("FileType", "gitcommit,gitrebase,gitconfig", "setl bufhidden=delete")
 
   autocmd("FocusGained", "*", "silent! :checktime")
