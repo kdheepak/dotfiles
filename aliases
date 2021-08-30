@@ -84,7 +84,7 @@ alias map="xargs -n1"
 
 # One of @janmoesen’s ProTip™s
 # for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-	# alias "$method"="lwp-request -m '$method'"
+# alias "$method"="lwp-request -m '$method'"
 # done
 
 # Make Grunt print stack traces by default
@@ -105,24 +105,24 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias reload="exec $SHELL -l"
 
 # cdf() {
-    # target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-    # if [ "$target" != "" ]; then
-        # cd "$target"; pwd
-    # else
-        # echo 'No Finder window found' >&2
-    # fi
+# target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+# if [ "$target" != "" ]; then
+# cd "$target"; pwd
+# else
+# echo 'No Finder window found' >&2
+# fi
 # }
 
 alias cdg='cd $(git root)'
 
 # ssh() {
-    # tmux rename-window -t${TMUX_PANE} "$*"
-    # command ssh "$@"
-    # tmux rename-window -t${TMUX_PANE} "zsh"
+# tmux rename-window -t${TMUX_PANE} "$*"
+# command ssh "$@"
+# tmux rename-window -t${TMUX_PANE} "zsh"
 # }
 
 # if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
-    # . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
+# . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
 # fi
 
 # tmux aliases
@@ -132,22 +132,22 @@ alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
 
 # kak() {
-    # command kak -clear
-    # server_name=$(command tmux display-message -p '#S')
-    # socket_file=$(command kak -l | grep $server_name)
+# command kak -clear
+# server_name=$(command tmux display-message -p '#S')
+# socket_file=$(command kak -l | grep $server_name)
 
-    # if [[ $socket_file == "" ]]; then
-        # # Create new kakoune daemon for current dir
-        # command kak -d -s $server_name >/dev/null 2>&1 </dev/null
-    # fi
+# if [[ $socket_file == "" ]]; then
+# # Create new kakoune daemon for current dir
+# command kak -d -s $server_name >/dev/null 2>&1 </dev/null
+# fi
 
-    # if [ $# -eq 0 ]; then
-        # # No arguments passed
-        # command kak -c $server_name -e 'edit -scratch *scratch*'
-    # else
-        # # and run kakoune (with any arguments passed to the script)
-        # command kak -c $server_name $@
-    # fi
+# if [ $# -eq 0 ]; then
+# # No arguments passed
+# command kak -c $server_name -e 'edit -scratch *scratch*'
+# else
+# # and run kakoune (with any arguments passed to the script)
+# command kak -c $server_name $@
+# fi
 #
 # }
 
@@ -163,7 +163,7 @@ alias ve="vim ~/.config/nvim/init.vim"
 alias :q="exit"
 alias :e="vim"
 
-export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --smart-case --hidden --fixed-strings --max-columns-preview --max-columns=\$(tput cols) --glob='!.git' --glob='!.DS_Store'"
+export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --smart-case --hidden --max-columns-preview --max-columns=\$(tput cols) --glob='!.git' --glob='!.DS_Store'"
 alias rg="rg $RG_FLAGS"
 alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
 
@@ -180,10 +180,10 @@ gifify() {
     if [[ -n "$1" ]]; then
         if [[ $2 == '--good' ]]; then
             ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
-            time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+            time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - >$1.gif
             rm out-static*.png
         else
-            ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+            ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 >$1.gif
         fi
     else
         echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
@@ -201,37 +201,37 @@ task-commit() {
 }
 
 update-julia() {
-  curl -LO https://julialangnightlies-s3.julialang.org/bin/mac/x64/julia-latest-mac64.dmg
-  hdiutil mount julia-latest-mac64.dmg
-  sleep 1
-  local path_to_julia_volume=$(find '/Volumes' -name 'Julia-*-DEV*')
-  local path_to_julia_app=$(find "$path_to_julia_volume" -name 'Julia-*.app')
-  echo $path_to_julia_app
-  rm -rf ~/Applications/Julia-nightly.app/
-  cp -R "$path_to_julia_app" ~/Applications/Julia-nightly.app
-  rm -rf julia-latest-mac64.dmg
-  hdiutil unmount "$path_to_julia_volume"
+    curl -LO https://julialangnightlies-s3.julialang.org/bin/mac/x64/julia-latest-mac64.dmg
+    hdiutil mount julia-latest-mac64.dmg
+    sleep 1
+    local path_to_julia_volume=$(find '/Volumes' -name 'Julia-*-DEV*')
+    local path_to_julia_app=$(find "$path_to_julia_volume" -name 'Julia-*.app')
+    echo $path_to_julia_app
+    rm -rf ~/Applications/Julia-nightly.app/
+    cp -R "$path_to_julia_app" ~/Applications/Julia-nightly.app
+    rm -rf julia-latest-mac64.dmg
+    hdiutil unmount "$path_to_julia_volume"
 }
 
 update-rust-analyzer() {
-  curl -LO https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-mac
-  rm -rf ~/local/bin/rust-analyzer
-  mv rust-analyzer-mac ~/local/bin/rust-analyzer
-  chmod +x ~/local/bin/rust-analyzer
+    curl -LO https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-mac
+    rm -rf ~/local/bin/rust-analyzer
+    mv rust-analyzer-mac ~/local/bin/rust-analyzer
+    chmod +x ~/local/bin/rust-analyzer
 }
 
 update-nvim() {
-  curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
-  tar xzvf nvim-macos.tar.gz
-  rm nvim-macos.tar.gz
-  rm -rf ~/local/nvim
-  mv nvim-osx64 ~/local/nvim/
+    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
+    tar xzvf nvim-macos.tar.gz
+    rm nvim-macos.tar.gz
+    rm -rf ~/local/nvim
+    mv nvim-osx64 ~/local/nvim/
 }
 
 function get_nextword_data() {
-  echo "Takes a long time to download..."
-  mkdir ~/local/dictionary
-  curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
+    echo "Takes a long time to download..."
+    mkdir ~/local/dictionary
+    curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
 }
 
 function c() {
