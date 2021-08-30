@@ -218,6 +218,8 @@ packer.startup({
       end,
     })
 
+    use({ "gennaro-tedesco/nvim-peekup" })
+
     use({
       "nvim-telescope/telescope.nvim",
       requires = {
