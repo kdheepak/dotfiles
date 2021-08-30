@@ -1,5 +1,9 @@
 -- For debugging purpose
 
+vim.cmd([[
+runtime! plugin/rplugin.vim
+]])
+
 require("kd/utils")
 
 -- Disable some unused built-in Neovim plugins

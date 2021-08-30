@@ -175,6 +175,8 @@ packer.startup({
 
     use({ "junegunn/fzf.vim" })
 
+    -- use({ "yuki-yano/fzf-preview.vim", branch = "release/remote", run = ":silent! UpdateRemotePlugins" })
+
     use({
       "ibhagwan/fzf-lua",
       requires = {
@@ -188,6 +190,7 @@ packer.startup({
           end,
         },
       },
+      event = "BufRead",
       config = function()
         require("fzf-lua").setup({
           previewers = { bat = { cmd = "bat", args = "", config = "~/.config/bat/config" } },
