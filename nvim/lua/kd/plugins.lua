@@ -207,6 +207,7 @@ packer.startup({
       event = "BufRead",
       setup = [[vim.g["asterisk#keeppos"] = 1]],
       config = function()
+        vim.opt.shortmess:append({ s = true, S = true })
         local noremap = require("kd/utils").noremap
         local map = require("kd/utils").map
         noremap("n", "<cmd>execute('normal! ' . v:count1 . 'n')<CR>zzzv", { silent = true })
