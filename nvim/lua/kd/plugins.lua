@@ -203,19 +203,17 @@ packer.startup({
     use("mfussenegger/nvim-dap")
 
     use({
-      "kevinhwang91/nvim-hlslens",
+      "haya14busa/vim-asterisk",
       event = "BufRead",
-      setup = [[vim.g.loaded_nvim_hlslens = 1]],
-      requires = {
-        {
-          "haya14busa/vim-asterisk",
-          config = function()
-            vim.g["asterisk#keeppos"] = 1
-          end,
-        }, -- asterisk.vim provides improved search * motions
-      },
       config = function()
-        require("kd/plugins/hlslens")
+        local noremap = require("kd/utils").noremap
+        local map = require("kd/utils").map
+        noremap("n", "<cmd>execute('normal! ' . v:count1 . 'n')<CR>zzzv", { silent = true })
+        noremap("N", "<cmd>execute('normal! ' . v:count1 . 'N')<CR>zzzv", { silent = true })
+        map("*", "<Plug>(asterisk-z*)")
+        map("#", "<Plug>(asterisk-z#)")
+        map("g*", "<Plug>(asterisk-gz*)")
+        map("g#", "<Plug>(asterisk-gz#)")
       end,
     })
 

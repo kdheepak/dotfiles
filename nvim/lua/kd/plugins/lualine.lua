@@ -67,6 +67,15 @@ Mode.update_status = function()
   end
 end
 
+local function HighlightSearchStatus()
+  local result = vim.fn.searchcount()
+  if result.total == 0 then
+    return ""
+  elseif result.incomplete == 2 then
+    return "[" .. result.current .. "/" .. result.total .. "]"
+  end
+end
+
 local sections = {
   lualine_a = { git_root, { "filename" } },
   lualine_b = { "branch" },
@@ -75,7 +84,7 @@ local sections = {
     require("lsp-status").status_progress,
     { "diagnostics", sources = { "nvim_lsp" } },
   },
-  lualine_y = { "progress" },
+  lualine_y = { HighlightSearchStatus, "progress" },
   lualine_z = { Mode.update_status },
 }
 
