@@ -205,6 +205,7 @@ packer.startup({
     use({
       "haya14busa/vim-asterisk",
       event = "BufRead",
+      setup = [[vim.g["asterisk#keeppos"] = 1]],
       config = function()
         local noremap = require("kd/utils").noremap
         local map = require("kd/utils").map
