@@ -88,4 +88,4 @@ local function todo(opts)
   return grep(opts)
 end
 
-nnoremap("<leader>fT", todo, { silent = true })
+nnoremap("<leader>fT", todo, { silent = true, label = "Todo comments" })

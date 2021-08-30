@@ -1,4 +1,5 @@
 local M = {}
+local wk = require("which-key")
 
 _G.kd = { g = {} }
 
@@ -68,6 +69,10 @@ function M._map(mode, lhs, rhs, opts)
   elseif buffer ~= nil then
     vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
   else
+    local t = {}
+    t[lhs] = { rhs, opts.label }
+    wk.register(t, vim.deepcopy(opts))
+    opts.label = nil
     vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
   end
 
