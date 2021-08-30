@@ -51,6 +51,21 @@ end
 
 kd.g.map_callbacks = {}
 
+local function which_key_map(mode, lhs, rhs, opts)
+  local wk_mappings = {}
+
+  wk_mappings[lhs] = { rhs, opts.label }
+
+  local wk_opts = {
+    mode = mode,
+    buffer = opts.buffer,
+    silent = opts.silent,
+    noremap = opts.noremap,
+  }
+
+  wk.register(wk_mappings, wk_opts)
+end
+
 function M._map(mode, lhs, rhs, opts)
   opts = opts or {}
   local rhs_type = type(rhs)
@@ -62,18 +77,25 @@ function M._map(mode, lhs, rhs, opts)
   elseif rhs_type ~= "string" then
     error("map(): unsupported rhs type: " .. rhs_type)
   end
+
   local buffer = opts.buffer
   opts.buffer = nil
+
   if buffer == true then
     vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
   elseif buffer ~= nil then
-    vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
+    if opts.label then
+      opts.buffer = buffer
+      which_key_map(mode, lhs, rhs, opts)
+    else
+      vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
+    end
   else
-    local t = {}
-    t[lhs] = { rhs, opts.label }
-    wk.register(t, vim.deepcopy(opts))
-    opts.label = nil
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    if opts.label then
+      which_key_map(mode, lhs, rhs, opts)
+    else
+      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    end
   end
 
   return {
