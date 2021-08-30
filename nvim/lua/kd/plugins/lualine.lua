@@ -68,12 +68,22 @@ Mode.update_status = function()
 end
 
 local function HighlightSearchStatus()
-  local result = vim.fn.searchcount()
-  if result.total == 0 then
+  if vim.v.hlsearch == 0 then
     return ""
-  elseif result.incomplete == 2 then
-    return "[" .. result.current .. "/" .. result.total .. "]"
   end
+  local result = vim.fn.searchcount({ recompute = 1 })
+  if vim.fn.empty(result) == 1 or result.total == 0 then
+    return ""
+  elseif result.incomplete == 1 then
+    return vim.fn.getreg("/") .. " [? // ??]"
+  elseif result.incomplete == 2 then
+    if result.total > result.maxcount and result.current > result.maxcount then
+      return vim.fn.getreg("/") .. " [" .. result.current .. "/" .. result.total .. "]"
+    elseif result.total > result.maxcount then
+      return vim.fn.getreg("/") .. " [" .. result.current .. "/" .. result.total .. "]"
+    end
+  end
+  return vim.fn.getreg("/") .. " [" .. result.current .. "/" .. result.total .. "]"
 end
 
 local sections = {

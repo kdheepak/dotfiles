@@ -211,14 +211,12 @@ packer.startup({
         local map = require("kd/utils").map
         noremap("n", "<cmd>execute('normal! ' . v:count1 . 'n')<CR>zzzv", { silent = true })
         noremap("N", "<cmd>execute('normal! ' . v:count1 . 'N')<CR>zzzv", { silent = true })
-        map("*", "<Plug>(asterisk-z*)")
-        map("#", "<Plug>(asterisk-z#)")
-        map("g*", "<Plug>(asterisk-gz*)")
-        map("g#", "<Plug>(asterisk-gz#)")
+        map("*", "<Plug>(asterisk-z*)", { silent = true })
+        map("#", "<Plug>(asterisk-z#)", { silent = true })
+        map("g*", "<Plug>(asterisk-gz*)", { silent = true })
+        map("g#", "<Plug>(asterisk-gz#)", { silent = true })
       end,
     })
-
-    use({ "gennaro-tedesco/nvim-peekup" })
 
     use({
       "nvim-telescope/telescope.nvim",
