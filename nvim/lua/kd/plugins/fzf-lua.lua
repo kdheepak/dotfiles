@@ -21,9 +21,6 @@ local get_grep_cmd = function(opts, search_query, no_esc)
     command = string.format("grep %s", opts.grep_opts)
   end
 
-  -- filename takes precedence over directory
-  -- filespec takes precedence over all and doesn't shellescape
-  -- this is so user can send a file populating command instead
   local search_path = ""
   if opts.filespec and #opts.filespec > 0 then
     search_path = opts.filespec
@@ -49,8 +46,6 @@ local grep = function(opts)
     opts.search = config._grep_last_search
   end
 
-  -- if user did not provide a search term
-  -- provide an input prompt
   if not opts.search or #opts.search == 0 then
     opts.search = vim.fn.input(opts.input_prompt)
   end
@@ -60,8 +55,6 @@ local grep = function(opts)
     return
   end
 
-  -- save the search query so the use can
-  -- call the same search again
   config._grep_last_search = opts.search
 
   local command = get_grep_cmd(opts, opts.search, true)
@@ -69,10 +62,6 @@ local grep = function(opts)
   opts.fzf_fn = fzf_helpers.cmd_line_transformer(command, function(x)
     return core.make_entry_file(opts, x)
   end)
-
-  --[[ opts.cb_selected = function(_, x)
-    return x
-  end ]]
 
   opts = core.set_fzf_line_args(opts)
   core.fzf_files(opts)
