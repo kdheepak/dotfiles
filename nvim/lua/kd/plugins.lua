@@ -205,6 +205,7 @@ packer.startup({
     use({
       "kevinhwang91/nvim-hlslens",
       event = "BufRead",
+      setup = [[vim.g.loaded_nvim_hlslens = 1]],
       requires = {
         {
           "haya14busa/vim-asterisk",
@@ -214,22 +215,7 @@ packer.startup({
         }, -- asterisk.vim provides improved search * motions
       },
       config = function()
-        local noremap = require("kd/utils").noremap
-        local map = require("kd/utils").map
-        noremap(
-          "n",
-          "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>zzzv",
-          { silent = true }
-        )
-        noremap(
-          "N",
-          "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zzzv",
-          { silent = true }
-        )
-        map("*", "<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>zzzv")
-        map("#", "<Plug>(asterisk-z#)<Cmd>lua require('hlslens').start()<CR>zzzv")
-        map("g*", "<Plug>(asterisk-gz*)<Cmd>lua require('hlslens').start()<CR>zzzv")
-        map("g#", "<Plug>(asterisk-gz#)<Cmd>lua require('hlslens').start()<CR>zzzv")
+        require("kd/plugins/hlslens")
       end,
     })
 
