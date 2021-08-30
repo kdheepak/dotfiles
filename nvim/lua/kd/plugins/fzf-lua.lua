@@ -2,16 +2,14 @@ local nnoremap = require("kd/utils").nnoremap
 local action = require("fzf.actions").action
 local core = require("fzf-lua.core")
 local utils = require("fzf-lua.utils")
+local grep = require("fzf-lua.providers.grep").grep
 local config = require("fzf-lua.config")
 local actions = require("fzf-lua.actions")
 local Config = require("todo-comments.config")
 local Highlight = require("todo-comments.highlight")
 local fzf_helpers = require("fzf.helpers")
 
-local get_grep_cmd = function(opts, search_query, no_esc)
-  if opts.raw_cmd and #opts.raw_cmd > 0 then
-    return opts.raw_cmd
-  end
+local get_grep_cmd = function(opts)
   local command = nil
   if opts.cmd and #opts.cmd > 0 then
     command = opts.cmd
@@ -30,50 +28,27 @@ local get_grep_cmd = function(opts, search_query, no_esc)
     search_path = vim.fn.shellescape(opts.cwd)
   end
 
-  if search_query == nil then
-    search_query = ""
-  elseif not no_esc then
-    search_query = '"' .. utils.rg_escape(search_query) .. '"'
-  end
+  local search_query = '"' .. opts.search .. '"'
 
   return string.format("%s %s %s", command, search_query, search_path)
-end
-
-local grep = function(opts)
-  opts = config.normalize_opts(opts, config.globals.grep)
-
-  if opts.continue_last_search or opts.repeat_last_search then
-    opts.search = config._grep_last_search
-  end
-
-  if not opts.search or #opts.search == 0 then
-    opts.search = vim.fn.input(opts.input_prompt)
-  end
-
-  if not opts.search or #opts.search == 0 then
-    utils.info("Please provide a valid search string")
-    return
-  end
-
-  config._grep_last_search = opts.search
-
-  local command = get_grep_cmd(opts, opts.search, true)
-
-  opts.fzf_fn = fzf_helpers.cmd_line_transformer(command, function(x)
-    return core.make_entry_file(opts, x)
-  end)
-
-  opts = core.set_fzf_line_args(opts)
-  core.fzf_files(opts)
-  opts.search = nil
 end
 
 local function todo(opts)
   if not opts then
     opts = {}
   end
+  opts = config.normalize_opts(opts, config.globals.grep)
+
   -- TODO: search better syntax highlighting for todo comments
-  opts.search = '"' .. Config.search_regex .. '"'
+  opts.search = Config.search_regex
+
+  opts.raw_cmd = get_grep_cmd(opts)
+
+  opts.no_header = true
+
+  opts.fzf_cli_args = opts.fzf_cli_args or ""
+  opts.fzf_cli_args = string.format([[%s --prompt="TodoComments>"]], opts.fzf_cli_args)
+
   return grep(opts)
 end
 
