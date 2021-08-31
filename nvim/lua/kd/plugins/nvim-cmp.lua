@@ -34,7 +34,9 @@ cmp.setup({
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping(function(fallback)
       local expandable = luasnip.expand_or_jumpable()
-      if vim.fn.pumvisible() == 1 then
+      if vim.fn.getbufvar(vim.fn.bufnr(), "&filetype") == "TelescopePrompt" then
+        return fallback()
+      elseif vim.fn.pumvisible() == 1 then
         local not_selected = vim.fn.complete_info({ "selected" }).selected == -1
         if not_selected then
           if expandable then
@@ -54,7 +56,9 @@ cmp.setup({
       "i",
     }),
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if vim.fn.pumvisible() == 1 then
+      if vim.fn.getbufvar(vim.fn.bufnr(), "&filetype") == "TelescopePrompt" then
+        fallback()
+      elseif vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T("<C-n>"), "n")
       elseif luasnip.expand_or_jumpable() then
         vim.fn.feedkeys(T("<Plug>luasnip-expand-or-jump"), "")
@@ -68,7 +72,9 @@ cmp.setup({
       "s",
     }),
     ["<S-tab>"] = cmp.mapping(function(fallback)
-      if vim.fn.pumvisible() == 1 then
+      if vim.fn.getbufvar(vim.fn.bufnr(), "&filetype") == "TelescopePrompt" then
+        fallback()
+      elseif vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T("<C-p>"), "n")
       elseif luasnip.jumpable(-1) then
         vim.fn.feedkeys(T("<Plug>luasnip-jump-prev"), "")
@@ -127,6 +133,11 @@ vim.schedule(function()
 end)
 
 augroup("KDLuaSnip", function()
+  autocmd("FileType", "TelescopePrompt", function()
+    require("cmp").setup.buffer({
+      completion = { autocomplete = false },
+    })
+  end)
   autocmd("InsertLeave", "*", function()
     local expandable = luasnip.expand_or_jumpable()
     if expandable then

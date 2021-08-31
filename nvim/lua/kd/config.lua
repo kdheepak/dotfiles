@@ -12,6 +12,9 @@ local command = utils.command
 local syntax = utils.syntax
 local highlight = utils.highlight
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- settings
 
 vim.cmd("syntax enable")

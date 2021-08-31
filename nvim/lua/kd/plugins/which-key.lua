@@ -63,7 +63,7 @@ wk.register({
   Y = { '"+Y', "Yank line to clipboard" },
   d = { '"+ygvd', "Cut line to clipboard" },
   g = { name = "Git", o = { "<cmd>'<,'>GBrowse<CR>", "Open file in browser" } },
-  f = { name = "Find", w = { ":lua require'fzf-lua'.grep_visual()<CR>", "Grep Visual" } },
+  -- f = { name = "Find", w = { ":lua require'fzf-lua'.grep_visual()<CR>", "Grep Visual" } },
 }, {
   mode = "v", -- NORMAL mode
   prefix = "<leader>",
@@ -174,25 +174,25 @@ local mappings = {
   --     S = { ":Telescope lsp_workspace_symbols<CR>", "lsp-workspace-symbols" },
   --   },
 
-  f = {
-    name = "Find",
-    b = { ":lua require'fzf-lua'.buffers()<CR>", "Buffers" },
-    l = { ":lua require'fzf-lua'.loclist()<CR>", "Location List" },
-    q = { ":lua require'fzf-lua'.quickfix()<CR>", "Quick Fix" },
-    c = { ":lua require'fzf-lua'.grep_curbuf()<CR>", "Grep Current Buffer" },
-    v = { ":lua require'fzf-lua'.grep_visual()<CR>", "Grep Visual" },
-    w = { ":lua require'fzf-lua'.grep_cword()<CR>", "Grep Cursor Word" },
-    g = { ":lua require'fzf-lua'.live_grep()<CR>", "Grep Live" },
-    f = { ":lua require'fzf-lua'.files()<CR>", "Files" },
-    h = { ":lua require'fzf-lua'.help_tags()<CR>", "Help" },
-    M = { ":lua require'fzf-lua'.man_pages()<CR>", "Man" },
-    m = { ":lua require'fzf-lua'.marks()<CR>", "Marks" },
-    t = { ":lua require'fzf-lua'.lsp_typedefs()<CR>", "Type Defs" },
-    r = { ":lua require'fzf-lua'.lsp_references()<CR>", "References" },
-    d = { ":lua require'fzf-lua'.lsp_definitions()<CR>", "Definitions" },
-    s = { ":lua require'fzf-lua'.lsp_workspace_symbols()<CR>", "Workspace Symbols" },
-  },
-
+  --   f = {
+  --     name = "Find",
+  --     b = { ":lua require'fzf-lua'.buffers()<CR>", "Buffers" },
+  --     l = { ":lua require'fzf-lua'.loclist()<CR>", "Location List" },
+  --     q = { ":lua require'fzf-lua'.quickfix()<CR>", "Quick Fix" },
+  --     c = { ":lua require'fzf-lua'.grep_curbuf()<CR>", "Grep Current Buffer" },
+  --     v = { ":lua require'fzf-lua'.grep_visual()<CR>", "Grep Visual" },
+  --     w = { ":lua require'fzf-lua'.grep_cword()<CR>", "Grep Cursor Word" },
+  --     g = { ":lua require'fzf-lua'.live_grep()<CR>", "Grep Live" },
+  --     f = { ":lua require'fzf-lua'.files()<CR>", "Files" },
+  --     h = { ":lua require'fzf-lua'.help_tags()<CR>", "Help" },
+  --     M = { ":lua require'fzf-lua'.man_pages()<CR>", "Man" },
+  --     m = { ":lua require'fzf-lua'.marks()<CR>", "Marks" },
+  --     t = { ":lua require'fzf-lua'.lsp_typedefs()<CR>", "Type Defs" },
+  --     r = { ":lua require'fzf-lua'.lsp_references()<CR>", "References" },
+  --     d = { ":lua require'fzf-lua'.lsp_definitions()<CR>", "Definitions" },
+  --     s = { ":lua require'fzf-lua'.lsp_workspace_symbols()<CR>", "Workspace Symbols" },
+  --   },
+  --
   s = {
     name = "Session",
     s = { ":SaveSession<CR>", "Save Session" },

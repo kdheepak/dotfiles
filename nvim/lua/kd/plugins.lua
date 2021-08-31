@@ -171,38 +171,6 @@ packer.startup({
 
     use("GutenYe/json5.vim")
 
-    use({ "junegunn/fzf", run = ":call fzf#install()" })
-
-    use({ "junegunn/fzf.vim" })
-
-    -- use({ "yuki-yano/fzf-preview.vim", branch = "release/remote", run = ":silent! UpdateRemotePlugins" })
-
-    use({
-      "ibhagwan/fzf-lua",
-      requires = {
-        { "kyazdani42/nvim-web-devicons" },
-        { "vijaymarupudi/nvim-fzf" },
-        {
-          "folke/todo-comments.nvim",
-          requires = "nvim-lua/plenary.nvim",
-          config = function()
-            require("todo-comments").setup({})
-          end,
-        },
-      },
-      event = "BufRead",
-      config = function()
-        require("fzf-lua").setup({
-          previewers = { bat = { cmd = "bat", args = "", config = "~/.config/bat/config" } },
-          async_or_timeout = 3000,
-          grep = {
-            rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --sort-files -g '!{.git,node_modules}/*'",
-          },
-        })
-        require("kd/plugins/fzf-lua")
-      end,
-    })
-
     use("mfussenegger/nvim-dap")
 
     use({
@@ -226,16 +194,16 @@ packer.startup({
       "nvim-telescope/telescope.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
+        { "nvim-lua/popup.nvim" },
+        { "crispgm/telescope-heading.nvim" },
+        { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+        { "nvim-telescope/telescope-dap.nvim" },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         { "nvim-telescope/telescope-github.nvim" },
         { "nvim-telescope/telescope-packer.nvim" },
-        { "nvim-telescope/telescope-fzf-writer.nvim" },
-        { "xiyaowong/telescope-emoji.nvim" },
         { "nvim-telescope/telescope-symbols.nvim" },
-        { "gbrlsnchs/telescope-lsp-handlers.nvim" },
         { "tamago324/telescope-openbrowser.nvim" },
-        { "crispgm/telescope-heading.nvim" },
-        { "nvim-telescope/telescope-dap.nvim" },
+        { "xiyaowong/telescope-emoji.nvim" },
       },
       config = function()
         require("kd/plugins/telescope")
