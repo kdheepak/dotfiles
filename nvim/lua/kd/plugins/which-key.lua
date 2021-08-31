@@ -105,7 +105,7 @@ nnoremap("<leader>gg", "<cmd>LazyGit<CR>", { label = "Git Status" })
 nnoremap("<leader>gC", "<cmd>Git commit<CR>", { label = "Git commit" })
 nnoremap("<leader>go", "<cmd>GBrowse<CR>", { label = "Open file in browser" })
 vnoremap("<leader>go", "<cmd>'<,'>GBrowse<CR>", { label = "Open file in browser" })
-nnoremap("<leader>gS", "<cmd>Git<CR>", { label = "Status" })
+nnoremap("<leader>gs", "<cmd>Git<CR>", { label = "Git Status" })
 nnoremap("<leader>gw", "<cmd>Gwrite<CR>", { label = "Stage" })
 nnoremap("<leader>gD", "<cmd>Gdiffsplit<CR>", { label = "Diff" })
 nnoremap("<leader>gd", "<cmd>DiffviewOpen<CR>", { label = "Diff ALL" })
@@ -141,9 +141,9 @@ end, {
   label = "Git Branches",
 })
 
-nnoremap("<leader>gs", function()
+nnoremap("<leader>gS", function()
   require("telescope.builtin").git_status({})
-end, { label = "Git Status" })
+end, { label = "Telescope Git Status" })
 
 nnoremap("<leader>s", { label = "+Session" })
 nnoremap("<leader>ss", ":SaveSession<CR>", { label = "Save Session" })
