@@ -250,12 +250,6 @@ packer.startup({
         { "hrsh7th/cmp-emoji" },
         { "hrsh7th/cmp-calc" },
         { "kdheepak/cmp-latex-symbols" },
-        {
-          "windwp/nvim-autopairs",
-          config = function()
-            require("nvim-autopairs").setup()
-          end,
-        },
       },
       config = function()
         require("kd/plugins/nvim-cmp")

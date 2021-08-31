@@ -1,4 +1,5 @@
 local M = {}
+local wk = require("which-key")
 
 _G.kd = { g = {} }
 
@@ -58,17 +59,59 @@ function M._map(mode, lhs, rhs, opts)
     key = M.get_key_for_fn(rhs, kd.g.map_callbacks)
     kd.g.map_callbacks[key] = rhs
     rhs = ":lua kd.g.map_callbacks." .. key .. "()<CR>"
+  elseif rhs_type == "table" then
+    if rhs.label == nil then
+      error("map(): unsupported rhs table")
+    end
+    opts.mode = mode
+    opts.nowait = false
+    opts.silent = opts.silent or false
+    local t = {}
+    t[lhs] = { name = rhs.label }
+    return wk.register(t, opts)
   elseif rhs_type ~= "string" then
     error("map(): unsupported rhs type: " .. rhs_type)
   end
 
+  local label = opts.label
   local buffer = opts.buffer
+  opts.label = nil
+
   if buffer == true then
-    vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
+    if label == nil then
+      vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
+    else
+      opts.mode = mode
+      opts.nowait = true
+      opts.buffer = vim.fn.bufnr()
+      opts.silent = opts.silent or false
+      local t = {}
+      t[lhs] = { rhs, opts.label }
+      wk.register(t, opts)
+    end
   elseif buffer ~= nil then
-    vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
+    if label == nil then
+      vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
+    else
+      opts.mode = mode
+      opts.nowait = true
+      opts.buffer = buffer
+      opts.silent = opts.silent or false
+      local t = {}
+      t[lhs] = { rhs, opts.label }
+      wk.register(t, opts)
+    end
   else
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    if label == nil then
+      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    else
+      opts.mode = mode
+      opts.nowait = false
+      opts.silent = opts.silent or false
+      local t = {}
+      t[lhs] = { rhs, label }
+      wk.register(t, opts)
+    end
   end
 
   return {
@@ -85,72 +128,72 @@ end
 
 function M.cnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.map(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.inoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.imap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.imap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.nnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.nmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.nmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.vnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.vmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.vmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.xnoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.xmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.xmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.snoremap(lhs, rhs, opts)
   opts = opts or {}
-  M.smap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.smap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.noremap(lhs, rhs, opts)
   opts = opts or {}
-  M.map(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+  return M.map(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
 function M.cmap(lhs, rhs, opts)
   opts = opts or {}
-  M._map("c", lhs, rhs, opts)
+  return M._map("c", lhs, rhs, opts)
 end
 
 function M.imap(lhs, rhs, opts)
   opts = opts or {}
-  M._map("i", lhs, rhs, opts)
+  return M._map("i", lhs, rhs, opts)
 end
 
 function M.nmap(lhs, rhs, opts)
   opts = opts or {}
-  M._map("n", lhs, rhs, opts)
+  return M._map("n", lhs, rhs, opts)
 end
 
 function M.xmap(lhs, rhs, opts)
   opts = opts or {}
-  M._map("x", lhs, rhs, opts)
+  return M._map("x", lhs, rhs, opts)
 end
 
 function M.smap(lhs, rhs, opts)
   opts = opts or {}
-  M._map("s", lhs, rhs, opts)
+  return M._map("s", lhs, rhs, opts)
 end
 
 function M.vmap(lhs, rhs, opts)
   opts = opts or {}
-  M._map("v", lhs, rhs, opts)
+  return M._map("v", lhs, rhs, opts)
 end
 
 function M.map(lhs, rhs, opts)
   opts = opts or {}
-  M._map("", lhs, rhs, opts)
+  return M._map("", lhs, rhs, opts)
 end
 
 kd.g.command_callbacks = {}

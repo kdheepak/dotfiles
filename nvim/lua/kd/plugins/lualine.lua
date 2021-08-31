@@ -67,6 +67,10 @@ Mode.update_status = function()
   end
 end
 
+local function ZoomToggleStatus()
+  return vim.fn["zoom#statusline"]()
+end
+
 local function HighlightSearchStatus()
   if vim.v.hlsearch == 0 then
     return ""
@@ -94,7 +98,7 @@ local sections = {
     require("lsp-status").status_progress,
     { "diagnostics", sources = { "nvim_lsp" } },
   },
-  lualine_y = { HighlightSearchStatus, "progress" },
+  lualine_y = { ZoomToggleStatus, HighlightSearchStatus, "progress" },
   lualine_z = { Mode.update_status },
 }
 
