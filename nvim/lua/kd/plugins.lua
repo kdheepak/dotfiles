@@ -205,6 +205,38 @@ packer.startup({
         { "tamago324/telescope-openbrowser.nvim" },
         { "xiyaowong/telescope-emoji.nvim" },
         { "nvim-telescope/telescope-bibtex.nvim" },
+        { "rmagatti/session-lens" },
+        { "DevonMorris/telescope-docker.nvim" },
+        { "tknightz/telescope-termfinder.nvim" },
+        { "xiyaowong/telescope-octo-commands.nvim" },
+        { "tkmpypy/telescope-jumps.nvim" },
+        {
+          "AckslD/nvim-neoclip.lua",
+          config = function()
+            require("neoclip").setup({
+              history = 1000,
+              filter = nil,
+              preview = true,
+              default_register = '"',
+              content_spec_column = false,
+              on_paste = {
+                set_reg = false,
+              },
+              keys = {
+                i = {
+                  select = "<cr>",
+                  paste = "<c-p>",
+                  paste_behind = "<c-k>",
+                },
+                n = {
+                  select = "<cr>",
+                  paste = "p",
+                  paste_behind = "P",
+                },
+              },
+            })
+          end,
+        },
       },
       config = function()
         require("kd/plugins/telescope")
@@ -212,6 +244,7 @@ packer.startup({
     })
 
     use({ "tyru/open-browser-github.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
+    use({ "tyru/open-browser-unicode.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
 
     use({ "vitalk/vim-shebang" })
 

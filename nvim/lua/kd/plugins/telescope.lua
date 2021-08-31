@@ -7,6 +7,13 @@ telescope.load_extension("gh")
 telescope.load_extension("lsp_handlers")
 telescope.load_extension("heading")
 telescope.load_extension("emoji")
+telescope.load_extension("neoclip")
+telescope.load_extension("session-lens")
+telescope.load_extension("openbrowser")
+telescope.load_extension("docker")
+telescope.load_extension("termfinder")
+telescope.load_extension("octo_commands")
+telescope.load_extension("jumps")
 
 telescope.setup({
   defaults = {
@@ -43,6 +50,18 @@ telescope.setup({
       override_file_sorter = true, -- override the file sorter
       case_mode = "smart_case", -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
+    },
+    lsp_handlers = {
+      code_action = {
+        telescope = require("telescope.themes").get_dropdown({}),
+      },
+    },
+    -- Add bookmark urls
+    openbrowser = {
+      bookmarks = {
+        ["luv docs"] = "https://github.com/luvit/luv/blob/master/docs.md",
+      },
+      bookmark_filepath = "~/config/nvim/telescope_openbrowser_bookamarks",
     },
   },
 })

@@ -161,7 +161,8 @@ end, {
 
 nnoremap("<leader>s", { label = "+Session" })
 nnoremap("<leader>ss", ":SaveSession<CR>", { label = "Save Session" })
-nnoremap("<leader>ss", ":silent! bufdo Bdelete<CR>:silent! RestoreSession<CR>", { label = "Load Session" })
+nnoremap("<leader>sL", ":SearchSession<CR>", { label = "Search Session" })
+nnoremap("<leader>sl", ":silent! bufdo Bdelete<CR>:silent! RestoreSession<CR>", { label = "Load Session" })
 
 nnoremap("<leader>d", { label = "Debug Adapter" })
 nnoremap("<leader>ds", { label = "+Step" })
@@ -232,6 +233,8 @@ function actions.fzf_multi_select(prompt_bufnr)
     actions.file_edit(prompt_bufnr)
   end
 end
+
+nnoremap("<leader>fo", "<cmd>lua require 'telescope'.extensions.openbrowser.list{}<CR>", { label = "Open Browser" })
 
 nnoremap("<leader>ft", "<cmd>TodoTelescope<CR>", { label = "Todos" })
 
