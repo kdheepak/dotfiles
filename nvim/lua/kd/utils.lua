@@ -372,29 +372,26 @@ M.check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
-function M.tablelength(T)
-  local count = 0
-  for _ in pairs(T) do
-    count = count + 1
-  end
-  return count
-end
-
 M.get_visual_selection = function()
-  -- must exit visual mode or program croaks
-  -- :visual leaves ex-mode back to normal mode
-  -- use 'gv' to reselect the text
   vim.cmd([[visual]])
-  local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
-  local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
-  local lines = vim.fn.getline(csrow, cerow)
-  -- local n = cerow-csrow+1
-  local n = M.tablelength(lines)
-  if n <= 0 then
-    return ""
+  local _, start_row, start_col, _ = unpack(vim.fn.getpos("'<"))
+  local _, end_row, end_col, _ = unpack(vim.fn.getpos("'>"))
+  if start_row > end_row or (start_row == end_row and start_col > end_col) then
+    start_row, end_row = end_row, start_row
+    start_col, end_col = end_col, start_col
   end
-  lines[n] = string.sub(lines[n], 1, cecol)
-  lines[1] = string.sub(lines[1], cscol)
+  P(start_row, start_col, end_row, end_col)
+  local lines = vim.fn.getline(start_row, end_row)
+  local n = 0
+  for _ in pairs(lines) do
+    n = n + 1
+  end
+  if n <= 0 then
+    return nil
+  end
+  lines[n] = string.sub(lines[n], 1, end_col)
+  lines[1] = string.sub(lines[1], start_col)
+  P(lines)
   return table.concat(lines, "\n")
 end
 
