@@ -210,33 +210,6 @@ packer.startup({
         { "tknightz/telescope-termfinder.nvim" },
         { "xiyaowong/telescope-octo-commands.nvim" },
         { "tkmpypy/telescope-jumps.nvim" },
-        {
-          "AckslD/nvim-neoclip.lua",
-          config = function()
-            require("neoclip").setup({
-              history = 1000,
-              filter = nil,
-              preview = true,
-              default_register = '"',
-              content_spec_column = false,
-              on_paste = {
-                set_reg = false,
-              },
-              keys = {
-                i = {
-                  select = "<cr>",
-                  paste = "<c-p>",
-                  paste_behind = "<c-k>",
-                },
-                n = {
-                  select = "<cr>",
-                  paste = "p",
-                  paste_behind = "P",
-                },
-              },
-            })
-          end,
-        },
       },
       config = function()
         require("kd/plugins/telescope")

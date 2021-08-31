@@ -236,6 +236,48 @@ end
 
 nnoremap("<leader>fo", "<cmd>lua require 'telescope'.extensions.openbrowser.list{}<CR>", { label = "Open Browser" })
 
+nnoremap("<leader>fr", function(opts)
+  opts = opts or {}
+  local make_entry = require("telescope.make_entry")
+  local sorters = require("telescope.sorters")
+  local pickers = require("telescope.pickers")
+  local finders = require("telescope.finders")
+
+  local registers_table = { '"', "_", "#", "=", "_", "/", "*", "+", ":", ".", "%" }
+
+  -- named
+  for i = 0, 9 do
+    table.insert(registers_table, tostring(i))
+  end
+
+  -- alphabetical
+  for i = 65, 90 do
+    table.insert(registers_table, string.char(i))
+  end
+
+  for i = 97, 123 do
+    table.insert(registers_table, string.char(i))
+  end
+
+  pickers.new(opts, {
+    prompt_title = "Registers",
+    finder = finders.new_table({
+      results = registers_table,
+      entry_maker = opts.entry_maker or make_entry.gen_from_registers(opts),
+    }),
+    -- use levenshtein as n-gram doesn't support <2 char matches
+    sorter = sorters.get_levenshtein_sorter(),
+    attach_mappings = function(_, map)
+      actions.select_default:replace(actions.paste_register)
+      map("i", "<C-e>", actions.edit_register)
+
+      return true
+    end,
+  }):find()
+end, {
+  label = "Registers",
+})
+
 nnoremap("<leader>ft", "<cmd>TodoTelescope<CR>", { label = "Todos" })
 
 nnoremap("<leader>fB", function()
