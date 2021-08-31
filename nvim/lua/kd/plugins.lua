@@ -559,6 +559,7 @@ packer.startup({
     use({
       "projekt0n/github-nvim-theme",
       config = function()
+        vim.g.background = "light"
         vim.g.termguicolors = true
         require("github-theme").setup({
           themeStyle = "light",

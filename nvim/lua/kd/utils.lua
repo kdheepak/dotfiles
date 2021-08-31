@@ -372,28 +372,33 @@ M.check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
-_G.command = M.command
-_G.cnoremap = M.cnoremap
-_G.inoremap = M.inoremap
-_G.nnoremap = M.nnoremap
-_G.vnoremap = M.vnoremap
-_G.xnoremap = M.xnoremap
-_G.snoremap = M.snoremap
-_G.noremap = M.noremap
-_G._map = M._map
-_G.map = M.map
-_G.cmap = M.cmap
-_G.imap = M.imap
-_G.nmap = M.nmap
-_G.xmap = M.xmap
-_G.smap = M.smap
-_G.vmap = M.vmap
-_G.augroup = M.augroup
-_G.autocmd = M.autocmd
+function M.tablelength(T)
+  local count = 0
+  for _ in pairs(T) do
+    count = count + 1
+  end
+  return count
+end
+
+M.get_visual_selection = function()
+  -- must exit visual mode or program croaks
+  -- :visual leaves ex-mode back to normal mode
+  -- use 'gv' to reselect the text
+  vim.cmd([[visual]])
+  local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
+  local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
+  local lines = vim.fn.getline(csrow, cerow)
+  -- local n = cerow-csrow+1
+  local n = M.tablelength(lines)
+  if n <= 0 then
+    return ""
+  end
+  lines[n] = string.sub(lines[n], 1, cecol)
+  lines[1] = string.sub(lines[1], cscol)
+  return table.concat(lines, "\n")
+end
+
 _G.T = M.T
 _G.P = M.P
-_G.setlocal = M.setlocal
-_G.syntax = M.syntax
-_G.highlight = M.highlight
 
 return M

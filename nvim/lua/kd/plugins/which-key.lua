@@ -238,6 +238,61 @@ end, {
   label = "Buffers",
 })
 
+local function file_browser()
+  local opts
+
+  opts = {
+    sorting_strategy = "ascending",
+    scroll_strategy = "cycle",
+    layout_config = {
+      prompt_position = "top",
+    },
+
+    attach_mappings = function(prompt_bufnr, map)
+      local current_picker = action_state.get_current_picker(prompt_bufnr)
+
+      local modify_cwd = function(new_cwd)
+        current_picker.cwd = new_cwd
+        current_picker:refresh(opts.new_finder(new_cwd), { reset_prompt = true })
+      end
+
+      map("i", "-", function()
+        modify_cwd(current_picker.cwd .. "/..")
+      end)
+
+      map("i", "~", function()
+        modify_cwd(vim.fn.expand("~"))
+      end)
+
+      local modify_depth = function(mod)
+        return function()
+          opts.depth = opts.depth + mod
+
+          local current_picker = action_state.get_current_picker(prompt_bufnr)
+          current_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
+        end
+      end
+
+      map("i", "<M-=>", modify_depth(1))
+      map("i", "<M-+>", modify_depth(-1))
+      map("i", "<cr>", actions.fzf_multi_select)
+
+      map("n", "yy", function()
+        local entry = action_state.get_selected_entry()
+        vim.fn.setreg("+", entry.value)
+      end)
+
+      return true
+    end,
+  }
+
+  require("telescope.builtin").file_browser(opts)
+end
+
+nnoremap("<leader>fH", function()
+  file_browser()
+end, { label = "File Browser" })
+
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
   if vim.loop.cwd() == vim.loop.os_homedir() then
@@ -247,11 +302,7 @@ nnoremap("<leader>ff", function(opts)
         "WarningMsg",
       },
     }, true, {})
-    opts.attach_mappings = function(_, map)
-      map("i", "<cr>", actions.fzf_multi_select)
-      return true
-    end
-    require("telescope.builtin").file_browser(opts)
+    file_browser()
   elseif vim.fn.isdirectory(vim.loop.cwd() .. "/.git") == 1 then
     opts.attach_mappings = function(_, map)
       map("i", "<cr>", actions.fzf_multi_select)
@@ -279,21 +330,108 @@ end, {
   silent = true,
 })
 
-nnoremap("<leader>fG", function(opts)
+nnoremap("<leader>fg", function(opts)
   opts = opts or {}
   opts.attach_mappings = function(_, map)
     map("i", "<cr>", actions.fzf_multi_select)
     return true
   end
-  require("telescope.builtin").grep_string(opts)
+  require("telescope.builtin").live_grep(opts)
+end, {
+  label = "Live Grep",
+  silent = true,
+})
+
+local grep_string = function(opts)
+  local conf = require("telescope.config").values
+  local vimgrep_arguments = opts.vimgrep_arguments or conf.vimgrep_arguments
+  local search_dirs = opts.search_dirs
+  local word = opts.search or vim.fn.expand("<cword>")
+
+  local escape_chars = function(string)
+    return string.gsub(string, "[%(|%)|\\|%[|%]|%-|%{%}|%?|%+|%*|%^|%$]", {
+      ["\\"] = "\\\\",
+      ["-"] = "\\-",
+      ["("] = "\\(",
+      [")"] = "\\)",
+      ["["] = "\\[",
+      ["]"] = "\\]",
+      ["{"] = "\\{",
+      ["}"] = "\\}",
+      ["?"] = "\\?",
+      ["+"] = "\\+",
+      ["*"] = "\\*",
+      ["^"] = "\\^",
+      ["$"] = "\\$",
+    })
+  end
+
+  local search = opts.use_regex and word or escape_chars(word)
+  local word_match = opts.word_match
+  local make_entry = require("telescope.make_entry")
+  opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
+
+  local additional_args = {}
+  if opts.additional_args ~= nil and type(opts.additional_args) == "function" then
+    additional_args = opts.additional_args(opts)
+  end
+
+  local args = vim.tbl_flatten({
+    vimgrep_arguments,
+    additional_args,
+    word_match,
+    search,
+  })
+
+  if search_dirs then
+    for _, path in ipairs(search_dirs) do
+      table.insert(args, vim.fn.expand(path))
+    end
+  else
+    table.insert(args, ".")
+  end
+
+  local pickers = require("telescope.pickers")
+  local finders = require("telescope.finders")
+  pickers.new(opts, {
+    prompt_title = "Find Word (" .. word .. ")",
+    finder = finders.new_oneshot_job(args, opts),
+    previewer = conf.grep_previewer(opts),
+    sorter = conf.generic_sorter(opts),
+  }):find()
+end
+
+vnoremap("<leader>fw", function(opts)
+  opts = opts or {}
+  opts.attach_mappings = function(_, map)
+    map("i", "<cr>", actions.fzf_multi_select)
+    return true
+  end
+  opts.search = require("kd/utils").get_visual_selection()
+  grep_string(opts)
+end, {
+  label = "Grep String",
+  silent = true,
+})
+
+nnoremap("<leader>fw", function(opts)
+  opts = opts or {}
+  opts.attach_mappings = function(_, map)
+    map("i", "<cr>", actions.fzf_multi_select)
+    return true
+  end
+  opts.search = vim.fn.expand("<cword>")
+  grep_string(opts)
 end, {
   label = "Grep String",
   silent = true,
 })
 
 nnoremap("<leader>fh", function()
-  require("telescope.builtin").help_tags({ lang = "en" })
-end, { label = "Help Tags" })
+  require("telescope.builtin").help_tags({ show_version = true, lang = "en" })
+end, {
+  label = "Help Tags",
+})
 
 nnoremap("<leader>fP", function()
   require("telescope").load_extension("packer").plugins({})
