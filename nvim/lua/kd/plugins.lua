@@ -389,6 +389,14 @@ packer.startup({
 
     use({ "dhruvasagar/vim-zoom", event = "BufRead" }) -- toggle zoom of current window within the current tab
 
+    use({
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup({})
+      end,
+    })
+
     -- use({ "kana/vim-niceblock", event = "BufRead" }) -- makes blockwise Visual mode more loadful and intuitive
 
     use({ "mbbill/undotree", event = "BufRead" }) -- visualizes undo history and makes it easier to browse and switch between different undo branches

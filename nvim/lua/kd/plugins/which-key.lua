@@ -211,6 +211,8 @@ function actions.fzf_multi_select(prompt_bufnr)
   end
 end
 
+nnoremap("<leader>ft", "<cmd>TodoTelescope<CR>", { label = "Todos" })
+
 nnoremap("<leader>fB", function()
   require("telescope.builtin").current_buffer_fuzzy_find({})
 end, {
@@ -289,7 +291,7 @@ end, {
 })
 
 nnoremap("<leader>fs", function()
-  require("telescope.builtin").symbols({ sources = { "emoji", "kaomoji", "gitmoji" } })
+  require("telescope.builtin").symbols({ sources = { "emoji", "kaomoji", "gitmoji", "latex", "math" } })
 end, {
   label = "Symbols",
 })
@@ -338,12 +340,17 @@ end, {
   label = "Diagnostics",
 })
 
+nnoremap("<leader>ld", function()
+  require("telescope.builtin").lsp_definitions({})
+end, {
+  label = "Definitions",
+})
+
 nnoremap("<leader>l]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { label = "Next Diagnostic" })
 nnoremap("<leader>l[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { label = "Previous Diagnostic" })
 nnoremap("<leader>ll", "<cmd>Trouble<CR>", { label = "Trouble" })
 nnoremap("<leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>", { label = "Rename" })
-nnoremap("<leader>ld", "<cmd>lua vim.lsp.buf.declaration()<CR>", { label = "Declaration" })
-nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.definition()<CR>", { label = "Definition" })
+nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { label = "Declaration" })
 nnoremap("<leader>lt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { label = "Type Definition" })
 nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", { label = "Hover Doc" })
 nnoremap("<leader>lH", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { label = "Signature" })
@@ -359,3 +366,23 @@ nnoremap("<leader>vm", "<cmd>TSHighlightCapturesUnderCursor<CR>", { label = "Sho
 nnoremap("<leader>ve", "<cmd>e $MYVIMRC<CR>", { label = "Open VIMRC" })
 nnoremap("<leader>vs", "<cmd>luafile $MYVIMRC<CR>", { label = "Source VIMRC" })
 nnoremap("<leader>vz", "<cmd>e ~/.zshrc<CR>", { label = "Open ZSHRC" })
+nnoremap("<Leader>vv", function()
+  require("telescope.builtin").find_files({
+    prompt_title = " Search Config Files ",
+    prompt_prefix = "   ",
+    cwd = "~/.config/nvim",
+  })
+end, {
+  label = "Config files",
+})
+
+nnoremap("<Leader>vg", function()
+  local themes = require("telescope.themes")
+  require("telescope.builtin").file_browser(themes.get_dropdown({
+    prompt_title = "Search Repos",
+    prompt_prefix = "  ",
+    cwd = "~/gitrepos",
+  }))
+end, {
+  label = "Search git repos",
+})

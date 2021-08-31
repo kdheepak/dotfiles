@@ -21,9 +21,10 @@ telescope.setup({
         ["<C-v>"] = actions.select_vertical,
         ["<C-x>"] = actions.select_horizontal,
         ["<C-t>"] = actions.select_tab,
-        ["<C-u>"] = actions.preview_scrolling_up,
-        ["<C-d>"] = actions.preview_scrolling_down,
-        ["<C-q>"] = actions.send_to_qflist,
+        ["<C-y>"] = actions.preview_scrolling_up,
+        ["<C-e>"] = actions.preview_scrolling_down,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-d>"] = actions.delete_buffer,
       },
     },
     layout_config = {
