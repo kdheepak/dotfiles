@@ -130,8 +130,16 @@ nnoremap("<leader>g%", function()
 end, { label = "Git Buffer Commits" })
 
 nnoremap("<leader>gr", function()
-  require("telescope.builtin").git_branches({})
-end, { label = "Git Branches" })
+  local actions = require("telescope.actions")
+  require("telescope.builtin").git_branches({
+    attach_mappings = function(_, map)
+      map("i", "<c-d>", actions.git_delete_branch)
+      return true
+    end,
+  })
+end, {
+  label = "Git Branches",
+})
 
 nnoremap("<leader>gs", function()
   require("telescope.builtin").git_status({})
@@ -220,8 +228,15 @@ end, {
 })
 
 nnoremap("<Leader>fb", function()
-  require("telescope.builtin").buffers({})
-end, { label = "Buffers" })
+  require("telescope.builtin").buffers({
+    attach_mappings = function(_, map)
+      map("i", "<C-d>", actions.delete_buffer)
+      return true
+    end,
+  })
+end, {
+  label = "Buffers",
+})
 
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
