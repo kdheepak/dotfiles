@@ -375,14 +375,21 @@ nnoremap("<Leader>vv", function()
 end, {
   label = "Config files",
 })
-
+nnoremap("<Leader>v.", function()
+  require("telescope.builtin").find_files({
+    prompt_title = "Search Dotfiles",
+    prompt_prefix = "  ",
+    cwd = "~/gitrepos/dotfiles",
+  })
+end, {
+  label = "Search git repos",
+})
 nnoremap("<Leader>vg", function()
-  local themes = require("telescope.themes")
-  require("telescope.builtin").file_browser(themes.get_dropdown({
+  require("telescope.builtin").find_files({
     prompt_title = "Search Repos",
     prompt_prefix = "  ",
     cwd = "~/gitrepos",
-  }))
+  })
 end, {
   label = "Search git repos",
 })
