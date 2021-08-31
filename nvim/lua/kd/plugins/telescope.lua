@@ -19,6 +19,7 @@ telescope.setup({
   defaults = {
     mappings = {
       i = {
+        ["<C-c>"] = false,
         ["<C-j>"] = actions.move_selection_worse,
         ["<C-k>"] = actions.move_selection_better,
         ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
@@ -32,6 +33,9 @@ telescope.setup({
         ["<C-e>"] = actions.preview_scrolling_down,
         ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
         ["<C-d>"] = actions.delete_buffer,
+        ["<C-H>"] = actions.move_to_top,
+        ["<C-M>"] = actions.move_to_middle,
+        ["<C-L>"] = actions.move_to_bottom,
       },
     },
     layout_config = {
