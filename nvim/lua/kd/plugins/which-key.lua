@@ -101,12 +101,14 @@ nnoremap("<leader>gB", "<cmd>Git blame<CR>", { label = "Git Blame" })
 nnoremap("<leader>gp", "<cmd>Git push<CR>", { label = "Git Push" })
 nnoremap("<leader>gP", "<cmd>Git pull<CR>", { label = "Git Pull" })
 nnoremap("<leader>gr", "<cmd>GRemove<CR>", { label = "Git Remove" })
-nnoremap("<leader>gg", "<cmd>LazyGit<CR>", { label = "Git Status" })
+nnoremap("<leader>gg", "<cmd>LazyGit<CR>", { label = "LazyGit" })
 nnoremap("<leader>gC", "<cmd>Git commit<CR>", { label = "Git commit" })
 nnoremap("<leader>go", "<cmd>GBrowse<CR>", { label = "Open file in browser" })
 vnoremap("<leader>go", "<cmd>'<,'>GBrowse<CR>", { label = "Open file in browser" })
 nnoremap("<leader>gs", "<cmd>Git<CR>", { label = "Git Status" })
 nnoremap("<leader>gw", "<cmd>Gwrite<CR>", { label = "Stage" })
+
+nnoremap("<leader>gd", { label = "Diff" })
 nnoremap("<leader>gD", "<cmd>Gdiffsplit<CR>", { label = "Diff" })
 nnoremap("<leader>gd", "<cmd>DiffviewOpen<CR>", { label = "Diff ALL" })
 nnoremap("<leader>gdt", ":call difftoggle#DiffToggle(1)<CR>", { label = "Diff toggle left" })
@@ -114,6 +116,8 @@ nnoremap("<leader>gdt", ":call difftoggle#DiffToggle(2)<CR>", { label = "Diff to
 nnoremap("<leader>gdt", ":call difftoggle#DiffToggle(3)<CR>", { label = "Diff toggle right" })
 nnoremap("<leader>gdu", ":diffupdate<CR>", { label = "Diff update" })
 nnoremap("<leader>gdc", [[/\v^[<=>]{7}( .*\|$)<CR>]], { label = "Show commit markers" })
+
+nnoremap("<leader>gh", { label = "Hunk" })
 nnoremap("<leader>ghs", '<cmd>lua require"gitsigns".stage_hunk()<CR>', { label = "Stage Hunk" })
 nnoremap("<leader>ghu", '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>', { label = "Undo Stage Hunk" })
 nnoremap("<leader>ghr", '<cmd>lua require"gitsigns".reset_hunk()<CR>', { label = "Reset Hunk" })
@@ -121,15 +125,29 @@ nnoremap("<leader>ghR", '<cmd>lua require"gitsigns".reset_buffer()<CR>', { label
 nnoremap("<leader>ghp", '<cmd>lua require"gitsigns".preview_hunk()<CR>', { label = "Preview Hunk" })
 nnoremap("<leader>ghb", '<cmd>lua require"gitsigns".blame_line(true)<CR>', { label = "Blame line" })
 
-nnoremap("<leader>gc", function()
+nnoremap("<leader>gt", { label = "Telescope" })
+
+nnoremap("<leader>gts", function()
+  require("telescope.builtin").git_status({})
+end, { label = "Git Status" })
+
+nnoremap("<leader>gtp", function()
+  require("telescope").extensions.gh.issues()
+end, { label = "Git Issues" })
+
+nnoremap("<leader>gti", function()
+  require("telescope").extensions.gh.issues()
+end, { label = "Git Issues" })
+
+nnoremap("<leader>gtc", function()
   require("telescope.builtin").git_commits({})
 end, { label = "Git Commits" })
 
-nnoremap("<leader>g%", function()
+nnoremap("<leader>gtb", function()
   require("telescope.builtin").git_bcommits({})
 end, { label = "Git Buffer Commits" })
 
-nnoremap("<leader>gr", function()
+nnoremap("<leader>gtr", function()
   local actions = require("telescope.actions")
   require("telescope.builtin").git_branches({
     attach_mappings = function(_, map)
@@ -140,10 +158,6 @@ nnoremap("<leader>gr", function()
 end, {
   label = "Git Branches",
 })
-
-nnoremap("<leader>gS", function()
-  require("telescope.builtin").git_status({})
-end, { label = "Telescope Git Status" })
 
 nnoremap("<leader>s", { label = "+Session" })
 nnoremap("<leader>ss", ":SaveSession<CR>", { label = "Save Session" })

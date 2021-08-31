@@ -204,6 +204,7 @@ packer.startup({
         { "nvim-telescope/telescope-symbols.nvim" },
         { "tamago324/telescope-openbrowser.nvim" },
         { "xiyaowong/telescope-emoji.nvim" },
+        { "nvim-telescope/telescope-bibtex.nvim" },
       },
       config = function()
         require("kd/plugins/telescope")
