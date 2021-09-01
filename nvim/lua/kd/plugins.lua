@@ -220,12 +220,10 @@ packer.startup({
     use({
       "lukas-reineke/indent-blankline.nvim",
       config = function()
-        require("indent_blankline").setup({
-          space_char_blankline = " ",
-          show_current_context = true,
-        })
+        require("indent_blankline").setup({})
       end,
     })
+
     use({ "tyru/open-browser-github.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
     use({ "tyru/open-browser-unicode.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
 
