@@ -216,6 +216,7 @@ packer.startup({
       end,
     })
 
+    -- use("lukas-reineke/indent-blankline.nvim")
     use({ "tyru/open-browser-github.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
     use({ "tyru/open-browser-unicode.vim", requires = { { "tyru/open-browser.vim" } }, event = "BufRead" }) -- opens github repo or github issue in browser
 
