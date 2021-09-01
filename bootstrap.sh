@@ -80,7 +80,7 @@ ln -s "$(pwd)/batconfig" ~/.config/bat/config
 rm -rf ~/.config/bat/bin/preview_fzf_grep
 ln -s "$(pwd)/preview_fzf_grep" ~/.config/bat/bin/preview_fzf_grep
 rm -rf ~/local/bin/irg
-ln -s "$(pwd)/fzf/irg" ~/local/bin/fzf/irg
+ln -s "$(pwd)/fzf/irg" ~/local/bin/irg
 rm -rf ~/.tmux/plugins/tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # tic -x xterm-256color-italic.terminfo
