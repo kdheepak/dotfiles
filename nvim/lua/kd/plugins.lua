@@ -199,6 +199,7 @@ packer.startup({
         { "gbrlsnchs/telescope-lsp-handlers.nvim" },
         { "nvim-telescope/telescope-dap.nvim" },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+        { "nvim-telescope/telescope-fzf-writer.nvim" },
         { "nvim-telescope/telescope-github.nvim" },
         { "nvim-telescope/telescope-packer.nvim" },
         { "nvim-telescope/telescope-symbols.nvim" },

@@ -2,6 +2,7 @@ local telescope = require("telescope")
 local actions = require("telescope.actions")
 
 telescope.load_extension("fzf")
+telescope.load_extension("fzf_writer")
 telescope.load_extension("dap")
 telescope.load_extension("gh")
 telescope.load_extension("lsp_handlers")
@@ -65,6 +66,11 @@ telescope.setup({
         ["luv docs"] = "https://github.com/luvit/luv/blob/master/docs.md",
       },
       bookmark_filepath = "~/config/nvim/telescope_openbrowser_bookamarks",
+    },
+    fzf_writer = {
+      minimum_grep_characters = 0,
+      minimum_files_characters = 0,
+      use_highlighter = true,
     },
   },
 })

@@ -196,6 +196,8 @@ export FZF_TMUX_HEIGHT='65%'
 
 zinit load Aloxaf/fzf-tab
 
+zinit load wfxr/forgit
+
 # zstyle ':fzf-tab:*' show-group full
 # zstyle ':fzf-tab:*' single-group ''
 # zstyle ':fzf-tab:*' single-group color $'\033[30m'
