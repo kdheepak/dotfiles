@@ -312,8 +312,22 @@ nnoremap("<leader>fH", function()
   file_browser()
 end, { label = "File Browser" })
 
+local function is_inside_git_directory()
+  local Job = require("plenary.job")
+  local _, ret = Job
+    :new({
+      command = "git",
+      args = { "rev-parse", "--is-inside-work-tree" },
+    })
+    :sync() -- or start()
+  return ret == 0
+end
+
 nnoremap("<leader>ff", function(opts)
+  opts = opts or {}
   if vim.fn.isdirectory(vim.loop.cwd() .. "/.git") == 1 then
+    require("fzf-lua").git_files(opts)
+  elseif require("kd/utils").is_git_repo() then
     require("fzf-lua").git_files(opts)
   else
     require("fzf-lua").files(opts)

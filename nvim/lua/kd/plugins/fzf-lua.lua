@@ -46,7 +46,6 @@ require("fzf-lua").setup({
     },
   },
   files = {
-    prompt = "Files❯ ",
     actions = {
       ["default"] = edit_or_qf,
     },

@@ -76,6 +76,7 @@ function M._map(mode, lhs, rhs, opts)
   local label = opts.label
   local buffer = opts.buffer
   opts.label = nil
+  opts.buffer = nil
 
   if buffer == true then
     if label == nil then
@@ -393,6 +394,15 @@ M.get_visual_selection = function()
   lines[1] = string.sub(lines[1], start_col)
   P(lines)
   return table.concat(lines, "\n")
+end
+
+function M.is_git_repo()
+  local output = vim.fn.systemlist("git rev-parse --is-inside-work-tree")
+  if vim.v.shell_error ~= 0 then
+    P(unpack(output))
+    return false
+  end
+  return true
 end
 
 _G.T = M.T
