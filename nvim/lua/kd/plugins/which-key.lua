@@ -125,36 +125,30 @@ nnoremap("<leader>ghR", '<cmd>lua require"gitsigns".reset_buffer()<CR>', { label
 nnoremap("<leader>ghp", '<cmd>lua require"gitsigns".preview_hunk()<CR>', { label = "Preview Hunk" })
 nnoremap("<leader>ghb", '<cmd>lua require"gitsigns".blame_line(true)<CR>', { label = "Blame line" })
 
-nnoremap("<leader>gt", { label = "Telescope" })
+nnoremap("<leader>gf", { label = "Fuzzy" })
 
-nnoremap("<leader>gts", function()
-  require("telescope.builtin").git_status({})
+nnoremap("<leader>gfs", function()
+  require("fzf-lua").git_status({})
 end, { label = "Git Status" })
 
-nnoremap("<leader>gtp", function()
+nnoremap("<leader>gfp", function()
   require("telescope").extensions.gh.issues()
 end, { label = "Git Issues" })
 
-nnoremap("<leader>gti", function()
+nnoremap("<leader>gfi", function()
   require("telescope").extensions.gh.issues()
 end, { label = "Git Issues" })
 
-nnoremap("<leader>gtc", function()
-  require("telescope.builtin").git_commits({})
+nnoremap("<leader>gfc", function()
+  require("fzf-lua").git_commits({})
 end, { label = "Git Commits" })
 
-nnoremap("<leader>gtb", function()
-  require("telescope.builtin").git_bcommits({})
+nnoremap("<leader>gfb", function()
+  require("fzf-lua").git_bcommits({})
 end, { label = "Git Buffer Commits" })
 
-nnoremap("<leader>gtr", function()
-  local actions = require("telescope.actions")
-  require("telescope.builtin").git_branches({
-    attach_mappings = function(_, map)
-      map("i", "<c-d>", actions.git_delete_branch)
-      return true
-    end,
-  })
+nnoremap("<leader>gfr", function()
+  require("fzf-lua").git_branches({})
 end, {
   label = "Git Branches",
 })
@@ -236,62 +230,28 @@ end
 
 nnoremap("<leader>fo", "<cmd>lua require 'telescope'.extensions.openbrowser.list{}<CR>", { label = "Open Browser" })
 
-nnoremap("<leader>fr", function(opts)
-  opts = opts or {}
-  local make_entry = require("telescope.make_entry")
-  local sorters = require("telescope.sorters")
-  local pickers = require("telescope.pickers")
-  local finders = require("telescope.finders")
-
-  local registers_table = { '"', "_", "#", "=", "_", "/", "*", "+", ":", ".", "%" }
-
-  -- named
-  for i = 0, 9 do
-    table.insert(registers_table, tostring(i))
-  end
-
-  -- alphabetical
-  for i = 65, 90 do
-    table.insert(registers_table, string.char(i))
-  end
-
-  for i = 97, 123 do
-    table.insert(registers_table, string.char(i))
-  end
-
-  pickers.new(opts, {
-    prompt_title = "Registers",
-    finder = finders.new_table({
-      results = registers_table,
-      entry_maker = opts.entry_maker or make_entry.gen_from_registers(opts),
-    }),
-    -- use levenshtein as n-gram doesn't support <2 char matches
-    sorter = sorters.get_levenshtein_sorter(),
-    attach_mappings = function(_, map)
-      actions.select_default:replace(actions.paste_register)
-      map("i", "<C-e>", actions.edit_register)
-
-      return true
-    end,
-  }):find()
-end, {
+nnoremap("<leader>fr", "<cmd>lua require 'fzf-lua'.registers{}<CR>", {
   label = "Registers",
+})
+
+nnoremap("<leader>fk", "<cmd>lua require 'fzf-lua'.keymaps{}<CR>", {
+  label = "Keymaps",
 })
 
 nnoremap("<leader>ft", "<cmd>TodoTelescope<CR>", { label = "Todos" })
 
 nnoremap("<leader>fB", function()
-  require("telescope.builtin").current_buffer_fuzzy_find({})
+  require("fzf-lua").blines({})
 end, {
   label = "Current Buffer",
 })
 
 nnoremap("<Leader>fb", function()
-  require("telescope.builtin").buffers({
-    attach_mappings = function(_, map)
-      map("i", "<C-d>", actions.delete_buffer)
-      return true
-    end,
+  require("fzf-lua").buffers({
+    -- attach_mappings = function(_, map)
+    --   map("i", "<C-d>", actions.delete_buffer)
+    --   return true
+    -- end,
   })
 end, {
   label = "Buffers",
@@ -353,29 +313,10 @@ nnoremap("<leader>fH", function()
 end, { label = "File Browser" })
 
 nnoremap("<leader>ff", function(opts)
-  opts = opts or {}
-  if vim.loop.cwd() == vim.loop.os_homedir() then
-    vim.api.nvim_echo({
-      {
-        "find_files on $HOME is danger. Launch file_browser instead.",
-        "WarningMsg",
-      },
-    }, true, {})
-    file_browser()
-  elseif vim.fn.isdirectory(vim.loop.cwd() .. "/.git") == 1 then
-    opts.attach_mappings = function(_, map)
-      map("i", "<cr>", actions.fzf_multi_select)
-      return true
-    end
-    require("telescope.builtin").git_files(opts)
+  if vim.fn.isdirectory(vim.loop.cwd() .. "/.git") == 1 then
+    require("fzf-lua").git_files(opts)
   else
-    -- add hidden files to find_files
-    opts.hidden = true
-    opts.attach_mappings = function(_, map)
-      map("i", "<cr>", actions.fzf_multi_select)
-      return true
-    end
-    require("telescope.builtin").find_files(opts)
+    require("fzf-lua").files(opts)
   end
 end, {
   label = "Files",
@@ -383,7 +324,7 @@ end, {
 })
 
 nnoremap("<leader>f:", function()
-  require("telescope.builtin").command_history({})
+  require("fzf-lua").command_history({})
 end, {
   label = "Command History",
   silent = true,
@@ -395,7 +336,7 @@ nnoremap("<leader>fg", function(opts)
     map("i", "<cr>", actions.fzf_multi_select)
     return true
   end
-  require("telescope.builtin").live_grep(opts)
+  require("fzf-lua").live_grep(opts)
 end, {
   label = "Live Grep",
   silent = true,
@@ -461,33 +402,21 @@ local grep_string = function(opts)
 end
 
 vnoremap("<leader>fw", function(opts)
-  opts = opts or {}
-  opts.attach_mappings = function(_, map)
-    map("i", "<cr>", actions.fzf_multi_select)
-    return true
-  end
-  opts.search = require("kd/utils").get_visual_selection()
-  grep_string(opts)
+  require("fzf-lua").grep_visual(opts)
 end, {
   label = "Grep String",
   silent = true,
 })
 
 nnoremap("<leader>fw", function(opts)
-  opts = opts or {}
-  opts.attach_mappings = function(_, map)
-    map("i", "<cr>", actions.fzf_multi_select)
-    return true
-  end
-  opts.search = vim.fn.expand("<cword>")
-  grep_string(opts)
+  require("fzf-lua").grep_cWORD(opts)
 end, {
   label = "Grep String",
   silent = true,
 })
 
 nnoremap("<leader>fh", function()
-  require("telescope.builtin").help_tags({ show_version = true, lang = "en" })
+  require("fzf-lua").help_tags()
 end, {
   label = "Help Tags",
 })
@@ -497,65 +426,71 @@ nnoremap("<leader>fP", function()
 end, { label = "Packer" })
 
 nnoremap("<leader>fm", function()
-  require("telescope.builtin").man_pages({ sections = { "ALL" } })
+  require("fzf-lua").man_pages({ sections = { "ALL" } })
 end, {
   label = "Man pages",
 })
 
 nnoremap("<leader>fs", function()
-  require("telescope.builtin").symbols({ sources = { "emoji", "kaomoji", "gitmoji", "latex", "math" } })
+  require("fzf-lua").spell_suggest()
 end, {
-  label = "Symbols",
+  label = "Spell suggest",
 })
 
 nnoremap("<leader>l", { label = "+LSP" })
 
 nnoremap("<leader>lr", function()
-  require("telescope.builtin").lsp_references({})
+  require("fzf-lua").lsp_references({})
 end, { label = "References" })
 
+nnoremap("<leader>ld", function()
+  require("fzf-lua").lsp_definitions({})
+end, {
+  label = "Definitions",
+})
+
+nnoremap("<leader>lD", function()
+  require("fzf-lua").lsp_declarations({})
+end, {
+  label = "Declarations",
+})
+
 nnoremap("<leader>li", function()
-  require("telescope.builtin").lsp_implementations({})
+  require("fzf-lua").lsp_implementations({})
 end, { label = "Implementation" })
 
 nnoremap("<leader>ls", function()
-  require("telescope.builtin").lsp_document_symbols({})
+  require("fzf-lua").lsp_document_symbols({})
 end, {
   label = "Document Symbols",
 })
 
 nnoremap("<leader>lS", function()
-  require("telescope.builtin").lsp_workspace_symbols({})
+  require("fzf-lua").lsp_workspace_symbols({})
 end, {
   label = "Workspace Symbols",
 })
 
-nnoremap("<leader>la", function()
-  require("telescope.builtin").lsp_code_actions({})
-end, { label = "Code actions" })
-
-vnoremap("<leader>la", function()
-  require("telescope.builtin").lsp_range_code_actions({})
+nnoremap("<leader>lt", function()
+  require("fzf-lua").lsp_typedefs({})
 end, {
-  label = "Code actions",
+  label = "Type definitions",
 })
 
+nnoremap("<leader>la", function()
+  require("fzf-lua").lsp_code_actions({})
+end, { label = "Code actions" })
+
 nnoremap("<leader>lg", function()
-  require("telescope.builtin").lsp_document_diagnostics({})
+  require("fzf-lua").lsp_document_diagnostics({})
 end, {
   label = "Diagnostics",
 })
 
 nnoremap("<leader>lG", function()
-  require("telescope.builtin").lsp_document_diagnostics({})
+  require("fzf-lua").lsp_workspace_diagnostics({})
 end, {
   label = "Diagnostics",
-})
-
-nnoremap("<leader>ld", function()
-  require("telescope.builtin").lsp_definitions({})
-end, {
-  label = "Definitions",
 })
 
 nnoremap("<leader>l]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { label = "Next Diagnostic" })

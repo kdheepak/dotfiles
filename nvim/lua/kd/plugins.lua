@@ -191,6 +191,17 @@ packer.startup({
     })
 
     use({
+      "ibhagwan/fzf-lua",
+      requires = {
+        "vijaymarupudi/nvim-fzf",
+        "kyazdani42/nvim-web-devicons",
+      },
+      config = function()
+        require("kd/plugins/fzf-lua")
+      end,
+    })
+
+    use({
       "nvim-telescope/telescope.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
