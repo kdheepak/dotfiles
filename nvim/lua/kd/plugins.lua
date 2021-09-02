@@ -10,14 +10,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute("packadd packer.nvim")
 end
 
-function M.reload_config()
-  vim.cmd("source ~/.config/nvim/init.lua")
-  vim.cmd("source ~/.config/nvim/lua/kd/plugins.lua")
-  vim.cmd(":PackerCompile")
-  -- vim.cmd(":PackerClean")
-  -- vim.cmd(":PackerInstall")
-end
-
 local packer = require("packer")
 local use = packer.use
 
@@ -40,8 +32,6 @@ packer.startup({
         require("kd/plugins/fzf-lua")
       end,
     })
-
-
 
   end,
   config = { display = { open_fn = require("packer.util").float } },
