@@ -116,7 +116,7 @@ augroup("KDAutocmds", function()
 
   autocmd("FileType", "gitcommit,gitrebase,gitconfig", "setl bufhidden=delete")
 
-  autocmd("FocusGained", "*", "silent! :checktime")
+  -- autocmd("FocusGained", "*", "silent! :checktime")
 
   autocmd("BufWinEnter", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o")
 

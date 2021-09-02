@@ -316,19 +316,9 @@ nnoremap("<leader>fH", function()
   file_browser()
 end, { label = "File Browser" })
 
-local function is_inside_git_directory()
-  local Job = require("plenary.job")
-  local _, ret = Job
-    :new({
-      command = "git",
-      args = { "rev-parse", "--is-inside-work-tree" },
-    })
-    :sync() -- or start()
-  return ret == 0
-end
-
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
+  -- opts.cwd = require("kd/utils").get_git_directory()
   require("fzf-lua").files(opts)
 end, {
   label = "Files",
@@ -421,7 +411,7 @@ end, {
 })
 
 nnoremap("<leader>fw", function(opts)
-  require("fzf-lua").grep_cWORD(opts)
+  require("fzf-lua").grep_cword(opts)
 end, {
   label = "Grep String",
   silent = true,

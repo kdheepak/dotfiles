@@ -396,13 +396,19 @@ M.get_visual_selection = function()
   return table.concat(lines, "\n")
 end
 
-function M.is_git_repo()
-  local output = vim.fn.systemlist("git rev-parse --is-inside-work-tree")
-  if vim.v.shell_error ~= 0 then
-    P(unpack(output))
-    return false
+function M.get_git_directory()
+  local Job = require("plenary.job")
+  local s, ret = Job
+    :new({
+      command = "git",
+      args = { "rev-parse", "--show-superproject-working-tree", "--show-toplevel" },
+    })
+    :sync()
+  if ret == 0 then
+    return s[1]
+  else
+    return nil
   end
-  return true
 end
 
 _G.T = M.T
