@@ -131,6 +131,10 @@ nnoremap("<leader>gfs", function()
   require("fzf-lua").git_status({})
 end, { label = "Git Status" })
 
+nnoremap("<leader>gff", function()
+  require("fzf-lua").git_files({})
+end, { label = "Git Files" })
+
 nnoremap("<leader>gfp", function()
   require("telescope").extensions.gh.issues()
 end, { label = "Git Issues" })
@@ -325,12 +329,7 @@ end
 
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
-  if require("kd/utils").is_git_repo() then
-    opts.cwd = vim.fn.system("git rev-parse --show-superproject-working-tree --show-toplevel"):gsub("\n", "")
-    require("fzf-lua").files(opts)
-  else
-    require("fzf-lua").files(opts)
-  end
+  require("fzf-lua").files(opts)
 end, {
   label = "Files",
   silent = true,
