@@ -325,7 +325,12 @@ end
 
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
-  require("fzf-lua").files(opts)
+  if require("kd/utils").is_git_repo() then
+    opts.cwd = vim.fn.system("git rev-parse --show-superproject-working-tree --show-toplevel"):gsub("\n", "")
+    require("fzf-lua").files(opts)
+  else
+    require("fzf-lua").files(opts)
+  end
 end, {
   label = "Files",
   silent = true,
