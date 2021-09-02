@@ -28,9 +28,6 @@ packer.startup({
         "vijaymarupudi/nvim-fzf",
         "kyazdani42/nvim-web-devicons",
       },
-      config = function()
-        require("kd/plugins/fzf-lua")
-      end,
     })
 
   end,
