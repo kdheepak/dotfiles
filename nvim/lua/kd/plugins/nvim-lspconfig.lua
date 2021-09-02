@@ -95,7 +95,6 @@ vim.lsp.handlers["textDocument/documentSymbol"] = require("lsputil.symbols").doc
 vim.lsp.handlers["workspace/symbol"] = require("lsputil.symbols").workspace_handler
 
 augroup("LSPDiagVistaNearest", function()
-  autocmd("VimEnter", "*", "call vista#RunForNearestMethodOrFunction()")
   autocmd("CursorHold", "*", function()
     vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
   end)

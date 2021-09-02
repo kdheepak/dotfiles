@@ -1,5 +1,5 @@
 local M = {}
-local wk = require("which-key")
+local wk, err = pcall(require, "which-key")
 
 _G.kd = { g = {} }
 
@@ -68,7 +68,9 @@ function M._map(mode, lhs, rhs, opts)
     opts.silent = opts.silent or false
     local t = {}
     t[lhs] = { name = rhs.label }
-    return wk.register(t, opts)
+		if wk then
+    	return wk.register(t, opts)
+		end
   elseif rhs_type ~= "string" then
     error("map(): unsupported rhs type: " .. rhs_type)
   end
@@ -82,36 +84,48 @@ function M._map(mode, lhs, rhs, opts)
     if label == nil then
       vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
     else
-      opts.mode = mode
-      opts.nowait = true
-      opts.buffer = vim.fn.bufnr()
-      opts.silent = opts.silent or false
-      local t = {}
-      t[lhs] = { rhs, opts.label }
-      wk.register(t, opts)
+			if wk then
+				opts.mode = mode
+				opts.nowait = true
+				opts.buffer = vim.fn.bufnr()
+				opts.silent = opts.silent or false
+				local t = {}
+				t[lhs] = { rhs, opts.label }
+      	wk.register(t, opts)
+			else
+      	vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
+			end
     end
   elseif buffer ~= nil then
     if label == nil then
       vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
     else
-      opts.mode = mode
-      opts.nowait = true
-      opts.buffer = buffer
-      opts.silent = opts.silent or false
-      local t = {}
-      t[lhs] = { rhs, opts.label }
-      wk.register(t, opts)
+			if wk then
+				opts.mode = mode
+				opts.nowait = true
+				opts.buffer = buffer
+				opts.silent = opts.silent or false
+				local t = {}
+				t[lhs] = { rhs, opts.label }
+				wk.register(t, opts)
+			else
+      	vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
+			end
     end
   else
     if label == nil then
       vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
     else
-      opts.mode = mode
-      opts.nowait = false
-      opts.silent = opts.silent or false
-      local t = {}
-      t[lhs] = { rhs, label }
-      wk.register(t, opts)
+			if wk then
+				opts.mode = mode
+				opts.nowait = false
+				opts.silent = opts.silent or false
+				local t = {}
+				t[lhs] = { rhs, label }
+				wk.register(t, opts)
+			else
+      	vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+			end
     end
   end
 

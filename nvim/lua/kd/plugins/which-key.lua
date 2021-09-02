@@ -67,10 +67,6 @@ nnoremap("<leader>Y", '"+Y', { label = "Yank line to clipboard" })
 
 nnoremap("<leader>v:", "<cmd>Telescope commands<CR>", { label = "Vim commands" })
 
-nnoremap("<leader>/", "<cmd>ToggleTerm direction=horizontal<CR>", { label = "Split terminal horizontally" })
-
-nnoremap("<leader>\\", "<cmd>ToggleTerm direction=vertical<CR>", { label = "Split terminal vertically" })
-
 nnoremap("<C-w>/", "<cmd>split<CR>", { label = "Split window horizontally" })
 nnoremap("<C-w>\\", "<cmd>vsplit<CR>", { label = "Split window vertically" })
 nnoremap("<C-w>z", "<cmd>call zoom#toggle()<CR>", { label = "Zoom toggle" })
@@ -318,7 +314,8 @@ end, { label = "File Browser" })
 
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
-  -- opts.cwd = require("kd/utils").get_git_directory()
+  opts.cwd = "~/gitrepos/dotfiles/"
+  -- opts.git_icons = false
   require("fzf-lua").files(opts)
 end, {
   label = "Files",
