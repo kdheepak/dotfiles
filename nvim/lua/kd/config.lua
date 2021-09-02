@@ -1,4 +1,3 @@
-print("hello")
 -- local utils = require("kd/utils")
 -- local augroup = utils.augroup
 -- local autocmd = utils.autocmd
