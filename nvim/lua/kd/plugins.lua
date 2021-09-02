@@ -129,12 +129,12 @@ packer.startup({
         },
         { "folke/lsp-colors.nvim" },
         { "simrat39/rust-tools.nvim" },
-        {
-          "ray-x/lsp_signature.nvim",
-          config = function()
-            require("lsp_signature").setup({})
-          end,
-        },
+        -- {
+        --   "ray-x/lsp_signature.nvim",
+        --   config = function()
+        --     require("lsp_signature").setup({})
+        --   end,
+        -- },
         {
           "kosayoda/nvim-lightbulb",
           config = function()

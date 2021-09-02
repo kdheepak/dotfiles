@@ -107,7 +107,7 @@ lsp_status.register_progress()
 local lspconfig = require("lspconfig")
 
 local function on_attach_vim(client, bufnr)
-  require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
+  -- require("lsp_signature").on_attach({ bind = true, floating_window = true, fix_pos = true, hint_enable = true })
   require("lsp-status").on_attach(client)
 
   local opts = { silent = true, buffer = bufnr }

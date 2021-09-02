@@ -94,6 +94,7 @@ vim.o.winminwidth = cmdheight * 2
 vim.o.shortmess = "filnxtToOfcI" --  Shut off completion and intro messages
 vim.o.scrolloff = 10 --  show 10 lines above and below
 vim.o.number = true
+vim.o.relativenumber = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
 vim.o.autoread = true

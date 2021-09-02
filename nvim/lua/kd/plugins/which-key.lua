@@ -325,13 +325,7 @@ end
 
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
-  if vim.fn.isdirectory(vim.loop.cwd() .. "/.git") == 1 then
-    require("fzf-lua").git_files(opts)
-  elseif require("kd/utils").is_git_repo() then
-    require("fzf-lua").git_files(opts)
-  else
-    require("fzf-lua").files(opts)
-  end
+  require("fzf-lua").files(opts)
 end, {
   label = "Files",
   silent = true,

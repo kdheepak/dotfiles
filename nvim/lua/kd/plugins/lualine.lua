@@ -17,7 +17,7 @@ local theme = {
   visual = { a = { bg = "#949800", fg = "#ffffff" }, b = { bg = "#f6f8fa", fg = "#949800" } },
 }
 
-function git_root()
+local function git_root()
   local original_current_dir = vim.fn.expand("%:p:h")
   local current_dir = original_current_dir
   while true do
@@ -31,10 +31,6 @@ function git_root()
     end
   end
   return original_current_dir
-end
-
-local function VistaNearestMethodOrFunction()
-  return vim.b.vista_nearest_method_or_function or ""
 end
 
 local Mode = require("lualine.component"):new()
@@ -92,13 +88,22 @@ end
 
 local sections = {
   lualine_a = { git_root, { "filename" } },
-  lualine_b = { "branch" },
-  lualine_c = { VistaNearestMethodOrFunction },
-  lualine_x = {
+  lualine_b = {
+    "branch",
+    "diff",
+    { "diagnostics", sources = { "nvim_lsp", "coc" } },
     require("lsp-status").status_progress,
-    { "diagnostics", sources = { "nvim_lsp" } },
   },
-  lualine_y = { ZoomToggleStatus, HighlightSearchStatus, "progress" },
+  lualine_c = {
+    function()
+      return " "
+    end,
+  },
+  lualine_x = {
+    ZoomToggleStatus,
+    HighlightSearchStatus,
+  },
+  lualine_y = { "progress", "location" },
   lualine_z = { Mode.update_status },
 }
 
@@ -120,8 +125,16 @@ require("lualine").setup({
   inactive_sections = {
     lualine_a = {},
     lualine_b = { git_root, { "filename", path = 1 } },
-    lualine_c = {},
-    lualine_x = {},
+    lualine_c = {
+      function()
+        return " "
+      end,
+    },
+    lualine_x = {
+      function()
+        return " "
+      end,
+    },
     lualine_y = { "progress", "mode" },
     lualine_z = {},
   },
