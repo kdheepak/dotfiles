@@ -1,0 +1,77 @@
+verbosity = 2
+
+[server]
+# exit session if no requests were received during given period in seconds
+# works only in unix sockets mode (-s/--session)
+# set to 0 to disable
+timeout = 1800 # seconds = 30 minutes
+
+[language.rust]
+extensions = ["rs"]
+roots = ["Cargo.toml"]
+command = "rls"
+
+[language.javascript]
+extensions = ["js", "jsx"]
+roots = ["package.json"]
+command = "flow"
+args = ["lsp"]
+
+[language.json]
+extensions = ["json"]
+roots = ["package.json"]
+command = "json-languageserver"
+args = ["--stdio"]
+
+[language.css]
+extensions = ["css"]
+roots = ["package.json"]
+command = "css-languageserver"
+args = ["--stdio"]
+
+[language.html]
+extensions = ["html"]
+roots = ["package.json"]
+command = "html-languageserver"
+args = ["--stdio"]
+
+[language.ocaml]
+extensions = ["ml", "mli"]
+roots = ["Makefile", "opam", "*.opam"]
+command = "ocaml-language-server"
+args = ["--stdio"]
+
+[language.reason]
+extensions = ["re", "rei"]
+roots = ["package.json", "Makefile", ".git", ".hg"]
+command = "ocaml-language-server"
+args = ["--stdio"]
+
+[language.python]
+extensions = ["py"]
+roots = ["requirements.txt", "setup.py", ".git", ".hg"]
+command = "pyls"
+
+[language.c_cpp]
+extensions = ["c", "h", "cc", "hh", "cpp", "hpp"]
+roots = ["compile_commands.json", ".cquery"]
+command = "cquery"
+args = ["--init={\"cacheDirectory\":\"/tmp/cquery\"}"]
+
+[language.haskell]
+extensions = ["hs"]
+roots = ["Setup.hs", "stack.yaml", "*.cabal"]
+command = "hie"
+args = ["--lsp"]
+
+[language.go]
+extensions = ["go"]
+roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
+command = "go-langserver"
+args = ["-mode", "stdio", "-gocodecompletion"]
+
+[language.bash]
+extensions = ["sh", "bash", "zsh"]
+roots = [".git", ".hg"]
+command = "bash-language-server"
+args = ["start"]

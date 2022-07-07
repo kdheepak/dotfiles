@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -e
+
+FILENAME="${1}"
+
+if [ ! -e "${FILENAME}" ]; then
+  git show HEAD^:${FILENAME}
+  exit 0
+fi
+
+case $(file --mime-type -b "${FILENAME}") in
+  inode/directory)
+    exa --git -lFha --group-directories-first --no-user --color=always "${FILENAME}"
+    ;;
+
+  image/*g)
+    if [ "$(command -v viu)" ]; then
+      catimg -w $((${FZF_PREVIEW_COLUMNS} - 2)) ${FILENAME}
+    else
+      echo ${FILENAME}
+    fi
+    ;;
+
+  application/zip)
+    zip -sf ${FILENAME}
+    ;;
+
+  *)
+    bat --color=always --terminal-width ${FZF_PREVIEW_COLUMNS} --style "numbers,changes" ${FILENAME} 2> /dev/null
+    ;;
+esac

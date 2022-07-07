@@ -1,0 +1,5 @@
+# dotfiles
+
+```
+./bootstrap.sh
+```

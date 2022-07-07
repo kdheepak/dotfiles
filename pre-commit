@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import re
+import os
+import sys
+from pre_commit import color
+
+
+def hex2rgb(h):
+    h = h.lstrip("#")
+    return ";".join(list(str(int(h[i : i + 2], 16)) for i in (0, 2, 4)))
+
+
+def true_color(foreground, background):
+    return "\x1b[38;2;{foreground}m\x1b[48;2;{background}m".format(foreground=hex2rgb(foreground), background=hex2rgb(background))
+
+
+color.RED = "  {}{}".format("\x1b[1m", true_color(os.environ["POWERLEVEL10K_BLACK"], os.environ["POWERLEVEL10K_RED"]))
+color.GREEN = "  {}".format("\x1b[3m")  # true_color(os.environ["POWERLEVEL10K_BLACK"], os.environ["POWERLEVEL10K_GREEN"]))
+color.YELLOW = true_color(os.environ["POWERLEVEL10K_BLACK"], os.environ["POWERLEVEL10K_YELLOW"])
+color.TURQUOISE = "  {}{}".format("\x1b[9m", true_color(os.environ["POWERLEVEL10K_FOREGROUND"], os.environ["POWERLEVEL10K_BACKGROUND"]))
+
+from pre_commit.main import main
+
+if __name__ == "__main__":
+    sys.argv[0] = re.sub(r"(-script\.pyw|\.exe)?$", "", sys.argv[0])
+    sys.exit(main())

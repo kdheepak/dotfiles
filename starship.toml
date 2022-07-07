@@ -1,0 +1,174 @@
+"$schema" = "https://starship.rs/config-schema.json"
+add_newline = false
+format = """
+╭─$directory$git_branch$git_state$git_status[](fg:#45475A) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all
+╰ \
+"""
+continuation_prompt = " "
+
+[line_break]
+disabled = true
+
+[fill]
+symbol = "·"
+style = "fg:#9399b2"
+
+[username] # only shows if we are in ssh
+style_user = "fg:#ff79c6"
+style_root = "red"
+format = "[▮](blue)[$user]($style)"
+show_always = false
+
+[hostname]
+ssh_only = true
+trim_at = "."
+style = "fg:#ff79c6"
+format = "[@](blue)[$hostname]($style)"
+
+[directory]
+style = "bg:#89B4FA fg:#181825"
+format = "[ $path ]($style)[](fg:#89B4FA bg:#45475A)"
+repo_root_style = "bold bg:#89B4FA fg:#181825"
+repo_root_format = "[ $before_root_path]($style)[$repo_root  ]($repo_root_style)[$path]($style)[$read_only]($read_only_style)[](fg:#89B4FA bg:#45475A)"
+fish_style_pwd_dir_length = 1
+truncation_length = 1
+truncate_to_repo = false
+read_only = " "
+
+[git_branch]
+symbol = " " # ""
+style = "bg:#45475A fg:#89B4FA"
+format = "[ $symbol$branch]($style)"
+
+[git_state]
+style = "bg:#45475A fg:#89B4FA"
+format = "[ ($state( $progress_current/$progress_total))]($style)"
+
+[git_status]
+style = "bg:#45475A fg:#89B4FA"
+format = "[ $all_status$ahead_behind]($style)"
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇡${ahead_count}⇣${behind_count} "
+up_to_date = ""
+untracked = "${count} "
+modified = "●${count} "
+staged = "${count} "
+deleted = "${count} "
+stashed = "${count} "
+renamed = "✎${count} "
+conflicted = "ﲅ${count} "
+
+[time]
+disabled = false
+style = "bg:#89B4FA fg:#181825"
+format = "[](fg:#89B4FA)[ $time ]($style)"
+
+[character]
+success_symbol = "[](bg:#89B4FA fg:#89B4FA)[✔ ](bg:#89B4FA fg:#181825)"
+error_symbol = "[](bg:#89B4FA fg:#fab387)[ ✘ ](bg:#fab387 fg:#181825)"
+format = "$symbol"
+
+[aws]
+symbol = "  "
+format = " [$symbol($version )]($style)"
+
+[buf]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[c]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[conda]
+symbol = " "
+format = " [$symbol$environment ]($style)"
+ignore_base = false
+disabled = false
+
+[dart]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[docker_context]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[elixir]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[elm]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[golang]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[haskell]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[lua]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[julia]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[nix_shell]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[nodejs]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[package]
+symbol = " "
+format = " [$symbol($version )](208 bold)"
+
+[python]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[spack]
+symbol = "🅢 "
+format = " [$symbol($version )]($style)"
+
+[rust]
+symbol = " "
+format = " [$symbol($version )]($style)"
+
+[custom.direnv_allowed]
+description = "Direnv allowed"
+command = "echo -n 'direnv '"
+when = "direnv status | grep -q 'Found RC allowed true'"
+format = " [$output ]($style)$symbol"
+style = "bold green"
+
+[custom.direnv_denied]
+description = "Direnv denied"
+command = "echo -n 'direnv '"
+when = "direnv status | grep -q 'Found RC allowed false'"
+format = " [$output ]($style)$symbol"
+style = "bold red"
+
+[cmd_duration]
+format = " [$duration ]($style)"

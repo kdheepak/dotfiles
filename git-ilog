@@ -1,0 +1,54 @@
+#!/bin/zsh
+
+# check fzf install
+is_fuzzy_installed() {
+    type fzf > /dev/null
+}
+if ! is_fuzzy_installed; then
+    echo "'fzf' not found"
+    echo "please install from: https://github.com/junegunn/fzf"
+    return 1
+fi
+
+# check inside tree
+is_inside_work_tree() {
+    git rev-parse --is-inside-work-tree > /dev/null
+}
+if ! is_inside_work_tree; then
+    return 1
+fi
+
+# external plugins
+(( $+commands[diff-so-fancy] )) && fancy='| diff-so-fancy'
+(( $+commands[emojify] )) && emojify='| emojify'
+
+local logline_to_hash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+local show_log="$logline_to_hash | xargs -I % sh -c 'git show --color=always %' $fancy"
+
+# clipboard
+if type pbcopy > /dev/null; then # osx
+    local clipboard=pbcopy
+elif type xsel > /dev/null; then # x11
+    local clipboard=xsel
+elif type xclip > /dev/null; then # x11
+    local clipboard=xclip
+fi
+
+# output format
+local print_format=$(git config --global ilog.format 2> /dev/null)
+if [ -z $print_format ]; then
+    print_format=${GIT_ILOG_FORMAT:-%C(auto)%h%d %s %C(black)%C(bold)%cr%C(reset)}
+fi
+
+# commands
+eval "git log --graph --color=always --format='$print_format' $@ $emojify" |
+    fzf --no-sort \
+        --reverse \
+        --tiebreak=index \
+        --no-multi \
+        --ansi \
+        --preview $show_log \
+        --header "enter to view, ctrl-y to copy hash" \
+        --bind "enter:execute:$show_log $emojify | less -R" \
+        --bind "ctrl-y:execute:$logline_to_hash | $clipboard" \
+    || true

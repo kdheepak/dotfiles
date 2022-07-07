@@ -1,0 +1,4 @@
+ssl_verify: false
+auto_activate_base: false
+anaconda_upload: false
+changeps1: false

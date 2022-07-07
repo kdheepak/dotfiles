@@ -1,0 +1,55 @@
+{
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": [
+        "c",
+        "cpp",
+        "cuda",
+        "objc",
+        "objcpp"
+      ],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      },
+      "rootPatterns": [
+        ".ccls-root",
+        "compile_commands.json"
+      ]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": [
+        "lua"
+      ]
+    },
+    "nim": {
+      "command": "nimlsp",
+      "filetypes": [
+        "nim"
+      ]
+    },
+    "vimls": {
+      "args": [
+        "--stdio"
+      ],
+      "command": "vim-language-server",
+      "filetypes": [
+        "vim"
+      ],
+      "initializationOptions": {
+        "diagnostic": {
+          "enable": true
+        },
+        "iskeyword": "vim iskeyword option",
+        "runtimepath": "vim/runtime/path",
+        "vimruntime": "path/to/$VIMRUNTIME"
+      }
+    }
+  }
+}

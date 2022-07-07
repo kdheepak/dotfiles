@@ -1,0 +1,208 @@
+#!/usr/bin/env bash
+
+alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
+
+# Shortcuts
+alias G="cd ~/gitrepos"
+
+alias ls="exa --git -lFha --group-directories-first --no-user"
+alias lg=lazygit
+
+# List only directories
+alias lsd="exa -lhF --no-user | grep --color=never '^d'"
+
+alias cat="bat --color=always"
+
+alias nn="nnn"
+
+alias ...="../../"
+alias ....="../../../"
+alias .....="../../../../"
+alias ......="../../../../../"
+alias .......="../../../../../../"
+alias ........="../../../../../../../"
+alias .........="../../../../../../../../"
+
+alias mv='mv -iv'
+alias cp='cp -iv'
+alias mkdir='mkdir -pv'
+alias tree="exa --tree"
+
+# Get week number
+alias week='date +%V'
+
+# Stopwatch
+# alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# Flush Directory Service cache
+# alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+# alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+# View HTTP traffic
+# alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+# alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# Canonical hex dump; some systems have this symlinked
+# command -v hd > /dev/null || alias hd="hexdump -C"
+
+# OS X has no `md5sum`, so use `md5` as a fallback
+# command -v md5sum > /dev/null || alias md5sum="md5"
+
+# OS X has no `sha1sum`, so use `shasum` as a fallback
+# command -v sha1sum > /dev/null || alias sha1sum="shasum"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Empty the Trash on all mounted volumes and the main HDD
+# Also, clear Apple’s System Logs to improve shell startup speed
+# alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+
+# Show/hide hidden files in Finder
+# alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+# alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Hide/show all desktop icons (useful when presenting)
+# alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+# alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+
+# URL-encode strings
+# alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+# Merge PDF files
+# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+# Disable Spotlight
+# alias spotoff="sudo mdutil -a -i off"
+# Enable Spotlight
+# alias spoton="sudo mdutil -a -i on"
+
+# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+# alias plistbuddy="/usr/libexec/PlistBuddy"
+
+# Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
+# (useful when executing time-consuming commands)
+alias badge="tput bel"
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# One of @janmoesen’s ProTip™s
+# for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+# alias "$method"="lwp-request -m '$method'"
+# done
+
+# Make Grunt print stack traces by default
+# command -v grunt > /dev/null && alias grunt="grunt --stack"
+
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+# alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
+
+alias cdg='cd $(git root)'
+alias cdv='cd ~/gitrepos/dotfiles/nvim'
+alias cdd='cd ~/gitrepos/dotfiles'
+alias cdn='cd ~/gitrepos/notes'
+alias cdr='cd ~/gitrepos'
+
+# tmux aliases
+alias ta='tmux attach'
+alias tls='tmux ls'
+alias tat='tmux attach -t'
+alias tns='tmux new-session -s'
+
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+  alias vi=nvr -cc split --remote-wait +'set bufhidden=wipe'
+else
+  alias vi=nvim
+fi
+
+alias e=vi
+alias vim=vi
+alias ve="vim ~/.config/nvim/init.vim"
+alias :q="exit"
+alias :e="vim"
+
+export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --smart-case --hidden --max-columns-preview --max-columns=\$(tput cols) --glob='!.git' --glob='!.DS_Store'"
+alias rg="rg $RG_FLAGS"
+alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
+
+alias julia-bleeding="$HOME/gitrepos/julia/usr/bin/julia"
+alias julia-nightly="$HOME/Applications/Julia-nightly.app/Contents/Resources/julia/bin/julia"
+alias julia-stable="$HOME/Applications/Julia-1.7.app/Contents/Resources/julia/bin/julia"
+alias julia="julia-nightly --color=yes"
+
+alias fast-julia="julia-bleeding --color=yes --startup-file=no"
+alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
+
+gifify() {
+  if [[ -n "$1" ]]; then
+    if [[ $2 == '--good' ]]; then
+      ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
+      time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+      rm out-static*.png
+    else
+      ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+    fi
+  else
+    echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
+  fi
+}
+
+task-commit() {
+  (
+    cd ~/gitrepos/task || return
+    git add .
+    git commit -m "Update files" --no-verify -q
+    git pull -q
+    git push -q
+  )
+}
+
+update-julia() {
+  curl -LO https://julialangnightlies-s3.julialang.org/bin/mac/x64/julia-latest-mac64.dmg
+  hdiutil mount julia-latest-mac64.dmg
+  sleep 1
+  local path_to_julia_volume=$(find '/Volumes' -name 'Julia-*-DEV*')
+  local path_to_julia_app=$(find "$path_to_julia_volume" -name 'Julia-*.app')
+  echo $path_to_julia_app
+  rm -rf ~/Applications/Julia-nightly.app/
+  cp -R "$path_to_julia_app" ~/Applications/Julia-nightly.app
+  rm -rf julia-latest-mac64.dmg
+  hdiutil unmount "$path_to_julia_volume"
+}
+
+datetime() {
+  date +%Y-%m-%dT%H:%M:%S%z
+}
+
+update-nvim() {
+  pushd ~/gitrepos/neovim || return
+  git pull
+  make -j8 CMAKE_INSTALL_PREFIX="$HOME/local/nvim" CMAKE_BUILD_TYPE=RelWithDebInfo
+  make install
+  popd || return
+}
+
+function get_nextword_data() {
+  echo "Takes a long time to download..."
+  mkdir ~/local/dictionary
+  curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
+}
+
+alias gfap="gfa --prune"
+alias gsb='git status -sb'
+alias gst='git status -s'
+
+alias franklin="julia -O0 -e 'using Franklin; serve(launch=false)'"

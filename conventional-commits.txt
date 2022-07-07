@@ -1,0 +1,29 @@
+# ----------------------------------------------------------
+# Header - type(scope): Brief description
+# ----------------------------------------------------------
+# * feat             :sparkles: ✨ A new feature - SemVar PATCH
+# * fix              :bug: 🐛 A bug fix - SemVar MINOR
+# * BREAKING CHANGE  :boom: 💥 Breaking API change - SemVar MAJOR
+# * revert           :wastebasket: 🗑  Revert a commit
+# * build            :hammer_and_pick: 🛠  Change to build system
+# * chore            :recycle: ♻️  Change to tooling/config/!src/!test
+# * ci               :gear: ⚙️  Change to CI pipeline/workflow
+# * docs             :books: 📚 Change to documentation only
+# * perf             :rocket: 🚀 Change that affects performance
+# * refactor         :package: 📦 Change not related to a bug or feat
+# * style            :gem: 💎 Change to style (whitespace, etc.)
+# * test             :rotating_light: 🚨 Change that adds/modifies tests
+# ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# Body - More description, if necessary
+# ----------------------------------------------------------
+# * Motivation behind changes, more detail into how
+#   functionality might be affected, etc.
+# ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# Footer - Associated issues, PRs, etc.
+# ----------------------------------------------------------
+# * Ex: Resolves Issue #207, see PR #15, etc.
+# ----------------------------------------------------------

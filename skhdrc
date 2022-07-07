@@ -1,0 +1,37 @@
+# open terminal
+hyper - return: open -a iTerm --new
+
+# open finder
+hyper - f : open ~
+
+# restart yabai
+# hyper - v : bash -c 'launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"'
+
+# focus window
+hyper - h : yabai -m window --focus west
+hyper - j : yabai -m window --focus south
+hyper - k : yabai -m window --focus north
+hyper - l : yabai -m window --focus east
+
+hyper - u : yabai -m window --display 2
+hyper - i : yabai -m window --display 3
+hyper - o : yabai -m window --display 1
+
+# focus monitor
+hyper - 1  : yabai -m display --focus 1
+hyper - 2  : yabai -m display --focus 2
+hyper - 3  : yabai -m display --focus 3
+hyper - p : yabai -m display --focus prev
+hyper - n : yabai -m display --focus next
+
+hyper - z : yabai -m window --toggle zoom-fullscreen
+
+# balance size of windows
+# use equals
+hyper - 0x18 : yabai -m space --balance
+
+# rotate tree
+hyper - r : yabai -m space --rotate 90
+
+# toggle window border
+hyper - b : yabai -m window --toggle border
