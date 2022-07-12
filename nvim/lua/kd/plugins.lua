@@ -97,7 +97,10 @@ packer.startup({
         },
         { "folke/lsp-colors.nvim" },
         { "williamboman/nvim-lsp-installer" },
-        { "SmiteshP/nvim-navic" },
+        { "SmiteshP/nvim-navic", config = function()
+          vim.g.navic_silence = true
+        end,
+        },
       },
       config = function()
         require("kd/plugins/nvim-lspconfig")
