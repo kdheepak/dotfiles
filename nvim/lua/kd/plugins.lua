@@ -515,9 +515,15 @@ packer.startup({
 
     use({ "tpope/vim-abolish", event = "BufRead" }) -- convert camel to snake
 
-    use({ "tpope/vim-surround", event = "BufRead" }) -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
-
     use({ "tpope/vim-repeat", event = "BufRead" }) -- repeat.vim remaps . in a way that plugins can tap into it.
+
+    -- Lua
+    use({
+      "kylechui/nvim-surround",
+      config = function()
+        require("nvim-surround").setup({})
+      end
+    })
 
     use({ "tpope/vim-speeddating", event = "BufRead" }) -- Tools for working with dates
 
