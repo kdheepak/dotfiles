@@ -322,7 +322,7 @@ export PATH="$PATH:/Users/$USER/Applications/Visual Studio Code.app/Contents/Res
 
 alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
 
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+
 autoload -U bashcompinit
 bashcompinit
-
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
