@@ -68,12 +68,7 @@ packer.startup({
       as = "catppuccin",
       config = function()
         local catppuccin = require("catppuccin")
-        catppuccin.setup({
-          term_colors = true,
-          styles = {
-            conditionals = "NONE",
-          }
-        })
+        catppuccin.setup({})
         vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
         vim.cmd([[colorscheme catppuccin]])
       end,
@@ -370,6 +365,15 @@ packer.startup({
 
     use({ "ggandor/lightspeed.nvim", event = "BufRead" }) -- load s and S to search, overrides f and t for multiline
 
+    -- Lua
+    use({
+      "kylechui/nvim-surround",
+      config = function()
+        require("nvim-surround").setup({
+        })
+      end
+    })
+
     -- -----------------------------------------------------------------------------------------------------------------
     --
     use({
@@ -515,15 +519,9 @@ packer.startup({
 
     use({ "tpope/vim-abolish", event = "BufRead" }) -- convert camel to snake
 
-    use({ "tpope/vim-repeat", event = "BufRead" }) -- repeat.vim remaps . in a way that plugins can tap into it.
+    use({ "tpope/vim-surround", event = "BufRead" }) -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 
-    -- Lua
-    use({
-      "kylechui/nvim-surround",
-      config = function()
-        require("nvim-surround").setup({})
-      end
-    })
+    use({ "tpope/vim-repeat", event = "BufRead" }) -- repeat.vim remaps . in a way that plugins can tap into it.
 
     use({ "tpope/vim-speeddating", event = "BufRead" }) -- Tools for working with dates
 
