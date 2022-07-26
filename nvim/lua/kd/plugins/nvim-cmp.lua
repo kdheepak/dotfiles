@@ -1,16 +1,8 @@
 local cmp = require("cmp")
 local has_words_before = require("kd/utils").has_words_before
-local luasnip = require("luasnip")
-
-require("luasnip/loaders/from_vscode").lazy_load()
-
 local function tab(fallback)
   if cmp.visible() then
     cmp.select_next_item()
-  elseif luasnip.expandable() then
-    luasnip.expand()
-  elseif luasnip.expand_or_jumpable() then
-    luasnip.expand_or_jump()
   elseif has_words_before() then
     cmp.complete()
   else
@@ -21,8 +13,6 @@ end
 local function shift_tab(fallback)
   if cmp.visible() then
     cmp.select_prev_item()
-  elseif luasnip.jumpable(-1) then
-    luasnip.jump(-1)
   else
     fallback()
   end
@@ -62,12 +52,6 @@ cmp.setup({
         or require("cmp_dap").is_dap_buffer()
   end,
   preselect = cmp.PreselectMode.None,
-  -- You should change this example to your chosen snippet engine.
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
 
   -- You must set mapping.
   mapping = {
@@ -101,7 +85,7 @@ cmp.setup({
           path = "ﱮ",
           buffer = "﬘",
           zsh = "",
-          luasnip = "",
+          -- luasnip = "",
           spell = "暈",
         })[entry.source.name]
         return vim_item
@@ -126,7 +110,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "buffer" },
     { name = "nvim_lsp" },
-    { name = "luasnip" },
     { name = "nvim_lsp_document_symbol" },
     { name = "nvim_lsp_signature_help" },
     { name = "latex_symbols" },
@@ -143,11 +126,11 @@ cmp.setup({
     { name = "crates" },
     { name = "julia_packages" },
     { name = 'dap' },
-    { name = "spell" },
-    {
-      name = "dictionary",
-      keyword_length = 5,
-    },
+    -- { name = "spell" },
+    -- {
+    --   name = "dictionary",
+    --   keyword_length = 5,
+    -- },
   }),
 })
 
