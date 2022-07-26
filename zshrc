@@ -177,14 +177,10 @@ zinit load dandavison/delta
 zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 
-zinit ice lucid wait'0' as'program' id-as'rust-analyzer' from'gh-r' \
-  ver'latest' mv'rust-analyzer* -> rust-analyzer'
-zinit light rust-analyzer/rust-analyzer
-
 # zi_completion has'pandoc'
 zinit light srijanshetty/zsh-pandoc-completion
 
-zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"exa* -> exa"
+zinit ice wait:2 lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
 zinit load ogham/exa
 
 zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
