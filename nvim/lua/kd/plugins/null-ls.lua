@@ -8,7 +8,6 @@ null_ls.setup({
     autocmd("BufWritePre", require("kd/plugins/nvim-lspconfig").on_save)
   end,
   sources = {
-    builtins.completion.spell,
     builtins.diagnostics.eslint,
     builtins.formatting.clang_format,
     builtins.formatting.black.with({ extra_args = { "--line-length", "150" } }),
