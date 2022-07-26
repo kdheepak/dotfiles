@@ -667,7 +667,7 @@ packer.startup({
 
     use({ "rust-lang/rust.vim", ft = { "rust" } }) -- rust file detection, syntax highlighting, formatting, Syntastic integration, and more
 
-    use({ "~/gitrepos/JuliaFormatter.vim", ft = "julia" }) -- Julia formatter support
+    -- use({ "~/gitrepos/JuliaFormatter.vim", ft = "julia" }) -- Julia formatter support
 
     use({ "kdheepak/gridlabd.vim", ft = "gridlabd" }) -- gridlabd syntax support
 
