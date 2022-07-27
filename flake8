@@ -1,5 +1,5 @@
 [flake8]
-ignore = D203,E501,E731,W391,E261,W503,F401,E203
+ignore = E772,D203,E501,E731,W391,E261,W503,F401,E203,F401
 exclude =
     test.py
     .git,
