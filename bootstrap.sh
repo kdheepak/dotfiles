@@ -27,6 +27,8 @@ rm ~/.prettierrc
 ln -s "$(pwd)/prettierrc" ~/.prettierrc
 rm ~/.zshrc
 ln -s "$(pwd)/zshrc" ~/.zshrc
+rm ~/.zprofile
+ln -s "$(pwd)/zprofile" ~/.zprofile
 rm ~/.config/starship.toml
 ln -s "$(pwd)/starship.toml" ~/.config/starship.toml
 rm ~/.rustfmt.toml

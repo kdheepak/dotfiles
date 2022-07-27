@@ -30,9 +30,9 @@ unsetopt autocd
 # source ~/.fonts/octicons-regular.sh
 # source ~/.fonts/pomicons-regular.sh
 
-source ~/gitrepos/dotfiles/aliases
-
 [ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
+source ~/gitrepos/dotfiles/aliases
+source ~/gitrepos/dotfiles/exports
 
 # Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -101,7 +101,7 @@ zmodload zsh/zpty
 zinit ice blockf atpull'zinit creinstall -q .'
 
 
-zinit ice lucid wait \
+zinit ice lucid \
         as:"program" \
         atclone:"./install --bin" \
         atpull:"%atclone" \
@@ -112,7 +112,7 @@ zinit load "junegunn/fzf"
 zinit ice make as"command" mv"nnn -> nnn" pick"nnn"
 zinit light jarun/nnn
 
-zinit ice wait"0" lucid as"program" pick"bin/git-dsf"
+zinit ice lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat='bat'"
@@ -124,7 +124,7 @@ zinit load lunaryorn/mdcat
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
-zinit wait'0' lucid from"gh-r" as"program" light-mode for @high-moctane/nextword
+zinit lucid from"gh-r" as"program" light-mode for @high-moctane/nextword
 
 zinit ice from"gh-r" as"program" pick"so/so"
 zinit load samtay/so
@@ -146,13 +146,13 @@ fix-git-trim() {
 zinit ice from"gh-r" as"program" pick"git-trim/git-trim"
 zinit load foriequal0/git-trim
 
-zinit ice lucid wait"0" as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
+zinit ice lucid as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
 zinit load 'jesseduffield/lazygit'
 
-zinit ice lucid wait"0" as"program" from"gh-r" mv"lazydocker* -> lazydocker"
+zinit ice lucid as"program" from"gh-r" mv"lazydocker* -> lazydocker"
 zinit load 'jesseduffield/lazydocker'
 
-zinit ice lucid wait"0" as"program" from"gh-r" mv"hadolint* -> hadolint"
+zinit ice lucid as"program" from"gh-r" mv"hadolint* -> hadolint"
 zinit load 'hadolint/hadolint'
 
 zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
@@ -170,16 +170,16 @@ zinit load sharkdp/fd
 zinit ice as"command" extract"" pick"delta/delta" mv"delta* -> delta" from"gh-r"
 zinit load dandavison/delta
 
-zinit ice lucid wait"0" as"program" from"gh-r" pick"gh*/bin/gh"
+zinit ice lucid as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 
 # zi_completion has'pandoc'
 zinit light srijanshetty/zsh-pandoc-completion
 
-zinit ice wait:0 lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
+zinit ice lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
 zinit load ogham/exa
 
-zinit ice wait:0 lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
+zinit ice lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
 zinit load kdheepak/taskwarrior-tui
 
 zinit load "b4b4r07/emoji-cli"
@@ -195,7 +195,7 @@ export NVM_SYMLINK_CURRENT=true
 export NVM_AUTO_USE=true
 zinit light lukechilds/zsh-nvm
 
-zinit ice wait"0" pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+zinit ice pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/completion.zsh
@@ -207,10 +207,10 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 
-zinit ice wait"0" if'[[ -n "$commands[task]" ]]' lucid
+zinit ice if'[[ -n "$commands[task]" ]]' lucid
 zinit snippet OMZ::plugins/taskwarrior/taskwarrior.plugin.zsh
 
-zinit snippet OMZ::plugins/brew/brew.plugin.zsh
+# zinit snippet OMZ::plugins/brew/brew.plugin.zsh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -219,7 +219,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 zinit ice depth=1 # optional, but avoids downloading the full history
 zinit light 3v1n0/zsh-bash-completions-fallback
-zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
+zinit lucid atload"zicompinit; zicdreplay" blockf for \
     zsh-users/zsh-completions
 
 # hub: https://github.com/github/hub
@@ -237,9 +237,9 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
 zinit load Aloxaf/fzf-tab
 
 zinit load wfxr/forgit
-export PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
+export PATH="$FORGIT_INSTALL_DIR/bin:$PATH"
 
-# zinit ice silent wait"0" pick"shell/*.zsh"
+# zinit ice silent pick"shell/*.zsh"
 # zinit load "lotabout/skim"
 #
 # zinit ice from'gh-r' as'program' mv pick'bin/sk';
@@ -310,8 +310,6 @@ zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=do
 
 ### End of Zinit's installer chunk
 
-export PATH="$PATH:/Users/$USER/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
 alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
 
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
@@ -322,5 +320,3 @@ bashcompinit
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-source ~/gitrepos/dotfiles/exports
