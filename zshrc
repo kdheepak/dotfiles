@@ -31,9 +31,6 @@ unsetopt autocd
 # source ~/.fonts/pomicons-regular.sh
 
 source ~/gitrepos/dotfiles/aliases
-source ~/gitrepos/dotfiles/exports
-
-export PATH="$HOME/.local/bin:$PATH"
 
 [ -f $HOME/.config/.custom ] && source $HOME/.config/.custom
 
@@ -115,7 +112,7 @@ zinit load "junegunn/fzf"
 zinit ice make as"command" mv"nnn -> nnn" pick"nnn"
 zinit light jarun/nnn
 
-zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
+zinit ice wait"0" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat='bat'"
@@ -127,9 +124,7 @@ zinit load lunaryorn/mdcat
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
-zinit wait'1' lucid from"gh-r" as"program" light-mode for @high-moctane/nextword
-
-hash tig &>/dev/null && zinit wait lucid for /zsh-tig-plugin
+zinit wait'0' lucid from"gh-r" as"program" light-mode for @high-moctane/nextword
 
 zinit ice from"gh-r" as"program" pick"so/so"
 zinit load samtay/so
@@ -181,10 +176,10 @@ zinit load "cli/cli"
 # zi_completion has'pandoc'
 zinit light srijanshetty/zsh-pandoc-completion
 
-zinit ice wait:2 lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
+zinit ice wait:0 lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
 zinit load ogham/exa
 
-zinit ice wait:2 lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
+zinit ice wait:0 lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
 zinit load kdheepak/taskwarrior-tui
 
 zinit load "b4b4r07/emoji-cli"
@@ -327,3 +322,5 @@ bashcompinit
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source ~/gitrepos/dotfiles/exports
