@@ -71,17 +71,6 @@ end
 
 vim.cmd([[command LspToggleFormatOnSave lua require'kd/plugins/nvim-lspconfig'.toggle_format_on_save()]])
 
-require("nvim-lsp-installer").setup({
-  automatic_installation = true,
-  ui = {
-    icons = {
-      server_installed = "",
-      server_pending = "",
-      server_uninstalled = "",
-    },
-  },
-})
-
 local lspconfig = require("lspconfig")
 
 local function on_attach(client, bufnr)

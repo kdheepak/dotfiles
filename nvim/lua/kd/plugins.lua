@@ -91,7 +91,18 @@ packer.startup({
           end,
         },
         { "folke/lsp-colors.nvim" },
-        { "williamboman/nvim-lsp-installer" },
+        { "williamboman/mason.nvim", config = function()
+            require("mason").setup({
+              ui = {
+                icons = {
+                  server_installed = "",
+                  server_pending = "",
+                  server_uninstalled = "",
+                },
+              },
+            })
+          end,
+        },
         { "SmiteshP/nvim-navic", config = function()
           vim.g.navic_silence = true
         end,
