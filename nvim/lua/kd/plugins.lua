@@ -130,21 +130,21 @@ packer.startup({
         { "rcarriga/cmp-dap" },
         { "antoinemadec/FixCursorHold.nvim" },
         { "rafamadriz/friendly-snippets" },
-        -- {
-        --   "L3MON4D3/LuaSnip",
-        --   config = function()
-        --     require("luasnip.config").set_config({
-        --       history = true,
-        --       updateevents = "TextChanged,TextChangedI",
-        --       enable_autosnippets = true,
-        --     })
-        --     local imap = require("kd/utils").imap
-        --     local smap = require("kd/utils").smap
-        --     imap("<Esc>", [[<Esc><cmd>silent LuaSnipUnlinkCurrent<CR>]])
-        --     smap("<Esc>", [[<Esc><cmd>silent LuaSnipUnlinkCurrent<CR>]])
-        --   end,
-        -- },
-        -- { "saadparwaiz1/cmp_luasnip" },
+        {
+          "L3MON4D3/LuaSnip",
+          config = function()
+            require("luasnip.config").set_config({
+              history = true,
+              updateevents = "TextChanged,TextChangedI",
+              enable_autosnippets = true,
+            })
+            local imap = require("kd/utils").imap
+            local smap = require("kd/utils").smap
+            imap("<Esc>", [[<Esc><cmd>silent LuaSnipUnlinkCurrent<CR>]])
+            smap("<Esc>", [[<Esc><cmd>silent LuaSnipUnlinkCurrent<CR>]])
+          end,
+        },
+        { "saadparwaiz1/cmp_luasnip" },
         { "onsails/lspkind-nvim" },
         { "hrsh7th/cmp-cmdline" },
         { "hrsh7th/cmp-nvim-lua" },
