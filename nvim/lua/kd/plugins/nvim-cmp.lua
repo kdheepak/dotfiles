@@ -21,7 +21,7 @@ end
 local function shift_tab(fallback)
   if cmp.visible() then
     cmp.select_prev_item()
- elseif luasnip.jumpable(-1) then
+  elseif luasnip.jumpable(-1) then
     luasnip.jump(-1)
   else
     fallback()
@@ -58,8 +58,7 @@ local lsp_icons = {
 
 cmp.setup({
   enabled = function()
-    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-        or require("cmp_dap").is_dap_buffer()
+    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
   end,
   preselect = cmp.PreselectMode.None,
   -- You should change this example to your chosen snippet engine.
@@ -141,7 +140,7 @@ cmp.setup({
     { name = "orgmode" },
     { name = "crates" },
     { name = "julia_packages" },
-    { name = 'dap' },
+    { name = "dap" },
     -- { name = "spell" },
     -- {
     --   name = "dictionary",

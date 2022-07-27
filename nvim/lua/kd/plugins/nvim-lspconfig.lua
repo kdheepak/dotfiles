@@ -77,12 +77,13 @@ local function on_attach(client, bufnr)
   navic.attach(client, bufnr)
   lsp_status.on_attach(client)
   client.config.flags = client.config.flags or {}
-  if client.name == "dockerls"
-      or client.name == "tsserver"
-      or client.name == "ccls"
-      or client.name == "jsonls"
-      or client.name == "svelte"
-      or client.name == "html"
+  if
+    client.name == "dockerls"
+    or client.name == "tsserver"
+    or client.name == "ccls"
+    or client.name == "jsonls"
+    or client.name == "svelte"
+    or client.name == "html"
   then
     client.server_capabilities.document_formatting = false
     client.server_capabilities.document_range_formatting = false
@@ -142,9 +143,8 @@ local servers = {
     julia_env_path = vim.fn.expand("~/.julia/environments/nvim-lspconfig"),
     -- This just adds dirname(fname) as a fallback (see nvim-lspconfig#1768).
     root_dir = function(fname)
-      local util = require 'lspconfig.util'
-      return util.root_pattern 'Project.toml' (fname) or util.find_git_ancestor(fname) or
-          util.path.dirname(fname)
+      local util = require("lspconfig.util")
+      return util.root_pattern("Project.toml")(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
     end,
   },
   sqlls = {},

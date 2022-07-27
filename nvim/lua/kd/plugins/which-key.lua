@@ -411,7 +411,7 @@ end, {
   silent = true,
 })
 
-nnoremap('<leader>:w', function()
+nnoremap("<leader>:w", function()
   vim.fn.mkdir(vim.fn.expand("%:p:h"), "p")
   vim.notify("Created " .. vim.fn.expand("%:p:h"))
   vim.cmd(":w")
