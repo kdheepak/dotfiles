@@ -2,6 +2,10 @@ local autocmd = require("kd/utils").autocmd
 local null_ls = require("null-ls")
 local builtins = null_ls.builtins
 
+local styluaConfig = {
+  extra_args = { "--config-path", vim.fn.expand("~/gitrepos/dotfiles/.stylua.toml") },
+}
+
 -- npm install -g prettier prettier-plugin-toml prettier-plugin-sh prettier-plugin-svelte @prettier/plugin-xml markdownlint
 null_ls.setup({
   on_attach = function(_)
@@ -10,6 +14,7 @@ null_ls.setup({
   sources = {
     builtins.diagnostics.eslint,
     builtins.formatting.clang_format,
+    builtins.formatting.stylua.with(styluaConfig),
     builtins.formatting.black.with({ extra_args = { "--line-length", "150" } }),
     null_ls.builtins.formatting.prettier.with({
       filetypes = {
