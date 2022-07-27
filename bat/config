@@ -1,0 +1,13 @@
+# Set the theme to "OneHalfLight"
+--theme="catppuccin"
+
+--color=always
+
+# Show line numbers, Git modifications and file header (but no grid)
+--style="numbers,changes,header,grid"
+
+# Use italic text on the terminal (not supported on all terminals)
+--italic-text=always
+
+# Use "gitignore" highlighting for ".ignore" files
+--map-syntax .ignore:.gitignore

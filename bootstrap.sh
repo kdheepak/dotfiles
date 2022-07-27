@@ -47,11 +47,8 @@ rm ~/.gitconfig
 ln -s "$(pwd)/gitconfig" ~/.gitconfig
 rm ~/.julia/config/startup.jl
 ln -s "$(pwd)/juliarc.jl" ~/.julia/config/startup.jl
-rm -rf ~/.config/bat/config
-ln -s "$(pwd)/batconfig" ~/.config/bat/config
-rm -rf ~/.config/bat/bin/preview_fzf_grep
-mkdir -p ~/.config/bat/bin
-ln -s "$(pwd)/preview_fzf_grep" ~/.config/bat/bin/preview_fzf_grep
+rm -rf ~/.config/bat/
+ln -s "$(pwd)/bat" ~/.config/bat
 rm -rf ~/local/bin/irg
 ln -s "$(pwd)/fzf/irg" ~/local/bin/irg
 rm -rf ~/.config/nvim
