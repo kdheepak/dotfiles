@@ -220,6 +220,7 @@ packer.startup({
             },
           },
           ensure_installed = "all",
+          ignore_install = { "phpdoc" },
           autotag = { enable = true },
           highlight = { enable = true, disable = { "julia" } },
           indent = { enable = true },
