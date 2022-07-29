@@ -91,7 +91,9 @@ packer.startup({
           end,
         },
         { "folke/lsp-colors.nvim" },
-        { "williamboman/mason.nvim", config = function()
+        {
+          "williamboman/mason.nvim",
+          config = function()
             require("mason").setup({
               ui = {
                 icons = {
@@ -103,9 +105,11 @@ packer.startup({
             })
           end,
         },
-        { "SmiteshP/nvim-navic", config = function()
-          vim.g.navic_silence = true
-        end,
+        {
+          "SmiteshP/nvim-navic",
+          config = function()
+            vim.g.navic_silence = true
+          end,
         },
       },
       config = function()
@@ -294,12 +298,15 @@ packer.startup({
       end,
       requires = {
         { "kyazdani42/nvim-web-devicons", opt = true },
-        { "kdheepak/tabline.nvim", config = function()
-          -- require 'tabline'.setup {
-          --   -- Defaults configuration options
-          --   enable = true,
-          -- }
-        end },
+        {
+          "kdheepak/tabline.nvim",
+          config = function()
+            -- require 'tabline'.setup {
+            --   -- Defaults configuration options
+            --   enable = true,
+            -- }
+          end,
+        },
         {
           "liuchengxu/vista.vim",
           config = function()
@@ -320,8 +327,8 @@ packer.startup({
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
-        "antoinemadec/FixCursorHold.nvim"
-      }
+        "antoinemadec/FixCursorHold.nvim",
+      },
     })
 
     use({
@@ -381,9 +388,8 @@ packer.startup({
     use({
       "kylechui/nvim-surround",
       config = function()
-        require("nvim-surround").setup({
-        })
-      end
+        require("nvim-surround").setup({})
+      end,
     })
 
     -- -----------------------------------------------------------------------------------------------------------------
@@ -429,19 +435,29 @@ packer.startup({
     })
 
     use({ "mfussenegger/nvim-dap" })
-    use({ 'theHamsta/nvim-dap-virtual-text', config = function()
-      require("nvim-dap-virtual-text").setup()
-    end })
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = function()
-      require("dapui").setup()
-    end }
+    use({
+      "theHamsta/nvim-dap-virtual-text",
+      config = function()
+        require("nvim-dap-virtual-text").setup()
+      end,
+    })
+    use({
+      "rcarriga/nvim-dap-ui",
+      requires = { "mfussenegger/nvim-dap" },
+      config = function()
+        require("dapui").setup()
+      end,
+    })
 
     use({ "jbyuki/one-small-step-for-vimkind", ft = "lua" }) -- DAP adapter for neovim lua language
 
-    use({ 'mfussenegger/nvim-dap-python', config = function()
-      require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-      require('dap-python').test_runner = 'pytest'
-    end })
+    use({
+      "mfussenegger/nvim-dap-python",
+      config = function()
+        require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
+        require("dap-python").test_runner = "pytest"
+      end,
+    })
 
     use({ "euclidianAce/BetterLua.vim", event = "BufRead" })
 
@@ -583,11 +599,14 @@ packer.startup({
 
     use({ "chrisbra/unicode.vim", event = "BufRead" }) -- vim unicode helper
 
-    use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
+    use({ "kevinhwang91/nvim-bqf", ft = "qf" })
 
-    use({ 'spywhere/detect-language.nvim', config = function()
-      require('detect-language').setup {}
-    end })
+    use({
+      "spywhere/detect-language.nvim",
+      config = function()
+        require("detect-language").setup({})
+      end,
+    })
 
     use({
       "akinsho/toggleterm.nvim",
@@ -612,49 +631,51 @@ packer.startup({
       event = "BufRead",
     })
 
-    use({ "hkupty/iron.nvim", config = function()
+    use({
+      "hkupty/iron.nvim",
+      config = function()
+        local iron = require("iron.core")
 
-      local iron = require("iron.core")
-
-      iron.setup {
-        config = {
-          -- If iron should expose `<plug>(...)` mappings for the plugins
-          should_map_plug = false,
-          -- Whether a repl should be discarded or not
-          scratch_repl = true,
-          -- Your repl definitions come here
-          repl_definition = {
-            sh = {
-              command = { "zsh" }
-            }
+        iron.setup({
+          config = {
+            -- If iron should expose `<plug>(...)` mappings for the plugins
+            should_map_plug = false,
+            -- Whether a repl should be discarded or not
+            scratch_repl = true,
+            -- Your repl definitions come here
+            repl_definition = {
+              sh = {
+                command = { "zsh" },
+              },
+            },
+            repl_open_cmd = require("iron.view").curry.bottom(40),
+            -- how the REPL window will be opened, the default is opening
+            -- a float window of height 40 at the bottom.
           },
-          repl_open_cmd = require('iron.view').curry.bottom(40),
-          -- how the REPL window will be opened, the default is opening
-          -- a float window of height 40 at the bottom.
-        },
-        -- Iron doesn't set keymaps by default anymore. Set them here
-        -- or use `should_map_plug = true` and map from you vim files
-        keymaps = {
-          send_motion = "<space>sc",
-          visual_send = "<space>sc",
-          send_file = "<space>sf",
-          send_line = "<space>sl",
-          send_mark = "<space>sm",
-          mark_motion = "<space>mc",
-          mark_visual = "<space>mc",
-          remove_mark = "<space>md",
-          cr = "<space>s<cr>",
-          interrupt = "<space>s<space>",
-          exit = "<space>sq",
-          clear = "<space>cl",
-        },
-        -- If the highlight is on, you can change how it looks
-        -- For the available options, check nvim_set_hl
-        highlight = {
-          italic = true
-        }
-      }
-    end })
+          -- Iron doesn't set keymaps by default anymore. Set them here
+          -- or use `should_map_plug = true` and map from you vim files
+          keymaps = {
+            send_motion = "<space>sc",
+            visual_send = "<space>sc",
+            send_file = "<space>sf",
+            send_line = "<space>sl",
+            send_mark = "<space>sm",
+            mark_motion = "<space>mc",
+            mark_visual = "<space>mc",
+            remove_mark = "<space>md",
+            cr = "<space>s<cr>",
+            interrupt = "<space>s<space>",
+            exit = "<space>sq",
+            clear = "<space>cl",
+          },
+          -- If the highlight is on, you can change how it looks
+          -- For the available options, check nvim_set_hl
+          highlight = {
+            italic = true,
+          },
+        })
+      end,
+    })
 
     use({
       "nacro90/numb.nvim", -- peek lines of the buffer
@@ -703,7 +724,12 @@ packer.startup({
     --   end,
     -- })
 
-    use({ 'lervag/vimtex' })
+    use({ "lervag/vimtex" })
+
+    use({
+      "quarto-dev/quarto-vim",
+      ft = { "quarto", "markdown" },
+    })
 
     use({
       "vim-pandoc/vim-pandoc-syntax",
@@ -725,22 +751,25 @@ packer.startup({
 
     use({ "jbyuki/venn.nvim", event = "BufRead" }) -- Draw ASCII diagrams in Neovim.
 
-    use({ "Pocco81/HighStr.nvim", config = function()
-      local vnoremap = require("kd/utils").vnoremap
-      local nnoremap = require("kd/utils").nnoremap
-      vnoremap("<leader>h1", ":<c-u>HSHighlight 1<CR>", { label = "Highlight 1" })
-      vnoremap("<leader>h2", ":<c-u>HSHighlight 2<CR>", { label = "Highlight 2" })
-      vnoremap("<leader>h3", ":<c-u>HSHighlight 3<CR>", { label = "Highlight 3" })
-      vnoremap("<leader>h4", ":<c-u>HSHighlight 4<CR>", { label = "Highlight 4" })
-      vnoremap("<leader>h5", ":<c-u>HSHighlight 5<CR>", { label = "Highlight 5" })
-      vnoremap("<leader>h6", ":<c-u>HSHighlight 6<CR>", { label = "Highlight 6" })
-      vnoremap("<leader>h7", ":<c-u>HSHighlight 7<CR>", { label = "Highlight 7" })
-      vnoremap("<leader>h8", ":<c-u>HSHighlight 8<CR>", { label = "Highlight 8" })
-      vnoremap("<leader>h9", ":<c-u>HSHighlight 9<CR>", { label = "Highlight 9" })
-      vnoremap("<leader>h0", ":<c-u>HSRmHighlight<CR>", { label = "Highlight Remove" })
-      vnoremap("<leader>hh", ":<c-u>HSRmHighlight rm_all<CR>", { label = "Highlight Remove all" })
-      nnoremap("<leader>hh", ":<c-u>HSRmHighlight rm_all<CR>", { label = "Highlight Remove all" })
-    end })
+    use({
+      "Pocco81/HighStr.nvim",
+      config = function()
+        local vnoremap = require("kd/utils").vnoremap
+        local nnoremap = require("kd/utils").nnoremap
+        vnoremap("<leader>h1", ":<c-u>HSHighlight 1<CR>", { label = "Highlight 1" })
+        vnoremap("<leader>h2", ":<c-u>HSHighlight 2<CR>", { label = "Highlight 2" })
+        vnoremap("<leader>h3", ":<c-u>HSHighlight 3<CR>", { label = "Highlight 3" })
+        vnoremap("<leader>h4", ":<c-u>HSHighlight 4<CR>", { label = "Highlight 4" })
+        vnoremap("<leader>h5", ":<c-u>HSHighlight 5<CR>", { label = "Highlight 5" })
+        vnoremap("<leader>h6", ":<c-u>HSHighlight 6<CR>", { label = "Highlight 6" })
+        vnoremap("<leader>h7", ":<c-u>HSHighlight 7<CR>", { label = "Highlight 7" })
+        vnoremap("<leader>h8", ":<c-u>HSHighlight 8<CR>", { label = "Highlight 8" })
+        vnoremap("<leader>h9", ":<c-u>HSHighlight 9<CR>", { label = "Highlight 9" })
+        vnoremap("<leader>h0", ":<c-u>HSRmHighlight<CR>", { label = "Highlight Remove" })
+        vnoremap("<leader>hh", ":<c-u>HSRmHighlight rm_all<CR>", { label = "Highlight Remove all" })
+        nnoremap("<leader>hh", ":<c-u>HSRmHighlight rm_all<CR>", { label = "Highlight Remove all" })
+      end,
+    })
   end,
   config = {
     display = { open_fn = require("packer.util").float },

@@ -1,5 +1,5 @@
 "$schema" = "https://starship.rs/config-schema.json"
-add_newline = false
+add_newline = true
 format = """
 ╭─$directory$git_branch$git_state$git_status[](fg:#45475A) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all
 ╰ \
