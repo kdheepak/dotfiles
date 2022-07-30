@@ -77,25 +77,27 @@ local function on_attach(client, bufnr)
   navic.attach(client, bufnr)
   lsp_status.on_attach(client)
   client.config.flags = client.config.flags or {}
+  P(client)
   if
     client.name == "dockerls"
     or client.name == "tsserver"
     or client.name == "ccls"
     or client.name == "jsonls"
     or client.name == "svelte"
+    or client.name == "sumneko_lua"
     or client.name == "html"
   then
+    client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.document_formatting = false
     client.server_capabilities.document_range_formatting = false
   else
     local opt = { silent = true, buffer = bufnr }
     -- Set some keybinds conditional on server capabilities
-    if client.server_capabilities.document_formatting then
+    if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
       nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opt)
-    elseif client.server_capabilities.document_range_formatting then
       vnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opt)
     end
-    if client.server_capabilities.document_formatting then
+    if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
       autocmd("BufWritePre", require("kd/plugins/nvim-lspconfig").on_save)
     end
   end
@@ -140,7 +142,6 @@ local servers = {
   svelte = {},
   tsserver = {},
   julials = {
-    julia_env_path = vim.fn.expand("~/.julia/environments/nvim-lspconfig"),
     -- This just adds dirname(fname) as a fallback (see nvim-lspconfig#1768).
     root_dir = function(fname)
       local util = require("lspconfig.util")
