@@ -356,7 +356,6 @@ M.get_visual_selection = function()
     start_row, end_row = end_row, start_row
     start_col, end_col = end_col, start_col
   end
-  P(start_row, start_col, end_row, end_col)
   local lines = vim.fn.getline(start_row, end_row)
   local n = 0
   for _ in pairs(lines) do
@@ -367,7 +366,6 @@ M.get_visual_selection = function()
   end
   lines[n] = string.sub(lines[n], 1, end_col)
   lines[1] = string.sub(lines[1], start_col)
-  P(lines)
   return table.concat(lines, "\n")
 end
 

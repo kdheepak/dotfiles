@@ -77,7 +77,6 @@ local function on_attach(client, bufnr)
   navic.attach(client, bufnr)
   lsp_status.on_attach(client)
   client.config.flags = client.config.flags or {}
-  P(client)
   if
     client.name == "dockerls"
     or client.name == "tsserver"
