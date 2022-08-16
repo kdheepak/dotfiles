@@ -269,7 +269,6 @@ function M.setlocal(name, ...)
       return vim.api.nvim_err_writeln("setlocal(): operator \"-=\" requires list type but got " .. option.type)
     end
     local current = vim.split(get(0, name), ",")
-    print("current " .. vim.inspect(current))
     local new = vim.tbl_filter(function(item)
       return item ~= value
     end, current)
@@ -374,12 +373,10 @@ end
 
 function M.get_git_directory()
   local Job = require("plenary.job")
-  local s, ret = Job
-    :new({
-      command = "git",
-      args = { "rev-parse", "--show-superproject-working-tree", "--show-toplevel" },
-    })
-    :sync()
+  local s, ret = Job:new({
+    command = "git",
+    args = { "rev-parse", "--show-superproject-working-tree", "--show-toplevel" },
+  }):sync()
   if ret == 0 then
     return s[1]
   else
