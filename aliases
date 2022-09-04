@@ -3,6 +3,14 @@
 alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 alias brew=~/.local/homebrew/bin/brew
 
+brew-symlink-cli() {
+  if [[ -n "$1" ]]; then
+    ln -s ~/.local/homebrew/bin/$1 ~/.local/bin/$1
+  else
+    echo "proper usage: brew-link-cli <cli-name>."
+  fi
+}
+
 # Shortcuts
 alias G="cd ~/gitrepos"
 
