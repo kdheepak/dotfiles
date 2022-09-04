@@ -7,7 +7,7 @@ brew-symlink-cli() {
   if [[ -n "$1" ]]; then
     ln -s ~/.local/homebrew/bin/$1 ~/.local/bin/$1
   else
-    echo "proper usage: brew-link-cli <cli-name>."
+    echo "proper usage: brew-symlink-cli <cli-name>."
   fi
 }
 
