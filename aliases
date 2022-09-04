@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
+alias brew=~/.local/homebrew/bin/brew
 
 # Shortcuts
 alias G="cd ~/gitrepos"
