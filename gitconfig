@@ -250,7 +250,6 @@
     side-by-side = true
     features = line-numbers
     syntax-theme = catppuccin
-    hunk-header-style = syntax line-number
 [delta "one-window"]
     side-by-side = false
 [fetch]
