@@ -298,15 +298,15 @@ packer.startup({
       end,
       requires = {
         { "kyazdani42/nvim-web-devicons", opt = true },
-        {
-          "kdheepak/tabline.nvim",
-          config = function()
-            -- require 'tabline'.setup {
-            --   -- Defaults configuration options
-            --   enable = true,
-            -- }
-          end,
-        },
+        -- {
+        --   "kdheepak/tabline.nvim",
+        --   config = function()
+        --     -- require 'tabline'.setup {
+        --     --   -- Defaults configuration options
+        --     --   enable = true,
+        --     -- }
+        --   end,
+        -- },
         {
           "liuchengxu/vista.vim",
           config = function()

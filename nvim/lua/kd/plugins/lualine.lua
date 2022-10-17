@@ -71,12 +71,7 @@ require("lualine").setup({
   options = { theme = "auto", globalstatus = true },
   tabline = {
     lualine_a = {
-      {
-        "buffers",
-        symbols = {
-          alternate_file = "^ ",
-        },
-      },
+      "buffers",
     },
     lualine_b = {},
     lualine_c = {},
