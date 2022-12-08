@@ -28,4 +28,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 # bind 'set completion-ignore-case on'
 # bind 'TAB:menu-complete'
 
-# export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$PATH:$HOME/.local/homebrew/bin"
