@@ -147,14 +147,6 @@ export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --s
 alias rg="rg $RG_FLAGS"
 alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
 
-alias julia-bleeding="$HOME/gitrepos/julia/usr/bin/julia"
-alias julia-nightly="$HOME/Applications/Julia-nightly.app/Contents/Resources/julia/bin/julia"
-alias julia-stable="$HOME/Applications/Julia-1.8.app/Contents/Resources/julia/bin/julia"
-alias julia="julia-stable --color=yes"
-
-alias fast-julia="julia-bleeding --color=yes --startup-file=no"
-alias test-julia="fast-julia --history-file=no --project -e 'using Pkg; Pkg.test()'"
-
 gifify() {
   if [[ -n "$1" ]]; then
     if [[ $2 == '--good' ]]; then
