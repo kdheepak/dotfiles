@@ -580,18 +580,27 @@ packer.startup({
     use({ "reedes/vim-wordy", event = "BufRead" }) -- uncover usage problems in your writing
 
     use({
-      "ntpeters/vim-better-whitespace",
+      "quarto-dev/quarto-nvim",
+      requires = {
+        "jmbuhr/otter.nvim",
+        "neovim/nvim-lspconfig",
+      },
       config = function()
-        local augroup = require("kd/utils").augroup
-        local autocmd = require("kd/utils").autocmd
-        augroup("StripWhitespace", function()
-          autocmd("BufEnter", "EnableStripWhitespaceOnSave")
-        end)
-        vim.g.strip_whitespace_confirm = 0
-        vim.g.strip_only_modified_lines = 1
+        require("quarto").setup({
+          lspFeatures = {
+            enabled = true,
+            languages = { "r", "python", "julia" },
+            diagnostics = {
+              enabled = true,
+              triggers = { "BufWrite" },
+            },
+            completion = {
+              enabled = true,
+            },
+          },
+        })
       end,
-      event = "BufRead",
-    }) -- caloads all trailing whitespace characters to be highlighted
+    })
 
     use({ "godlygeek/tabular", event = "BufRead" }) -- line up text
 
