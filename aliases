@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
-alias brew=~/.local/homebrew/bin/brew
+alias brew=/opt/homebrew/bin/brew
 
 brew-symlink-cli() {
   if [[ -n "$1" ]]; then
@@ -207,3 +207,9 @@ alias gsb='git status -sb'
 alias gst='git status -s'
 
 alias franklin="julia -O0 -e 'using Franklin; serve(launch=false)'"
+alias julia-test="julia -O0 -e 'using Pkg; Pkg.test()'"
+
+alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
+
+
+

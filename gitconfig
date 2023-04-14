@@ -9,6 +9,7 @@
 
 [push]
     default = simple
+	autoSetupRemote = true
 [merge]
     tool = diffconflicts
     # Include summaries of merged commits in newly created merge commit messages
