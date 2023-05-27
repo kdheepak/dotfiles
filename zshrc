@@ -119,7 +119,7 @@ zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=
 zinit load sharkdp/bat
 
 zinit ice from"gh-r" as"program" mv"mdcat* -> mdcat" pick"mdcat/mdcat"
-zinit load lunaryorn/mdcat
+zinit load swsnr/mdcat
 
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
@@ -308,8 +308,15 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w 
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
 
-### End of Zinit's installer chunk
-
 autoload -U bashcompinit
 bashcompinit
 
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
