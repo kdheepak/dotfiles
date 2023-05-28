@@ -83,7 +83,7 @@ local function on_attach(client, bufnr)
     or client.name == "ccls"
     or client.name == "jsonls"
     or client.name == "svelte"
-    or client.name == "sumneko_lua"
+    or client.name == "lua_ls"
     or client.name == "html"
   then
     client.server_capabilities.documentFormattingProvider = false
@@ -107,7 +107,7 @@ end
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   capabilities = create_capabilities(),
   on_attach = on_attach,
   settings = {
