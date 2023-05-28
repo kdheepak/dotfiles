@@ -49,7 +49,6 @@ rm ~/.gitconfig
 ln -s "$(pwd)/gitconfig" ~/.gitconfig
 rm ~/.julia/config/startup.jl
 ln -s "$(pwd)/juliarc.jl" ~/.julia/config/startup.jl
-rm -rf ~/.config/bat/
 ln -s "$(pwd)/bat" ~/.config/bat
 rm -rf ~/local/bin/irg
 ln -s "$(pwd)/fzf/irg" ~/local/bin/irg
