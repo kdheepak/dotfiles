@@ -5,7 +5,7 @@ palette = "github"
 
 add_newline = true
 format = """
-╭─$directory$git_branch$git_state$git_status[](fg:surface1) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all
+╭─$directory$git_branch$git_state$git_status[](fg:surface1) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
 ╰ \
 """
 continuation_prompt = " "
@@ -67,11 +67,11 @@ conflicted = "ﲅ${count} "
 [time]
 disabled = false
 style = "bg:blue fg:mantle"
-format = "[](fg:blue)[ $time ]($style)"
+format = "[](fg:blue bg:surface1)[ $time ]($style)"
 
 [character]
-success_symbol = "[](bg:blue fg:blue)[✔ ](bg:blue fg:mantle)"
-error_symbol = "[](bg:blue fg:peach)[ ✘ ](bg:peach fg:mantle)"
+success_symbol = "[](fg:surface1)[ ✔ ](bg:surface1 fg:blue)"
+error_symbol = "[](fg:surface2)[ ✘ ](bg:surface2 fg:mantle)"
 format = "$symbol"
 
 [aws]
