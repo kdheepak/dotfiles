@@ -237,20 +237,20 @@
     pager = "{                                                       \
         COLUMNS=$(tput cols);                                        \
         if [ $COLUMNS -ge 160 ] && [ -z $FZF_PREVIEW_COLUMNS ]; then \
-            delta --syntax-theme=catppuccin --side-by-side -w $COLUMNS;  \
+            delta --syntax-theme=GitHub --side-by-side -w $COLUMNS;  \
         elif [ $COLUMNS -ge 200 ] && [ $FZF_PREVIEW_COLUMNS ]; then  \
-            delta --syntax-theme=catppuccin --side-by-side -w $FZF_PREVIEW_COLUMNS;            \
+            delta --syntax-theme=GitHub --side-by-side -w $FZF_PREVIEW_COLUMNS;            \
         else                                                         \
-            delta --syntax-theme=catppuccin --features=one-window;                             \
+            delta --syntax-theme=GitHub --features=one-window;                             \
         fi                                                           \
     }"
 [interactive]
-    diffFilter = bash -c 'delta --color-only --syntax-theme=catppuccin'
+    diffFilter = bash -c 'delta --color-only --syntax-theme=GitHub'
 [delta]
     line-numbers = true
     side-by-side = true
     features = line-numbers
-    syntax-theme = catppuccin
+    syntax-theme = GitHub
 [delta "one-window"]
     side-by-side = false
 [fetch]
