@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 # Sets user-defined palette
-palette = "catppuccin_mocha"
+palette = "github"
 
 add_newline = true
 format = """
@@ -15,7 +15,7 @@ disabled = true
 
 [fill]
 symbol = "·"
-style = "fg:#9399b2"
+style = "fg:overlay2"
 
 [username] # only shows if we are in ssh
 style_user = "fg:pink"
@@ -26,7 +26,7 @@ show_always = false
 [hostname]
 ssh_only = true
 trim_at = "."
-style = "fg:#ff79c6"
+style = "fg:pink"
 format = "[@](blue)[$hostname]($style)"
 
 [directory]
@@ -290,3 +290,32 @@ surface0 = "#313244"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
+
+[palettes.github]
+rosewater = "#ede3fe"
+flamingo = "#f5d3d5"
+pink = "#fca569"
+mauve = "#a475f9"
+red = "#cf222e"
+maroon = "#d94e58"
+peach = "#fb8f44"
+yellow = "#f9d03a"
+green = "#116329"
+teal = "#cfe0d4"
+sky = "#70a17f"
+sapphire = "#0969da"
+blue = "#3a87e1"
+lavender = "#6ba5e9"
+text = "#ffffff"
+subtext1 = "#bcbdbf"
+subtext0 = "#b691fa"
+overlay2 = "#418254"
+overlay1 = "#715733"
+overlay0 = "#948166"
+surface2 = "#fdfdfd"
+surface1 = "#fdfeff"
+surface0 = "#fffefd"
+base = "#f6f8fa"
+mantle = "#fdfdfc"
+crust = "#fdfdfc"
+
