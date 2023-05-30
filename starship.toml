@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 # Sets user-defined palette
-palette = "github"
+palette = "catppuccin_mocha"
 
 add_newline = true
 format = """
@@ -71,7 +71,7 @@ format = "[](fg:blue bg:surface1)[ $time ]($style)"
 
 [character]
 success_symbol = "[](fg:surface1)[ ✔ ](bg:surface1 fg:blue)"
-error_symbol = "[](fg:surface2)[ ✘ ](bg:surface2 fg:mantle)"
+error_symbol = "[](fg:surface1)[ ✘ ](bg:surface1 fg:red)"
 format = "$symbol"
 
 [aws]
