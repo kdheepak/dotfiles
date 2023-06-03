@@ -162,6 +162,8 @@
     frg = forgit reset_head
     fss = forgit stash_show
 
+    logme = !git log --pretty=format:\"* %s\" --author `git config user.email`
+
 [apply]
 
     # Detect whitespace errors when applying a patch
