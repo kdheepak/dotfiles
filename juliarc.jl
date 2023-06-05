@@ -1,10 +1,4 @@
 ENV["JULIA_NUM_THREADS"] = 8
-ENV["EDITOR"] = "code"
-if Sys.iswindows()
-  ENV["JULIA_EDITOR"] = "code.cmd -g"
-else
-  ENV["JULIA_EDITOR"] = "code"
-end
 
 import Pkg
 if isdefined(Pkg.Resolve, :CONFLICT_COLORS)

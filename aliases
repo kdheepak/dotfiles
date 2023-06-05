@@ -131,7 +131,7 @@ alias tls='tmux ls'
 alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
 
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+if [ -n "$NVIM" ]; then
   alias vi=nvr -cc split --remote-wait +'set bufhidden=wipe'
 else
   alias vi=nvim
