@@ -62,7 +62,7 @@ staged = "${count} "
 deleted = "${count} "
 stashed = "${count} "
 renamed = "✎${count} "
-conflicted = "ﲅ${count} "
+conflicted = "${count} "
 
 [time]
 disabled = false
