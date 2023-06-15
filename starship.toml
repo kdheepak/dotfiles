@@ -5,7 +5,7 @@ palette = "catppuccin_mocha"
 
 add_newline = true
 format = """
-╭─$directory$git_branch$git_state$git_status[](fg:surface1) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
+╭─$directory$git_branch$git_commit$git_state$git_status[](fg:surface1) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
 ╰ \
 """
 continuation_prompt = " "
@@ -44,6 +44,10 @@ read_only = " "
 symbol = " " # ""
 style = "bg:surface1 fg:blue"
 format = "[ $symbol$branch]($style)"
+
+[git_commit]
+style = "bg:surface1 fg:blue"
+format = "[  $hash$tag]($style)"
 
 [git_state]
 style = "bg:surface1 fg:blue"
