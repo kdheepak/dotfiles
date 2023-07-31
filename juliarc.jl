@@ -173,6 +173,7 @@ function template()
   end
 end
 
+# From @tecosaur on slack
 module PkgStack
 
 import Pkg
