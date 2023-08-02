@@ -1,5 +1,3 @@
-ENV["JULIA_NUM_THREADS"] = 8
-
 import Pkg
 if isdefined(Pkg.Resolve, :CONFLICT_COLORS)
   append!(Pkg.Resolve.CONFLICT_COLORS, [21:51; 55:119; 124:142; 160:184; 196:220])
