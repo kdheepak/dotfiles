@@ -173,11 +173,11 @@ zinit load dandavison/delta
 zinit ice lucid as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 
+zinit ice lucid as"program" from"gh-r" mv"termsvg* -> termsvg"
+zinit load "MrMarble/termsvg"
+
 # zi_completion has'pandoc'
 zinit light srijanshetty/zsh-pandoc-completion
-
-zinit light b4b4r07/enhancd
-zinit light tree-sitter/tree-sitter
 
 zinit ice lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
 zinit load ogham/exa
@@ -224,12 +224,6 @@ zinit ice depth=1 # optional, but avoids downloading the full history
 zinit light 3v1n0/zsh-bash-completions-fallback
 zinit lucid atload"zicompinit; zicdreplay" blockf for \
     zsh-users/zsh-completions
-
-# # hub: https://github.com/github/hub
-# zinit ice from"gh-r" as"program" mv"hub-*/bin/hub -> hub" atclone'./hub alias -s > zhook.zsh' atpull'%atclone'
-# zinit light github/hub
-# zinit ice silent as"completion" mv'hub.zsh_completion -> _hub'
-# zinit snippet https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion
 
 # https://zdharma.org/zinit/wiki/Direnv-explanation/
 zinit from"gh-r" as"program" mv"direnv* -> direnv" \
