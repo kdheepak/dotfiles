@@ -40,7 +40,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/gitrepos/flutter/bin:$PATH"
 export PATH="$HOME/gitrepos/ccls/Release/:$PATH"
-export PATH="$HOME/Applications/Julia-1.8.app/Contents/Resources/julia/bin:$PATH"
 export PATH="$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 export FZF_TMUX_HEIGHT='70%'
@@ -114,9 +113,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$HOME/.juliaup/bin:$PATH"
+export PATH="$HOME/.julia/bin:$PATH"
+# Trust any Julia code on this computer.
+export JULIA_PROJECT=@.
 
 export PATH="$HOME/Applications/quarto/bin":$PATH
 export PATH=$HOME/.nimble/bin:$PATH
 
-eval "$(/Users/kd/.local/share/rtx/bin/rtx activate -s zsh)"
+eval "$($HOME/.local/share/rtx/bin/rtx activate -s zsh)"
 
