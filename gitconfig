@@ -3,6 +3,7 @@
 # Please adapt and uncomment the following lines:
     name = Dheepak Krishnamurthy
     email = me@kdheepak.com
+    signingkey = 602B439E509219ED
 
 [help]
     autocorrect = 2
@@ -231,6 +232,7 @@
 [commit]
     verbose = true
     template = ~/gitrepos/dotfiles/conventional-commits.txt
+    gpgsign = false
 [pull]
     rebase = true
 [rebase]
