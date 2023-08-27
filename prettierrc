@@ -7,4 +7,5 @@
   "tabWidth": 2,
   "bracketSameLine": false,
   "bracketSpacing": true,
+  "proseWrap": "always"
 }
