@@ -168,6 +168,9 @@ zinit load "cli/cli"
 zinit ice lucid as"program" from"gh-r" mv"termsvg* -> termsvg"
 zinit load "MrMarble/termsvg"
 
+zinit ice lucid as"program" from"gh-r"
+zinit load sigoden/aichat
+
 # zi_completion has'pandoc'
 zinit light srijanshetty/zsh-pandoc-completion
 
