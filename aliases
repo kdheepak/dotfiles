@@ -132,16 +132,12 @@ alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
 
 if [ -n "$NVIM" ]; then
-  alias vi=nvr -cc split --remote-wait +'set bufhidden=wipe'
+  alias e=nvr -cc split --remote-wait +'set bufhidden=wipe'
 else
-  alias vi=nvim
+  alias e=nvim
 fi
 
-alias e=vi
-alias vim=vi
-alias ve="vim ~/.config/nvim/init.vim"
 alias :q="exit"
-alias :e="vim"
 
 export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --smart-case --hidden --max-columns-preview --max-columns=\$(tput cols) --glob='!.git' --glob='!.DS_Store'"
 alias rg="rg $RG_FLAGS"
