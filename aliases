@@ -136,6 +136,7 @@ if [ -n "$NVIM" ]; then
 else
   alias e=nvim
 fi
+alias nv='e'
 
 alias :q="exit"
 
@@ -198,13 +199,12 @@ function get_nextword_data() {
   curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
 }
 
-
 # pretty_print_directory
 # - replace $HOME with ~
 # - make everything before the last '/' green, and everything after white and
 #   bold
 # - takes a single argument or reads from stdin
-function pretty_print_directory () {
+function pretty_print_directory() {
   green='\x1b[32m'
   bold='\x1b[1m'
   reset='\x1b[0m'
@@ -216,8 +216,8 @@ function pretty_print_directory () {
     input="$1"
   fi
 
-  echo "$input" | \
-  sed -E 's:'"$HOME"':~: ; s:$HOME:~: ; s:(.*/)([^/]+):'"${green}"'\1'"${reset}${bold}"'\2'"${reset}"':'
+  echo "$input" \
+    | sed -E 's:'"$HOME"':~: ; s:$HOME:~: ; s:(.*/)([^/]+):'"${green}"'\1'"${reset}${bold}"'\2'"${reset}"':'
 }
 
 # custom type
@@ -226,7 +226,7 @@ function pretty_print_directory () {
 # - Show symlink targets.
 # - If any line is an alias, highlight the first word, and include a nested
 #   type call for that word.
-function type () {
+function type() {
   local gray='\e[38;5;8m'
   local blue='\e[34m'
   local bold='\e[1m'
@@ -311,6 +311,3 @@ alias franklin="julia -O0 -e 'using Franklin; serve(launch=false)'"
 alias julia-test="julia -O0 -e 'using Pkg; Pkg.test()'"
 
 alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
-
-
-
