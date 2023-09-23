@@ -168,6 +168,9 @@ zinit load "cli/cli"
 zinit ice lucid as"program" from"gh-r" mv"termsvg* -> termsvg"
 zinit load "MrMarble/termsvg"
 
+zinit ice lucid as"program" from"gh-r" mv"mods* -> mods"
+zinit load "charmbracelet/mods"
+
 zinit ice lucid as"program" from"gh-r"
 zinit load sigoden/aichat
 

@@ -137,6 +137,8 @@ else
   alias e=nvim
 fi
 alias nv='e'
+alias vim='e'
+alias vi='e'
 
 alias :q="exit"
 
