@@ -164,6 +164,7 @@
     fss = forgit stash_show
 
     logme = !git log --pretty=format:\"* %s\" --author `git config user.email`
+    wash = clean -dfX -e '.envrc' -e '.env' -e '.vscode/*'
 
 [apply]
 
