@@ -138,12 +138,6 @@ zinit load extrawurst/gitui
 zinit ice from"gh-r" as"program"
 zinit load sayanarijit/xplr
 
-zinit ice lucid as"program" from"gh-r" mv"lazygit* -> lazygit" atload"alias lg='lazygit'"
-zinit load 'jesseduffield/lazygit'
-
-zinit ice lucid as"program" from"gh-r" mv"lazydocker* -> lazydocker"
-zinit load 'jesseduffield/lazydocker'
-
 zinit ice lucid as"program" from"gh-r" mv"hadolint* -> hadolint"
 zinit load 'hadolint/hadolint'
 
