@@ -1,11 +1,11 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 # Sets user-defined palette
-palette = "github"
+palette = "rosepine"
 
 add_newline = true
 format = """
-╭─$directory$git_branch$git_commit$git_state$git_status[](fg:surface1) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
+╭─$directory$git_branch$git_commit$git_state$git_status[](fg:base01) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
 ╰ \
 """
 continuation_prompt = " "
@@ -15,25 +15,25 @@ disabled = true
 
 [fill]
 symbol = "·"
-style = "fg:overlay2"
+style = "fg:base0F"
 
 [username] # only shows if we are in ssh
 style_user = "fg:pink"
 style_root = "red"
-format = "[▮](blue)[$user]($style)"
+format = "[▮](base00)[$user]($style)"
 show_always = false
 
 [hostname]
 ssh_only = true
 trim_at = "."
 style = "fg:pink"
-format = "[@](blue)[$hostname]($style)"
+format = "[@](base00)[$hostname]($style)"
 
 [directory]
-style = "bg:blue fg:mantle"
-format = "[ $path ]($style)[](fg:blue bg:surface1)"
-repo_root_style = "bold bg:blue fg:mantle"
-repo_root_format = "[ $before_root_path]($style)[$repo_root  ]($repo_root_style)[$path]($style)[$read_only]($read_only_style)[](fg:blue bg:surface1)"
+style = "bg:base0a fg:base00"
+format = "[ $path ]($style)[](fg:base0a bg:base00)"
+repo_root_style = "bold bg:base0a fg:base00"
+repo_root_format = "[ $before_root_path]($style)[$repo_root  ]($repo_root_style)[$path]($style)[$read_only]($read_only_style)[](fg:base0a bg:base00)"
 fish_style_pwd_dir_length = 1
 truncation_length = 1
 truncate_to_repo = false
@@ -42,19 +42,19 @@ read_only = " "
 
 [git_branch]
 symbol = " " # ""
-style = "bg:surface1 fg:blue"
+style = "bg:base01 fg:base0a"
 format = "[ $symbol$branch]($style)"
 
 [git_commit]
-style = "bg:surface1 fg:blue"
+style = "bg:base01 fg:base0a"
 format = "[  $hash$tag]($style)"
 
 [git_state]
-style = "bg:surface1 fg:blue"
+style = "bg:base01 fg:base0a"
 format = "[ ($state( $progress_current/$progress_total))]($style)"
 
 [git_status]
-style = "bg:surface1 fg:blue"
+style = "bg:base01 fg:base0a"
 format = "[ $all_status$ahead_behind]($style)"
 ahead = "⇡${count} "
 behind = "⇣${count} "
@@ -70,12 +70,12 @@ conflicted = "${count} "
 
 [time]
 disabled = false
-style = "bg:blue fg:mantle"
-format = "[](fg:blue bg:surface1)[ $time ]($style)"
+style = "bg:base0a fg:base00 bold"
+format = "[](fg:base0a bg:base01)[ $time ]($style)"
 
 [character]
-success_symbol = "[](fg:surface1)[ ✔ ](bg:surface1 fg:blue)"
-error_symbol = "[](fg:surface1)[ ✘ ](bg:surface1 fg:red)"
+success_symbol = "[](fg:base01)[ ✔ ](bg:base01 fg:base0a)"
+error_symbol = "[](fg:base01)[ ✘ ](bg:base01 fg:base09)"
 format = "$symbol"
 
 [aws]
@@ -322,3 +322,36 @@ surface0 = "#fffefd"
 base = "#fdfeff"
 mantle = "#ffffff"
 crust = "#fdfdfc"
+
+[palettes.rosepine]
+base = "#191724"
+surface = "#1f1d2e"
+overlay = "#26233a"
+muted = "#6e6a86"
+subtle = "#908caa"
+text = "#e0def4"
+love = "#eb6f92"
+gold = "#f6c177"
+rose = "#ebbcba"
+pine = "#31748f"
+foam = "#9ccfd8"
+iris = "#c4a7e7"
+highlightLow = "#21202e"
+highlightMed = "#403d52"
+highlightHigh = "#524f67"
+base00 = "#191724"
+base01 = "#1f1d2e"
+base02 = "#26233a"
+base03 = "#6e6a86"
+base04 = "#908caa"
+base05 = "#e0def4"
+base06 = "#e0def4"
+base07 = "#524f67"
+base08 = "#eb6f92"
+base09 = "#f6c177"
+base0a = "#ebbcba"
+base0b = "#31748f"
+base0c = "#9ccfd8"
+base0d = "#c4a7e7"
+base0e = "#f6c177"
+base0f = "#524f67"
