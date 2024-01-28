@@ -179,6 +179,9 @@ zinit load kdheepak/taskwarrior-tui
 
 zinit load "b4b4r07/emoji-cli"
 
+zinit ice lucid extract"" from"gh-r" as"command" mv"oatmeal* -> oatmeal"
+zinit load "dustinblackman/oatmeal"
+
 ### starship
 export STARSHIP_CONFIG=~/.config/starship.toml
 zinit ice as"command" from"gh-r" \
