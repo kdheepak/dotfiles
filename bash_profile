@@ -29,3 +29,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 # bind 'TAB:menu-complete'
 
 export PATH="$PATH:$HOME/.local/homebrew/bin"
+. "$HOME/.cargo/env"

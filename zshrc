@@ -330,3 +330,4 @@ if [ -f "$HOME/miniforge3/etc/profile.d/mamba.sh" ]; then
 fi
 
 
+. "$HOME/.cargo/env"
