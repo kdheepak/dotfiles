@@ -15,6 +15,7 @@
     tool = vimdiff
     # Include summaries of merged commits in newly created merge commit messages
     log = true
+	conflictStyle = zdiff3
 [mergetool]
     prompt = true
 [mergetool "vimdiff"]
@@ -256,3 +257,6 @@
     smtpuser = me@kdheepak.com
     smtpencryption = tls
     smtpserverport = 587
+
+[url "git@github.com:"]
+    insteadOf = "https://github.com/"

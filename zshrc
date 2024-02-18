@@ -331,3 +331,5 @@ fi
 
 
 . "$HOME/.cargo/env"
+
+eval "$(zoxide init zsh --cmd cd)"
