@@ -103,6 +103,3 @@ export JULIA_PROJECT=@.
 
 export PATH="$HOME/Applications/quarto/bin":$PATH
 export PATH=$HOME/.nimble/bin:$PATH
-
-eval "$($HOME/.local/share/rtx/bin/rtx activate -s zsh)"
-

@@ -224,7 +224,8 @@
 [pull]
     rebase = true
 [rebase]
-    autoStash = true
+	autostash = true
+	autosquash = true
 [core]
     pager = "{                                                       \
         COLUMNS=$(tput cols);                                        \

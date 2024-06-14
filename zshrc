@@ -333,3 +333,5 @@ fi
 . "$HOME/.cargo/env"
 
 eval "$(zoxide init zsh --cmd cd)"
+
+eval "$($HOME/.local/bin/mise activate zsh)"
