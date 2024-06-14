@@ -1,0 +1,6 @@
+import = ["~/.config/alacritty/rose-pine.toml"]
+
+[font]
+normal = { family = "FiraCode Nerd Font Mono", style = "Regular"}
+size = 12
+
