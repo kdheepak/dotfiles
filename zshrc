@@ -98,6 +98,15 @@ zmodload zsh/zpty
 
 zinit ice blockf atpull'zinit creinstall -q .'
 
+# Load starship theme
+# line 1: `starship` binary as command, from github release
+# line 2: starship setup at clone(create init.zsh, completion)
+# line 3: pull behavior same as clone, source init.zsh
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
+
 zinit ice lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
@@ -252,8 +261,3 @@ eval "$(zoxide init zsh --cmd cd)"
 
 eval "$($HOME/.local/bin/mise activate zsh)"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
-
-# load starship
-if has "starship" ; then
-  eval "$(starship init zsh)"
-fi
