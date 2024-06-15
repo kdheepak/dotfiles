@@ -261,4 +261,3 @@ eval "$(zoxide init zsh --cmd cd)"
 
 eval "$($HOME/.local/bin/mise activate zsh)"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
-eval "$(zellij setup --generate-auto-start zsh)"

@@ -9,33 +9,22 @@ keybinds clear-defaults=true {
                 bind "Enter" { SwitchToMode "locked"; }
                 bind "Esc" { UndoRenameTab; SwitchToMode "tmux"; }
         }
-        tmux {
+
+        tmux clear-defaults=true {
                 bind "Enter" { SwitchToMode "locked"; }
                 bind "Esc" { SwitchToMode "locked"; }
                 bind "Alt `" { SwitchToMode "locked"; }
+
                 bind "H" { NewPane "Left"; SwitchToMode "locked"; }
                 bind "J" { NewPane "Down"; SwitchToMode "locked"; }
                 bind "K" { NewPane "Up"; SwitchToMode "locked"; }
                 bind "L" { NewPane "Right"; SwitchToMode "locked"; }
 
-                bind "h" { MoveFocus "Left"; }
-                bind "j" { MoveFocus "Down"; }
-                bind "k" { MoveFocus "Up"; }
-                bind "l" { MoveFocus "Right"; }
+                bind "Ctrl h" { MoveFocus "Left"; }
+                bind "Ctrl l" { MoveFocus "Right"; }
+                bind "Ctrl j" { MoveFocus "Down"; }
+                bind "Ctrl k" { MoveFocus "Up"; }
 
-                bind "/" { EditScrollback; SwitchToMode "locked"; }
-                bind "," { SwitchToMode "RenameTab"; TabNameInput 0; }
-                bind "[" { SwitchToMode "scroll"; }
-                bind "r" { SwitchToMode "resize"; }
-
-                bind "Space" { NextSwapLayout; }
-                bind "t" { NewTab; SwitchToMode "locked"; }
-                bind "Tab" { GoToNextTab; }
-                bind "o" { FocusNextPane; }
-                bind "p" { GoToPreviousTab; }
-                bind "q" { Detach; }
-                bind "x" { CloseFocus; SwitchToMode "locked"; }
-                bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         }
         resize {
                 bind "h" { Resize "Left"; }
@@ -48,11 +37,6 @@ keybinds clear-defaults=true {
         }
         shared_except "tmux" {
                 bind "Alt `" { SwitchToMode "tmux"; }
-
-                bind "Ctrl h" { MoveFocus "Left"; }
-                bind "Ctrl j" { MoveFocus "Down"; }
-                bind "Ctrl k" { MoveFocus "Up"; }
-                bind "Ctrl l" { MoveFocus "Right"; }
         }
 }
 
