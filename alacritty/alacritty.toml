@@ -1,6 +1,12 @@
 import = ["~/.config/alacritty/rose-pine.toml"]
 
 [font]
-normal = { family = "FiraCode Nerd Font", style = "Regular"}
+normal = { family = "FiraCode Nerd Font Mono", style = "Regular"}
 size = 12
 
+[shell]
+program = "/bin/zsh"
+args = ["-l", "-c", "~/.local/share/mise/shims/zellij attach --index 0 --create"]
+
+[window]
+startup_mode = "Maximized"

@@ -31,8 +31,8 @@ rm ~/.zprofile
 ln -s "$(pwd)/zprofile" ~/.zprofile
 rm ~/.config/starship.toml
 ln -s "$(pwd)/starship.toml" ~/.config/starship.toml
-rm ~/.rustfmt.toml
-ln -s "$(pwd)/rustfmt.toml" ~/.rustfmt.toml
+# rm ~/.rustfmt.toml
+# ln -s "$(pwd)/rustfmt.toml" ~/.rustfmt.toml
 rm ~/.condarc
 ln -s "$(pwd)/condarc" ~/.condarc
 rm ~/.config/flake8
@@ -53,3 +53,9 @@ rm -rf ~/.config/bat
 ln -s "$(pwd)/bat" ~/.config/bat
 rm -rf ~/local/bin/irg
 ln -s "$(pwd)/fzf/irg" ~/local/bin/irg
+rm -rf ~/.config/alacritty
+ln -s "$(pwd)/alacritty" ~/.config/alacritty
+rm -rf ~/.config/zellij
+ln -s "$(pwd)/zellij" ~/.config/zellij
+rm -rf ~/.config/mise
+ln -s "$(pwd)/mise" ~/.config/mise
