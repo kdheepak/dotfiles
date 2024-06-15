@@ -1,0 +1,12 @@
+[settings]
+experimental = true
+
+[tools]
+"cargo:cargo-binstall" = "latest"
+"cargo:zellij" = "latest"
+neovim = "nightly"
+"cargo:yazi-cli" = "latest"
+starship = "latest"
+delta = "latest"
+ripgrep = "latest"
+bat = "latest"
