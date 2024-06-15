@@ -7,6 +7,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
+has() {
+  type "$1" > /dev/null 2>&1
+}
+
+
 source ~/gitrepos/dotfiles/base16.fzf.config
 
 # practically unlimited history
@@ -82,123 +88,36 @@ autoload -Uz _zinit
 #     # prompt_char           # prompt symbol
 # )
 
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
-
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d0d0d0"
-export ZSH_AUTOSUGGEST_STRATEGY=(history)
-export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-export ZSH_AUTOSUGGEST_USE_ASYNC=1
-export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 setopt AUTO_CD
 bindkey '^P' up-history
 bindkey '^N' down-history
 
-zstyle ':completion:*' menu select
 _comp_options+=(globdots)  # include hidden files in autocomplete
 
 zmodload zsh/zpty
 
 zinit ice blockf atpull'zinit creinstall -q .'
 
-
-zinit ice lucid \
-        as:"program" \
-        atclone:"./install --bin" \
-        atpull:"%atclone" \
-        pick:"bin/fzf" \
-        multisrc:"shell/{key-bindings,completion}.zsh"
-zinit load "junegunn/fzf"
-
-zinit ice make as"command" mv"nnn -> nnn" pick"nnn"
-zinit light jarun/nnn
-
 zinit ice lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
-
-zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat='bat'"
-zinit load sharkdp/bat
-
-zinit ice from"gh-r" as"program" mv"mdcat* -> mdcat" pick"mdcat/mdcat"
-zinit load swsnr/mdcat
-
-zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
-zinit light "jonas/tig"
-
-zinit lucid from"gh-r" as"program" light-mode for @high-moctane/nextword
-
-zinit ice from"gh-r" as"program" pick"so/so"
-zinit load samtay/so
-
-zinit ice from"gh-r" as"program" pick"pq-*/pq"
-zinit load Th3Whit3Wolf/pquote
-
-zinit ice from"gh-r" as"program"
-zinit load extrawurst/gitui
-
-zinit ice from"gh-r" as"program"
-zinit load sayanarijit/xplr
-
-zinit ice lucid as"program" from"gh-r" mv"hadolint* -> hadolint"
-zinit load 'hadolint/hadolint'
-
-zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
-zinit load BurntSushi/ripgrep
-
-zinit ice from"gh-r" as"program" mv"ripgrep_all* -> ripgrep_all" pick"ripgrep_all/rga"
-zinit load phiresky/ripgrep-all
-
-zinit ice depth'1' as"program" pick"ranger.py" atload"alias r='ranger.py'"
-zinit load ranger/ranger
-
-zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
-zinit load sharkdp/fd
-
-zinit ice as"command" extract"" pick"delta/delta" mv"delta* -> delta" from"gh-r"
-zinit load dandavison/delta
 
 zinit ice lucid as"program" from"gh-r" pick"gh*/bin/gh"
 zinit load "cli/cli"
 
-zinit ice lucid as"program" from"gh-r" mv"termsvg* -> termsvg"
-zinit load "MrMarble/termsvg"
-
-zinit ice lucid as"program" from"gh-r" mv"mods* -> mods"
-zinit load "charmbracelet/mods"
-
-zinit ice lucid as"program" from"gh-r"
-zinit load sigoden/aichat
-
-# zi_completion has'pandoc'
-zinit light srijanshetty/zsh-pandoc-completion
-
 zinit ice lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
 zinit load ogham/exa
 
-zinit ice lucid extract"" from"gh-r" as"command" mv"taskwarrior-tui* -> tt"
-zinit load kdheepak/taskwarrior-tui
-
 zinit load "b4b4r07/emoji-cli"
-
-zinit ice lucid extract"" from"gh-r" as"command" mv"oatmeal* -> oatmeal"
-zinit load "dustinblackman/oatmeal"
-
-### starship
-export STARSHIP_CONFIG=~/.config/starship.toml
-zinit ice as"command" from"gh-r" \
-      atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-      atpull"%atclone" src"init.zsh"
-zinit light starship/starship
 
 export NVM_SYMLINK_CURRENT=true
 export NVM_AUTO_USE=true
 zinit light lukechilds/zsh-nvm
 
-zinit ice pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ::lib/completion.zsh
-zinit snippet OMZ::lib/git.zsh
-# zinit snippet PZT::modules/completion/init.zsh
+# zinit ice pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+# zinit snippet OMZ::plugins/git/git.plugin.zsh
+# zinit snippet OMZ::lib/history.zsh
+# zinit snippet OMZ::lib/completion.zsh
+# zinit snippet OMZ::lib/git.zsh
 
 zinit light zdharma-continuum/fast-syntax-highlighting
 
@@ -227,9 +146,6 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
         direnv/direnv
 
 zinit load Aloxaf/fzf-tab
-
-zinit load wfxr/forgit
-export PATH="$FORGIT_INSTALL_DIR/bin:$PATH"
 
 # zinit ice silent pick"shell/*.zsh"
 # zinit load "lotabout/skim"
@@ -335,3 +251,9 @@ fi
 eval "$(zoxide init zsh --cmd cd)"
 
 eval "$($HOME/.local/bin/mise activate zsh)"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+# load starship
+if has "starship" ; then
+  eval "$(starship init zsh)"
+fi
