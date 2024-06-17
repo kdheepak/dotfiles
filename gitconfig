@@ -207,7 +207,7 @@
 [gpg]
     program = gpg
 [http]
-    sslVerify = false
+	sslverify = false
     postBuffer = 2M
 [init]
     templatedir = ~/gitrepos/dotfiles/git-templates
