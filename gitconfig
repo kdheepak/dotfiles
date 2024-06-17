@@ -15,7 +15,7 @@
     tool = vimdiff
     # Include summaries of merged commits in newly created merge commit messages
     log = true
-	conflictStyle = zdiff3
+    conflictStyle = zdiff3
 [mergetool]
     prompt = true
 [mergetool "vimdiff"]
@@ -207,7 +207,7 @@
 [gpg]
     program = gpg
 [http]
-	sslverify = false
+    sslverify = false
     postBuffer = 2M
 [init]
     templatedir = ~/gitrepos/dotfiles/git-templates
@@ -224,26 +224,27 @@
 [pull]
     rebase = true
 [rebase]
-	autostash = true
-	autosquash = true
+    autostash = true
+    autosquash = true
 [core]
     pager = "{                                                       \
         COLUMNS=$(tput cols);                                        \
         if [ $COLUMNS -ge 160 ] && [ -z $FZF_PREVIEW_COLUMNS ]; then \
-            delta --syntax-theme=catppuccin --side-by-side -w $COLUMNS;  \
+            delta --side-by-side -w $COLUMNS;  \
         elif [ $COLUMNS -ge 200 ] && [ $FZF_PREVIEW_COLUMNS ]; then  \
-            delta --syntax-theme=catppuccin --side-by-side -w $FZF_PREVIEW_COLUMNS;            \
+            delta --side-by-side -w $FZF_PREVIEW_COLUMNS;            \
         else                                                         \
-            delta --syntax-theme=catppuccin --features=one-window;                             \
+            delta --features=one-window;                             \
         fi                                                           \
     }"
+
+[include]
+    path = ~/.config/delta/themes.gitconfig
 [interactive]
-    diffFilter = bash -c 'delta --color-only --syntax-theme=catppuccin'
+    diffFilter = bash -c 'delta --color-only'
 [delta]
     line-numbers = true
     side-by-side = true
-    features = line-numbers
-    syntax-theme = catppuccin
 [delta "one-window"]
     side-by-side = false
 [fetch]
