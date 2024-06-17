@@ -10,3 +10,4 @@ args = ["-l", "-c", "~/.local/share/mise/shims/zellij"]
 
 [window]
 startup_mode = "Maximized"
+option_as_alt = "Both"
