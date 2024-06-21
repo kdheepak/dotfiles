@@ -15,15 +15,13 @@ keybinds clear-defaults=true {
                 bind "Esc" { SwitchToMode "locked"; }
                 bind "Alt `" { SwitchToMode "locked"; }
 
-                bind "H" { NewPane "Left"; SwitchToMode "locked"; }
-                bind "J" { NewPane "Down"; SwitchToMode "locked"; }
-                bind "K" { NewPane "Up"; SwitchToMode "locked"; }
-                bind "L" { NewPane "Right"; SwitchToMode "locked"; }
+                bind "/" { NewPane "Down"; SwitchToMode "locked"; }
+                bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
 
-                bind "Ctrl h" { MoveFocus "Left"; }
-                bind "Ctrl l" { MoveFocus "Right"; }
-                bind "Ctrl j" { MoveFocus "Down"; }
-                bind "Ctrl k" { MoveFocus "Up"; }
+                bind "h" { MoveFocus "Left"; SwitchToMode "locked"; }
+                bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
+                bind "j" { MoveFocus "Down"; SwitchToMode "locked";  }
+                bind "k" { MoveFocus "Up";  SwitchToMode "locked"; }
 
         }
         resize {
