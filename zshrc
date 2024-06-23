@@ -259,4 +259,6 @@ fi
 
 eval "$($HOME/.local/bin/mise activate zsh)"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+export PATH=$PATH:$HOME/.pixi/bin
 eval "$(pixi completion --shell zsh)"
