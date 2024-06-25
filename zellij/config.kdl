@@ -47,7 +47,6 @@ keybinds clear-defaults=true {
             bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
             bind "d" { HalfPageScrollDown; }
             bind "u" { HalfPageScrollUp; }
-            bind "c" { Copy; }
         }
         entersearch {
             bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
@@ -156,17 +155,17 @@ pane_frames false
 //
 themes {
     my-rose-pine {
-        fg "#403d52"
-        bg "#e0def4"
-        red "#eb6f92"
-        cyan "#31748f"
+        fg "#e0def4"
+        bg "#403d52"
+        black "#191724"
         blue "#9ccfd8"
-        yellow "#f6c177"
+        cyan "#31748f"
+        green "#ebbcba"
         magenta "#c4a7e7"
         orange "#fe640b"
-        green "#ebbcba"
-        black "#191724"
+        red "#eb6f92"
         white "#e0def4"
+        yellow "#f6c177"
     }
 }
 
@@ -224,7 +223,7 @@ default_mode "locked"
 // Enable or disable automatic copy (and clear) of selection when releasing mouse
 // Default: true
 //
-copy_on_select false
+// copy_on_select false
 
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
