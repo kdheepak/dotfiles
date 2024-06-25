@@ -26,7 +26,7 @@ keybinds clear-defaults=true {
             bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
             bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
             bind "n" { GoToNextTab; SwitchToMode "locked"; }
-
+            bind "x" { CloseFocus; SwitchToMode "Normal"; }
         }
         resize {
             bind "h" { Resize "Left"; }
