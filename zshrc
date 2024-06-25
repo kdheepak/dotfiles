@@ -98,23 +98,8 @@ zmodload zsh/zpty
 
 zinit ice blockf atpull'zinit creinstall -q .'
 
-# Load starship theme
-# line 1: `starship` binary as command, from github release
-# line 2: starship setup at clone(create init.zsh, completion)
-# line 3: pull behavior same as clone, source init.zsh
-zinit ice as"command" from"gh-r" \
-          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-          atpull"%atclone" src"init.zsh"
-zinit light starship/starship
-
 zinit ice lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
-
-zinit ice lucid as"program" from"gh-r" pick"gh*/bin/gh"
-zinit load "cli/cli"
-
-zinit ice lucid extract"" from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa/exa"
-zinit load ogham/exa
 
 zinit load "b4b4r07/emoji-cli"
 
@@ -133,9 +118,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 
-zinit ice if'[[ -n "$commands[task]" ]]' lucid
-zinit snippet OMZ::plugins/taskwarrior/taskwarrior.plugin.zsh
-
 # zinit snippet OMZ::plugins/brew/brew.plugin.zsh
 
 bindkey '^[[A' history-substring-search-up
@@ -148,22 +130,7 @@ zinit light 3v1n0/zsh-bash-completions-fallback
 zinit lucid atload"zicompinit; zicdreplay" blockf for \
     zsh-users/zsh-completions
 
-# https://zdharma.org/zinit/wiki/Direnv-explanation/
-zinit from"gh-r" as"program" mv"direnv* -> direnv" \
-    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
-    pick"direnv" src="zhook.zsh" for \
-        direnv/direnv
-
 zinit load Aloxaf/fzf-tab
-
-# zinit ice silent pick"shell/*.zsh"
-# zinit load "lotabout/skim"
-#
-# zinit ice from'gh-r' as'program' mv pick'bin/sk';
-# zinit load lotabout/skim
-
-zinit ice from'gh-r' as'program' mv'pastel* -> pastel' pick'pastel/pastel';
-zinit load sharkdp/pastel
 
 zstyle ':fzf-tab:*' fzf-bindings 'ctrl-space:toggle+down' 'ctrl-y:yank'
 zstyle ':completion:complete:*:options' sort false
@@ -262,3 +229,5 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 export PATH=$PATH:$HOME/.pixi/bin
 eval "$(pixi completion --shell zsh)"
+
+eval "$(starship init zsh)"
