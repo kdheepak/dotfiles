@@ -9,8 +9,7 @@ keybinds clear-defaults=true {
             bind "Enter" { SwitchToMode "locked"; }
             bind "Esc" { UndoRenameTab; SwitchToMode "tmux"; }
         }
-
-        tmux clear-defaults=true {
+        tmux {
             bind "[" { SwitchToMode "Scroll"; }
             bind "Enter" { SwitchToMode "locked"; }
             bind "Esc" { SwitchToMode "locked"; }
@@ -26,7 +25,7 @@ keybinds clear-defaults=true {
             bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
             bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
             bind "n" { GoToNextTab; SwitchToMode "locked"; }
-            bind "x" { CloseFocus; SwitchToMode "Normal"; }
+            bind "x" { CloseFocus; SwitchToMode "locked"; }
         }
         resize {
             bind "h" { Resize "Left"; }
@@ -38,22 +37,24 @@ keybinds clear-defaults=true {
             bind "Esc" { SwitchToMode "locked"; }
         }
         scroll {
-            bind "Ctrl s" { SwitchToMode "Normal"; }
-            bind "e" { EditScrollback; SwitchToMode "Normal"; }
+            bind "Ctrl c" "Esc" { ScrollToBottom; SwitchToMode "locked"; }
+            bind "Enter" { SwitchToMode "locked"; }
+            bind "e" { EditScrollback; SwitchToMode "locked"; }
             bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
-            bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
             bind "j" "Down" { ScrollDown; }
             bind "k" "Up" { ScrollUp; }
             bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
             bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
             bind "d" { HalfPageScrollDown; }
             bind "u" { HalfPageScrollUp; }
-            // uncomment this and adjust key if using copy_on_select=false
-            // bind "Alt c" { Copy; }
+            bind "c" { Copy; }
+        }
+        entersearch {
+            bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
+            bind "Enter" { SwitchToMode "Search"; }
         }
         search {
-            bind "Ctrl s" { SwitchToMode "Normal"; }
-            bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
+            bind "Ctrl c" { ScrollToBottom; SwitchToMode "locked"; }
             bind "j" "Down" { ScrollDown; }
             bind "k" "Up" { ScrollUp; }
             bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
@@ -67,7 +68,7 @@ keybinds clear-defaults=true {
             bind "o" { SearchToggleOption "WholeWord"; }
         }
         shared_except "tmux" {
-                bind "Alt `" { SwitchToMode "tmux"; }
+            bind "Alt `" { SwitchToMode "tmux"; }
         }
 }
 
@@ -223,7 +224,7 @@ default_mode "locked"
 // Enable or disable automatic copy (and clear) of selection when releasing mouse
 // Default: true
 //
-// copy_on_select false
+copy_on_select false
 
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
