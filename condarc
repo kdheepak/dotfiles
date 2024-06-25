@@ -1,4 +1,4 @@
-ssl_verify: false
 auto_activate_base: true
 anaconda_upload: false
 changeps1: false
+ssl_verify: false

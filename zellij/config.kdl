@@ -2,36 +2,69 @@
 
 keybinds clear-defaults=true {
         normal {
-                bind "`" { SwitchToMode "tmux"; }
-                bind "Esc" { SwitchToMode "locked"; }
+            bind "`" { SwitchToMode "tmux"; }
+            bind "Esc" { SwitchToMode "locked"; }
         }
         renametab {
-                bind "Enter" { SwitchToMode "locked"; }
-                bind "Esc" { UndoRenameTab; SwitchToMode "tmux"; }
+            bind "Enter" { SwitchToMode "locked"; }
+            bind "Esc" { UndoRenameTab; SwitchToMode "tmux"; }
         }
 
         tmux clear-defaults=true {
-                bind "Enter" { SwitchToMode "locked"; }
-                bind "Esc" { SwitchToMode "locked"; }
-                bind "Alt `" { SwitchToMode "locked"; }
+            bind "[" { SwitchToMode "Scroll"; }
+            bind "Enter" { SwitchToMode "locked"; }
+            bind "Esc" { SwitchToMode "locked"; }
+            bind "Alt `" { SwitchToMode "locked"; }
 
-                bind "/" { NewPane "Down"; SwitchToMode "locked"; }
-                bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
+            bind "/" { NewPane "Down"; SwitchToMode "locked"; }
+            bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
 
-                bind "h" { MoveFocus "Left"; SwitchToMode "locked"; }
-                bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
-                bind "j" { MoveFocus "Down"; SwitchToMode "locked";  }
-                bind "k" { MoveFocus "Up";  SwitchToMode "locked"; }
+            bind "h" { MoveFocus "Left"; SwitchToMode "locked"; }
+            bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
+            bind "j" { MoveFocus "Down"; SwitchToMode "locked";  }
+            bind "k" { MoveFocus "Up";  SwitchToMode "locked"; }
+            bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+            bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
+            bind "n" { GoToNextTab; SwitchToMode "locked"; }
 
         }
         resize {
-                bind "h" { Resize "Left"; }
-                bind "j" { Resize "Down"; }
-                bind "k" { Resize "Up"; }
-                bind "l" { Resize "Right"; }
+            bind "h" { Resize "Left"; }
+            bind "j" { Resize "Down"; }
+            bind "k" { Resize "Up"; }
+            bind "l" { Resize "Right"; }
 
-                bind "Enter" { SwitchToMode "locked"; }
-                bind "Esc" { SwitchToMode "locked"; }
+            bind "Enter" { SwitchToMode "locked"; }
+            bind "Esc" { SwitchToMode "locked"; }
+        }
+        scroll {
+            bind "Ctrl s" { SwitchToMode "Normal"; }
+            bind "e" { EditScrollback; SwitchToMode "Normal"; }
+            bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
+            bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
+            bind "j" "Down" { ScrollDown; }
+            bind "k" "Up" { ScrollUp; }
+            bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
+            bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
+            bind "d" { HalfPageScrollDown; }
+            bind "u" { HalfPageScrollUp; }
+            // uncomment this and adjust key if using copy_on_select=false
+            // bind "Alt c" { Copy; }
+        }
+        search {
+            bind "Ctrl s" { SwitchToMode "Normal"; }
+            bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
+            bind "j" "Down" { ScrollDown; }
+            bind "k" "Up" { ScrollUp; }
+            bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
+            bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
+            bind "d" { HalfPageScrollDown; }
+            bind "u" { HalfPageScrollUp; }
+            bind "n" { Search "down"; }
+            bind "p" { Search "up"; }
+            bind "c" { SearchToggleOption "CaseSensitivity"; }
+            bind "w" { SearchToggleOption "Wrap"; }
+            bind "o" { SearchToggleOption "WholeWord"; }
         }
         shared_except "tmux" {
                 bind "Alt `" { SwitchToMode "tmux"; }

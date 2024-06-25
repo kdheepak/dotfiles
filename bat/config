@@ -1,5 +1,5 @@
 # Set the theme to "OneHalfLight"
---theme="catppuccin"
+--theme="base16"
 
 --color=always
 
