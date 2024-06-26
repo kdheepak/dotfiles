@@ -231,3 +231,6 @@ export PATH=$PATH:$HOME/.pixi/bin
 eval "$(pixi completion --shell zsh)"
 
 eval "$(starship init zsh)"
+
+eval "$(direnv hook zsh)"
+
