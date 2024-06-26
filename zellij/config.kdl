@@ -26,6 +26,7 @@ keybinds clear-defaults=true {
             bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
             bind "n" { GoToNextTab; SwitchToMode "locked"; }
             bind "x" { CloseFocus; SwitchToMode "locked"; }
+            bind "e" { EditScrollback; SwitchToMode "locked"; }
         }
         resize {
             bind "h" { Resize "Left"; }
