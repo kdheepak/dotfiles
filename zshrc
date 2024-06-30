@@ -118,7 +118,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 
-# zinit snippet OMZ::plugins/brew/brew.plugin.zsh
+zinit snippet OMZ::plugins/brew/brew.plugin.zsh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -234,3 +234,7 @@ eval "$(starship init zsh)"
 
 eval "$(direnv hook zsh)"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+path=('$HOME/.juliaup/bin' $path)
+export PATH
