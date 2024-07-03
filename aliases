@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
-alias brew=/opt/homebrew/bin/brew
 
 brew-symlink-cli() {
   if [[ -n "$1" ]]; then

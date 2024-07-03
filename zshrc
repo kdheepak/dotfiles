@@ -1,6 +1,9 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
+
+export PATH=$PATH:$HOME/homebrew/bin
+
 set -o emacs
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -118,7 +121,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-history-substring-search
 
-zinit snippet OMZ::plugins/brew/brew.plugin.zsh
+# zinit snippet OMZ::plugins/brew/brew.plugin.zsh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -227,14 +230,14 @@ fi
 eval "$($HOME/.local/bin/mise activate zsh)"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
-export PATH=$PATH:$HOME/.pixi/bin
+export PATH=$HOME/.pixi/bin:$PATH
 eval "$(pixi completion --shell zsh)"
 
 eval "$(starship init zsh)"
 
 eval "$(direnv hook zsh)"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(brew shellenv)"
 
 path=('$HOME/.juliaup/bin' $path)
 export PATH
