@@ -225,12 +225,11 @@ if [ -f "$HOME/miniforge3/etc/profile.d/mamba.sh" ]; then
 fi
 
 
-. "$HOME/.cargo/env"
-
 eval "$($HOME/.local/bin/mise activate zsh)"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
-
 export PATH=$HOME/.pixi/bin:$PATH
+export PATH=$HOME/.juliaup/bin:$PATH
+
 eval "$(pixi completion --shell zsh)"
 
 eval "$(starship init zsh)"
@@ -239,5 +238,6 @@ eval "$(direnv hook zsh)"
 
 eval "$(brew shellenv)"
 
-path=('$HOME/.juliaup/bin' $path)
+. "$HOME/.cargo/env"
+
 export PATH
