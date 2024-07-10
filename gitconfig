@@ -37,7 +37,7 @@
     url =! bash -c 'git config --get remote.origin.url | sed -E "s/.+:\\(.+\\)\\.git$/https:\\\\/\\\\/github\\\\.com\\\\/\\\\1/g"'
     co = checkout
     save = !git commit -am 'chore: Update files' && git push
-    wip = !SKIP='check-commit-msg' git commit -anm 'WIP'
+    wip = !SKIP='check-commit-msg' git commit -anm 'wip: Update files'
 
     lg = log --date-order --all --color=always --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)'
     ls = log --date-order --all --color=always --graph --abbrev-commit --decorate --date=relative --simplify-by-decoration --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)'
@@ -209,7 +209,7 @@
     sslverify = false
     postBuffer = 2M
 [init]
-    templatedir = ~/gitrepos/dotfiles/git-templates
+    # templatedir = ~/gitrepos/dotfiles/git-templates
     defaultBranch = main
 [rerere]
     enabled = false

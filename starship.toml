@@ -135,11 +135,7 @@ symbol = " "
 format = " [$symbol($version )]($style)"
 
 [memory_usage]
-symbol = " "
-
-[nim]
-symbol = " "
-format = " [$symbol($version )]($style)"
+symbol = "󰍛 "
 
 [nix_shell]
 symbol = " "
@@ -150,7 +146,7 @@ symbol = " "
 format = " [$symbol($version )]($style)"
 
 [package]
-symbol = " "
+symbol = "󰏗 "
 format = " [$symbol($version )](208 bold)"
 
 [python]
