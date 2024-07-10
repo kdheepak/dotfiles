@@ -135,6 +135,8 @@ zinit lucid atload"zicompinit; zicdreplay" blockf for \
 
 zinit load Aloxaf/fzf-tab
 
+zinit load wfxr/forgit
+
 zstyle ':fzf-tab:*' fzf-bindings 'ctrl-space:toggle+down' 'ctrl-y:yank'
 zstyle ':completion:complete:*:options' sort false
 zstyle ":completion:*:git-checkout:*" sort false
