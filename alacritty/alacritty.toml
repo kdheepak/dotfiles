@@ -3,9 +3,17 @@ import = ["~/.config/alacritty/rose-pine.toml"]
 [font]
 size = 12
 
+[font.bold_italic]
+family = "FiraCode Nerd Font Mono"
+
+[font.bold]
+family = "FiraCode Nerd Font Mono"
+
+[font.italic]
+family = "FiraCode Nerd Font Mono"
 
 [font.normal]
-family = "MonaspiceNe Nerd Font Mono"
+family = "FiraCode Nerd Font Mono"
 
 [shell]
 program = "/bin/zsh"
