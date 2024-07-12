@@ -4,16 +4,16 @@ import = ["~/.config/alacritty/rose-pine.toml"]
 size = 12
 
 [font.bold_italic]
-family = "FiraCode Nerd Font Mono"
+family = "RecMonoLinear Nerd Font Mono"
 
 [font.bold]
-family = "FiraCode Nerd Font Mono"
+family = "RecMonoLinear Nerd Font Mono"
 
 [font.italic]
-family = "FiraCode Nerd Font Mono"
+family = "RecMonoLinear Nerd Font Mono"
 
 [font.normal]
-family = "FiraCode Nerd Font Mono"
+family = "RecMonoLinear Nerd Font Mono"
 
 [shell]
 program = "/bin/zsh"
@@ -22,6 +22,3 @@ args = ["-l", "-c", "~/.local/share/mise/shims/zellij"]
 [window]
 startup_mode = "Maximized"
 option_as_alt = "Both"
-
-[env]
-TERM = "xterm-256color"
