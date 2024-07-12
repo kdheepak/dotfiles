@@ -2,19 +2,19 @@ import = ["~/.config/alacritty/rose-pine.toml"]
 
 [font]
 builtin_box_drawing = true
-size = 12
+size = 14
 
 [font.bold_italic]
-family = "Iosevkata Nerd Font"
+family = "Pragmasevka Nerd Font"
 
 [font.bold]
-family = "Iosevkata Nerd Font"
+family = "Pragmasevka Nerd Font"
 
 [font.italic]
-family = "Iosevkata Nerd Font"
+family = "Pragmasevka Nerd Font"
 
 [font.normal]
-family = "Iosevkata Nerd Font"
+family = "Pragmasevka Nerd Font"
 
 [font.glyph_offset]
 x = 0
