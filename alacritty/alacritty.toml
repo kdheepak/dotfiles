@@ -1,19 +1,28 @@
 import = ["~/.config/alacritty/rose-pine.toml"]
 
 [font]
+builtin_box_drawing = true
 size = 12
 
 [font.bold_italic]
-family = "RecMonoLinear Nerd Font Mono"
+family = "Iosevkata Nerd Font"
 
 [font.bold]
-family = "RecMonoLinear Nerd Font Mono"
+family = "Iosevkata Nerd Font"
 
 [font.italic]
-family = "RecMonoLinear Nerd Font Mono"
+family = "Iosevkata Nerd Font"
 
 [font.normal]
-family = "RecMonoLinear Nerd Font Mono"
+family = "Iosevkata Nerd Font"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.offset]
+x = 0
+y = 0
 
 [shell]
 program = "/bin/zsh"
