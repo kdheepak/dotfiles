@@ -57,5 +57,7 @@ rm -rf ~/.config/alacritty
 ln -s "$(pwd)/alacritty" ~/.config/alacritty
 rm -rf ~/.config/zellij
 ln -s "$(pwd)/zellij" ~/.config/zellij
+rm -rf ~/.config/tmux
+ln -s "$(pwd)/tmux.config" ~/.config/tmux/tmux.conf
 rm -rf ~/.config/mise
 ln -s "$(pwd)/mise" ~/.config/mise
