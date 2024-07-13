@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
 
-export PATH=$PATH:$HOME/homebrew/bin
+eval "$($HOME/homebrew/bin/brew shellenv)"
 
 set -o emacs
 
@@ -238,8 +238,4 @@ eval "$(starship init zsh)"
 
 eval "$(direnv hook zsh)"
 
-eval "$(brew shellenv)"
-
 . "$HOME/.cargo/env"
-
-export PATH
