@@ -2,19 +2,19 @@ import = ["~/.config/alacritty/rose-pine.toml"]
 
 [font]
 builtin_box_drawing = true
-size = 14
+size = 12
 
 [font.bold_italic]
-family = "Pragmasevka Nerd Font"
+family = "IosevkaFireTerm Nerd Font Mono"
 
 [font.bold]
-family = "Pragmasevka Nerd Font"
+family = "IosevkaFireTerm Nerd Font Mono"
 
 [font.italic]
-family = "Pragmasevka Nerd Font"
+family = "IosevkaFireTerm Nerd Font Mono"
 
 [font.normal]
-family = "Pragmasevka Nerd Font"
+family = "IosevkaFireTerm Nerd Font Mono"
 
 [font.glyph_offset]
 x = 0
@@ -26,7 +26,7 @@ y = 0
 
 [shell]
 program = "/bin/zsh"
-args = ["-l", "-c", "~/homebrew/bin/zellij"]
+args = ["-l", "-c", "~/.local/share/mise/shims/zellij"]
 
 [window]
 startup_mode = "Maximized"

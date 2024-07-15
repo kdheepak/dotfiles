@@ -23,35 +23,35 @@ keybinds clear-defaults=true {
     normal {
         bind "Esc" { SwitchToMode "locked"; }
 
-        bind "/" { TogglePaneFrames; SwitchToMode "EnterSearch"; SearchInput 0; }
-        bind "t" { NewTab; SwitchToMode "locked"; }
-        bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
-        bind "/" { NewPane "Down"; SwitchToMode "locked"; }
-        bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; SwitchToMode "locked"; }
-        bind "x" { CloseFocus; SwitchToMode "locked"; }
-        bind "w" { SwitchToMode "Session"; SwitchToMode "locked"; }
-        bind "e" { EditScrollback; SwitchToMode "locked"; }
+        bind "Alt /" { TogglePaneFrames; SwitchToMode "EnterSearch"; SearchInput 0; }
+        bind "Alt t" { NewTab; SwitchToMode "locked"; }
+        bind "Alt \\" { NewPane "Right"; SwitchToMode "locked"; }
+        bind "Alt /" { NewPane "Down"; SwitchToMode "locked"; }
+        bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; SwitchToMode "locked"; }
+        bind "Alt x" { CloseFocus; SwitchToMode "locked"; }
+        bind "Alt w" { SwitchToMode "Session"; SwitchToMode "locked"; }
+        bind "Alt e" { EditScrollback; SwitchToMode "locked"; }
 
-        bind "1" { GoToTab 1; SwitchToMode "locked"; }
-        bind "2" { GoToTab 2; SwitchToMode "locked"; }
-        bind "3" { GoToTab 3; SwitchToMode "locked"; }
-        bind "4" { GoToTab 4; SwitchToMode "locked"; }
-        bind "5" { GoToTab 5; SwitchToMode "locked"; }
-        bind "6" { GoToTab 6; SwitchToMode "locked"; }
-        bind "7" { GoToTab 7; SwitchToMode "locked"; }
-        bind "8" { GoToTab 8; SwitchToMode "locked"; }
-        bind "9" { GoToTab 9; SwitchToMode "locked"; }
+        bind "Alt 1" { GoToTab 1; SwitchToMode "locked"; }
+        bind "Alt 2" { GoToTab 2; SwitchToMode "locked"; }
+        bind "Alt 3" { GoToTab 3; SwitchToMode "locked"; }
+        bind "Alt 4" { GoToTab 4; SwitchToMode "locked"; }
+        bind "Alt 5" { GoToTab 5; SwitchToMode "locked"; }
+        bind "Alt 6" { GoToTab 6; SwitchToMode "locked"; }
+        bind "Alt 7" { GoToTab 7; SwitchToMode "locked"; }
+        bind "Alt 8" { GoToTab 8; SwitchToMode "locked"; }
+        bind "Alt 9" { GoToTab 9; SwitchToMode "locked"; }
 
-        bind "0" { ToggleFloatingPanes; SwitchToMode "locked"; }
+        bind "Alt 0" { ToggleFloatingPanes; SwitchToMode "locked"; }
 
-        bind "h" { MoveFocus "Left"; SwitchToMode "locked"; }
-        bind "j" { MoveFocus "Down"; SwitchToMode "locked"; }
-        bind "k" { MoveFocus "Up"; SwitchToMode "locked"; }
-        bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
+        bind "Alt h" { MoveFocus "Left"; SwitchToMode "locked"; }
+        bind "Alt j" { MoveFocus "Down"; SwitchToMode "locked"; }
+        bind "Alt k" { MoveFocus "Up"; SwitchToMode "locked"; }
+        bind "Alt l" { MoveFocus "Right"; SwitchToMode "locked"; }
 
-        bind "+" { Resize "Increase"; }
-        bind "-" { Resize "Decrease"; }
-        bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+        bind "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
     }
 
     search {
