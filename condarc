@@ -1,4 +1,4 @@
 auto_activate_base: true
 anaconda_upload: false
 changeps1: false
-ssl_verify: /Users/pdkr001/.config/certs/Cisco Umbrella Root CA.cer
+ssl_verify: false
