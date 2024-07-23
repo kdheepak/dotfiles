@@ -39,7 +39,6 @@ truncation_length = 1
 truncate_to_repo = false
 read_only = " "
 
-
 [git_branch]
 symbol = " " # ""
 style = "bg:base01 fg:base0a"
@@ -151,7 +150,7 @@ format = " [$symbol($version )](208 bold)"
 
 [python]
 symbol = " "
-format = " [$symbol($version )]($style)"
+format = " [$symbol($version $virtualenv )]($style)"
 
 [spack]
 symbol = "🅢 "
@@ -386,3 +385,11 @@ base0c = "#0184bc"
 base0d = "#4078f2"
 base0e = "#a626a4"
 base0f = "#986801"
+
+[custom.poetry_env]
+when = """
+! {[[ env=$(poetry env info -p 2>/dev/null) && [[ "$(which python)" == *"$env"* ]]}
+"""
+style = "blink"
+symbol = "🐍 "
+format = "[$symbol]($style)"

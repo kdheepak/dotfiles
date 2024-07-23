@@ -220,7 +220,6 @@
 [http]
     sslverify = false
     postBuffer = 2M
-	sslCAInfo = /Users/pdkr001/.config/certs/Cisco-Umbrella-Root-CA.pem
 [init]
     # templatedir = ~/gitrepos/dotfiles/git-templates
     defaultBranch = main
