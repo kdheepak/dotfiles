@@ -300,9 +300,11 @@ main() {
     check_python
     install_pipx
     log_python_environment
+    pipx_install black
+    pipx_install cookiecutter
+    pipx_install llm
     pipx_install poetry
     pipx_install pre-commit
-    pipx_install black
     pipx_install pylint
     mamba_install bat
     mamba_install delta
@@ -314,17 +316,17 @@ main() {
     mamba_install git-lfs
     mamba_install htop
     mamba_install httpie
+    mamba_install ipython
     mamba_install jq
-    mamba_install nodejs
+    mamba_install jupyter
     mamba_install neovim
+    mamba_install nodejs
     mamba_install pandoc
     mamba_install ripgrep
     mamba_install rsync
     mamba_install starship
     mamba_install unrar
     mamba_install unzip
-    mamba_install ipython
-    mamba_install jupyter
     git lfs install
 }
 
