@@ -305,7 +305,6 @@ main() {
     pipx_install black
     pipx_install pylint
     mamba_install bat
-    mamba_install broot
     mamba_install delta
     mamba_install direnv
     mamba_install exa
