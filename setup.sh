@@ -323,6 +323,8 @@ main() {
     mamba_install starship
     mamba_install unrar
     mamba_install unzip
+    mamba_install ipython
+    mamba_install jupyter
     git lfs install
 }
 
