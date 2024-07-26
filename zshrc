@@ -210,6 +210,21 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+eval "$($HOME/.local/bin/mise activate zsh)"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+export PATH=$HOME/.pixi/bin:$PATH
+export PATH=$HOME/.juliaup/bin:$PATH
+
+eval "$(pixi completion --shell zsh)"
+
+eval "$(starship init zsh)"
+
+eval "$(direnv hook zsh)"
+
+. "$HOME/.cargo/env"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$("$HOME/miniforge3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -225,17 +240,5 @@ unset __conda_setup
 if [ -f "$HOME/miniforge3/etc/profile.d/mamba.sh" ]; then
     . "$HOME/miniforge3/etc/profile.d/mamba.sh"
 fi
+# <<< conda initialize <<<
 
-
-eval "$($HOME/.local/bin/mise activate zsh)"
-export PATH="$HOME/.local/share/mise/shims:$PATH"
-export PATH=$HOME/.pixi/bin:$PATH
-export PATH=$HOME/.juliaup/bin:$PATH
-
-eval "$(pixi completion --shell zsh)"
-
-eval "$(starship init zsh)"
-
-eval "$(direnv hook zsh)"
-
-. "$HOME/.cargo/env"
