@@ -2,7 +2,7 @@ import = ["~/.config/alacritty/rose-pine.toml"]
 
 [font]
 builtin_box_drawing = true
-size = 12
+size = 14
 
 [font.bold_italic]
 family = "IosevkaFireTerm Nerd Font Mono"
