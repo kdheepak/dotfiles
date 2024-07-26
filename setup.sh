@@ -317,6 +317,7 @@ main() {
     mamba_install httpie
     mamba_install jq
     mamba_install nodejs
+    mamba_install neovim
     mamba_install pandoc
     mamba_install ripgrep
     mamba_install rsync
