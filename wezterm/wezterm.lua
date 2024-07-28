@@ -153,6 +153,45 @@ config.keys = {
     mods = "LEADER",
     action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
   },
+  { key = "Z", mods = "LEADER", action = act.TogglePaneZoomState },
+  { key = "[", mods = "LEADER", action = act.ActivateCopyMode },
+  { key = "]", mods = "LEADER", action = act.PasteFrom("Clipboard") },
+  {
+    key = "u",
+    mods = "LEADER",
+    action = act.CharSelect({
+      copy_on_select = true,
+      copy_to = "ClipboardAndPrimarySelection",
+    }),
+  },
+  {
+    key = "o",
+    mods = "LEADER",
+    action = act({
+      QuickSelectArgs = {
+        label = "OPEN URL",
+        patterns = {
+          "https?://\\S+",
+          "git://\\S+",
+          "ssh://\\S+",
+          "ftp://\\S+",
+          "file://\\S+",
+          "mailto://\\S+",
+          [[h?t?t?p?s?:?/?/?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&/=]*]],
+          [[h?t?t?p?:?/?/?localhost:?[0-9]*/?\b[-a-zA-Z0-9@:%_\+.~#?&/=]*]],
+        },
+        action = wezterm.action_callback(function(window, pane)
+          local url = window:get_selection_text_for_pane(pane)
+          wezterm.log_info("opening: " .. url)
+          wezterm.open_with(url)
+        end),
+      },
+    }),
+  },
+  { key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
+  { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
+  { key = "PageUp", mods = "SHIFT", action = act.ScrollByPage(-0.8) },
+  { key = "PageDown", mods = "SHIFT", action = act.ScrollByPage(0.8) },
 }
 
 return config
