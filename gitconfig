@@ -200,15 +200,6 @@
     local = yellow
     remote = green
 
-[color "diff"]
-
-    meta = 11
-    frag = magenta bold
-    old = red bold
-    new = green bold
-    commit = yellow bold
-    whitespace = red reverse
-
 [color "status"]
 
     added = yellow
@@ -238,26 +229,19 @@
     autostash = true
     autosquash = true
 [core]
-    pager = "{                                                       \
-        COLUMNS=$(tput cols);                                        \
-        if [ $COLUMNS -ge 160 ] && [ -z $FZF_PREVIEW_COLUMNS ]; then \
-            delta --side-by-side -w $COLUMNS;  \
-        elif [ $COLUMNS -ge 200 ] && [ $FZF_PREVIEW_COLUMNS ]; then  \
-            delta --side-by-side -w $FZF_PREVIEW_COLUMNS;            \
-        else                                                         \
-            delta --features=one-window;                             \
-        fi                                                           \
-    }"
-
+    pager = delta
 [include]
     path = ~/.config/delta/themes.gitconfig
 [interactive]
-    diffFilter = bash -c 'delta --color-only'
+    diffFilter = delta --color-only --features=interactive
 [delta]
+    syntax-theme = "rose-pine"
     line-numbers = true
     side-by-side = true
+    hyperlinks = true
 [delta "one-window"]
     side-by-side = false
+
 [fetch]
     prune = true
 [filter "lfs"]
@@ -265,11 +249,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[sendemail]
-    smtpserver = smtp.mail.me.com
-    smtpuser = me@kdheepak.com
-    smtpencryption = tls
-    smtpserverport = 587
 
 [url "git@github.com:"]
     insteadOf = "https://github.com/"
