@@ -16,159 +16,143 @@ wezterm.on("gui-startup", function()
   window:gui_window():focus()
 end)
 
--- if you are *NOT* lazy-loading smart-splits.nvim (recommended)
-local function is_vim(pane)
-  -- this is set by the plugin, and unset on ExitPre in Neovim
-  return pane:get_user_vars().IS_NVIM == "true"
-end
+config.color_scheme = "rose-pine"
+config.default_cursor_style = "BlinkingBar"
+config.automatically_reload_config = true
+config.window_close_confirmation = "NeverPrompt"
+config.adjust_window_size_when_changing_font_size = false
+config.window_decorations = "RESIZE"
+config.check_for_updates = false
+-- config.default_prog = { "/bin/zsh", "-l", "-c", "~/.local/share/mise/shims/zellij" }
+config.tab_bar_at_bottom = true
+config.enable_tab_bar = true
+config.audible_bell = "Disabled"
+config.font_size = 12
 
--- if you *ARE* lazy-loading smart-splits.nvim (not recommended)
--- you have to use this instead, but note that this will not work
--- in all cases (e.g. over an SSH connection). Also note that
--- `pane:get_foreground_process_name()` can have high and highly variable
--- latency, so the other implementation of `is_vim()` will be more
--- performant as well.
-local function is_vim(pane)
-  -- This gsub is equivalent to POSIX basename(3)
-  -- Given "/foo/bar" returns "bar"
-  -- Given "c:\\foo\\bar" returns "bar"
-  local process_name = string.gsub(pane:get_foreground_process_name(), "(.*[/\\])(.*)", "%2")
-  return process_name == "nvim" or process_name == "vim"
-end
-
-local direction_keys = {
-  h = "Left",
-  j = "Down",
-  k = "Up",
-  l = "Right",
-}
-
-local function split_nav(resize_or_move, key)
-  return {
-    key = key,
-    mods = resize_or_move == "resize" and "META" or "CTRL",
-    action = wezterm.action_callback(function(win, pane)
-      if is_vim(pane) then
-        -- pass the keys through to vim/nvim
-        win:perform_action({
-          SendKey = { key = key, mods = resize_or_move == "resize" and "META" or "CTRL" },
-        }, pane)
-      else
-        if resize_or_move == "resize" then
-          win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
-        else
-          win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
-        end
-      end
-    end),
-  }
-end
-
-config = {
-  keys = {
-    -- move between split panes
-    split_nav("move", "h"),
-    split_nav("move", "j"),
-    split_nav("move", "k"),
-    split_nav("move", "l"),
-    -- resize panes
-    split_nav("resize", "h"),
-    split_nav("resize", "j"),
-    split_nav("resize", "k"),
-    split_nav("resize", "l"),
+config.font_rules = {
+  {
+    intensity = "Normal",
+    italic = false,
+    font = iosevka("Medium", "Normal"),
   },
-  color_scheme = "rose-pine",
-  default_cursor_style = "BlinkingBar",
-  automatically_reload_config = true,
-  window_close_confirmation = "NeverPrompt",
-  adjust_window_size_when_changing_font_size = false,
-  window_decorations = "RESIZE",
-  check_for_updates = false,
-  use_fancy_tab_bar = false,
-  default_prog = { "/bin/zsh", "-l", "-c", "~/.local/share/mise/shims/zellij" },
-  tab_bar_at_bottom = false,
-  audible_bell = "Disabled",
-  font_size = 12,
-  font_rules = {
-    {
-      intensity = "Normal",
-      italic = false,
-      font = iosevka("Medium", "Normal"),
-    },
-    {
-      intensity = "Normal",
-      italic = true,
-      font = iosevka("Medium", "Italic"),
-    },
-    {
-      intensity = "Bold",
-      italic = false,
-      font = iosevka("ExtraBold", "Normal"),
-    },
-    {
-      intensity = "Bold",
-      italic = true,
-      font = iosevka("ExtraBold", "Italic"),
-    },
-    {
-      intensity = "Half",
-      italic = false,
-      font = iosevka("Regular", "Normal"),
-    },
-    {
-      intensity = "Half",
-      italic = true,
-      font = iosevka("Regular", "Italic"),
-    },
+  {
+    intensity = "Normal",
+    italic = true,
+    font = iosevka("Medium", "Italic"),
   },
-  enable_tab_bar = false,
-  window_padding = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0,
+  {
+    intensity = "Bold",
+    italic = false,
+    font = iosevka("ExtraBold", "Normal"),
   },
-  -- from: https://akos.ma/blog/adopting-wezterm/
-  hyperlink_rules = {
-    -- Matches: a URL in parens: (URL)
-    {
-      regex = "\\((\\w+://\\S+)\\)",
-      format = "$1",
-      highlight = 1,
-    },
-    -- Matches: a URL in brackets: [URL]
-    {
-      regex = "\\[(\\w+://\\S+)\\]",
-      format = "$1",
-      highlight = 1,
-    },
-    -- Matches: a URL in curly braces: {URL}
-    {
-      regex = "\\{(\\w+://\\S+)\\}",
-      format = "$1",
-      highlight = 1,
-    },
-    -- Matches: a URL in angle brackets: <URL>
-    {
-      regex = "<(\\w+://\\S+)>",
-      format = "$1",
-      highlight = 1,
-    },
-    -- Then handle URLs not wrapped in brackets
-    {
-      -- Before
-      --regex = '\\b\\w+://\\S+[)/a-zA-Z0-9-]+',
-      --format = '$0',
-      -- After
-      regex = "[^(]\\b(\\w+://\\S+[)/a-zA-Z0-9-]+)",
-      format = "$1",
-      highlight = 1,
-    },
-    -- implicit mailto link
-    {
-      regex = "\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b",
-      format = "mailto:$0",
-    },
+  {
+    intensity = "Bold",
+    italic = true,
+    font = iosevka("ExtraBold", "Italic"),
+  },
+  {
+    intensity = "Half",
+    italic = false,
+    font = iosevka("Regular", "Normal"),
+  },
+  {
+    intensity = "Half",
+    italic = true,
+    font = iosevka("Regular", "Italic"),
   },
 }
+
+config.window_padding = {
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
+}
+-- from: https://akos.ma/blog/adopting-wezterm/
+config.hyperlink_rules = {
+  -- Matches: a URL in parens: (URL)
+  {
+    regex = "\\((\\w+://\\S+)\\)",
+    format = "$1",
+    highlight = 1,
+  },
+  -- Matches: a URL in brackets: [URL]
+  {
+    regex = "\\[(\\w+://\\S+)\\]",
+    format = "$1",
+    highlight = 1,
+  },
+  -- Matches: a URL in curly braces: {URL}
+  {
+    regex = "\\{(\\w+://\\S+)\\}",
+    format = "$1",
+    highlight = 1,
+  },
+  -- Matches: a URL in angle brackets: <URL>
+  {
+    regex = "<(\\w+://\\S+)>",
+    format = "$1",
+    highlight = 1,
+  },
+  -- Then handle URLs not wrapped in brackets
+  {
+    -- Before
+    --regex = '\\b\\w+://\\S+[)/a-zA-Z0-9-]+',
+    --format = '$0',
+    -- After
+    regex = "[^(]\\b(\\w+://\\S+[)/a-zA-Z0-9-]+)",
+    format = "$1",
+    highlight = 1,
+  },
+  -- implicit mailto link
+  {
+    regex = "\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b",
+    format = "mailto:$0",
+  },
+}
+
+local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
+bar.apply_to_config(config, {
+  enabled_modules = {
+    username = false,
+    hostname = false,
+  },
+})
+
+local act = wezterm.action
+
+config.leader = { key = "`", timeout_milliseconds = 1000 }
+
+config.keys = {
+  { key = "`", mods = "LEADER", action = act.SendString("`") },
+  { key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
+  { key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
+  { key = "1", mods = "LEADER", action = act.ActivateTab(0) },
+  { key = "2", mods = "LEADER", action = act.ActivateTab(1) },
+  { key = "3", mods = "LEADER", action = act.ActivateTab(2) },
+  { key = "4", mods = "LEADER", action = act.ActivateTab(3) },
+  { key = "5", mods = "LEADER", action = act.ActivateTab(4) },
+  { key = "6", mods = "LEADER", action = act.ActivateTab(5) },
+  { key = "7", mods = "LEADER", action = act.ActivateTab(6) },
+  { key = "8", mods = "LEADER", action = act.ActivateTab(7) },
+  { key = "9", mods = "LEADER", action = act.ActivateTab(8) },
+  { key = "0", mods = "LEADER", action = act.ActivateTab(9) },
+  { key = "Space", mods = "LEADER", action = act.ActivateLastTab },
+  { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+  { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+  { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+  { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+  { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+  {
+    key = "/",
+    mods = "LEADER",
+    action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
+  },
+  {
+    key = "\\",
+    mods = "LEADER",
+    action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+  },
+}
+
 return config
