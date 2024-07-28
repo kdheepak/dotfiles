@@ -6,6 +6,10 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+local function iosevka(weight, style)
+  return wezterm.font("IosevkaFireTerm Nerd Font Mono", { weight = weight, style = style })
+end
+
 config = {
   color_scheme = "rose-pine",
   default_cursor_style = "BlinkingBar",
@@ -18,7 +22,38 @@ config = {
   default_prog = { "zellij" },
   tab_bar_at_bottom = false,
   font_size = 12,
-  font = wezterm.font("IosevkaFireTerm Nerd Font Mono", { weight = "Medium" }),
+  font_rules = {
+    {
+      intensity = "Normal",
+      italic = false,
+      font = iosevka("Medium", "Normal"),
+    },
+    {
+      intensity = "Normal",
+      italic = true,
+      font = iosevka("Medium", "Italic"),
+    },
+    {
+      intensity = "Bold",
+      italic = false,
+      font = iosevka("ExtraBold", "Normal"),
+    },
+    {
+      intensity = "Bold",
+      italic = true,
+      font = iosevka("ExtraBold", "Italic"),
+    },
+    {
+      intensity = "Half",
+      italic = false,
+      font = iosevka("Regular", "Normal"),
+    },
+    {
+      intensity = "Half",
+      italic = true,
+      font = iosevka("Regular", "Italic"),
+    },
+  },
   enable_tab_bar = false,
   window_padding = {
     left = 3,
