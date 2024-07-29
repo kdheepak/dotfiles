@@ -17,7 +17,7 @@ wezterm.on("gui-startup", function()
 end)
 
 config.color_scheme = "rose-pine"
--- config.default_cursor_style = "BlinkingBar"
+config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
 config.window_close_confirmation = "NeverPrompt"
 config.adjust_window_size_when_changing_font_size = false
@@ -28,6 +28,8 @@ config.tab_bar_at_bottom = true
 config.enable_tab_bar = true
 config.audible_bell = "Disabled"
 config.font_size = 12
+config.swallow_mouse_click_on_pane_focus = true
+config.swallow_mouse_click_on_window_focus = true
 
 config.font_rules = {
   {
@@ -195,7 +197,5 @@ config.keys = {
 }
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-config.swallow_mouse_click_on_pane_focus = true
-config.swallow_mouse_click_on_window_focus = true
 
 return config
