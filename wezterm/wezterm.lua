@@ -17,7 +17,7 @@ wezterm.on("gui-startup", function()
 end)
 
 config.color_scheme = "rose-pine"
-config.default_cursor_style = "BlinkingBar"
+-- config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
 config.window_close_confirmation = "NeverPrompt"
 config.adjust_window_size_when_changing_font_size = false
@@ -153,7 +153,8 @@ config.keys = {
     mods = "LEADER",
     action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
   },
-  { key = "Z", mods = "LEADER", action = act.TogglePaneZoomState },
+  { key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = false }) },
+  { key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
   { key = "[", mods = "LEADER", action = act.ActivateCopyMode },
   { key = "]", mods = "LEADER", action = act.PasteFrom("Clipboard") },
   {
@@ -193,5 +194,9 @@ config.keys = {
   { key = "PageUp", mods = "SHIFT", action = act.ScrollByPage(-0.8) },
   { key = "PageDown", mods = "SHIFT", action = act.ScrollByPage(0.8) },
 }
+
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+config.swallow_mouse_click_on_pane_focus = true
+config.swallow_mouse_click_on_window_focus = true
 
 return config

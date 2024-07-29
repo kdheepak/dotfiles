@@ -39,7 +39,7 @@
     save = !git commit -am 'chore: Update files' && git push
     wip = !SKIP='check-commit-msg' git commit -anm 'wip: Update files'
 
-    lg = log --date-order --all --color=always --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)'
+    lg = !serie --order=chrono
     ls = log --date-order --all --color=always --graph --abbrev-commit --decorate --date=relative --simplify-by-decoration --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)'
     ll = log --date-order --all --color=always --graph --abbrev-commit --decorate --date=relative --stat --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) - %C(dim red)%an%C(reset)%C(bold yellow)%d%C(reset)'
     # View abbreviated SHA, description, and history graph of the latest 20 commits
@@ -235,7 +235,6 @@
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [delta]
-    syntax-theme = "rose-pine"
     line-numbers = true
     side-by-side = true
     hyperlinks = true
