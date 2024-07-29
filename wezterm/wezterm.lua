@@ -138,7 +138,6 @@ config.keys = {
   { key = "9", mods = "LEADER", action = act.ActivateTab(8) },
   { key = "0", mods = "LEADER", action = act.ActivateTab(9) },
   { key = "Space", mods = "LEADER", action = act.ActivateLastTab },
-  { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
   { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
   { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
   { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
