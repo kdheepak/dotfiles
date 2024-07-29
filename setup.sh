@@ -303,7 +303,6 @@ main() {
     pipx_install black
     pipx_install cookiecutter
     pipx_install llm
-    pipx_install poetry
     pipx_install pre-commit
     pipx_install pylint
     mamba_install bat
@@ -327,7 +326,6 @@ main() {
     mamba_install starship
     mamba_install unrar
     mamba_install unzip
-    git lfs install
 }
 
 main "$@"
