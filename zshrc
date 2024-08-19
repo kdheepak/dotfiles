@@ -6,15 +6,9 @@ eval "$($HOME/homebrew/bin/brew shellenv)"
 
 set -o emacs
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-
 has() {
   type "$1" > /dev/null 2>&1
 }
-
 
 source ~/gitrepos/dotfiles/base16.fzf.config
 
