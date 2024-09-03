@@ -19,7 +19,3 @@ brew install coreutils binutils diffutils findutils gawk gnu-indent gnu-sed gnu-
 
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh && bash miniconda.sh -b -p $HOME/miniconda3 -f -u
-
-pip install neovim
-pip install pre-commit
