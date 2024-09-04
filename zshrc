@@ -236,3 +236,23 @@ if [ -f "$HOME/miniforge3/etc/profile.d/mamba.sh" ]; then
 fi
 # <<< conda initialize <<<
 
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/Users/$HOME/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
+
+# >>> gams initialize >>>
+# !! Contents within this block are managed by a gams installer script !!
+export PATH="$HOME/.local/bin/gams47.3_osx_arm64:$PATH"
+# <<< gams initialize <<<
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"

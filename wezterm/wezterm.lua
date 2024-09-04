@@ -25,6 +25,12 @@ config.inactive_pane_hsb = {
 }
 
 config.color_scheme = "rose-pine"
+config.colors = {
+  -- the foreground color of selected text
+  selection_fg = "black",
+  -- the background color of selected text
+  selection_bg = "white",
+}
 config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
 config.window_close_confirmation = "NeverPrompt"
