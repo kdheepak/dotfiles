@@ -19,6 +19,11 @@ wezterm.on("gui-startup", function()
   window:gui_window():focus()
 end)
 
+config.inactive_pane_hsb = {
+  saturation = 1,
+  brightness = 1,
+}
+
 config.color_scheme = "rose-pine"
 config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
