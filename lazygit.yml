@@ -56,7 +56,6 @@ customCommands:
     description: "git save"
     context: "files"
     loadingText: "git commit save"
-    subprocess: true
   - key: "C"
     context: "files"
     description: "commit files with format"
