@@ -236,10 +236,11 @@
     diffFilter = delta --color-only --features=interactive
 [delta]
     line-numbers = true
-    side-by-side = true
     hyperlinks = true
 [delta "one-window"]
     side-by-side = false
+[delta "two-window"]
+    side-by-side = true
 
 [fetch]
     prune = true
