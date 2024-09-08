@@ -10,7 +10,10 @@ if wezterm.config_builder then
 end
 
 local function iosevka(weight, style)
-  return wezterm.font("IosevkaFireTerm Nerd Font Mono", { weight = weight, style = style })
+  return wezterm.font_with_fallback(
+    { "IosevkaFireTerm Nerd Font Mono", "FlogSymbols" },
+    { weight = weight, style = style }
+  )
 end
 
 wezterm.on("gui-startup", function()
