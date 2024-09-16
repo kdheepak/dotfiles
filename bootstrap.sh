@@ -3,6 +3,7 @@ echo "Symlinking files from $(pwd)"
 mkdir -p ~/.config
 mkdir -p ~/.julia/config
 mkdir -p ~/local/bin
+mkdir -p ~/.config/tmux
 
 rm ~/.gitignore
 ln -s "$(pwd)/.gitignore" ~/.gitignore
@@ -59,7 +60,7 @@ rm -rf ~/.config/zellij
 ln -s "$(pwd)/zellij" ~/.config/zellij
 rm -rf ~/.config/wezterm
 ln -s "$(pwd)/wezterm" ~/.config/wezterm
-rm -rf ~/.config/tmux
-ln -s "$(pwd)/tmux.config" ~/.config/tmux/tmux.conf
+rm -rf ~/.config/tmux/tmux.conf
+ln -s "$(pwd)/tmux.conf" ~/.config/tmux/tmux.conf
 rm -rf ~/.config/mise
 ln -s "$(pwd)/mise" ~/.config/mise
