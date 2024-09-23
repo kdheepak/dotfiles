@@ -354,30 +354,30 @@ main() {
     uv_tool_install llm
     uv_tool_install pre-commit
     uv_tool_install pylint
+    uv_too_install httpie
     mamba_install bat
     mamba_install delta
     mamba_install direnv
-    mamba_install findutils
     mamba_install fzf
     mamba_install gh
     mamba_install git-lfs
-    mamba_install htop
-    mamba_install httpie
     mamba_install ipython
-    mamba_install jq
     mamba_install jupyter
     mamba_install neovim
     mamba_install nodejs
     mamba_install pandoc
     mamba_install ripgrep
-    mamba_install rsync
     mamba_install starship
     mamba_install unrar
-    mamba_install unzip
+    mamba_install 7zip
 
     if [[ -z $ON_WINDOWS ]]; then
         # if ON_WINDOWS is not set
         mamba_install exa
+        mamba_install findutils
+        mamba_install htop
+        mamba_install jq
+        mamba_install rsync
     fi
 }
 
