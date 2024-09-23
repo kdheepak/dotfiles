@@ -215,7 +215,7 @@ download_with_curl() {
 install_miniforge3() {
 
     local should_remove_miniforge3=${1:-false}
-    local should_mamba_init=${2:-true}
+    local should_mamba_init=${2:-false}
     local should_ssl_no_revoke=${3:-false}
     local should_ca_native=${4:-false}
     local should_cacert=${5:-false}
@@ -259,10 +259,13 @@ install_miniforge3() {
         run_command mamba update mamba -y
         run_command mamba install python=3.12 -y
 
-        info "Running conda init on all shells ..."
-        run_command mamba init --all
+        if [[ $should_mamba_init == true ]]; then
+            info "Running conda init on all shells ..."
+            run_command mamba init --all
+        fi
 
-        run_command python -m uv pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
+        run_command pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
+        run_command uv pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
 
     else
         log "miniforge3 is already installed at $RESET'$MINIFORGE3_INSTALL_DIRECTORY'"
@@ -297,7 +300,7 @@ if not home in exe.parents:
 uv_tool_install() {
     local tool_name="$1"
     info "Installing $tool_name with uv ..."
-    run_command python -m uv tool install "$tool_name" --force
+    run_command uv tool install "$tool_name" --force
 }
 
 mamba_install() {
