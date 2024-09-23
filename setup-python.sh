@@ -332,19 +332,12 @@ main() {
             --enable-mamba-init)
                 should_mamba_init=true
                 ;;
-            --help)
-                show_help
-                safe_exit 0
-                ;;
             *)
-                show_help
                 error "Unknown option: $1"
                 ;;
         esac
         shift
     done
-
-    show_help
 
     check_dependencies
 
