@@ -89,6 +89,67 @@ setopt AUTO_CD
 bindkey '^P' up-history
 bindkey '^N' down-history
 
+# From https://github.com/bew/dotfiles/blob/1e1117fec1a043027a40e27434acf85d5fdeb00d/zsh/rc/mappings.zsh#L543
+
+# Get the row (0-indexed) the cursor is on (in a multi-lines buffer)
+function zle::utils::get-cursor-row0-in-buffer
+{
+  local cursor_row0_in_buffer=0
+  for (( i=1; i<=$#LBUFFER; i++ )); do
+    [[ ${LBUFFER[$i]} == $'\n' ]] && (( cursor_row0_in_buffer += 1 ))
+  done
+  REPLY_cursor_row0_in_buffer=$cursor_row0_in_buffer
+}
+
+function zle::term-utils::get-cursor-pos
+{
+  # Inspired from: https://www.zsh.org/mla/users/2015/msg00866.html
+  # It seems to work well :) (unlike my own old impl from a long time ago)
+  local pos="" char
+  print -n $'\e[6n' # Ask terminal for cursor position
+  # Then read char by char until we get a 'R'
+  # (terminal reply looks like: `\e[57;12R`)
+  while read -r -s -k1 char; do
+    [[ $char == R ]] && break
+    pos+=$char
+  done
+  pos=${pos#*\[} # remove '\e['
+
+  # pos has format 'row;col'
+  REPLY_cursor_row_in_term=${pos%;*} # remove ';col'
+  REPLY_cursor_col_in_term=${pos#*;} # remove 'row;'
+}
+
+# NOTE: when implemented in terminals, we can have '...reveal-scrollback-by' !
+function zle::term-utils::hide-scrollback-by
+{
+  local by_rows="${1:-1}" # default to 1 line
+  [[ "$by_rows" == 0 ]] && return
+
+  echo -n $'\e['"${by_rows}S" >/dev/tty # Scroll the terminal
+  echo -n $'\e['"${by_rows}A" >/dev/tty # Move the cursor back up
+}
+
+# NOTE: Not perfect..
+#   When completion menu is visible, it quits completion mode
+#   (accepting current entry for some reason..)
+function zwidget::clear-but-keep-scrollback
+{
+  local REPLY_cursor_row_in_term REPLY_cursor_col_in_term
+  zle::term-utils::get-cursor-pos
+
+  local REPLY_cursor_row0_in_buffer
+  zle::utils::get-cursor-row0-in-buffer
+
+  local prompt_row=$(( REPLY_cursor_row_in_term - REPLY_cursor_row0_in_buffer ))
+  zle::term-utils::hide-scrollback-by "$(( prompt_row - 1 ))"
+
+  zle redisplay
+  # zle -M "prompt row was: $prompt_row"
+}
+zle -N zwidget::clear-but-keep-scrollback
+bindkey '^l' zwidget::clear-but-keep-scrollback
+
 _comp_options+=(globdots)  # include hidden files in autocomplete
 
 zmodload zsh/zpty
@@ -256,3 +317,4 @@ export NVM_DIR="$HOME/.nvm"
 
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+eval "$(uv generate-shell-completion zsh)"
