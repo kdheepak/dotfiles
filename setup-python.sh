@@ -357,7 +357,6 @@ main() {
     mamba_install bat
     mamba_install delta
     mamba_install direnv
-    mamba_install exa
     mamba_install findutils
     mamba_install fzf
     mamba_install gh
@@ -375,6 +374,11 @@ main() {
     mamba_install starship
     mamba_install unrar
     mamba_install unzip
+
+    if [[ -z $ON_WINDOWS ]]; then
+        # if ON_WINDOWS is not set
+        mamba_install exa
+    fi
 }
 
 main "$@"
