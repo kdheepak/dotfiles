@@ -1,26 +1,58 @@
 #!/usr/bin/env bash
 
+command -v tput &> /dev/null && [ -t 1 ] && [ -z "${NO_COLOR:-}" ] || tput() { true; }
+
 set -euo pipefail
 
-# Color codes
-WHITE='\033[0;30m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-ON_RED='\033[41m'
-ON_GREEN='\033[42m'
-ON_YELLOW='\033[43m'
-ON_BLUE='\033[44m'
-ON_PURPLE='\033[45m'
-BOLD='\033[1m'
-RESET='\033[0m'
-BLINK='\033[5m'
+BG_BLACK=$(tput setab 0)
+BG_RED=$(tput setab 1)
+BG_GREEN=$(tput setab 2)
+BG_YELLOW=$(tput setab 3)
+BG_BLUE=$(tput setab 4)
+BG_MAGENTA=$(tput setab 5)
+BG_CYAN=$(tput setab 6)
+BG_WHITE=$(tput setab 7)
+BG_DEFAULT=$(tput setab 9)
 
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+BG_BRIGHT_BLACK=$(tput setab 8)    # Not widely supported
+BG_BRIGHT_RED=$(tput setab 9)      # Not widely supported
+BG_BRIGHT_GREEN=$(tput setab 10)   # Not widely supported
+BG_BRIGHT_YELLOW=$(tput setab 11)  # Not widely supported
+BG_BRIGHT_BLUE=$(tput setab 12)    # Not widely supported
+BG_BRIGHT_MAGENTA=$(tput setab 13) # Not widely supported
+BG_BRIGHT_CYAN=$(tput setab 14)    # Not widely supported
+BG_BRIGHT_WHITE=$(tput setab 15)   # Not widely supported
+BG_BRIGHT_DEFAULT=$(tput setab 9)
+
+FG_BLACK=$(tput setaf 0)
+FG_RED=$(tput setaf 1)
+FG_GREEN=$(tput setaf 2)
+FG_YELLOW=$(tput setaf 3)
+FG_BLUE=$(tput setaf 4)
+FG_MAGENTA=$(tput setaf 5)
+FG_CYAN=$(tput setaf 6)
+FG_WHITE=$(tput setaf 7)
+FG_DEFAULT=$(tput setaf 9)
+
+FG_BRIGHT_BLACK=$(tput setaf 8)    # Not widely supported
+FG_BRIGHT_RED=$(tput setaf 9)      # Not widely supported
+FG_BRIGHT_GREEN=$(tput setaf 10)   # Not widely supported
+FG_BRIGHT_YELLOW=$(tput setaf 11)  # Not widely supported
+FG_BRIGHT_BLUE=$(tput setaf 12)    # Not widely supported
+FG_BRIGHT_MAGENTA=$(tput setaf 13) # Not widely supported
+FG_BRIGHT_CYAN=$(tput setaf 14)    # Not widely supported
+FG_BRIGHT_WHITE=$(tput setaf 15)   # Not widely supported
+FG_BRIGHT_DEFAULT=$(tput setaf 9)
+
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+BLINK=$(tput blink)
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+PROJECT_DIR=$(realpath $SCRIPT_DIR/..)
 MINIFORGE3_INSTALL_DIRECTORY="$HOME/miniforge3"
-FORCE_INSTALL=false
+
+CACERT_PEM_FILE=$SCRIPT_DIR/cacert.pem
 
 # Determine the OS and architecture
 case "$(uname)" in
@@ -52,33 +84,52 @@ safe_exit() {
 }
 
 # Functions for printing messages
+tip() {
+    echo -e "${FG_BRIGHT_BLACK}${BG_CYAN}${BOLD} TIP ${RESET}: ${FG_CYAN}$1${RESET}"
+}
+
 error() {
-    echo -e "${WHITE}${ON_RED}${BOLD}${BLINK} ERROR ${RESET}: ${RED}$1${RESET}"
+    echo -e "
+${FG_BRIGHT_BLACK}${BG_RED}${BOLD} ERROR ${RESET}: ${FG_RED}$1${RESET}"
 
     if [[ -n ${2:-} ]]; then
-        echo -e "
-${WHITE}${ON_PURPLE}${BOLD}${BLINK} TIP ${RESET}: ${PURPLE}$2${RESET}"
+        tip $2
     fi
 
     echo -e "
-Something has gone wrong with your installation. If you have any questions, contact the developers for support."
+If you have any questions, contact the developers for support."
 
     safe_exit 1
 }
 
 warn() {
-    echo -e "${WHITE}${ON_YELLOW}${BOLD}${BLINK} WARN ${RESET}: ${YELLOW}$1${RESET}"
+    echo -e "
+${FG_BRIGHT_BLACK}${BG_YELLOW}${BOLD}${BLINK} WARN ${RESET}: ${FG_YELLOW}$1${RESET}"
 }
 
 log() {
-    echo -e "${WHITE}${ON_GREEN}${BOLD}${BLINK} LOG ${RESET}: ${GREEN}$1${RESET}"
+    echo -e "
+${FG_BRIGHT_BLACK}${BG_GREEN}${BOLD} LOG ${RESET}: ${FG_GREEN}$1${RESET}"
 }
 
 info() {
-    echo -e "${WHITE}${ON_BLUE}${BOLD}${BLINK} INFO ${RESET}: ${BLUE}$1${RESET}"
+    echo -e "
+${FG_WHITE}${BG_BLUE}${BOLD} INFO ${RESET}: ${FG_BLUE}$1${RESET}"
+}
+
+execute() {
+    echo -e "
+${FG_WHITE}${BG_MAGENTA}${BOLD} EXECUTE ${RESET}: ${FG_MAGENTA}$1${RESET}"
+}
+
+run_command() {
+    execute "+ $*"
+    "$@"
 }
 
 check_dependencies() {
+
+    info "Checking dependencies for install script ..."
 
     # Check for required dependencies
 
@@ -91,8 +142,9 @@ check_dependencies() {
     # If conda is not installed and python is not installed, install miniforge
     if command -v conda > /dev/null 2>&1; then
         EXISTING_CONDA_INSTALLATION=$(which conda)
-        # Check if conda is from Miniforge
-        if [[ $EXISTING_CONDA_INSTALLATION != *miniforge* ]]; then
+        if [[ $EXISTING_CONDA_INSTALLATION == *miniforge* ]]; then
+            info "Conda (Miniforge) is already installed. Continuing ..."
+        else
             log "conda  : $RESET'$(which conda)'"
             warn "Conda is installed but is not Miniforge3. If you proceed, Miniforge3 will be installed as part of this script. We recommend deleting your previous installation of Python."
             read -p "Proceed anyway? (y/n): " choice
@@ -131,49 +183,95 @@ check_dependencies() {
         fi
     fi
     command -v mamba > /dev/null 2>&1 || info "mamba is not installed. It will be installed as part of this script."
-    command -v pipx > /dev/null 2>&1 || info "pipx is not installed. It will be installed as part of this script."
 }
 
+# Function to download files with curl options
+download_with_curl() {
+    local url=$1
+    local output_file=$2
+    local ssl_no_revoke=$3
+    local ca_native=$4
+    local cacert=$5
+
+    # Reset positional parameters so that subcommands don't see the script arguments
+    shift $#
+
+    CURL_OPTS=""
+
+    if [[ $ssl_no_revoke == true ]]; then
+        CURL_OPTS="$CURL_OPTS --ssl-no-revoke"
+    fi
+    if [[ $ca_native == true ]]; then
+        CURL_OPTS="$CURL_OPTS --ca-native"
+    fi
+    if [[ $cacert == true ]]; then
+        CURL_OPTS="$CURL_OPTS --cacert $CACERT_PEM_FILE"
+    fi
+
+    run_command curl -fL "$url" -o "$output_file" $CURL_OPTS || error "Unable to download from $url with curl."
+}
+
+# Function to install miniforge3
 install_miniforge3() {
+
+    local should_remove_miniforge3=${1:-false}
+    local should_mamba_init=${2:-true}
+    local should_ssl_no_revoke=${3:-false}
+    local should_ca_native=${4:-false}
+    local should_cacert=${5:-false}
+    local should_conda_ssl_verify=${6:-false}
+
+    # Reset positional parameters so that subcommands don't see the script arguments
+    shift $#
+
+    if [[ $should_remove_miniforge3 == true ]]; then
+        info "Removing miniforge3 ..."
+        run_command rm -rf ~/miniforge3/
+    fi
+
     if [[ ! -d $MINIFORGE3_INSTALL_DIRECTORY ]]; then
         info "Downloading miniforge3 ..."
-        curl -fsSL $MINIFORGE3_DOWNLOAD_URL -o $MINIFORGE3_INSTALLER
+
+        download_with_curl "$MINIFORGE3_DOWNLOAD_URL" "$MINIFORGE3_INSTALLER" "$should_ssl_no_revoke" "$should_ca_native" "$should_cacert"
 
         info "Installing miniforge3 ..."
 
         if [[ -n $ON_WINDOWS ]]; then
             INSTALL_PREFIX="$(cygpath --windows $MINIFORGE3_INSTALL_DIRECTORY)"
             INSTALLER="$(cygpath --windows $MINIFORGE3_INSTALLER)"
-            cmd.exe //C "$INSTALLER /InstallationType=JustMe /RegisterPython=1 /AddToPath=1 /S /D=$INSTALL_PREFIX"
+            run_command cmd.exe //C "$INSTALLER /InstallationType=JustMe /RegisterPython=1 /AddToPath=1 /S /D=$INSTALL_PREFIX"
             source $MINIFORGE3_INSTALL_DIRECTORY/Scripts/activate
         else
-            bash $MINIFORGE3_INSTALLER -b -f -p $MINIFORGE3_INSTALL_DIRECTORY
+            run_command bash $MINIFORGE3_INSTALLER -b -f -p $MINIFORGE3_INSTALL_DIRECTORY
             source $MINIFORGE3_INSTALL_DIRECTORY/bin/activate
         fi
 
-        conda config --set ssl_verify False
-        mamba update mamba -y
-        mamba install -y -n base -c conda-forge conda-libmamba-solver
-        conda config --set solver libmamba
-
         info "Installing Python 3.12 ..."
 
-        mamba install python=3.12 -y
+        if [[ $should_conda_ssl_verify == true ]]; then
+            run_command conda config --set ssl_verify $CACERT_PEM_FILE
+        elif [[ $should_conda_ssl_verify == false ]]; then
+            run_command conda config --set ssl_verify false
+        else
+            info "No modifying conda config"
+        fi
 
-        info "Activating conda shell $(basename $SHELL) ..."
+        run_command mamba update mamba -y
+        run_command mamba install python=3.12 -y
 
-        mamba init $(basename $SHELL)
+        info "Running conda init on all shells ..."
+        run_command mamba init --all
 
-        python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
+        run_command python -m uv pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
 
-        info "Restart your terminal application and re-run this script to proceed."
-        safe_exit 0
+    else
+        log "miniforge3 is already installed at $RESET'$MINIFORGE3_INSTALL_DIRECTORY'"
     fi
 }
 
 check_python() {
     if ! command -v python &> /dev/null; then
-        error "miniforge3 installation found at '$MINIFORGE3_INSTALL_DIRECTORY' however 'python' not found in PATH." "Consider the following checklist:
+        error "miniforge3 installation found at '$MINIFORGE3_INSTALL_DIRECTORY' however 'python' not found in PATH." "Consider the following options in order:
 
 1. Restart your terminal application and try running this script again.
 2. Restart your computer and try running this script again.
@@ -181,6 +279,7 @@ check_python() {
     else
 
         PYTHON_PATH=$(python -c "import sys; print(sys.executable)")
+        log "python is already installed at $RESET'$PYTHON_PATH'"
 
         python -c "
 import sys
@@ -189,65 +288,22 @@ import os
 exe = pathlib.Path(sys.executable)
 home = pathlib.Path(os.getenv('HOME'))
 if not home in exe.parents:
-    print(f'${WHITE}${ON_RED}${BOLD}${BLINK} ERROR ${RESET}: Found \'{sys.executable}\' but expected python from miniforge installation. You may have multiple pythons installed. Contact the developers for support to proceed.')
+    print(f'${FG_WHITE}${BG_RED}${BOLD} ERROR ${RESET}: Found \'{sys.executable}\' but expected python from miniforge installation. You may have multiple pythons installed. Contact the developers for support.')
     sys.exit(-1)
         "
     fi
 }
 
-_delete_dir_contents() {
-    local dir_path="$1"
-    if [[ -d $dir_path ]]; then
-        rm -rf "$dir_path"/*
-        info "Deleted: $dir_path"
-    else
-        info "Dir not found: $dir_path"
-    fi
-}
-
-install_pipx() {
-    if ! python -m pipx --version &> /dev/null; then
-        info "Installing pipx ..."
-        python -m pip install pipx
-        python -m pipx ensurepath
-
-        PIPX_VENV_CACHEDIR=$(python -m pipx environment | grep "PIPX_VENV_CACHEDIR=" | cut -d '=' -f 2 | xargs)
-        PIPX_LOCAL_VENVS=$(python -m pipx environment | grep "PIPX_LOCAL_VENVS=" | cut -d '=' -f 2 | xargs)
-
-        if [[ -n $ON_WINDOWS ]]; then
-            PIPX_VENV_CACHEDIR=$(cygpath.exe --unix "$PIPX_VENV_CACHEDIR")
-            PIPX_LOCAL_VENVS=$(cygpath.exe --unix "$PIPX_LOCAL_VENVS")
-            PIPX_BIN_DIR=$(cygpath.exe --unix "$PIPX_BIN_DIR")
-        fi
-
-        _delete_dir_contents "$PIPX_VENV_CACHEDIR"
-        _delete_dir_contents "$PIPX_LOCAL_VENVS"
-
-        info "Restart your terminal application and re-run this script to proceed."
-        safe_exit 0
-    fi
-}
-
-pipx_install() {
+uv_tool_install() {
     local tool_name="$1"
-    if command -v "$tool_name" > /dev/null 2>&1; then
-        if $FORCE_INSTALL; then
-            info "Installing $tool_name ..."
-            python -m pipx uninstall "$tool_name"
-            python -m pipx install "$tool_name" --force
-        else
-            info "$tool_name is already installed."
-        fi
-    else
-        info "Installing $tool_name ..."
-        python -m pipx install "$tool_name" --force
-    fi
+    info "Installing $tool_name with uv ..."
+    run_command python -m uv tool install "$tool_name" --force
 }
 
 mamba_install() {
     local tool_name="$1"
     info "Installing $tool_name with mamba ..."
-    mamba install -y -q -c conda-forge "$tool_name"
+    run_command mamba install -y -q -c conda-forge "$tool_name"
 }
 
 log_python_environment() {
@@ -261,31 +317,24 @@ log_python_environment() {
     log "which conda   : $RESET$(which -a conda | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
     log "which mamba   : $RESET$(which -a mamba | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
     log "which pip     : $RESET$(which -a pip | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
-    log "which pipx    : $RESET$(which -a pipx | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
 
-}
-
-show_help() {
-    echo "Usage: $(basename $0) [OPTIONS]"
-    echo "Install Miniforge, Python, pipx, and poetry."
-    echo ""
-    echo "Options:"
-    echo "  --help         Show this help message and exit"
-    echo "  --skip-poetry  Skip the poetry installation"
-    echo "  --skip-pipx    Skip the pipx installation"
-    echo "  --force        Force reinstall"
 }
 
 main() {
+    local should_remove_miniforge3=false
+    local should_mamba_init=false
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
+            --force-reinstall)
+                should_remove_miniforge3=true
+                ;;
+            --enable-mamba-init)
+                should_mamba_init=true
+                ;;
             --help)
                 show_help
                 safe_exit 0
-                ;;
-            --force)
-                FORCE_INSTALL=true
                 ;;
             *)
                 show_help
@@ -295,16 +344,20 @@ main() {
         shift
     done
 
+    show_help
+
     check_dependencies
-    install_miniforge3
+
+    install_miniforge3 $should_remove_miniforge3 $should_mamba_init
+
     check_python
-    install_pipx
+
     log_python_environment
-    pipx_install black
-    pipx_install cookiecutter
-    pipx_install llm
-    pipx_install pre-commit
-    pipx_install pylint
+
+    uv_tool_install cookiecutter
+    uv_tool_install llm
+    uv_tool_install pre-commit
+    uv_tool_install pylint
     mamba_install bat
     mamba_install delta
     mamba_install direnv
