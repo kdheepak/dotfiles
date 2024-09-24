@@ -354,7 +354,7 @@ main() {
     uv_tool_install llm
     uv_tool_install pre-commit
     uv_tool_install pylint
-    uv_too_install httpie
+    uv_tool_install httpie
     mamba_install bat
     mamba_install delta
     mamba_install direnv
