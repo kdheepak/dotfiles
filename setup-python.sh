@@ -304,9 +304,13 @@ uv_tool_install() {
 }
 
 mamba_install() {
-    local tool_name="$1"
-    info "Installing $tool_name with mamba ..."
-    run_command mamba install -y -q -c conda-forge "$tool_name"
+    info "Installing $@ with mamba ..."
+    # Construct the install command
+    cmd="mamba install -y"
+    for package in "$@"; do
+        cmd+=" $package"
+    done
+    run_command $cmd
 }
 
 log_python_environment() {
@@ -355,29 +359,14 @@ main() {
     uv_tool_install pre-commit
     uv_tool_install pylint
     uv_tool_install httpie
-    mamba_install bat
-    mamba_install delta
-    mamba_install direnv
-    mamba_install fzf
-    mamba_install gh
-    mamba_install git-lfs
-    mamba_install ipython
-    mamba_install jupyter
-    mamba_install neovim
-    mamba_install nodejs
-    mamba_install pandoc
-    mamba_install ripgrep
-    mamba_install starship
-    mamba_install unrar
-    mamba_install 7zip
+    mamba_install bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar
 
     if [[ -z $ON_WINDOWS ]]; then
         # if ON_WINDOWS is not set
-        mamba_install exa
-        mamba_install findutils
-        mamba_install htop
-        mamba_install jq
-        mamba_install rsync
+        mamba_install exa findutils htop jq rsync
+    else
+        # if ON_WINDOWS is set
+        mamba_install 7zip
     fi
 }
 
