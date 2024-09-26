@@ -219,7 +219,7 @@ install_miniforge3() {
     local should_ssl_no_revoke=${3:-false}
     local should_ca_native=${4:-false}
     local should_cacert=${5:-false}
-    local should_conda_ssl_verify=${6:-false}
+    local should_conda_ssl_verify=${6:-}
 
     # Reset positional parameters so that subcommands don't see the script arguments
     shift $#
@@ -359,7 +359,7 @@ main() {
     uv_tool_install pre-commit
     uv_tool_install pylint
     uv_tool_install httpie
-    mamba_install bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel ipywidgets jupyterlab_execute_time jupyterlab_pygments ipydrawio ipydrawio-export ipydrawio-widgets ipyforcegraph jupyterlab ipympl matplotlib panel jupyterlab-lsp python-lsp-server jupytext
+    mamba_install bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext
 
     if [[ -z $ON_WINDOWS ]]; then
         # if ON_WINDOWS is not set
@@ -370,7 +370,6 @@ main() {
     fi
 
     pip install jupyter_copilot
-    pip install jupysql-plugin
     pip install jupyterlab-quarto
     pip install jupyterlab-rainbow-brackets
     pip install jupyterlab_rise
