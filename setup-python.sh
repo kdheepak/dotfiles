@@ -373,6 +373,8 @@ main() {
     pip install jupyterlab-quarto
     pip install jupyterlab-rainbow-brackets
     pip install jupyterlab_rise
+    pip install jupyterlab-code-formatter
+    pip install black isort
 }
 
 main "$@"
