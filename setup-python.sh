@@ -359,7 +359,7 @@ main() {
     uv_tool_install pre-commit
     uv_tool_install pylint
     uv_tool_install httpie
-    mamba_install bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel
+    mamba_install bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel ipywidgets jupyterlab_execute_time jupyterlab_pygments ipydrawio ipydrawio-export ipydrawio-widgets ipyforcegraph jupyterlab ipympl matplotlib panel jupyterlab-lsp python-lsp-server jupytext
 
     if [[ -z $ON_WINDOWS ]]; then
         # if ON_WINDOWS is not set
@@ -368,6 +368,12 @@ main() {
         # if ON_WINDOWS is set
         mamba_install 7zip
     fi
+
+    pip install jupyter_copilot
+    pip install jupysql-plugin
+    pip install jupyterlab-quarto
+    pip install jupyterlab-rainbow-brackets
+    pip install jupyterlab_rise
 }
 
 main "$@"
