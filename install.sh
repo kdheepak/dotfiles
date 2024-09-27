@@ -8,6 +8,7 @@ brew install bat
 brew install cmake
 brew install tmux
 brew install pkg-config
+brew install fontconfig
 
 brew install koekeishiya/formulae/yabai
 brew install koekeishiya/formulae/skhd
