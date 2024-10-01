@@ -226,7 +226,7 @@ zstyle ':fzf-tab:complete:cp:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:mv:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:rsync:*' fzf-preview $PREVIEW_SNIPPET
 
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta --syntax-theme=GitHub'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --oneline --decorate --graph --color=always $word'
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
 	'case "$group" in
