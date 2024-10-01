@@ -231,12 +231,12 @@ zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --oneline --decorate -
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
 	'case "$group" in
 	"commit tag") git show --color=always $word ;;
-	*) git show --color=always $word | delta --syntax-theme=GitHub;;
+	*) git show --color=always $word | delta;;
 	esac'
 zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
 	'case "$group" in
-	"modified file") git diff $word | delta --syntax-theme=GitHub;;
-	"recent commit object name") git show --color=always $word | delta --syntax-theme=GitHub;;
+	"modified file") git diff $word | delta;;
+	"recent commit object name") git show --color=always $word | delta;;
 	*) git log --oneline --decorate --graph --color=always $word ;;
 	esac'
 
