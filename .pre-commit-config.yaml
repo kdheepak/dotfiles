@@ -20,6 +20,6 @@ repos:
       - id: black
         args: [--line-length=150]
   - repo: https://github.com/kdheepak/conventional-commits-precommit
-    rev: v0.3.7
+    rev: v0.3.8
     hooks:
       - id: check-commit-msg
