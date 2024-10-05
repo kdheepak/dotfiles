@@ -3,7 +3,7 @@
     # Please adapt and uncomment the following lines:
     name = Dheepak Krishnamurthy
     email = noreply@kdheepak.com
-    signingkey = 602B439E509219ED
+    signingkey = CE546F92D6E3ABB9
 
 [help]
     autocorrect = 2
