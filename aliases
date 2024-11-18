@@ -125,9 +125,9 @@ alias tns='tmux new-session -s'
 alias ovim="command vim"
 
 if [ -n "$NVIM" ]; then
-  alias e=nvr --remote
+    alias e=nvr --remote
 else
-  alias e=nvim
+    alias e=nvim
 fi
 alias nv='e'
 alias vim='e'
@@ -138,27 +138,27 @@ alias rg="rg $RG_FLAGS"
 alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
 
 gifify() {
-  if [[ -n "$1" ]]; then
-    if [[ $2 == '--good' ]]; then
-      ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
-      time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - >$1.gif
-      rm out-static*.png
+    if [[ -n $1 ]]; then
+        if [[ $2 == '--good' ]]; then
+            ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
+            time convert -verbose +dither -layers Optimize -resize 1200x1200\> out-static*.png GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+            rm out-static*.png
+        else
+            ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+        fi
     else
-      ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 >$1.gif
+        echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
     fi
-  else
-    echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
-  fi
 }
 
 datetime() {
-  date +%Y-%m-%dT%H:%M:%S%z
+    date +%Y-%m-%dT%H:%M:%S%z
 }
 
 function get_nextword_data() {
-  echo "Takes a long time to download..."
-  mkdir ~/local/dictionary
-  curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
+    echo "Takes a long time to download..."
+    mkdir ~/local/dictionary
+    curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
 }
 
 # custom type
@@ -168,120 +168,120 @@ function get_nextword_data() {
 # - If any line is an alias, highlight the first word, and include a nested
 #   type call for that word.
 function type() {
-  local gray='\e[38;5;8m'
-  local blue='\e[34m'
-  local bold='\e[1m'
-  local reset='\e[0m'
+    local gray='\e[38;5;8m'
+    local blue='\e[34m'
+    local bold='\e[1m'
+    local reset='\e[0m'
 
-  output="$(command type -a "$@")"
+    output="$(command type -a "$@")"
 
-  # if there is no output, return
-  if [[ -z "$output" ]]; then
-    return 1
-  fi
-
-  local regex_path='^[[:graph:]]+ is [[:graph:]]+$' # case "WORD is /some/path"
-  local regex_alias='^[[:graph:]]+ is aliased to'   # case "WORD is aliased to"
-  local regex_is='^[[:graph:]]+ is '                # case "WORD is ..."
-
-  # For every output line
-  while IFS= read -r line; do
-    # If line has the form "WORD is /some/path", pretty print the path and add
-    # symlink target, if any.
-    if [[ "$line" =~ $regex_path ]]; then
-      local word="${line%% is*}"
-      local path="${line#* is }"
-      local pretty_path="$(pretty_print_directory "$path")"
-      local output_line="${bold}${word}${reset} is ${pretty_path}"
-
-      # symlink stuff
-      local symlink_path="$(realpath "$path")"
-      if [[ "$symlink_path" != "$path" ]]; then
-        local pretty_symlink_path="$(pretty_print_directory "$symlink_path")"
-        output_line="${output_line} ${gray}->${reset} ${pretty_symlink_path}"
-      fi
-
-      printf '%b\n' "$output_line"
-
-    # If line has the form "WORD is aliased to `ALIAS ...", highlight alias
-    elif [[ "$line" =~ $regex_alias ]]; then
-      # Note that forms can be either:
-      # - "WORD is aliased to `ALIAS ...'" or
-      # - "WORD is aliased to `ALIAS'"
-      local word="${line%% is*}"
-      local rest="${line#* is aliased to \`}"
-      local alias="${rest%%[ \']*}"
-      local rest="${rest#*${alias}}"
-
-      local is_alias_different_command=false
-      if [[ "$word" != "$alias" ]]; then
-        is_alias_different_command=true
-      fi
-
-      # if the alias is different than the word, highligh as blue
-      local alias_highlight=${bold}
-      if [[ "$is_alias_different_command" = true ]]; then
-        alias_highlight=${bold}${blue}
-      fi
-
-      printf '%b\n' "${bold}${word}${reset} is aliased to \`${alias_highlight}${alias}${reset}${rest}"
-
-      # if the alias is different, recursively call 'type' on it. Indent two spaces.
-      if [[ "$is_alias_different_command" = true ]]; then
-        local alias_output="$(type "$alias" | sed 's/^/  /')"
-        printf '%b\n' "$alias_output"
-      fi
-
-    # If a line has the form "WORD is ...", highlight word.
-    # This is just the catch-all case.
-    elif [[ "$line" =~ $regex_is ]]; then
-      local word="${line%% is*}"
-      local rest="${line#* is }"
-      printf '%b\n' "${bold}${word}${reset} is ${rest}"
-    else
-      printf '%s\n' "$line"
+    # if there is no output, return
+    if [[ -z $output ]]; then
+        return 1
     fi
-  done <<<"$output"
+
+    local regex_path='^[[:graph:]]+ is [[:graph:]]+$' # case "WORD is /some/path"
+    local regex_alias='^[[:graph:]]+ is aliased to'   # case "WORD is aliased to"
+    local regex_is='^[[:graph:]]+ is '                # case "WORD is ..."
+
+    # For every output line
+    while IFS= read -r line; do
+        # If line has the form "WORD is /some/path", pretty print the path and add
+        # symlink target, if any.
+        if [[ $line =~ $regex_path ]]; then
+            local word="${line%% is*}"
+            local path="${line#* is }"
+            local pretty_path="$(pretty_print_directory "$path")"
+            local output_line="${bold}${word}${reset} is ${pretty_path}"
+
+            # symlink stuff
+            local symlink_path="$(realpath "$path")"
+            if [[ $symlink_path != "$path" ]]; then
+                local pretty_symlink_path="$(pretty_print_directory "$symlink_path")"
+                output_line="${output_line} ${gray}->${reset} ${pretty_symlink_path}"
+            fi
+
+            printf '%b\n' "$output_line"
+
+        # If line has the form "WORD is aliased to `ALIAS ...", highlight alias
+        elif [[ $line =~ $regex_alias ]]; then
+            # Note that forms can be either:
+            # - "WORD is aliased to `ALIAS ...'" or
+            # - "WORD is aliased to `ALIAS'"
+            local word="${line%% is*}"
+            local rest="${line#* is aliased to \`}"
+            local alias="${rest%%[ \']*}"
+            local rest="${rest#*${alias}}"
+
+            local is_alias_different_command=false
+            if [[ $word != "$alias" ]]; then
+                is_alias_different_command=true
+            fi
+
+            # if the alias is different than the word, highligh as blue
+            local alias_highlight=${bold}
+            if [[ $is_alias_different_command == true ]]; then
+                alias_highlight=${bold}${blue}
+            fi
+
+            printf '%b\n' "${bold}${word}${reset} is aliased to \`${alias_highlight}${alias}${reset}${rest}"
+
+            # if the alias is different, recursively call 'type' on it. Indent two spaces.
+            if [[ $is_alias_different_command == true ]]; then
+                local alias_output="$(type "$alias" | sed 's/^/  /')"
+                printf '%b\n' "$alias_output"
+            fi
+
+        # If a line has the form "WORD is ...", highlight word.
+        # This is just the catch-all case.
+        elif [[ $line =~ $regex_is ]]; then
+            local word="${line%% is*}"
+            local rest="${line#* is }"
+            printf '%b\n' "${bold}${word}${reset} is ${rest}"
+        else
+            printf '%s\n' "$line"
+        fi
+    done <<< "$output"
 }
 
 gli() {
 
-  # param validation
-  if [[ ! $(git log -n 1 "$@" | head -n 1) ]]; then
-    return
-  fi
+    # param validation
+    if [[ ! $(git log -n 1 "$@" | head -n 1) ]]; then
+        return
+    fi
 
-  # filter by file string
-  local filter
-  # param existed, git log for file if existed
-  if [ -n "$@" ] && [ -f "$@" ]; then
-    filter="-- $@"
-  fi
+    # filter by file string
+    local filter
+    # param existed, git log for file if existed
+    if [ -n "$@" ] && [ -f "$@" ]; then
+        filter="-- $@"
+    fi
 
-  # git command
-  local gitlog=(
-    git log
-    --graph --color=always
-    --abbrev=7
-    --format='%C(auto)%h %an %C(blue)%s %C(yellow)%cr'
-    "$@"
-  )
+    # git command
+    local gitlog=(
+        git log
+        --graph --color=always
+        --abbrev=7
+        --format='%C(auto)%h %an %C(blue)%s %C(yellow)%cr'
+        "$@"
+    )
 
-  # fzf command
-  local fzf=(
-    fzf
-    --ansi --no-sort --reverse --tiebreak=index
-    --preview "f() { set -- \$(echo -- \$@ | grep -o '[a-f0-9]\{7\}'); [ \$# -eq 0 ] || git show --color=always \$1 $filter; }; f {}"
-    --bind "ctrl-q:abort,ctrl-m:execute:
+    # fzf command
+    local fzf=(
+        fzf
+        --ansi --no-sort --reverse --tiebreak=index
+        --preview "f() { set -- \$(echo -- \$@ | grep -o '[a-f0-9]\{7\}'); [ \$# -eq 0 ] || git show --color=always \$1 $filter; }; f {}"
+        --bind "ctrl-q:abort,ctrl-m:execute:
                 (grep -o '[a-f0-9]\{7\}' | head -1 |
                 xargs -I % sh -c 'git show --color=always % $filter | less -R') << 'FZF-EOF'
                 {}
                 FZF-EOF"
-    --preview-window=right:60%
-  )
+        --preview-window=right:60%
+    )
 
-  # piping them
-  $gitlog | $fzf
+    # piping them
+    $gitlog | $fzf
 }
 
 alias gfap="gfa --prune"
@@ -289,3 +289,34 @@ alias gsb='git status -sb'
 alias gst='git status -s'
 
 alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
+
+function archive-folder() {
+
+    # Show help message if no arguments or '-h' is passed
+    if [[ -z $1 || $1 == "-h" || $1 == "--help" ]]; then
+        echo "Usage: archive-folder <folder_name>"
+        echo "Archives the specified folder into a zip file with the current date."
+        return 0
+    fi
+
+    local foldername=$1
+    local folderbase=$(basename "$foldername")
+    local date=$(date +%Y-%m-%d)
+    local archive_name="${folderbase}-${date}.zip"
+
+    # Check if the 7z command is available
+    if ! command -v 7z &> /dev/null; then
+        echo "Error: 7z command not found. Please install 7zip."
+        return 1
+    fi
+
+    # Check if the folder exists
+    if [[ ! -d $foldername ]]; then
+        echo "Error: Folder '$foldername' does not exist."
+        return 1
+    fi
+
+    # Create the archive
+    echo "Creating archive '$archive_name' from folder '$foldername'..."
+    7z a -tzip "$archive_name" "$foldername" && echo "Archive created successfully." || echo "Error: Failed to create archive."
+}
