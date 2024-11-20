@@ -359,7 +359,7 @@ main() {
     uv_tool_install pre-commit
     uv_tool_install pylint
     uv_tool_install httpie
-    mamba_install eza bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext ruff cmake
+    mamba_install eza bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext ruff cmake panel watchfiles param matplotlib numpy pandas "ibis-framework[duckdb]"
 
     if [[ -z $ON_WINDOWS ]]; then
         # if ON_WINDOWS is not set
