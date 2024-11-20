@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -d $1 ]]; then
-    exa --tree --level=2 --color=always $1
+    eza --tree --level=2 --color=always $1
 elif [[ -f $1 ]]; then
     bat --pager=never --color=always --line-range :80 $1
 else
