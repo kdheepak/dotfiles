@@ -5,7 +5,7 @@ alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
 # Shortcuts
 alias G="cd ~/gitrepos"
 
-alias ls="eza --git --git-repos -lha -F --icons --group-directories-first --no-user"
+alias ls="eza --git -lha -F --icons --group-directories-first --no-user"
 alias lg=lazygit
 
 # List only directories
