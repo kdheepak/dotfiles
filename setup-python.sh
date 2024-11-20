@@ -375,6 +375,8 @@ main() {
     pip install jupyterlab_rise
     pip install jupyterlab-code-formatter
     pip install black isort
+
+    info "Completed!"
 }
 
 main "$@"
