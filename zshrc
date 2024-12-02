@@ -265,16 +265,13 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-eval "$($HOME/.local/bin/mise activate zsh)"
-export PATH="$HOME/.local/share/mise/shims:$PATH"
-export PATH=$HOME/.pixi/bin:$PATH
 export PATH=$HOME/.juliaup/bin:$PATH
 
 eval "$(pixi completion --shell zsh)"
 
-eval "$(starship init zsh)"
+eval "$($HOME/miniforge3/bin/starship init zsh)"
 
-eval "$(direnv hook zsh)"
+eval "$($HOME/miniforge3/bin/direnv hook zsh)"
 
 . "$HOME/.cargo/env"
 
