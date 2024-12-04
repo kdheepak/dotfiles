@@ -81,7 +81,6 @@ config.window_close_confirmation = "NeverPrompt"
 config.adjust_window_size_when_changing_font_size = false
 config.window_decorations = "RESIZE"
 config.check_for_updates = false
--- config.default_prog = { "/bin/zsh", "-l", "-c", "~/.local/share/mise/shims/zellij" }
 config.tab_bar_at_bottom = true
 config.enable_tab_bar = true
 config.audible_bell = "Disabled"
@@ -214,24 +213,24 @@ bar.apply_to_config(config, {
 config.leader = { key = "`", timeout_milliseconds = 1000 }
 
 config.keys = {
-  { key = "`",     mods = "LEADER", action = act.SendString("`") },
-  { key = "n",     mods = "LEADER", action = act.ActivateTabRelative(1) },
-  { key = "p",     mods = "LEADER", action = act.ActivateTabRelative(-1) },
-  { key = "1",     mods = "LEADER", action = act.ActivateTab(0) },
-  { key = "2",     mods = "LEADER", action = act.ActivateTab(1) },
-  { key = "3",     mods = "LEADER", action = act.ActivateTab(2) },
-  { key = "4",     mods = "LEADER", action = act.ActivateTab(3) },
-  { key = "5",     mods = "LEADER", action = act.ActivateTab(4) },
-  { key = "6",     mods = "LEADER", action = act.ActivateTab(5) },
-  { key = "7",     mods = "LEADER", action = act.ActivateTab(6) },
-  { key = "8",     mods = "LEADER", action = act.ActivateTab(7) },
-  { key = "9",     mods = "LEADER", action = act.ActivateTab(8) },
-  { key = "0",     mods = "LEADER", action = act.ActivateTab(9) },
+  { key = "`", mods = "LEADER", action = act.SendString("`") },
+  { key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
+  { key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
+  { key = "1", mods = "LEADER", action = act.ActivateTab(0) },
+  { key = "2", mods = "LEADER", action = act.ActivateTab(1) },
+  { key = "3", mods = "LEADER", action = act.ActivateTab(2) },
+  { key = "4", mods = "LEADER", action = act.ActivateTab(3) },
+  { key = "5", mods = "LEADER", action = act.ActivateTab(4) },
+  { key = "6", mods = "LEADER", action = act.ActivateTab(5) },
+  { key = "7", mods = "LEADER", action = act.ActivateTab(6) },
+  { key = "8", mods = "LEADER", action = act.ActivateTab(7) },
+  { key = "9", mods = "LEADER", action = act.ActivateTab(8) },
+  { key = "0", mods = "LEADER", action = act.ActivateTab(9) },
   { key = "Space", mods = "LEADER", action = act.ActivateLastTab },
-  { key = "h",     mods = "LEADER", action = act.ActivatePaneDirection("Left") },
-  { key = "j",     mods = "LEADER", action = act.ActivatePaneDirection("Down") },
-  { key = "k",     mods = "LEADER", action = act.ActivatePaneDirection("Up") },
-  { key = "l",     mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+  { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+  { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+  { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+  { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
   {
     key = "/",
     mods = "LEADER",
@@ -283,10 +282,10 @@ config.keys = {
     mods = "LEADER",
     action = act.EmitEvent("trigger-vim-with-scrollback"),
   },
-  { key = "UpArrow",   mods = "SHIFT", action = act.ScrollToPrompt(-1) },
+  { key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
   { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
-  { key = "PageUp",    mods = "SHIFT", action = act.ScrollByPage(-0.8) },
-  { key = "PageDown",  mods = "SHIFT", action = act.ScrollByPage(0.8) },
+  { key = "PageUp", mods = "SHIFT", action = act.ScrollByPage(-0.8) },
+  { key = "PageDown", mods = "SHIFT", action = act.ScrollByPage(0.8) },
 }
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
