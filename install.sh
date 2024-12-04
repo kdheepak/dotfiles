@@ -15,4 +15,6 @@ brew cask install font-firacode-nerd-font
 
 brew install coreutils binutils diffutils findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip watch wdiff wget gdb gpatch make git less openssh unzip sevenzip
 
+brew install delta
+
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
