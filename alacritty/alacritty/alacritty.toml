@@ -6,4 +6,4 @@ size = 12
 
 [shell]
 program = "/bin/zsh"
-args = ["-l", "-c", "~/.local/share/mise/shims/zellij attach --index 0 --create"]
+args = ["-l", "-c", "zellij attach --index 0 --create"]
