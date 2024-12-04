@@ -24,10 +24,6 @@ y = 0
 x = 0
 y = 0
 
-[shell]
-program = "/bin/zsh"
-args = ["-l", "-c", "~/.local/share/mise/shims/zellij"]
-
 [window]
 startup_mode = "Maximized"
 option_as_alt = "Both"
