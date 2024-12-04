@@ -62,5 +62,3 @@ rm -rf ~/.config/wezterm
 ln -s "$(pwd)/wezterm" ~/.config/wezterm
 rm -rf ~/.config/tmux/tmux.conf
 ln -s "$(pwd)/tmux.conf" ~/.config/tmux/tmux.conf
-rm -rf ~/.config/mise
-ln -s "$(pwd)/mise" ~/.config/mise
