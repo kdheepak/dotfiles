@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 echo "Installing requirements"
 
-brew install neovim
 brew install pkg-config
 brew install fontconfig
-brew install zellij
 
 brew install koekeishiya/formulae/yabai
 brew install koekeishiya/formulae/skhd
