@@ -267,6 +267,12 @@ zinit light-mode for \
 
 export PATH=$HOME/.juliaup/bin:$PATH
 
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  eval "$($HOME/.local/bin/mise activate zsh --shims)"
+else
+  eval "$($HOME/.local/bin/mise activate zsh)"
+fi
+
 eval "$(pixi completion --shell zsh)"
 
 eval "$($HOME/miniforge3/bin/starship init zsh)"
@@ -298,7 +304,7 @@ fi
 
 # !! Contents within this block are managed by juliaup !!
 
-path=('/Users/$HOME/.juliaup/bin' $path)
+path=('$HOME/.juliaup/bin' $path)
 export PATH
 
 # <<< juliaup initialize <<<
