@@ -116,12 +116,6 @@ alias cdd='cd ~/gitrepos/dotfiles'
 alias cdn='cd ~/gitrepos/notes'
 alias cdr='cd ~/gitrepos'
 
-# tmux aliases
-alias ta='tmux attach'
-alias tls='tmux ls'
-alias tat='tmux attach -t'
-alias tns='tmux new-session -s'
-
 alias ovim="command vim"
 
 if [ -n "$NVIM" ]; then
@@ -136,6 +130,8 @@ alias vi='e'
 export RG_FLAGS="--color=always --heading --line-number --trim --no-messages --smart-case --hidden --max-columns-preview --max-columns=\$(tput cols) --glob='!.git' --glob='!.DS_Store'"
 alias rg="rg $RG_FLAGS"
 alias raa="rg $RG_FLAGS --no-ignore --stats --follow --text --search-zip -uuu"
+
+alias yz='yazi'
 
 gifify() {
     if [[ -n $1 ]]; then
