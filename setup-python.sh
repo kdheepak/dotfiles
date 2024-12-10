@@ -2,7 +2,13 @@
 
 command -v tput &> /dev/null && [ -t 1 ] && [ -z "${NO_COLOR:-}" ] || tput() { true; }
 
-set -euo pipefail
+# bash strict mode
+set -T          # inherit DEBUG and RETURN trap for functions
+set -C          # prevent file overwrite by > &> <>
+set -E          # inherit -e
+set -e          # exit immediately on errors
+set -u          # exit on not assigned variables
+set -o pipefail # exit on pipe failure
 
 BG_BLACK=$(tput setab 0)
 BG_RED=$(tput setab 1)
@@ -48,25 +54,31 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 BLINK=$(tput blink)
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-PROJECT_DIR=$(realpath $SCRIPT_DIR/..)
-MINIFORGE3_INSTALL_DIRECTORY="$HOME/miniforge3"
+################################################################################
+# global variables
+################################################################################
 
-CACERT_PEM_FILE=$SCRIPT_DIR/cacert.pem
+declare -r PS4='debug($LINENO) ${FUNCNAME[0]:+${FUNCNAME[0]}}(): '
+declare -r SCRIPT_VERSION='1.0.0'
+declare -r SCRIPT_NAME="./$(basename $0)"
+declare -r SCRIPT_PARENT_DIR="$(dirname $0)"
+declare -r SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+declare -r PROJECT_DIR=$(realpath $SCRIPT_DIR/..)
+declare -r MINIFORGE3_INSTALL_DIRECTORY="$HOME/miniforge3"
 
 # Determine the OS and architecture
 case "$(uname)" in
     MINGW* | MSYS*)
-        CONDA_OS="Windows"
-        CONDA_ARCH="x86_64"
-        CONDA_EXT="exe"
-        ON_WINDOWS=true
+        declare -r CONDA_OS="Windows"
+        declare -r CONDA_ARCH="x86_64"
+        declare -r CONDA_EXT="exe"
+        declare -r ON_WINDOWS=true
         ;;
     *)
-        CONDA_OS=$(uname)
-        CONDA_ARCH=$(uname -m)
-        CONDA_EXT="sh"
-        ON_WINDOWS=
+        declare -r CONDA_OS=$(uname)
+        declare -r CONDA_ARCH=$(uname -m)
+        declare -r CONDA_EXT="sh"
+        declare -r ON_WINDOWS=
         ;;
 esac
 
@@ -204,72 +216,195 @@ download_with_curl() {
     if [[ $ca_native == true ]]; then
         CURL_OPTS="$CURL_OPTS --ca-native"
     fi
-    if [[ $cacert == true ]]; then
-        CURL_OPTS="$CURL_OPTS --cacert $CACERT_PEM_FILE"
-    fi
 
     run_command curl -fL "$url" -o "$output_file" $CURL_OPTS || error "Unable to download from $url with curl."
 }
 
-# Function to install miniforge3
-install_miniforge3() {
+function download_miniforge3() {
 
-    local should_remove_miniforge3=${1:-false}
-    local should_mamba_init=${2:-false}
-    local should_ssl_no_revoke=${3:-false}
-    local should_ca_native=${4:-false}
-    local should_cacert=${5:-false}
-    local should_conda_ssl_verify=${6:-}
+    function help() {
+        echo "Usage: $SCRIPT_NAME download-conda [OPTIONS]"
+        printf "%-35s %s\n" "  --force" "force download of miniforge3"
+        printf "%-35s %s\n" "  --ssl-no-revoke" "disable SSL certificate revocation checks"
+        printf "%-35s %s\n" "  --ca-native" "use the system's CA certificates"
+        printf "%-35s %s\n" "  --cacert" "use the provided CA certificate file"
+        printf "%-35s %s\n" "  --help" "show help menu and options"
+    }
 
-    # Reset positional parameters so that subcommands don't see the script arguments
-    shift $#
+    local should_ssl_no_revoke=false
+    local should_ca_native=false
+    local should_cacert=false
+    local should_force_download=false
 
-    if [[ $should_remove_miniforge3 == true ]]; then
-        info "Removing miniforge3 ..."
-        run_command rm -rf ~/miniforge3/
+    while [ ${#} -gt 0 ]; do
+        error_message="Error: a value is needed for '$1='"
+        case $1 in
+            --force)
+                should_force_download=true
+                shift 1
+                ;;
+            --ssl-no-revoke)
+                should_ssl_no_revoke=true
+                shift 1
+                ;;
+            --ca-native)
+                should_ca_native=true
+                shift 1
+                ;;
+            --cacert)
+                should_cacert=true
+                shift 1
+                ;;
+            --help)
+                help
+                safe_exit 0
+                ;;
+            *)
+                help
+                error "unknown option '$1'. See help options above."
+                break
+                ;;
+        esac
+    done
+
+    # if miniforge3 installer exists and force_download is false, return
+
+    if [[ -f $MINIFORGE3_INSTALLER && $should_force_download == false ]]; then
+        info "Miniforge3 installer already found at $MINIFORGE3_INSTALLER ..."
+        return
     fi
 
-    if [[ ! -d $MINIFORGE3_INSTALL_DIRECTORY ]]; then
-        info "Downloading miniforge3 ..."
+    info "Downloading miniforge3 installer from $MINIFORGE3_DOWNLOAD_URL to $MINIFORGE3_INSTALLER ..."
+    download_with_curl "$MINIFORGE3_DOWNLOAD_URL" "$MINIFORGE3_INSTALLER" "$should_ssl_no_revoke" "$should_ca_native" "$should_cacert"
+}
 
-        download_with_curl "$MINIFORGE3_DOWNLOAD_URL" "$MINIFORGE3_INSTALLER" "$should_ssl_no_revoke" "$should_ca_native" "$should_cacert"
+function install_miniforge3() {
 
-        info "Installing miniforge3 ..."
+    function help() {
+        echo "Usage: $SCRIPT_NAME install-config [OPTIONS]"
+        printf "%-35s %s\n" "  --force" "force reinstallation of miniforge3"
+        printf "%-35s %s\n" "  --help" "show help menu and options"
+    }
 
-        if [[ -n $ON_WINDOWS ]]; then
-            INSTALL_PREFIX="$(cygpath --windows $MINIFORGE3_INSTALL_DIRECTORY)"
-            INSTALLER="$(cygpath --windows $MINIFORGE3_INSTALLER)"
-            run_command cmd.exe //C "$INSTALLER /InstallationType=JustMe /RegisterPython=1 /AddToPath=1 /S /D=$INSTALL_PREFIX"
-            source $MINIFORGE3_INSTALL_DIRECTORY/Scripts/activate
-        else
-            run_command bash $MINIFORGE3_INSTALLER -b -f -p $MINIFORGE3_INSTALL_DIRECTORY
-            source $MINIFORGE3_INSTALL_DIRECTORY/bin/activate
-        fi
+    local force=false
 
-        info "Installing Python 3.12 ..."
+    while [ ${#} -gt 0 ]; do
+        error_message="Error: a value is needed for '$1='"
+        case $1 in
+            --force)
+                force=true
+                shift 1
+                ;;
+            --help)
+                help
+                safe_exit 0
+                ;;
+            *)
+                help
+                error "unknown option '$1'. See help options above."
+                break
+                ;;
+        esac
+    done
 
-        if [[ $should_conda_ssl_verify == true ]]; then
-            run_command conda config --set ssl_verify $CACERT_PEM_FILE
-        elif [[ $should_conda_ssl_verify == false ]]; then
-            run_command conda config --set ssl_verify false
-        else
-            info "No modifying conda config"
-        fi
+    if [[ $force == true ]]; then
+        info "Forcing reinstallation of miniforge3 ..."
+        run_command rm -rf $MINIFORGE3_INSTALL_DIRECTORY
+    fi
 
-        run_command mamba update mamba -y
-        run_command mamba install python=3.12 -y
+    # check if miniforge3 already installed
+    if [[ -d ${MINIFORGE3_INSTALL_DIRECTORY} ]]; then
+        check_python
+        return
+    fi
 
-        if [[ $should_mamba_init == true ]]; then
-            info "Running conda init on all shells ..."
-            run_command mamba init --all
-        fi
-
-        run_command pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
-        run_command uv pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
-
+    # check if miniforge3_installer exists
+    if [[ ! -f $MINIFORGE3_INSTALLER ]]; then
+        error "Miniforge3 installer not found at $MINIFORGE3_INSTALLER ..." 'Run `download` subcommand first.'
     else
-        log "miniforge3 is already installed at $RESET'$MINIFORGE3_INSTALL_DIRECTORY'"
+        info "Miniforge3 installer found at $MINIFORGE3_INSTALLER ..."
     fi
+
+    info "Installing miniforge3 from ${MINIFORGE3_INSTALLER} into ${MINIFORGE3_INSTALL_DIRECTORY} ..."
+
+    if [[ -n $ON_WINDOWS ]]; then
+        INSTALL_PREFIX="$(cygpath --windows $MINIFORGE3_INSTALL_DIRECTORY)"
+        INSTALLER="$(cygpath --windows $MINIFORGE3_INSTALLER)"
+        run_command cmd.exe //C "$INSTALLER /InstallationType=JustMe /RegisterPython=1 /AddToPath=1 /S /D=$INSTALL_PREFIX"
+        eval "$(conda shell.bash hook)"
+    else
+        run_command bash $MINIFORGE3_INSTALLER -b -f -p $MINIFORGE3_INSTALL_DIRECTORY
+        source $MINIFORGE3_INSTALL_DIRECTORY/bin/activate
+        eval "$(conda shell.bash hook)"
+    fi
+
+}
+
+function setup_miniforge3() {
+
+    function help() {
+        echo "Usage: $SCRIPT_NAME setup-conda [OPTIONS]"
+        printf "%-35s %s\n" "  --init" "add conda initialization to shell startup scripts"
+        printf "%-35s %s\n" '  --ssl-verify=$preference' "set conda ssl verify [true|false|truststore]"
+        printf "%-35s %s\n" "  --help" "show help menu and options"
+    }
+
+    local should_conda_init=false
+    local conda_ssl_verify=
+
+    while [ ${#} -gt 0 ]; do
+        error_message="Error: a value is needed for '$1='"
+        case $1 in
+            --init)
+                should_conda_init=true
+                shift 1
+                ;;
+            --ssl-verify=*)
+                # Extract value after '='
+                conda_ssl_verify="${1#*=}"
+                shift
+                ;;
+            --help)
+                help
+                safe_exit 0
+                ;;
+            *)
+                help
+                error "unknown option '$1'. See help options above."
+                break
+                ;;
+        esac
+    done
+
+    if [[ $conda_ssl_verify == true ]]; then
+        run_command conda config --set ssl_verify $CACERT_PEM_FILE
+    elif [[ $conda_ssl_verify == false ]]; then
+        run_command conda config --set ssl_verify false
+    elif [[ $conda_ssl_verify == "truststore" ]]; then
+        run_command conda config --set ssl_verify "truststore"
+    elif [[ -n $conda_ssl_verify ]]; then
+        run_command conda config --set ssl_verify $conda_ssl_verify
+    else
+        warn "Not modifying conda config"
+    fi
+
+    info "Updating conda ..."
+    run_command conda update conda -y
+
+    if [[ $should_conda_init == true ]]; then
+        info "Running conda init on all shells ..."
+        run_command conda init --all
+    else
+        warn "Skipping adding conda initialization to shell startup scripts ..."
+    fi
+
+    eval "$(conda shell.bash hook)"
+
+    run_command conda install uv -y
+
+    run_command pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
+    run_command uv pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools --upgrade
+
 }
 
 check_python() {
@@ -313,53 +448,15 @@ mamba_install() {
     run_command $cmd
 }
 
-log_python_environment() {
-    log "python  : $RESET$(python -c "import sys; print(sys.executable)")"
-    log "python3 : $RESET$(python3 -c "import sys; print(sys.executable)")"
-
-    echo ""
-
-    local space="                       "
-    log "which python  : $RESET$(which -a python | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
-    log "which conda   : $RESET$(which -a conda | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
-    log "which mamba   : $RESET$(which -a mamba | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
-    log "which pip     : $RESET$(which -a pip | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
-
-}
-
-main() {
-    local should_remove_miniforge3=false
-    local should_mamba_init=false
-
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-            --force-reinstall)
-                should_remove_miniforge3=true
-                ;;
-            --enable-mamba-init)
-                should_mamba_init=true
-                ;;
-            *)
-                error "Unknown option: $1"
-                ;;
-        esac
-        shift
-    done
-
-    check_dependencies
-
-    install_miniforge3 $should_remove_miniforge3 $should_mamba_init
-
-    check_python
-
-    log_python_environment
+download_dependencies() {
 
     uv_tool_install cookiecutter
     uv_tool_install llm
     uv_tool_install pre-commit
     uv_tool_install pylint
     uv_tool_install httpie
-    mamba_install eza bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext ruff cmake panel hvplot holoviews watchfiles param matplotlib numpy pandas "ibis-framework[duckdb,geospatial]" lonboard
+
+    mamba_install eza bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext ruff cmake panel hvplot holoviews watchfiles param matplotlib numpy pandas "ibis-framework[duckdb,geospatial]" lonboard just tokei
 
     if [[ -z $ON_WINDOWS ]]; then
         # if ON_WINDOWS is not set
@@ -379,4 +476,68 @@ main() {
     info "Completed!"
 }
 
+log_python_environment() {
+    log "python  : $RESET$(python -c "import sys; print(sys.executable)")"
+    log "python3 : $RESET$(python3 -c "import sys; print(sys.executable)")"
+
+    echo ""
+
+    local space="                       "
+    log "which python  : $RESET$(which -a python | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
+    log "which conda   : $RESET$(which -a conda | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
+    log "which mamba   : $RESET$(which -a mamba | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
+    log "which pip     : $RESET$(which -a pip | awk -v space="$space" 'NR==1{print; next} {print space $0}')"
+
+}
+
+function main() {
+    function help() {
+        echo "Usage: $SCRIPT_NAME [COMMAND] [OPTIONS]"
+        printf "%-35s %s\n" "  status" "check dependencies"
+        printf "%-35s %s\n" "  download" "download miniforge3"
+        printf "%-35s %s\n" "  install" "install miniforge3"
+        printf "%-35s %s\n" "  setup" "setup miniforge3"
+        printf "%-35s %s\n" "  dependencies" "download dependencies"
+        printf "%-35s %s\n" "  --version" "show version"
+        printf "%-35s %s\n" "  --help" "show help menu and commands"
+    }
+
+    if ((${#} == 0)); then
+        help
+        safe_exit 0
+    fi
+
+    case ${1} in
+        --help)
+            help
+            safe_exit 0
+            ;;
+        --version)
+            version
+            safe_exit 0
+            ;;
+        status)
+            check_dependencies
+            log_python_environment
+            ;;
+        download)
+            download_miniforge3 "${@:2}"
+            ;;
+        install)
+            install_miniforge3 "${@:2}"
+            ;;
+        setup)
+            setup_miniforge3 "${@:2}"
+            ;;
+        dependencies)
+            download_dependencies "${@:2}"
+            ;;
+        *)
+            help
+            error "Got unknown command '$1' but expected one of the commands listed above"
+            ;;
+    esac
+}
+
 main "$@"
+safe_exit 0
