@@ -466,12 +466,12 @@ download_dependencies() {
         mamba_install 7zip
     fi
 
-    pip install jupyter_copilot
+    # pip install jupyter_copilot
     pip install jupyterlab-quarto
     pip install jupyterlab-rainbow-brackets
-    pip install jupyterlab_rise
+    # pip install jupyterlab_rise
     pip install jupyterlab-code-formatter
-    pip install black isort
+    # pip install black isort
 
     info "Completed!"
 }
