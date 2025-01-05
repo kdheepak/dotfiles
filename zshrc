@@ -275,9 +275,9 @@ fi
 
 eval "$(pixi completion --shell zsh)"
 
-eval "$($HOME/miniforge3/bin/starship init zsh)"
+eval "$(starship init zsh)"
 
-eval "$($HOME/miniforge3/bin/direnv hook zsh)"
+eval "$(direnv hook zsh)"
 
 . "$HOME/.cargo/env"
 
