@@ -275,10 +275,6 @@ fi
 
 eval "$(pixi completion --shell zsh)"
 
-eval "$(starship init zsh)"
-
-eval "$(direnv hook zsh)"
-
 . "$HOME/.cargo/env"
 
 # >>> conda initialize >>>
@@ -321,3 +317,8 @@ export NVM_DIR="$HOME/.nvm"
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 eval "$(uv generate-shell-completion zsh)"
+
+eval "$(starship init zsh)"
+
+eval "$(direnv hook zsh)"
+
