@@ -441,7 +441,7 @@ uv_tool_install() {
 mamba_install() {
     info "Installing $@ with mamba ..."
     # Construct the install command
-    cmd="mamba install -y"
+    cmd="mamba upgrade -y"
     for package in "$@"; do
         cmd+=" $package"
     done
