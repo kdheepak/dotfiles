@@ -456,6 +456,7 @@ download_dependencies() {
     uv_tool_install pylint
     uv_tool_install httpie
     uv_tool_install black
+    uv_tool_install aider-install
 
     mamba_install eza bat delta direnv fzf gh git-lfs ipython jupyter neovim nodejs pandoc ripgrep starship unrar python-localvenv-kernel jupyterlab jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext ruff cmake panel hvplot holoviews watchfiles param matplotlib numpy pandas "ibis-framework[duckdb,geospatial]" lonboard just tokei git-cliff
 
