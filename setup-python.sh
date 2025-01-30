@@ -468,7 +468,7 @@ download_dependencies() {
         mamba_install 7zip
     fi
 
-    # pip install jupyter_copilot
+    pip install jupyter_copilot
     pip install jupyterlab-quarto
     pip install jupyterlab-rainbow-brackets
     # pip install jupyterlab_rise
