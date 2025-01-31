@@ -12,15 +12,16 @@ import getpass
 
 
 def anonymize_username(content, username):
-    return content.replace(username, "USERNAME_PLACEHOLDER")
+    return content.replace(username, "XXXXXX")
 
 
 def main():
     username = getpass.getuser()
-    if not sys.stdin.isatty():
-        content = sys.stdin.read()
-    else:
-        content = pyperclip.paste()
+    content = pyperclip.paste()
 
     anonymized_content = anonymize_username(content, username)
     print(anonymized_content)
+
+
+if __name__ == "__main__":
+    main()
