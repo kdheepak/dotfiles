@@ -4,7 +4,7 @@ experimental = true
 [tools]
 "cargo:cargo-binstall" = "latest"
 "cargo:zellij" = "latest"
-neovim = "latest"
+neovim = "stable"
 "cargo:yazi-cli" = "latest"
 "cargo:git-trim" = "latest"
 "cargo:pastel" = "latest"
