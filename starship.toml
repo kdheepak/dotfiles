@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 # Sets user-defined palette
-palette = "rosepine"
+palette = "github"
 
 add_newline = true
 format = """
@@ -15,7 +15,7 @@ disabled = true
 
 [fill]
 symbol = "·"
-style = "fg:base0F"
+style = "fg:base0f"
 
 [username] # only shows if we are in ssh
 style_user = "fg:pink"
@@ -30,10 +30,10 @@ style = "fg:pink"
 format = "[@](base00)[$hostname]($style)"
 
 [directory]
-style = "bg:base0a fg:base00"
-format = "[ $path ]($style)[](fg:base0a bg:base00)"
-repo_root_style = "bold bg:base0a fg:base00"
-repo_root_format = "[ $before_root_path]($style)[$repo_root  ]($repo_root_style)[$path]($style)[$read_only]($read_only_style)[](fg:base0a bg:base00)"
+style = "bg:base0a fg:base01"
+format = "[ $path ]($style)[](fg:base0a bg:base01)"
+repo_root_style = "bold bg:base0a fg:base01"
+repo_root_format = "[ $before_root_path]($style)[$repo_root  ]($repo_root_style)[$path]($style)[$read_only]($read_only_style)[](fg:base0a bg:base01)"
 fish_style_pwd_dir_length = 1
 truncation_length = 1
 truncate_to_repo = false
@@ -327,7 +327,7 @@ base06 = "#ffffff"
 base07 = "#ffffff"
 base08 = "#ed6a43"
 base09 = "#0086b3"
-base0a = "#795da3"
+base0a = "#0969da"
 base0b = "#183691"
 base0c = "#183691"
 base0d = "#795da3"
