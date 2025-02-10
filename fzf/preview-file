@@ -11,7 +11,7 @@ fi
 
 case $(file --mime-type -b "${FILENAME}") in
   inode/directory)
-    exa --git -lFha --group-directories-first --no-user --color=always "${FILENAME}"
+    eza --git -lha --group-directories-first --no-user --color=always "${FILENAME}"
     ;;
 
   image/*g)
@@ -27,6 +27,6 @@ case $(file --mime-type -b "${FILENAME}") in
     ;;
 
   *)
-    bat --color=always --terminal-width ${FZF_PREVIEW_COLUMNS} --style "numbers,changes" ${FILENAME} 2> /dev/null
+    bat --color=always --terminal-width ${FZF_PREVIEW_COLUMNS} ${FILENAME} 2> /dev/null
     ;;
 esac
