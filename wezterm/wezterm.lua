@@ -65,16 +65,17 @@ local color = {
   crust = "#11111b",
 }
 
-config.color_scheme = "rose-pine"
-config.colors = {
-  selection_fg = color.text,
-  selection_bg = color.surface2,
-  compose_cursor = color.flamingo,
-  scrollbar_thumb = color.surface2,
-  cursor_fg = color.black,
-  cursor_bg = color.red,
-  cursor_border = color.rosewater,
-}
+config.color_scheme = "Github (base16)"
+-- config.colors = {
+--   selection_fg = color.text,
+--   selection_bg = color.surface2,
+--   compose_cursor = color.flamingo,
+--   scrollbar_thumb = color.surface2,
+--   cursor_fg = color.black,
+--   cursor_bg = color.red,
+--   cursor_border = color.rosewater,
+-- }
+
 config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
 config.window_close_confirmation = "NeverPrompt"
