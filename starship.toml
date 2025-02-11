@@ -175,6 +175,7 @@ format = " [$output ]($style)$symbol"
 style = "bold red"
 
 [cmd_duration]
+style = "fg:baseff"
 format = " [$duration ]($style)"
 
 # palette tables should be last in the config ⚓️
