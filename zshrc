@@ -188,20 +188,20 @@ zinit light 3v1n0/zsh-bash-completions-fallback
 zinit lucid atload"zicompinit; zicdreplay" blockf for \
     zsh-users/zsh-completions
 
-zinit load Aloxaf/fzf-tab
-
 zinit load wfxr/forgit
 
-zstyle ':fzf-tab:*' fzf-bindings 'ctrl-space:toggle+down' 'ctrl-y:yank'
-zstyle ':completion:complete:*:options' sort false
-zstyle ":completion:*:git-checkout:*" sort false
-zstyle ':fzf-tab:*' single-group ''
-zstyle ':fzf-tab:complete:_zlua:*' query-string input
-zstyle ':completion:*:descriptions' format ' %d'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:*' switch-group ',' '.'
+zinit load Aloxaf/fzf-tab
 
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:complete:*:options' sort false
 zstyle ':completion:*' special-dirs true
+
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-space:toggle+down' 'ctrl-y:yank'
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # setup file preview - keep adding commands we might need preview for
 local PREVIEW_SNIPPET='$HOME/gitrepos/dotfiles/fzf/preview-file $realpath'
@@ -225,7 +225,7 @@ zstyle ':fzf-tab:complete:rm:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:cp:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:mv:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:rsync:*' fzf-preview $PREVIEW_SNIPPET
-
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --oneline --decorate --graph --color=always $word'
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
