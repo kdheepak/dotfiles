@@ -226,6 +226,7 @@ zstyle ':fzf-tab:complete:cp:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:mv:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:rsync:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:_zlua:*' query-string input
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --oneline --decorate --graph --color=always $word'
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
@@ -240,7 +241,6 @@ zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
 	*) git log --oneline --decorate --graph --color=always $word ;;
 	esac'
 
-zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
 # Preview variables
 # TODO: Only works with exported values as this is executed in a subshell. Is
