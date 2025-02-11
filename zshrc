@@ -213,7 +213,7 @@ zstyle ':fzf-tab:complete:ls:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:cd:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:z:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:zd:*' fzf-preview $PREVIEW_SNIPPET
-zstyle ':fzf-tab:complete:eza:*' fzf-preview $PREVIEW_SNIPPET
+zstyle ':fzf-tab:complete:exa:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:v:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:nvim:*' fzf-preview $PREVIEW_SNIPPET
 zstyle ':fzf-tab:complete:vim:*' fzf-preview $PREVIEW_SNIPPET
