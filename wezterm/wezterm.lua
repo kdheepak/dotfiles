@@ -66,15 +66,64 @@ local color = {
 }
 
 config.color_scheme = "Github (base16)"
--- config.colors = {
---   selection_fg = color.text,
---   selection_bg = color.surface2,
---   compose_cursor = color.flamingo,
---   scrollbar_thumb = color.surface2,
---   cursor_fg = color.black,
---   cursor_bg = color.red,
---   cursor_border = color.rosewater,
--- }
+
+local basename = function(s)
+  return string.gsub(s, "(.*[/\\])(.*)", "%2")
+end
+
+local tab_title = function(tab_info)
+  local active_pane = tab_info.active_pane
+  local current_dir = basename(tostring(active_pane.current_working_dir))
+
+  local active_procces = active_pane.foreground_process_name
+  local tab_title = string.lower(active_pane.title)
+  local tab_index = tostring(tab_info.tab_index + 1)
+  local icon = wezterm.nerdfonts.cod_terminal
+  local text_color = "#f5f5f5"
+
+  if string.find(tab_title, "nvim") then
+    icon = wezterm.nerdfonts.custom_neovim
+    text_color = "#f5f5f5"
+  elseif string.find(tab_title, "lazygit") then
+    icon = wezterm.nerdfonts.fa_git
+    text_color = "#f5f5f5"
+  elseif string.find(active_procces, "node") then
+    icon = wezterm.nerdfonts.dev_nodejs_small
+    text_color = "#f5f5f5"
+  elseif string.find(active_procces, "net") then
+    icon = wezterm.nerdfonts.md_dot_net
+    text_color = "#f5f5f5"
+  end
+
+  if tab_index and #tab_index > 0 then
+    return " " .. tab_index .. ": " .. current_dir .. " " .. icon .. " ", text_color
+  end
+
+  return tab_info.active_pane.title
+end
+
+wezterm.on("format-tab-title", function(tab, _, _, _, _, max_width)
+  local background = "#5c6d74"
+  local edge_background = "none"
+  if tab.is_active then
+    background = "#0969da"
+  end
+  local edge_foreground = background
+  local title, text_color = tab_title(tab)
+  if tab.is_active then
+    return {
+      { Background = { Color = "#0969da" } },
+      { Foreground = { Color = text_color } },
+      { Text = title },
+    }
+  else
+    return {
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = title },
+    }
+  end
+end)
 
 config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
