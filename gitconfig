@@ -6,11 +6,12 @@
     signingkey = CE546F92D6E3ABB9
 
 [help]
-    autocorrect = 2
+    autocorrect = prompt
 
 [push]
     default = simple
     autoSetupRemote = true
+    followTags = true
 [merge]
     tool = vimdiff
     # Include summaries of merged commits in newly created merge commit messages
@@ -27,6 +28,9 @@
     algorithm = patience
     # Detect copies as well as renames
     renames = copies
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
 
 [pretty]
     lg = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an%C(reset)%C(yellow)%d%C(reset)
@@ -226,8 +230,9 @@
 [pull]
     rebase = true
 [rebase]
-    autostash = true
-    autosquash = true
+        autoSquash = true
+        autoStash = true
+        updateRefs = true
 [core]
     pager = delta
 [include]
@@ -244,6 +249,8 @@
 
 [fetch]
     prune = true
+    pruneTags = true
+    all = true
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -254,3 +261,12 @@
     ignoreRevsFile = .git-blame-ignore-revs
     markIgnoredLines = true
     markUnblamableLines = true
+
+# clearly makes git better
+
+[column]
+        ui = auto
+[branch]
+        sort = -committerdate
+[tag]
+        sort = version:refname
