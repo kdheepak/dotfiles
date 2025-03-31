@@ -22,7 +22,6 @@
 [mergetool "vimdiff"]
     cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     trustExitCode = true
-
 [diff]
     tool = vimdiff
     algorithm = patience
@@ -227,9 +226,9 @@
 [pull]
     rebase = true
 [rebase]
-        autoSquash = true
-        autoStash = true
-        updateRefs = true
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
 [core]
     pager = delta
 [include]
