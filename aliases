@@ -286,6 +286,15 @@ alias gst='git status -s'
 
 alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
 
+cd-box() {
+    local box_dir="$HOME/Library/CloudStorage/Box-Box"
+    local dir
+    dir=$(find "$box_dir" -mindepth 1 -maxdepth 1 -type d | fzf --prompt="> " --preview 'eza --tree --color=always --level=2 {}')
+    if [[ -n $dir ]]; then
+        cd "$dir"
+    fi
+}
+
 function archive-folder() {
 
     # Show help message if no arguments or '-h' is passed
