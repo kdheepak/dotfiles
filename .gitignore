@@ -78,3 +78,7 @@ Backup of *.doc*
 
 # Visio autosave temporary files
 *.~vsd*
+
+.claude/*
+CLAUDE.local.md
+CLAUDE.md
