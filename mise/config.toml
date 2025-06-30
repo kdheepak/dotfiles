@@ -5,6 +5,8 @@
 experimental = true
 pipx_uvx = true
 python.uv_venv_auto = true
+python.compile = false
+idiomatic_version_file_enable_tools = ["python"]
 
 [tools]
 rust = "latest"
@@ -18,6 +20,7 @@ fd = "latest"               # Better find
 sd = "latest"               # Better sed
 tmux = "latest"
 jq = "latest"
+yq = "latest"
 dust = "latest"             # Better du
 uv = "latest"
 jujutsu = "latest"
@@ -26,6 +29,26 @@ shfmt = "latest"
 starship = "latest"
 tree-sitter = "latest"
 nim = "latest"
+zellij = "latest"
+glow = "latest"
+hexyl = "latest"
+usage = "latest"
+watchexec = "latest"
+python = "latest"
+
+stylua = "2"
+lua-language-server = "2"
+
+node = "22"
+pnpm = "latest"
+bun = "latest"
+"npm:markdownlint-cli" = "latest"
+"npm:prettier" = "3"
+
+yamllint = "1.35"
+typos = "latest"
+
+"pipx:toml-sort" = "latest"
 
 github-cli = "latest"
 lazygit = "latest"
@@ -34,7 +57,6 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:git-trim" = "latest"
 
 "cargo:cargo-binstall" = "latest"
-"cargo:zellij" = "latest"
 "cargo:pastel" = "latest"
 "cargo:eza" = "latest"
 "cargo:license-generator" = "latest"
@@ -57,4 +79,5 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:zoxide" = "latest"   # Smart cd (z command)
 "cargo:xh" = "latest"       # Better curl/httpie
 "cargo:ouch" = "latest"
+"cargo:git-cliff" = "latest"
 
