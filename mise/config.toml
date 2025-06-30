@@ -1,93 +1,84 @@
 # [env]
-# _.python.venv = { path = ".venv", create = true }
+# _.python.venv = { path = ".venv", create = true }  # Commented out: Would create Python virtual environment in .venv directory
 
 [settings]
-experimental = true
-pipx_uvx = true
-python.uv_venv_auto = true
-python.compile = false
-idiomatic_version_file_enable_tools = ["python"]
-disable_backends = ["asdf"]
+experimental = true                                  # Enable experimental features in mise
+pipx_uvx = true                                     # Enable pipx and uvx integration for Python package management
+python.uv_venv_auto = true                          # Automatically create Python virtual environments using uv
+python.compile = false                              # Disable Python bytecode compilation for faster startup
+idiomatic_version_file_enable_tools = ["python"]   # Enable version file detection for Python projects
+disable_backends = ["asdf"]                         # Disable asdf backend (using mise instead)
 
 [tools]
-rust = "latest"
-go = "latest"
-neovim = "stable"
-direnv = "latest"
-fzf = "latest"
-bat = "latest"              # Better cat with syntax highlighting
-ripgrep = "latest"          # Better grep (rg command)
-fd = "latest"               # Better find
-sd = "latest"               # Better sed
-tmux = "latest"
-jq = "latest"
-yq = "latest"
-dust = "latest"             # Better du
-uv = "latest"
-jujutsu = "latest"
-shellcheck = "latest"
-shfmt = "latest"
-starship = "latest"
-tree-sitter = "latest"
-nim = "latest"
-zellij = "latest"
-glow = "latest"
-hexyl = "latest"
-usage = "latest"
-watchexec = "latest"
-python = "latest"
-gum = "latest"
-
-stylua = "2"
-lua-language-server = "2"
-
-bun = "latest"
-"npm:markdownlint-cli" = "latest"
-"npm:prettier" = "3"
-
-yamllint = "1.35"
-typos = "latest"
-
-"aqua:curlie" = "latest"
-
-"pipx:toml-sort" = "latest"
-"pipx:pre-commit" = "latest"
-"pipx:black" = "latest"
-"pipx:cookiecutter" = "latest"
-"pipx:httpie" = "latest"
-"pipx:llm" = "latest"
-"pipx:ruff" = "latest"
-
-github-cli = "latest"
-lazygit = "latest"
-difftastic = "latest"
-delta = "latest"            # Better git diffs (complements difftastic)
-"cargo:git-trim" = "latest"
-
-"cargo:cargo-binstall" = "latest"
-"cargo:bottom" = "latest"   # Better top/htop
-"cargo:broot" = "latest"
-"cargo:dua-cli" = "latest"
-"cargo:eza" = "latest"
-"cargo:fx" = "latest" # Interactive JSON tool
-"cargo:git-cliff" = "latest"
-"cargo:gitui" = "latest"
-"cargo:hyperfine" = "latest"
-"cargo:jless" = "latest"
-"cargo:just" = "latest"     # Command runner (Makefile alternative)
-"cargo:license-generator" = "latest"
-"cargo:onefetch" = "latest"
-"cargo:ouch" = "latest"
-"cargo:pastel" = "latest"
-"cargo:procs" = "latest"    # Better ps
-"cargo:rust-script" = "latest"
-"cargo:scriptisto" = "latest"
-"cargo:serie" = "latest"
-"cargo:tealdeer" = "latest"
-"cargo:tokei" = "latest"    # Code statistics
-"cargo:typstyle" = "latest"
-"cargo:xh" = "latest"       # Better curl/httpie
-"cargo:yazi-fm" = "latest"
-"cargo:zoxide" = "latest"   # Smart cd (z command)
-
-
+rust = "latest"                                     # Rust programming language compiler and toolchain
+go = "latest"                                       # Go programming language compiler
+neovim = "stable"                                   # Modern Vim-based text editor
+direnv = "latest"                                   # Environment variable management per directory
+fzf = "latest"                                      # Fuzzy finder for command line
+bat = "latest"                                      # Better cat with syntax highlighting
+ripgrep = "latest"                                  # Better grep (rg command)
+fd = "latest"                                       # Better find
+sd = "latest"                                       # Better sed
+tmux = "latest"                                     # Terminal multiplexer for session management
+jq = "latest"                                       # JSON processor and query tool
+yq = "latest"                                       # YAML processor (like jq for YAML)
+dust = "latest"                                     # Better du - disk usage analyzer
+uv = "latest"                                       # Fast Python package installer and resolver
+jujutsu = "latest"                                  # Git-compatible VCS with advanced features
+shellcheck = "latest"                               # Shell script static analysis tool
+shfmt = "latest"                                    # Shell script formatter
+starship = "latest"                                 # Cross-shell prompt customization
+tree-sitter = "latest"                             # Parsing library for syntax highlighting
+nim = "latest"                                      # Nim programming language compiler
+zellij = "latest"                                   # Terminal workspace manager (tmux alternative)
+glow = "latest"                                     # Markdown renderer for terminal
+hexyl = "latest"                                    # Command-line hex viewer
+usage = "latest"                                    # Tool for generating CLI usage documentation
+watchexec = "latest"                                # File watcher that executes commands on changes
+python = "latest"                                   # Python programming language interpreter
+gum = "latest"                                      # Tool for glamorous shell scripts and TUI components
+stylua = "2"                                        # Lua code formatter (version 2)
+lua-language-server = "2"                          # Lua language server for IDE features (version 2)
+bun = "latest"                                      # Fast JavaScript runtime and package manager
+"npm:markdownlint-cli" = "latest"                   # Markdown linting tool via npm
+"npm:prettier" = "3"                                # Code formatter via npm (version 3)
+yamllint = "1.35"                                   # YAML linting tool (version 1.35)
+typos = "latest"                                    # Source code spell checker
+"aqua:curlie" = "latest"                            # curl-like HTTP client via aqua package manager
+"aqua:fx" = "latest"                                # Interactive JSON tool via aqua package manager
+"pipx:toml-sort" = "latest"                         # TOML file sorter via pipx
+"pipx:pre-commit" = "latest"                        # Git pre-commit hook framework via pipx
+"pipx:black" = "latest"                             # Python code formatter via pipx
+"pipx:cookiecutter" = "latest"                      # Project template tool via pipx
+"pipx:httpie" = "latest"                            # HTTP client for APIs via pipx
+"pipx:llm" = "latest"                               # Large Language Model CLI tool via pipx
+"pipx:ruff" = "latest"                              # Fast Python linter and formatter via pipx
+github-cli = "latest"                               # GitHub command line interface
+lazygit = "latest"                                  # Terminal UI for Git commands
+difftastic = "latest"                               # Structural diff tool for code
+delta = "latest"                                    # Better git diffs (complements difftastic)
+"cargo:git-trim" = "latest"                         # Git branch cleanup tool via cargo
+"cargo:cargo-binstall" = "latest"                   # Binary installation for cargo packages
+"cargo:bottom" = "latest"                           # Better top/htop system monitor via cargo
+"cargo:broot" = "latest"                            # Tree-view file manager via cargo
+"cargo:dua-cli" = "latest"                          # Disk usage analyzer via cargo
+"cargo:eza" = "latest"                              # Better ls command via cargo
+"cargo:git-cliff" = "latest"                        # Changelog generator from git history via cargo
+"cargo:gitui" = "latest"                            # Terminal UI for Git via cargo
+"cargo:hyperfine" = "latest"                        # Command-line benchmarking tool via cargo
+"cargo:jless" = "latest"                            # JSON viewer for terminal via cargo
+"cargo:just" = "latest"                             # Command runner (Makefile alternative) via cargo
+"cargo:license-generator" = "latest"                # Software license generator via cargo
+"cargo:onefetch" = "latest"                         # Git repository information display via cargo
+"cargo:ouch" = "latest"                             # Archive extraction tool via cargo
+"cargo:pastel" = "latest"                           # Color manipulation and palette tool via cargo
+"cargo:procs" = "latest"                            # Better ps process viewer via cargo
+"cargo:rust-script" = "latest"                      # Run Rust files as scripts via cargo
+"cargo:scriptisto" = "latest"                       # Language-agnostic script runner via cargo
+"cargo:serie" = "latest"                            # Rich git repository analytics via cargo
+"cargo:tealdeer" = "latest"                         # Fast tldr pages implementation via cargo
+"cargo:tokei" = "latest"                            # Code statistics and line counting via cargo
+"cargo:typstyle" = "latest"                         # Typst markup language formatter via cargo
+"cargo:xh" = "latest"                               # Better curl/httpie HTTP client via cargo
+"cargo:yazi-fm" = "latest"                          # Terminal file manager via cargo
+"cargo:zoxide" = "latest"                           # Smart cd command (z command) via cargo
