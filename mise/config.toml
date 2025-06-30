@@ -2,11 +2,11 @@
 # _.python.venv = { path = ".venv", create = true }  # Commented out: Would create Python virtual environment in .venv directory
 
 [settings]
-experimental = true                                  # Enable experimental features in mise
+experimental = true                                 # Enable experimental features in mise
 pipx_uvx = true                                     # Enable pipx and uvx integration for Python package management
 python.uv_venv_auto = true                          # Automatically create Python virtual environments using uv
 python.compile = false                              # Disable Python bytecode compilation for faster startup
-idiomatic_version_file_enable_tools = ["python"]   # Enable version file detection for Python projects
+idiomatic_version_file_enable_tools = ["python"]    # Enable version file detection for Python projects
 disable_backends = ["asdf"]                         # Disable asdf backend (using mise instead)
 
 [tools]
@@ -28,7 +28,7 @@ jujutsu = "latest"                                  # Git-compatible VCS with ad
 shellcheck = "latest"                               # Shell script static analysis tool
 shfmt = "latest"                                    # Shell script formatter
 starship = "latest"                                 # Cross-shell prompt customization
-tree-sitter = "latest"                             # Parsing library for syntax highlighting
+tree-sitter = "latest"                              # Parsing library for syntax highlighting
 nim = "latest"                                      # Nim programming language compiler
 zellij = "latest"                                   # Terminal workspace manager (tmux alternative)
 glow = "latest"                                     # Markdown renderer for terminal
@@ -37,15 +37,18 @@ usage = "latest"                                    # Tool for generating CLI us
 watchexec = "latest"                                # File watcher that executes commands on changes
 python = "latest"                                   # Python programming language interpreter
 gum = "latest"                                      # Tool for glamorous shell scripts and TUI components
+
 stylua = "2"                                        # Lua code formatter (version 2)
-lua-language-server = "2"                          # Lua language server for IDE features (version 2)
+lua-language-server = "2"                           # Lua language server for IDE features (version 2)
 bun = "latest"                                      # Fast JavaScript runtime and package manager
 "npm:markdownlint-cli" = "latest"                   # Markdown linting tool via npm
 "npm:prettier" = "3"                                # Code formatter via npm (version 3)
 yamllint = "1.35"                                   # YAML linting tool (version 1.35)
 typos = "latest"                                    # Source code spell checker
+
 "aqua:curlie" = "latest"                            # curl-like HTTP client via aqua package manager
 "aqua:fx" = "latest"                                # Interactive JSON tool via aqua package manager
+
 "pipx:toml-sort" = "latest"                         # TOML file sorter via pipx
 "pipx:pre-commit" = "latest"                        # Git pre-commit hook framework via pipx
 "pipx:black" = "latest"                             # Python code formatter via pipx
@@ -53,10 +56,12 @@ typos = "latest"                                    # Source code spell checker
 "pipx:httpie" = "latest"                            # HTTP client for APIs via pipx
 "pipx:llm" = "latest"                               # Large Language Model CLI tool via pipx
 "pipx:ruff" = "latest"                              # Fast Python linter and formatter via pipx
+
 github-cli = "latest"                               # GitHub command line interface
 lazygit = "latest"                                  # Terminal UI for Git commands
 difftastic = "latest"                               # Structural diff tool for code
 delta = "latest"                                    # Better git diffs (complements difftastic)
+
 "cargo:git-trim" = "latest"                         # Git branch cleanup tool via cargo
 "cargo:cargo-binstall" = "latest"                   # Binary installation for cargo packages
 "cargo:bottom" = "latest"                           # Better top/htop system monitor via cargo
