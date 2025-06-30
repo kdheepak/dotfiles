@@ -1,7 +1,13 @@
+# [env]
+# _.python.venv = { path = ".venv", create = true }
+
 [settings]
 experimental = true
+pipx_uvx = true
+python.uv_venv_auto = true
 
 [tools]
+rust = "latest"
 go = "latest"
 neovim = "stable"
 direnv = "latest"
@@ -13,6 +19,7 @@ sd = "latest"               # Better sed
 tmux = "latest"
 jq = "latest"
 dust = "latest"             # Better du
+uv = "latest"
 
 github-cli = "latest"
 lazygit = "latest"
@@ -44,3 +51,4 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:jless" = "latest"    # JSON viewer
 "cargo:zoxide" = "latest"   # Smart cd (z command)
 "cargo:xh" = "latest"       # Better curl/httpie
+
