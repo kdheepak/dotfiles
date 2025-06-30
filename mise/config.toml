@@ -24,6 +24,8 @@ bun = "latest"                                      # Fast JavaScript runtime an
 "pipx:httpie" = "latest"                            # HTTP client for APIs
 "pipx:llm" = "latest"                               # Large Language Model CLI tool
 "pipx:ruff" = "latest"                              # Fast Python linter and formatter
+"pipx:pptx2md" = "latest"                           # Convert powerpoint to markdown
+"pipx:bump2version" = "latest"                      # Bump version
 uv = "latest"                                       # Fast Python package installer and resolver
 
 # --- Node.js Ecosystem Tools (via npm) ---
@@ -101,7 +103,6 @@ jless = "latest"            # JSON viewer for terminal - cargo:jless
 "cargo:scriptisto" = "latest"           # Language-agnostic script runner
 "cargo:tealdeer" = "latest"             # Fast tldr pages implementation
 tree-sitter = "latest"                  # Parsing library for syntax highlighting
-"pipx:pptx2md" = "latest"               # Convert powerpoint to markdown
 
 # --- Containerization ---
 podman = "latest"
