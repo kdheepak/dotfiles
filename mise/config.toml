@@ -25,6 +25,7 @@ shellcheck = "latest"
 shfmt = "latest"
 starship = "latest"
 tree-sitter = "latest"
+nim = "latest"
 
 github-cli = "latest"
 lazygit = "latest"
