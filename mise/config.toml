@@ -89,18 +89,19 @@ jless = "latest"            # JSON viewer for terminal - cargo:jless
 "cargo:xh" = "latest"       # Better curl/httpie HTTP client (via cargo)
 
 # --- Utilities ---
-"cargo:cargo-binstall" = "latest" # Binary installation for cargo packages
-"cargo:bottom" = "latest"         # Better top/htop system monitor
-"cargo:hyperfine" = "latest"      # Command-line benchmarking tool
-"cargo:just" = "latest"           # Command runner (Makefile alternative)
-"cargo:license-generator" = "latest" # Software license generator
-"cargo:ouch" = "latest"           # Archive extraction tool
-"cargo:pastel" = "latest"         # Color manipulation and palette tool
-"cargo:procs" = "latest"          # Better ps process viewer
-"cargo:rust-script" = "latest"    # Run Rust files as scripts
-"cargo:scriptisto" = "latest"     # Language-agnostic script runner
-"cargo:tealdeer" = "latest"       # Fast tldr pages implementation
-tree-sitter = "latest"            # Parsing library for syntax highlighting
+"cargo:cargo-binstall" = "latest"       # Binary installation for cargo packages
+"cargo:bottom" = "latest"               # Better top/htop system monitor
+"cargo:hyperfine" = "latest"            # Command-line benchmarking tool
+"cargo:just" = "latest"                 # Command runner (Makefile alternative)
+"cargo:license-generator" = "latest"    # Software license generator
+"cargo:ouch" = "latest"                 # Archive extraction tool
+"cargo:pastel" = "latest"               # Color manipulation and palette tool
+"cargo:procs" = "latest"                # Better ps process viewer
+"cargo:rust-script" = "latest"          # Run Rust files as scripts
+"cargo:scriptisto" = "latest"           # Language-agnostic script runner
+"cargo:tealdeer" = "latest"             # Fast tldr pages implementation
+tree-sitter = "latest"                  # Parsing library for syntax highlighting
+"pipx:pptx2md" = "latest"               # Convert powerpoint to markdown
 
 # --- Containerization ---
 podman = "latest"
