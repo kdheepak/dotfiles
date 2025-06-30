@@ -54,6 +54,7 @@ typos = "latest"
 "pipx:cookiecutter" = "latest"
 "pipx:httpie" = "latest"
 "pipx:llm" = "latest"
+"pipx:ruff" = "latest"
 
 github-cli = "latest"
 lazygit = "latest"
