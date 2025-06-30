@@ -7,6 +7,7 @@ pipx_uvx = true
 python.uv_venv_auto = true
 python.compile = false
 idiomatic_version_file_enable_tools = ["python"]
+disable_backends = ["asdf"]
 
 [tools]
 rust = "latest"
@@ -35,7 +36,6 @@ hexyl = "latest"
 usage = "latest"
 watchexec = "latest"
 python = "latest"
-eza = "latest"
 
 stylua = "2"
 lua-language-server = "2"
