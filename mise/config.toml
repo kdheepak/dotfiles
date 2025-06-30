@@ -2,24 +2,45 @@
 experimental = true
 
 [tools]
+go = "latest"
+neovim = "stable"
+direnv = "latest"
+fzf = "latest"
+bat = "latest"              # Better cat with syntax highlighting
+ripgrep = "latest"          # Better grep (rg command)
+fd = "latest"               # Better find
+sd = "latest"               # Better sed
+tmux = "latest"
+jq = "latest"
+dust = "latest"             # Better du
+
+github-cli = "latest"
+lazygit = "latest"
+difftastic = "latest"
+delta = "latest"            # Better git diffs (complements difftastic)
+"cargo:git-trim" = "latest"
+
 "cargo:cargo-binstall" = "latest"
 "cargo:zellij" = "latest"
-neovim = "stable"
-"cargo:yazi-cli" = "latest"
-"cargo:git-trim" = "latest"
 "cargo:pastel" = "latest"
 "cargo:eza" = "latest"
 "cargo:license-generator" = "latest"
-github-cli = "latest"
-lazygit = "latest"
 "cargo:rust-script" = "latest"
 "cargo:scriptisto" = "latest"
-tig = "latest"
-go = "latest"
-difftastic = "latest"
 "cargo:typstyle" = "latest"
 "cargo:serie" = "latest"
-tmux = "latest"
 "cargo:yazi-fm" = "latest"
 "cargo:starship" = "latest"
-direnv = "latest"
+"cargo:tokei" = "latest"    # Code statistics
+"cargo:hyperfine" = "latest" # Benchmarking tool
+"cargo:just" = "latest"     # Command runner (Makefile alternative)
+"cargo:bottom" = "latest"   # Better top/htop
+"cargo:procs" = "latest"    # Better ps
+"cargo:tealdeer" = "latest"
+"cargo:gitui" = "latest"
+"cargo:dua-cli" = "latest"
+"cargo:hexyl" = "latest"
+"cargo:fx" = "latest" # Interactive JSON tool
+"cargo:jless" = "latest"    # JSON viewer
+"cargo:zoxide" = "latest"   # Smart cd (z command)
+"cargo:xh" = "latest"       # Better curl/httpie
