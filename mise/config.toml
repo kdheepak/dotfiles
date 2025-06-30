@@ -73,7 +73,6 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:tealdeer" = "latest"
 "cargo:gitui" = "latest"
 "cargo:dua-cli" = "latest"
-"cargo:hexyl" = "latest"
 "cargo:fx" = "latest" # Interactive JSON tool
 "cargo:jless" = "latest"    # JSON viewer
 "cargo:zoxide" = "latest"   # Smart cd (z command)
