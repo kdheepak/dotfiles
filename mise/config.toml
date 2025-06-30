@@ -49,6 +49,11 @@ yamllint = "1.35"
 typos = "latest"
 
 "aqua:curlie" = "latest"
+"aqua:git-cliff" = "latest"
+"aqua:jless" = "latest"
+"aqua:hyperfine" = "latest"
+"aqua:gitui" = "latest"
+"aqua:fx" = "latest"
 
 "pipx:toml-sort" = "latest"
 "pipx:pre-commit" = "latest"
@@ -70,10 +75,6 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:dua-cli" = "latest"
 "cargo:eza" = "latest"
 "cargo:fx" = "latest" # Interactive JSON tool
-"cargo:git-cliff" = "latest"
-"cargo:gitui" = "latest"
-"cargo:hyperfine" = "latest" # Benchmarking tool
-"cargo:jless" = "latest"    # JSON viewer
 "cargo:just" = "latest"     # Command runner (Makefile alternative)
 "cargo:license-generator" = "latest"
 "cargo:ouch" = "latest"
