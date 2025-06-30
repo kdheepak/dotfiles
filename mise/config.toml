@@ -37,6 +37,7 @@ usage = "latest"
 watchexec = "latest"
 python = "latest"
 nvm = "latest"
+gum = "latest"
 
 stylua = "2"
 lua-language-server = "2"
