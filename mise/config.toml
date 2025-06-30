@@ -35,6 +35,7 @@ hexyl = "latest"
 usage = "latest"
 watchexec = "latest"
 python = "latest"
+eza = "latest"
 
 stylua = "2"
 lua-language-server = "2"
