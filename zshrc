@@ -161,9 +161,9 @@ zinit load zdharma-continuum/zsh-diff-so-fancy
 
 zinit load "b4b4r07/emoji-cli"
 
-export NVM_SYMLINK_CURRENT=true
-export NVM_AUTO_USE=true
-zinit light lukechilds/zsh-nvm
+# export NVM_SYMLINK_CURRENT=true
+# export NVM_AUTO_USE=true
+# zinit light lukechilds/zsh-nvm
 
 # zinit ice pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 # zinit snippet OMZ::plugins/git/git.plugin.zsh
@@ -314,9 +314,9 @@ export PATH
 export PATH="$HOME/.local/bin/gams_49_6_1/gams49.6_osx_arm64:$PATH"
 # <<< gams initialize <<<
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"

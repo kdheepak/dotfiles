@@ -36,12 +36,11 @@ hexyl = "latest"
 usage = "latest"
 watchexec = "latest"
 python = "latest"
+nvm = "latest"
 
 stylua = "2"
 lua-language-server = "2"
 
-node = "22"
-pnpm = "latest"
 bun = "latest"
 "npm:markdownlint-cli" = "latest"
 "npm:prettier" = "3"
