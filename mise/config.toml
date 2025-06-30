@@ -36,7 +36,6 @@ hexyl = "latest"
 usage = "latest"
 watchexec = "latest"
 python = "latest"
-nvm = "latest"
 gum = "latest"
 
 stylua = "2"
@@ -81,4 +80,5 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:xh" = "latest"       # Better curl/httpie
 "cargo:ouch" = "latest"
 "cargo:git-cliff" = "latest"
+
 
