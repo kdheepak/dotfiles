@@ -35,15 +35,15 @@ neovim = "latest"                                   # Modern Vim-based text edit
 helix = "latest"
 
 # --- Shell and Productivity ---
-direnv = "latest"       # Environment variable management per directory
-fzf = "latest"          # Fuzzy finder for command line
-usage = "latest"        # Tool for generating CLI usage documentation
-watchexec = "latest"    # File watcher that executes commands on changes
-zoxide = "latest"       # Smart cd command (z command)
-gum = "latest"          # Tool for glamorous shell scripts and TUI components
-starship = "latest"     # Cross-shell prompt customization
-zellij = "latest"       # Terminal workspace manager (tmux alternative)
-atuin = "latest"        # Replaces shell history with a powerful, searchable database
+direnv = "latest"               # Environment variable management per directory
+fzf = "latest"                  # Fuzzy finder for command line
+usage = "latest"                # Tool for generating CLI usage documentation
+watchexec = "latest"            # File watcher that executes commands on changes
+zoxide = "latest"               # Smart cd command (z command)
+gum = "latest"                  # Tool for glamorous shell scripts and TUI components
+starship = "latest"             # Cross-shell prompt customization
+zellij = "latest"               # Terminal workspace manager (tmux alternative)
+"cargo:atuin" = "latest"        # Replaces shell history with a powerful, searchable database
 
 # --- File System and Navigation ---
 bat = "latest"              # Better cat with syntax highlighting
