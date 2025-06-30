@@ -20,6 +20,10 @@ tmux = "latest"
 jq = "latest"
 dust = "latest"             # Better du
 uv = "latest"
+jujutsu = "latest"
+shellcheck = "latest"
+shfmt = "latest"
+starship = "latest"
 
 github-cli = "latest"
 lazygit = "latest"
@@ -37,7 +41,6 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:typstyle" = "latest"
 "cargo:serie" = "latest"
 "cargo:yazi-fm" = "latest"
-"cargo:starship" = "latest"
 "cargo:tokei" = "latest"    # Code statistics
 "cargo:hyperfine" = "latest" # Benchmarking tool
 "cargo:just" = "latest"     # Command runner (Makefile alternative)
@@ -51,4 +54,5 @@ delta = "latest"            # Better git diffs (complements difftastic)
 "cargo:jless" = "latest"    # JSON viewer
 "cargo:zoxide" = "latest"   # Smart cd (z command)
 "cargo:xh" = "latest"       # Better curl/httpie
+"cargo:ouch" = "latest"
 
