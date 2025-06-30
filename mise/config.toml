@@ -48,6 +48,8 @@ bun = "latest"
 yamllint = "1.35"
 typos = "latest"
 
+"aqua:curlie" = "latest"
+
 "pipx:toml-sort" = "latest"
 "pipx:pre-commit" = "latest"
 "pipx:black" = "latest"
