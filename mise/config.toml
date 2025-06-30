@@ -49,6 +49,11 @@ yamllint = "1.35"
 typos = "latest"
 
 "pipx:toml-sort" = "latest"
+"pipx:pre-commit" = "latest"
+"pipx:black" = "latest"
+"pipx:cookiecutter" = "latest"
+"pipx:httpie" = "latest"
+"pipx:llm" = "latest"
 
 github-cli = "latest"
 lazygit = "latest"
