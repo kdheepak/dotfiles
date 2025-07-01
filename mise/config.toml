@@ -8,6 +8,7 @@ python.uv_venv_auto = true                          # Automatically create Pytho
 python.compile = false                              # always download precompiled binaries
 idiomatic_version_file_enable_tools = ["python"]    # Enable version file detection for Python projects
 disable_backends = ["asdf"]                         # Disable asdf backend (using mise instead)
+status.show_env = true
 
 [tools]
 # --- Languages and Runtimes ---
