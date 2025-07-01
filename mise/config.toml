@@ -29,6 +29,7 @@ bun = "latest"                                      # Fast JavaScript runtime an
 "pipx:bump2version" = "latest"                      # Bump version
 "pipx:ty" = "latest"                                # type checker
 uv = "latest"                                       # Fast Python package installer and resolver
+"cargo:uv-migrator" = "latest"                      # Move from setup.py, conda env etc to uv
 
 # --- Node.js Ecosystem Tools (via npm) ---
 "npm:markdownlint-cli" = "latest"                   # Markdown linting tool
@@ -48,6 +49,7 @@ gum = "latest"                  # Tool for glamorous shell scripts and TUI compo
 starship = "latest"             # Cross-shell prompt customization
 zellij = "latest"               # Terminal workspace manager (tmux alternative)
 "cargo:atuin" = "latest"        # Replaces shell history with a powerful, searchable database
+cosign = "latest"               # A tool for Container Signing, Verification and Storage
 
 # --- File System and Navigation ---
 bat = "latest"              # Better cat with syntax highlighting
@@ -56,21 +58,23 @@ fd = "latest"               # Better find
 sd = "latest"               # Better sed
 dust = "latest"             # Better du - disk usage analyzer
 "cargo:broot" = "latest"    # Tree-view file manager - cargo:broot
-"cargo:dua-cli" = "latest"  # Disk usage analyzer - cargo:dua-cli
 "cargo:yazi-fm" = "latest"  # Terminal file manager - cargo:yazi-fm
 "cargo:eza" = "latest"      # Better ls command (formerly exa) - cargo:eza
+dua = "latest"                  # A tool to learn about disk usage, fast!
+duf = "latest"                  # A disk utility
 
 # --- Git and Version Control ---
-github-cli = "latest"       # GitHub command line interface
-lazygit = "latest"          # Terminal UI for Git commands
-jujutsu = "latest"          # Git-compatible VCS with advanced features
-difftastic = "latest"       # Structural diff tool for code
-delta = "latest"            # Better git diffs (complements difftastic)
-"cargo:git-trim" = "latest" # Git branch cleanup tool
-"cargo:git-cliff" = "latest" # Changelog generator from git history
-"cargo:gitui" = "latest"    # Terminal UI for Git
-"cargo:onefetch" = "latest" # Git repository information display
-"cargo:serie" = "latest"    # Rich git repository analytics
+github-cli = "latest"                    # GitHub command line interface
+lazygit = "latest"                       # Terminal UI for Git commands
+jujutsu = "latest"                       # Git-compatible VCS with advanced features
+difftastic = "latest"                    # Structural diff tool for code
+delta = "latest"                         # Better git diffs (complements difftastic)
+"cargo:git-trim" = "latest"              # Git branch cleanup tool
+"cargo:git-cliff" = "latest"             # Changelog generator from git history
+"cargo:gitui" = "latest"                 # Terminal UI for Git
+"cargo:onefetch" = "latest"              # Git repository information display
+"cargo:serie" = "latest"                 # Rich git repository analytics
+"aqua:github/git-sizer" = "latest"       # Summary about git repo size
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"            # Shell script static analysis tool
@@ -93,10 +97,10 @@ jless = "latest"            # JSON viewer for terminal - cargo:jless
 "cargo:xh" = "latest"       # Better curl/httpie HTTP client (via cargo)
 
 # --- Utilities ---
+"just" = "latest"                       # Command runner (Makefile alternative)
 "cargo:cargo-binstall" = "latest"       # Binary installation for cargo packages
 "cargo:bottom" = "latest"               # Better top/htop system monitor
 "cargo:hyperfine" = "latest"            # Command-line benchmarking tool
-"cargo:just" = "latest"                 # Command runner (Makefile alternative)
 "cargo:license-generator" = "latest"    # Software license generator
 "cargo:ouch" = "latest"                 # Archive extraction tool
 "cargo:pastel" = "latest"               # Color manipulation and palette tool
