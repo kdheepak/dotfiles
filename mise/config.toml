@@ -114,3 +114,9 @@ lazydocker = "latest"
 # --- Database Management ---
 "cargo:sqlx-cli" = "latest"
 "pipx:harlequin" = "latest"
+
+[tasks]
+uv = "uv sync --group dev --all-extras"
+clean = ["rm -rf .venv", "rm -rf node_modules"]
+lint = "pre-commit run --all-files"
+
