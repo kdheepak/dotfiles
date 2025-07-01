@@ -1,0 +1,218 @@
+#!/usr/bin/env -S uv run --script
+#MISE description = "Run tests and post results to PR"
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "python-dateutil",
+#     "rich",
+# ]
+# ///
+import subprocess
+import os
+import shlex
+import re
+import time
+
+from rich.console import Console
+from rich.panel import Panel
+from rich.prompt import Prompt
+
+console = Console()
+
+
+def sanitize(text: str) -> str:
+    """Redact likely sensitive values from text output."""
+    username = (
+        os.getenv("USER")
+        or os.getenv("USERNAME")
+        or os.path.basename(os.path.expanduser("~"))
+    )
+    patterns = [
+        username,
+        os.path.expanduser("~"),
+        re.escape(os.path.expanduser("~")),
+        r"/Users/[^/]+",  # Mac home directory path
+        r"/home/[^/]+",  # Linux home directory path
+        r"C:\\Users\\[^\\]+",  # Windows home directory path
+    ]
+    for pattern in patterns:
+        text = re.sub(pattern, "[REDACTED]", text, flags=re.IGNORECASE)
+    return text
+
+
+def run_and_capture(command):
+    process = subprocess.Popen(
+        shlex.split(command),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        bufsize=1,
+        universal_newlines=True,  # For text output
+    )
+
+    output = ""
+    with console.status(f"[bold cyan]Running[/] `{command}`..."):
+        for line in process.stdout:
+            console.print(sanitize(line.rstrip()))
+            output += line
+        process.stdout.close()
+        process.wait()
+
+    process.stdout.close()
+    process.wait()
+
+    if process.returncode != 0:
+        raise RuntimeError(f"Command failed with exit code {process.returncode}")
+    return sanitize(output)
+
+
+def get_pr_number():
+    result = subprocess.run(
+        shlex.split("gh pr view --json number -q .number"),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if result.returncode != 0:
+        err = result.stderr.strip()
+        if 'branch "main"' in err:
+            raise RuntimeError(
+                "Unable to create a PR from `main`. Create a branch and try again."
+            )
+        console.print(
+            Panel(
+                f"❌ [bold red]Error:[/] Failed to get PR number: {err}", expand=False
+            )
+        )
+        if (
+            Prompt.ask(
+                "[yellow]No PR found. Would you like to create one now?",
+                choices=["y", "n"],
+                default="y",
+            )
+            == "y"
+        ):
+            result = subprocess.run(shlex.split("gh pr create --fill"))
+            if result.returncode != 0:
+                raise RuntimeError("Failed to create PR")
+
+            console.print("[green]PR created. Re-running to get PR number...[/]")
+            return get_pr_number()
+        else:
+            raise RuntimeError("No PR found and user chose not to create one.")
+
+    return result.stdout.strip()
+
+
+def post_comment(pr_number, body):
+    result = subprocess.run(
+        shlex.split(f"gh pr view {pr_number} --json url -q .url"),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    pr_url = result.stdout.strip()
+    if result.returncode != 0:
+        console.print(
+            Panel(
+                f"❌ [bold red]Error:[/] Failed to get PR URL: {result.stderr.strip()}",
+                expand=False,
+            )
+        )
+        return
+
+    if (
+        Prompt.ask(
+            f"[yellow]Do you want to post a comment on PR {pr_url}",
+            choices=["y", "n"],
+            default="y",
+        )
+        == "y"
+    ):
+        console.print(f"[green]Posting comment on PR #{pr_number}...[/]")
+        subprocess.run(
+            shlex.split(f"gh pr comment {pr_number} --body '{body}'"), check=True
+        )
+    else:
+        raise RuntimeError("User chose not to post a comment.")
+
+
+def check_pr_state(pr_number):
+    result = subprocess.run(
+        shlex.split(f"gh pr view {pr_number} --json state -q .state"),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"Failed to get PR state: {result.stderr.strip()}")
+
+    pr_state = result.stdout.strip()
+    if pr_state != "OPEN":
+        raise RuntimeError("PR is not open. Exiting.")
+
+    console.print(f"[green]PR #{pr_number} is open.[/]")
+
+
+def human_readable(seconds):
+    from dateutil.relativedelta import relativedelta
+
+    delta = relativedelta(seconds=seconds)
+    attrs = ["years", "months", "days", "hours", "minutes", "seconds", "microseconds"]
+    return ", ".join(
+        [
+            "%d %s"
+            % (getattr(delta, attr), attr if getattr(delta, attr) > 1 else attr[:-1])
+            for attr in attrs
+            if getattr(delta, attr)
+        ]
+    )
+
+
+def main():
+    console.rule("[bold blue]Test Check Automation[/]")
+
+    pr_number = get_pr_number()
+
+    check_pr_state(pr_number)
+
+    console.print("\n[bold yellow]Running tests...[/]")
+
+    start_time = time.time()
+    pytest_output = run_and_capture("pytest tests")
+    end_time = time.time()
+
+    time_to_run = human_readable(seconds=end_time - start_time)
+
+    console.print("\n")
+    console.rule("[bold blue]Posting Comment")
+    console.print("\n")
+
+    comment = f"""
+Test Results:
+
+```
+{pytest_output.strip()}
+```
+
+The tests took {time_to_run} to run.
+
+Version:
+
+```
+{version_output.strip()}
+```
+    """
+
+    post_comment(pr_number, comment)
+
+    console.print("\n")
+
+    console.print(Panel("✅ [bold green]Comment posted successfully.[/]", expand=False))
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        exception_name = type(e).__name__
+        console.print(Panel(f"❌ [bold red]{exception_name}:[/] {e}", expand=False))
