@@ -57,6 +57,7 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 BLINK=$(tput blink)
 
+declare -r REPO_ROOT=$(git rev-parse --show-toplevel)
 declare -r SCRIPT_VERSION='1.0.0'
 declare -r SCRIPT_NAME="./$(basename $0)"
 declare -r SCRIPT_PARENT_DIR="$(dirname $0)"
