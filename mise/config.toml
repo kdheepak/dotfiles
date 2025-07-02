@@ -1,5 +1,5 @@
 # [env]
-# _.python.venv = { path = ".venv", create = true }  # Commented out: Would create Python virtual environment in .venv directory
+# _.python.venv = { path = ".venv", create = true }  # Would create Python virtual environment in .venv directory
 
 [settings]
 experimental = true # Enable experimental features in mise
