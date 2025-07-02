@@ -85,6 +85,7 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "cargo:git-trim" = "latest"        # Git branch cleanup tool
 "cargo:git-cliff" = "latest"       # Changelog generator from git history
 "cargo:gitui" = "latest"           # Terminal UI for Git
+"cargo:gitu" = "latest"            # Magit inspired UI
 "cargo:onefetch" = "latest"        # Git repository information display
 "cargo:serie" = "latest"           # Rich git repository analytics
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
