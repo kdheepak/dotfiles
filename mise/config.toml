@@ -18,10 +18,10 @@ status.show_env = true
 "cargo:cargo-binstall" = "latest"           # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
-go = "latest"                           # Go programming language compiler
+# go = "latest"                           # Go programming language compiler
 python = "latest"                       # Python programming language interpreter
 bun = "latest"                          # Fast JavaScript runtime and package manager
-"asdf:mise-plugins/mise-nim" = "latest"
+# "asdf:mise-plugins/mise-nim" = "latest"
 "cargo:juliaup" = "latest"
 
 # --- Python Ecosystem Tools (via pipx) ---
