@@ -14,7 +14,6 @@ disable_backends = ["asdf"] # Disable asdf backend (using mise instead)
 status.show_env = true
 
 [tools]
-git = "latest"
 
 # --- Languages and Runtimes ---
 rust = "latest"   # Rust programming language compiler and toolchain
@@ -162,6 +161,7 @@ tree-sitter = "latest"               # Parsing library for syntax highlighting
 taplo = "latest"                     # TOML validator
 ninja = "latest"
 cmake = "3.29"
+"aqua:artempyanykh/marksman" = "latest"
 coreutils = "latest"
 hurl = "latest"
 "cargo:numbat-cli" = "latest"
