@@ -192,6 +192,70 @@ def install_git_from_installer(installer_path: Path, config_path: Path) -> int:
         return 1
 
 
+def get_git_install_location() -> Path | None:
+    """Get the Git installation directory"""
+    try:
+        # Try to find git.exe location
+        result = subprocess.run(
+            ["where", "git"], capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            git_path = Path(result.stdout.strip().split("\n")[0])
+            # Navigate up from git.exe to installation root
+            # Typical path: C:\Users\User\AppData\Local\Programs\Git\cmd\git.exe
+            install_dir = git_path.parent.parent
+            return install_dir
+    except Exception:
+        pass
+
+    # Fallback: check common installation directories
+    username = os.environ.get("USERNAME", os.environ.get("USER", "User"))
+    common_paths = [
+        Path(f"C:\\Users\\{username}\\AppData\\Local\\Programs\\Git"),
+        Path("C:\\Program Files\\Git"),
+        Path("C:\\Program Files (x86)\\Git"),
+    ]
+
+    for path in common_paths:
+        if path.exists() and (path / "bin" / "git.exe").exists():
+            return path
+
+    return None
+
+
+def get_current_git_version() -> str | None:
+    """Get the currently installed Git version"""
+    try:
+        result = subprocess.run(
+            ["git", "--version"], capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            # Extract version from "git version 2.50.0.windows.1"
+            version_line = result.stdout.strip()
+            version_match = version_line.split()
+            if len(version_match) >= 3:
+                return version_match[2].split(".windows")[0]
+    except Exception:
+        pass
+    return None
+
+
+def find_git_uninstaller() -> Path | None:
+    """Find the Git uninstaller executable"""
+    install_dir = get_git_install_location()
+    if not install_dir:
+        return None
+
+    # Look for uninstaller in installation directory
+    uninstaller_patterns = ["unins*.exe", "Uninstall*.exe"]
+
+    for pattern in uninstaller_patterns:
+        for uninstaller in install_dir.glob(pattern):
+            return uninstaller
+
+    return None
+
+
 @app.command()
 def download(
     version: str = typer.Option("2.50.0", "--version", help="Git version to download"),
@@ -392,6 +456,84 @@ def check():
     else:
         console.print("❌ Git is not installed", style="red")
         console.print(f"💡 Run '{SCRIPT_NAME} install' to install Git", style="blue")
+
+
+@app.command()
+def uninstall(
+    force: bool = typer.Option(False, "--force", help="Skip confirmation prompts"),
+    keep_config: bool = typer.Option(
+        False, "--keep-config", help="Keep Git configuration files"
+    ),
+):
+    """Uninstall Git for Windows"""
+
+    console.print(Panel.fit("🗑️ Git Uninstaller", style="bold red"))
+
+    # Check if Git is installed
+    if not check_git_installed():
+        console.print("❌ Git is not installed", style="red")
+        return
+
+    # Get current version for confirmation
+    current_version = get_current_git_version()
+    if current_version:
+        console.print(f"📦 Found Git version: [yellow]{current_version}[/yellow]")
+
+    # Find uninstaller
+    uninstaller = find_git_uninstaller()
+    if not uninstaller:
+        console.print("❌ Could not find Git uninstaller", style="red")
+        console.print("💡 Try manual uninstall through Windows Settings", style="blue")
+        raise typer.Exit(1)
+
+    console.print(f"🔍 Found uninstaller: [dim]{uninstaller}[/dim]")
+
+    # Confirmation
+    if not force:
+        if not Confirm.ask("Are you sure you want to uninstall Git?"):
+            console.print("Uninstall cancelled.", style="blue")
+            return
+
+    # Run uninstaller
+    console.print("🗑️ Uninstalling Git...", style="yellow")
+
+    try:
+        uninstall_args = [str(uninstaller), "/SILENT"]
+
+        # Add /NORESTART to prevent automatic restart
+        uninstall_args.append("/NORESTART")
+
+        with console.status("[yellow]Uninstalling Git..."):
+            result = subprocess.run(
+                uninstall_args,
+                check=False,
+                timeout=120,  # 2 minute timeout
+            )
+
+        if result.returncode == 0:
+            console.print("✅ Git uninstalled successfully!", style="green")
+
+            # Verify uninstallation
+            if not check_git_installed():
+                console.print("🎉 Verified: Git has been removed", style="green")
+            else:
+                console.print(
+                    "⚠️ Git command still available - restart may be required",
+                    style="yellow",
+                )
+
+        else:
+            console.print(
+                f"❌ Uninstall failed with exit code: {result.returncode}", style="red"
+            )
+            raise typer.Exit(1)
+
+    except subprocess.TimeoutExpired:
+        console.print("❌ Uninstall timed out", style="red")
+        raise typer.Exit(1)
+    except Exception as e:
+        console.print(f"❌ Uninstall failed: {e}", style="red")
+        raise typer.Exit(1)
 
 
 @app.command()
