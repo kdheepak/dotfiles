@@ -95,7 +95,9 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "npm:git-cz" = "latest"
 "cargo:git-absorb" = "latest"
 "pipx:git-revise" = "latest"
-tig = "latest"
+wait-for-gh-rate-limit = "latest"
+"ubi:houseabsolute/omegasort" = "latest"
+"ubi:houseabsolute/precious" = "latest"
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"          # Shell script static analysis tool
@@ -211,7 +213,6 @@ traefik = "latest"
 # --- Database Management ---
 "cargo:sqlx-cli" = "latest"
 "pipx:harlequin" = "latest"
-
 
 [tasks]
 uv = "uv sync --group dev --all-extras"
