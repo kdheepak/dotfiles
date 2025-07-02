@@ -61,11 +61,11 @@ watchexec = "latest"           # File watcher that executes commands on changes
 zoxide = "latest"              # Smart cd command (z command)
 gum = "latest"                 # Tool for glamorous shell scripts and TUI components
 starship = "latest"            # Cross-shell prompt customization
-zellij = "latest"              # Terminal workspace manager (tmux alternative)
+# zellij = "latest"              # Terminal workspace manager (tmux alternative)
 "cargo:atuin" = "latest"       # Replaces shell history with a powerful, searchable database
 cosign = "latest"              # A tool for Container Signing, Verification and Storage
 "pipx:bump2version" = "latest" # Bump version
-"aqua:wtfutil/wtf" = "latest"
+# "aqua:wtfutil/wtf" = "latest"
 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
@@ -76,7 +76,7 @@ sd = "latest"              # Better sed
 dust = "latest"            # Better du - disk usage analyzer
 "cargo:broot" = "latest"   # Tree-view file manager - cargo:broot
 "cargo:yazi-fm" = "latest" # Terminal file manager - cargo:yazi-fm
-"cargo:eza" = "latest"     # Better ls command (formerly exa) - cargo:eza
+# "cargo:eza" = "latest"     # Better ls command (formerly exa) - cargo:eza
 dua = "latest"             # A tool to learn about disk usage, fast!
 duf = "latest"             # A disk utility
 
@@ -89,9 +89,9 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "cargo:git-trim" = "latest"        # Git branch cleanup tool
 "cargo:git-cliff" = "latest"       # Changelog generator from git history
 "cargo:gitui" = "latest"           # Terminal UI for Git
-"cargo:gitu" = "latest"            # Magit inspired UI
+# "cargo:gitu" = "latest"            # Magit inspired UI
 "cargo:onefetch" = "latest"        # Git repository information display
-"cargo:serie" = "latest"           # Rich git repository analytics
+# "cargo:serie" = "latest"           # Rich git repository analytics
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
 "aqua:git-lfs/git-lfs" = "latest"
 "npm:git-cz" = "latest"
@@ -121,10 +121,10 @@ jq = "latest"            # JSON processor and query tool
 yq = "latest"            # YAML processor (like jq for YAML)
 glow = "latest"          # Markdown renderer for terminal
 hexyl = "latest"         # Command-line hex viewer
-jless = "latest"         # JSON viewer for terminal - cargo:jless
 "aqua:curlie" = "latest" # curl-like HTTP client (via Aqua)
 "aqua:fx" = "latest"     # Interactive JSON tool (via Aqua)
 "cargo:xh" = "latest"    # Better curl/httpie HTTP client (via cargo)
+"cargo:jless" = "latest"         # JSON viewer for terminal - cargo:jless
 
 # --- Utilities ---
 "just" = "latest"                          # Command runner (Makefile alternative)
@@ -156,7 +156,7 @@ tree-sitter = "latest"                     # Parsing library for syntax highligh
 "cargo:cargo-nextest" = "latest"
 "cargo:mergiraf" = "latest"
 "cargo:cargo-shear" = "latest"
-"cargo:cargo-show" = "latest"
+# "cargo:cargo-show" = "latest"
 "cargo:cross" = "latest"
 "cargo:flamegraph" = "latest"
 "cargo:wasm-tools" = "latest"
@@ -186,7 +186,7 @@ sops = "latest"
 "ubi:dathere/qsv" = "latest"
 # "ubi:barthr/redo" = "latest"
 "aqua:caarlos0/svu" = "latest"
-"aqua:yorukot/superfile" = "latest"
+# "aqua:yorukot/superfile" = "latest"
 "aqua:alexpasmantier/television" = "latest"
 "asdf:jimmidyson/asdf-upx" = "latest"
 
