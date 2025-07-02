@@ -203,7 +203,7 @@ pandoc = "latest"                       # Convert markdown to word, pdf etc
 "aqua:charmbracelet/mods" = "latest" # Large Language Model CLI tool
 "pipx:llm" = "latest"                # Large Language Model CLI tool
 "pipx:gitingest" = "latest"          # Turn any Git repository into a prompt-friendly text ingest for LLMs.
-# "npm:@anthropic-ai/claude-code" = "latest"
+"npm:@anthropic-ai/claude-code" = { version = "latest", os = ["macos"] }
 
 # --- Containerization ---
 podman = "latest"
