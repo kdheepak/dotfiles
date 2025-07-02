@@ -76,7 +76,7 @@ sd = "latest"              # Better sed
 dust = "latest"            # Better du - disk usage analyzer
 "cargo:broot" = "latest"   # Tree-view file manager - cargo:broot
 "cargo:yazi-fm" = "latest" # Terminal file manager - cargo:yazi-fm
-# "cargo:eza" = "latest"     # Better ls command (formerly exa) - cargo:eza
+"cargo:eza" = "latest"     # Better ls command (formerly exa) - cargo:eza
 dua = "latest"             # A tool to learn about disk usage, fast!
 duf = "latest"             # A disk utility
 
