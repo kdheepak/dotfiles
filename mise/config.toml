@@ -136,6 +136,7 @@ tree-sitter = "latest"               # Parsing library for syntax highlighting
 taplo = "latest"                     # TOML validator
 ninja = "latest"
 cmake = "3.29"
+coreutils = "latest"
 
 # --- Containerization ---
 podman = "latest"
