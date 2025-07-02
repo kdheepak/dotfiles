@@ -23,27 +23,27 @@ python = "latest" # Python programming language interpreter
 bun = "latest"    # Fast JavaScript runtime and package manager
 
 # --- Python Ecosystem Tools (via pipx) ---
-"pipx:pylint" = "latest"       # Linter
-"pipx:toml-sort" = "latest"    # TOML file sorter
-"pipx:pre-commit" = "latest"   # Git pre-commit hook framework
-"pipx:black" = "latest"        # Python code formatter
-"pipx:cookiecutter" = "latest" # Project template tool
-"pipx:httpie" = "latest"       # HTTP client for APIs
-"pipx:ruff" = "latest"         # Fast Python linter and formatter
-"pipx:ty" = "latest"           # type checker
-"pipx:mypy" = "latest"         # type checker
+"pipx:pylint" = "latest"                 # Linter
+"pipx:toml-sort" = "latest"              # TOML file sorter
+"pipx:pre-commit" = "latest"             # Git pre-commit hook framework
+"pipx:black" = "latest"                  # Python code formatter
+"pipx:cookiecutter" = "latest"           # Project template tool
+"pipx:httpie" = "latest"                 # HTTP client for APIs
+"pipx:ruff" = "latest"                   # Fast Python linter and formatter
+"pipx:ty" = "latest"                     # type checker
+"pipx:mypy" = "latest"                   # type checker
 "pipx:commitizen" = "latest"
 "pipx:json-schema-for-humans" = "latest"
-uv = "latest"                  # Fast Python package installer and resolver
-"cargo:uv-migrator" = "latest" # Move from setup.py, conda env etc to uv
+uv = "latest"                            # Fast Python package installer and resolver
+"cargo:uv-migrator" = "latest"           # Move from setup.py, conda env etc to uv
 
 "pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material" }
 
 # --- Node.js Ecosystem Tools (via npm) ---
-"npm:markdownlint-cli" = "latest" # Markdown linting tool
+"npm:markdownlint-cli" = "latest"  # Markdown linting tool
 "npm:markdownlint-cli2" = "latest"
-"npm:prettier" = "latest"         # Code formatter
-"npm:@anthropic-ai/claude-code" = "latest"
+"npm:prettier" = "latest"          # Code formatter
+"npm:strip-ansi-cli" = "4.0.0"
 
 # --- Editors ---
 neovim = "latest" # Modern Vim-based text editor
@@ -60,7 +60,6 @@ starship = "latest"            # Cross-shell prompt customization
 zellij = "latest"              # Terminal workspace manager (tmux alternative)
 "cargo:atuin" = "latest"       # Replaces shell history with a powerful, searchable database
 cosign = "latest"              # A tool for Container Signing, Verification and Storage
-pandoc = "latest"              # Convert markdown to word, pdf etc
 "pipx:bump2version" = "latest" # Bump version
 
 # --- File System and Navigation ---
@@ -116,20 +115,20 @@ jless = "latest"         # JSON viewer for terminal - cargo:jless
 "cargo:xh" = "latest"    # Better curl/httpie HTTP client (via cargo)
 
 # --- Utilities ---
-"just" = "latest"                       # Command runner (Makefile alternative)
-"cargo:cargo-binstall" = "latest"       # Binary installation for cargo packages
-"cargo:bottom" = "latest"               # Better top/htop system monitor
-"cargo:hyperfine" = "latest"            # Command-line benchmarking tool
-"cargo:license-generator" = "latest"    # Software license generator
-"cargo:ouch" = "latest"                 # Archive extraction tool
-"cargo:pastel" = "latest"               # Color manipulation and palette tool
-"cargo:procs" = "latest"                # Better ps process viewer
-"cargo:rust-script" = "latest"          # Run Rust files as scripts
-"cargo:scriptisto" = "latest"           # Language-agnostic script runner
-"cargo:tealdeer" = "latest"             # Fast tldr pages implementation
-tree-sitter = "latest"                  # Parsing library for syntax highlighting
-"cargo:eva" = "latest"                  # CLI expressions and math (like bc on steroids)
-"cargo:bandwhich" = "latest"            # Network traffic analyzer
+"just" = "latest"                    # Command runner (Makefile alternative)
+"cargo:cargo-binstall" = "latest"    # Binary installation for cargo packages
+"cargo:bottom" = "latest"            # Better top/htop system monitor
+"cargo:hyperfine" = "latest"         # Command-line benchmarking tool
+"cargo:license-generator" = "latest" # Software license generator
+"cargo:ouch" = "latest"              # Archive extraction tool
+"cargo:pastel" = "latest"            # Color manipulation and palette tool
+"cargo:procs" = "latest"             # Better ps process viewer
+"cargo:rust-script" = "latest"       # Run Rust files as scripts
+"cargo:scriptisto" = "latest"        # Language-agnostic script runner
+"cargo:tealdeer" = "latest"          # Fast tldr pages implementation
+tree-sitter = "latest"               # Parsing library for syntax highlighting
+"cargo:eva" = "latest"               # CLI expressions and math (like bc on steroids)
+"cargo:bandwhich" = "latest"         # Network traffic analyzer
 "cargo:bacon" = "latest"
 "cargo:cargo-deny" = "latest"
 "cargo:cargo-dist" = "latest"
@@ -144,18 +143,23 @@ tree-sitter = "latest"                  # Parsing library for syntax highlightin
 "cargo:flamegraph" = "latest"
 "cargo:wasm-tools" = "latest"
 "cargo:toml-cli" = "latest"
-taplo = "latest"                        # TOML validator
+taplo = "latest"                     # TOML validator
 ninja = "latest"
 cmake = "3.29"
 coreutils = "latest"
+
+# --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
+'npm:@marp-team/marp-cli' = 'latest'
 "pipx:pptx2md" = "latest"               # Convert powerpoint to markdown
+pandoc = "latest"                       # Convert markdown to word, pdf etc
 "pipx:weasyprint" = "latest"
 
 # --- AI ---
-"aqua:charmbracelet/mods" = "latest" # Large Language Model CLI tool
-"pipx:llm" = "latest"                # Large Language Model CLI tool
-"pipx:gitingest" = "latest"          # Turn any Git repository into a prompt-friendly text ingest for LLMs.
+"aqua:charmbracelet/mods" = "latest"       # Large Language Model CLI tool
+"pipx:llm" = "latest"                      # Large Language Model CLI tool
+"pipx:gitingest" = "latest"                # Turn any Git repository into a prompt-friendly text ingest for LLMs.
+"npm:@anthropic-ai/claude-code" = "latest"
 
 # --- Containerization ---
 podman = "latest"
