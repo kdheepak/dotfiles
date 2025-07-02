@@ -91,6 +91,7 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "aqua:git-lfs/git-lfs" = "latest"
 "npm:git-cz" = "latest"
 "cargo:git-absorb" = "latest"
+"pipx:git-revise" = "latest"
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"          # Shell script static analysis tool
