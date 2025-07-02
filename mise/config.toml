@@ -184,7 +184,7 @@ sops = "latest"
 "aqua:pvolok/mprocs" = "latest"
 "cargo:navi" = "latest"
 "ubi:dathere/qsv" = "latest"
-"ubi:barthr/redo" = "latest"
+# "ubi:barthr/redo" = "latest"
 "aqua:caarlos0/svu" = "latest"
 "aqua:yorukot/superfile" = "latest"
 "aqua:alexpasmantier/television" = "latest"
@@ -205,7 +205,7 @@ pandoc = "latest"                       # Convert markdown to word, pdf etc
 "aqua:charmbracelet/mods" = "latest"       # Large Language Model CLI tool
 "pipx:llm" = "latest"                      # Large Language Model CLI tool
 "pipx:gitingest" = "latest"                # Turn any Git repository into a prompt-friendly text ingest for LLMs.
-"npm:@anthropic-ai/claude-code" = "latest"
+# "npm:@anthropic-ai/claude-code" = "latest"
 
 # --- Containerization ---
 podman = "latest"
