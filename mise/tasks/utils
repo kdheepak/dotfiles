@@ -8,6 +8,12 @@ if [[ -n ${_BASH_UTILS_LOADED:-} ]]; then
 fi
 readonly _BASH_UTILS_LOADED=1
 
+readonly BASH_UTILS_VERSION="1.0.0"
+
+version() {
+    echo "Bash Utils Library v${BASH_UTILS_VERSION}"
+}
+
 ################################################################################
 # Bash strict mode
 ################################################################################
