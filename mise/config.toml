@@ -30,8 +30,6 @@ bun = "latest"    # Fast JavaScript runtime and package manager
 "pipx:cookiecutter" = "latest" # Project template tool
 "pipx:httpie" = "latest"       # HTTP client for APIs
 "pipx:ruff" = "latest"         # Fast Python linter and formatter
-"pipx:pptx2md" = "latest"      # Convert powerpoint to markdown
-"pipx:bump2version" = "latest" # Bump version
 "pipx:ty" = "latest"           # type checker
 "pipx:mypy" = "latest"         # type checker
 uv = "latest"                  # Fast Python package installer and resolver
@@ -48,17 +46,18 @@ neovim = "latest" # Modern Vim-based text editor
 helix = "latest"
 
 # --- Shell and Productivity ---
-direnv = "latest"        # Environment variable management per directory
-fzf = "latest"           # Fuzzy finder for command line
-usage = "latest"         # Tool for generating CLI usage documentation
-watchexec = "latest"     # File watcher that executes commands on changes
-zoxide = "latest"        # Smart cd command (z command)
-gum = "latest"           # Tool for glamorous shell scripts and TUI components
-starship = "latest"      # Cross-shell prompt customization
-zellij = "latest"        # Terminal workspace manager (tmux alternative)
-"cargo:atuin" = "latest" # Replaces shell history with a powerful, searchable database
-cosign = "latest"        # A tool for Container Signing, Verification and Storage
-pandoc = "latest"        # Convert markdown to word, pdf etc
+direnv = "latest"              # Environment variable management per directory
+fzf = "latest"                 # Fuzzy finder for command line
+usage = "latest"               # Tool for generating CLI usage documentation
+watchexec = "latest"           # File watcher that executes commands on changes
+zoxide = "latest"              # Smart cd command (z command)
+gum = "latest"                 # Tool for glamorous shell scripts and TUI components
+starship = "latest"            # Cross-shell prompt customization
+zellij = "latest"              # Terminal workspace manager (tmux alternative)
+"cargo:atuin" = "latest"       # Replaces shell history with a powerful, searchable database
+cosign = "latest"              # A tool for Container Signing, Verification and Storage
+pandoc = "latest"              # Convert markdown to word, pdf etc
+"pipx:bump2version" = "latest" # Bump version
 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
@@ -95,10 +94,11 @@ yamllint = "latest"            # YAML linting tool (version 1.35)
 typos = "latest"               # Source code spell checker
 tokei = "latest"               # Code statistics and line counting - cargo:tokei
 typstyle = "latest"            # Typst markup language formatter - cargo:typstyle
-actionlint = "1.7.7"
-committed = "1.1.7"
-lychee = "0.18.1"
-"pipx:yamlfix" = "1.17.0"
+actionlint = "latest"
+committed = "latest"
+lychee = "latest"
+"pipx:yamlfix" = "latest"
+"pipx:codespell" = "latest"
 
 # --- Data Processing and Viewing ---
 jq = "latest"            # JSON processor and query tool
@@ -144,6 +144,7 @@ ninja = "latest"
 cmake = "3.29"
 coreutils = "latest"
 "aqua:mfontanini/presenterm" = "latest"
+"pipx:pptx2md" = "latest"               # Convert powerpoint to markdown
 "pipx:weasyprint" = "latest"
 
 # --- AI ---
