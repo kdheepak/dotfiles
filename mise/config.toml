@@ -32,6 +32,7 @@ bun = "latest"    # Fast JavaScript runtime and package manager
 "pipx:ruff" = "latest"                   # Fast Python linter and formatter
 "pipx:ty" = "latest"                     # type checker
 "pipx:mypy" = "latest"                   # type checker
+"pipx:isort" = "latest"
 "pipx:commitizen" = "latest"
 "pipx:json-schema-for-humans" = "latest"
 uv = "latest"                            # Fast Python package installer and resolver
