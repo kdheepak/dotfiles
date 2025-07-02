@@ -49,7 +49,7 @@ uv = "latest"                            # Fast Python package installer and res
 "npm:strip-ansi-cli" = "4.0.0"
 
 # --- Editors ---
-neovim = "latest" # Modern Vim-based text editor
+neovim = "nightly" # Modern Vim-based text editor
 helix = "latest"
 "asdf:mise-plugins/mise-vim" = "latest"
 

@@ -329,4 +329,3 @@ eval "$(direnv hook zsh)"
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
-source $HOME/.config/broot/launcher/bash/br
