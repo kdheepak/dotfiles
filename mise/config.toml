@@ -16,11 +16,11 @@ status.show_env = true
 [tools]
 
 # --- Languages and Runtimes ---
-rust = "latest"   # Rust programming language compiler and toolchain
-rust-analyzer = "latest"   # Rust programming language compiler and toolchain
-go = "latest"     # Go programming language compiler
-python = "latest" # Python programming language interpreter
-bun = "latest"    # Fast JavaScript runtime and package manager
+rust = "latest"                         # Rust programming language compiler and toolchain
+rust-analyzer = "latest"                # Rust programming language compiler and toolchain
+go = "latest"                           # Go programming language compiler
+python = "latest"                       # Python programming language interpreter
+bun = "latest"                          # Fast JavaScript runtime and package manager
 "asdf:mise-plugins/mise-nim" = "latest"
 "cargo:juliaup" = "latest"
 
@@ -125,24 +125,24 @@ jless = "latest"         # JSON viewer for terminal - cargo:jless
 "cargo:xh" = "latest"    # Better curl/httpie HTTP client (via cargo)
 
 # --- Utilities ---
-"just" = "latest"                    # Command runner (Makefile alternative)
-"cargo:cargo-binstall" = "latest"    # Binary installation for cargo packages
-"cargo:bottom" = "latest"            # Better top/htop system monitor
-"cargo:hyperfine" = "latest"         # Command-line benchmarking tool
-"cargo:license-generator" = "latest" # Software license generator
-"cargo:choose" = "latest"            # Alternative to cut
-"aqua:mr-karan/doggo" = "latest"     # Alternative to dig
+"just" = "latest"                          # Command runner (Makefile alternative)
+"cargo:cargo-binstall" = "latest"          # Binary installation for cargo packages
+"cargo:bottom" = "latest"                  # Better top/htop system monitor
+"cargo:hyperfine" = "latest"               # Command-line benchmarking tool
+"cargo:license-generator" = "latest"       # Software license generator
+"cargo:choose" = "latest"                  # Alternative to cut
+"aqua:mr-karan/doggo" = "latest"           # Alternative to dig
 duckdb = "latest"
 "asdf:mise-plugins/mise-ffmpeg" = "latest"
-"cargo:ouch" = "latest"              # Archive extraction tool
-"cargo:pastel" = "latest"            # Color manipulation and palette tool
-"cargo:procs" = "latest"             # Better ps process viewer
-"cargo:rust-script" = "latest"       # Run Rust files as scripts
-"cargo:scriptisto" = "latest"        # Language-agnostic script runner
-"cargo:tealdeer" = "latest"          # Fast tldr pages implementation
-tree-sitter = "latest"               # Parsing library for syntax highlighting
-"cargo:eva" = "latest"               # CLI expressions and math (like bc on steroids)
-"cargo:bandwhich" = "latest"         # Network traffic analyzer
+"cargo:ouch" = "latest"                    # Archive extraction tool
+"cargo:pastel" = "latest"                  # Color manipulation and palette tool
+"cargo:procs" = "latest"                   # Better ps process viewer
+"cargo:rust-script" = "latest"             # Run Rust files as scripts
+"cargo:scriptisto" = "latest"              # Language-agnostic script runner
+"cargo:tealdeer" = "latest"                # Fast tldr pages implementation
+tree-sitter = "latest"                     # Parsing library for syntax highlighting
+"cargo:eva" = "latest"                     # CLI expressions and math (like bc on steroids)
+"cargo:bandwhich" = "latest"               # Network traffic analyzer
 "cargo:bacon" = "latest"
 "cargo:cargo-deny" = "latest"
 "cargo:cargo-dist" = "latest"
@@ -161,7 +161,7 @@ tree-sitter = "latest"               # Parsing library for syntax highlighting
 "cargo:wasm-bindgen-cli" = "latest"
 "cargo:wasm-pack" = "latest"
 "cargo:cargo-zigbuild" = "latest"
-taplo = "latest"                     # TOML validator
+taplo = "latest"                           # TOML validator
 ninja = "latest"
 cmake = "3.29"
 "aqua:artempyanykh/marksman" = "latest"
