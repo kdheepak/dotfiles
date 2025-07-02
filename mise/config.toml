@@ -32,6 +32,8 @@ bun = "latest"    # Fast JavaScript runtime and package manager
 "pipx:ruff" = "latest"         # Fast Python linter and formatter
 "pipx:ty" = "latest"           # type checker
 "pipx:mypy" = "latest"         # type checker
+"pipx:commitizen" = "latest"
+"pipx:json-schema-for-humans" = "latest"
 uv = "latest"                  # Fast Python package installer and resolver
 "cargo:uv-migrator" = "latest" # Move from setup.py, conda env etc to uv
 
@@ -39,7 +41,9 @@ uv = "latest"                  # Fast Python package installer and resolver
 
 # --- Node.js Ecosystem Tools (via npm) ---
 "npm:markdownlint-cli" = "latest" # Markdown linting tool
+"npm:markdownlint-cli2" = "latest"
 "npm:prettier" = "latest"         # Code formatter
+"npm:@anthropic-ai/claude-code" = "latest"
 
 # --- Editors ---
 neovim = "latest" # Modern Vim-based text editor
@@ -84,6 +88,7 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "cargo:serie" = "latest"           # Rich git repository analytics
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
 "aqua:git-lfs/git-lfs" = "latest"
+"npm:git-cz" = "latest"
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"          # Shell script static analysis tool
