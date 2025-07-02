@@ -65,7 +65,7 @@ cosign = "latest"              # A tool for Container Signing, Verification and 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
 ripgrep = "latest"         # Better grep (rg command)
-ripgrep-all = "latest"         # Better grep (rg command)
+ripgrep-all = "latest"     # Better grep (rg command)
 fd = "latest"              # Better find
 sd = "latest"              # Better sed
 dust = "latest"            # Better du - disk usage analyzer
