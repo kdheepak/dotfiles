@@ -125,7 +125,7 @@ hexyl = "latest"         # Command-line hex viewer
 "aqua:curlie" = "latest" # curl-like HTTP client (via Aqua)
 "aqua:fx" = "latest"     # Interactive JSON tool (via Aqua)
 "cargo:xh" = "latest"    # Better curl/httpie HTTP client (via cargo)
-"cargo:jless" = "latest" # JSON viewer for terminal - cargo:jless
+"cargo:jless" = { version = "latest" , os = ["macos"] } # JSON viewer for terminal 
 
 # --- Utilities ---
 "just" = "latest"                           # Command runner (Makefile alternative)
