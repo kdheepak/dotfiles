@@ -137,6 +137,7 @@ tree-sitter = "latest"               # Parsing library for syntax highlighting
 "cargo:cargo-generate" = "latest"
 "cargo:cargo-insta" = "latest"
 "cargo:cargo-nextest" = "latest"
+"cargo:mergiraf" = "latest"
 "cargo:cargo-shear" = "latest"
 "cargo:cargo-show" = "latest"
 "cargo:cross" = "latest"
