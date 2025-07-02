@@ -159,7 +159,6 @@ hurl = "latest"
 "cargo:miniserve" = "latest"
 "cargo:du-dust" = "latest"
 "cargo:kmeans_colors" = "latest"
-"cargo:genact" = "latest"
 "cargo:xsv" = "latest"
 
 # --- presentation ---
