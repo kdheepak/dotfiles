@@ -20,6 +20,8 @@ rust = "latest"   # Rust programming language compiler and toolchain
 go = "latest"     # Go programming language compiler
 python = "latest" # Python programming language interpreter
 bun = "latest"    # Fast JavaScript runtime and package manager
+"asdf:mise-plugins/mise-nim" = "latest"
+"cargo:juliaup" = "latest"
 
 # --- Python Ecosystem Tools (via pipx) ---
 "pipx:pylint" = "latest"                 # Linter
@@ -176,6 +178,7 @@ age = "latest"
 packer = "latest"
 sops = "latest"
 "aqua:pvolok/mprocs" = "latest"
+"cargo:navi" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
