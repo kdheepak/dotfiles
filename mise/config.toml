@@ -85,7 +85,7 @@ lazygit = "latest"                 # Terminal UI for Git commands
 jujutsu = "latest"                 # Git-compatible VCS with advanced features
 difftastic = "latest"              # Structural diff tool for code
 delta = "latest"                   # Better git diffs (complements difftastic)
-"cargo:git-trim" = "latest"        # Git branch cleanup tool
+"cargo:git-trim" = { version = "latest" , os = ["macos"] }       # Git branch cleanup tool
 "cargo:git-cliff" = "latest"       # Changelog generator from git history
 "cargo:gitui" = { version = "latest", os = ["macos"] }          # Terminal UI for Git
 "cargo:gitu" = { version = "latest" , os = ["macos"] } # Magit inspired UI
