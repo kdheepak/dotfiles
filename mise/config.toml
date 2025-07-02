@@ -133,6 +133,8 @@ tree-sitter = "latest"               # Parsing library for syntax highlighting
 "cargo:wasm-tools" = "latest"
 "cargo:toml-cli" = "latest"
 taplo = "latest"                     # TOML validator
+ninja = "latest"
+cmake = "3.29"
 
 # --- Containerization ---
 podman = "latest"
