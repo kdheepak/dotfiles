@@ -179,6 +179,7 @@ packer = "latest"
 sops = "latest"
 "aqua:pvolok/mprocs" = "latest"
 "cargo:navi" = "latest"
+"ubi:dathere/qsv" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
