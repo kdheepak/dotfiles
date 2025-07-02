@@ -103,6 +103,7 @@ committed = "latest"
 lychee = "latest"
 "pipx:yamlfix" = "latest"
 "pipx:codespell" = "latest"
+"aqua:mvdan/sh" = "latest"
 
 # --- Data Processing and Viewing ---
 jq = "latest"            # JSON processor and query tool
@@ -146,6 +147,7 @@ tree-sitter = "latest"               # Parsing library for syntax highlighting
 "cargo:toml-cli" = "latest"
 "cargo:wasm-bindgen-cli" = "latest"
 "cargo:wasm-pack" = "latest"
+"cargo:cargo-zigbuild" = "latest"
 taplo = "latest"                     # TOML validator
 ninja = "latest"
 cmake = "3.29"
