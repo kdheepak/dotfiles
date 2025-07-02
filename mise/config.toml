@@ -55,6 +55,7 @@ starship = "latest"      # Cross-shell prompt customization
 zellij = "latest"        # Terminal workspace manager (tmux alternative)
 "cargo:atuin" = "latest" # Replaces shell history with a powerful, searchable database
 cosign = "latest"        # A tool for Container Signing, Verification and Storage
+pandoc = "latest"        # Convert markdown to word, pdf etc
 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
