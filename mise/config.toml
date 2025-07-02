@@ -80,6 +80,7 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "cargo:onefetch" = "latest"        # Git repository information display
 "cargo:serie" = "latest"           # Rich git repository analytics
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
+"aqua:git-lfs/git-lfs" = "latest"
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"          # Shell script static analysis tool
