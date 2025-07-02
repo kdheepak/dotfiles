@@ -33,6 +33,7 @@ bun = "latest"    # Fast JavaScript runtime and package manager
 "pipx:pptx2md" = "latest"      # Convert powerpoint to markdown
 "pipx:bump2version" = "latest" # Bump version
 "pipx:ty" = "latest"           # type checker
+"pipx:mypy" = "latest"         # type checker
 uv = "latest"                  # Fast Python package installer and resolver
 "cargo:uv-migrator" = "latest" # Move from setup.py, conda env etc to uv
 
