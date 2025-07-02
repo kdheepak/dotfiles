@@ -96,6 +96,7 @@ shellcheck = "latest"          # Shell script static analysis tool
 shfmt = "latest"               # Shell script formatter
 stylua = "latest"              # Lua code formatter (version 2)
 lua-language-server = "latest" # Lua language server for IDE features (version 2)
+"cargo:selene" = "latest"
 yamllint = "latest"            # YAML linting tool (version 1.35)
 typos = "latest"               # Source code spell checker
 tokei = "latest"               # Code statistics and line counting - cargo:tokei
