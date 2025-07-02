@@ -14,11 +14,16 @@ repos:
       - id: check-symlinks
       - id: fix-encoding-pragma
       - id: mixed-line-ending
-  - repo: https://github.com/ambv/black
-    rev: 22.3.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.1
     hooks:
-      - id: black
+      # Run the linter.
+      - id: ruff-check
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
   - repo: https://github.com/kdheepak/conventional-commits-precommit
     rev: v0.3.8
     hooks:
       - id: check-commit-msg
+

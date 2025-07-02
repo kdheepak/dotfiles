@@ -14,6 +14,8 @@ disable_backends = ["asdf"] # Disable asdf backend (using mise instead)
 status.show_env = true
 
 [tools]
+git = "latest"
+
 # --- Languages and Runtimes ---
 rust = "latest"   # Rust programming language compiler and toolchain
 go = "latest"     # Go programming language compiler
