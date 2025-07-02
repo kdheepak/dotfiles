@@ -64,7 +64,7 @@ starship = "latest"            # Cross-shell prompt customization
 "cargo:atuin" = "latest"       # Replaces shell history with a powerful, searchable database
 cosign = "latest"              # A tool for Container Signing, Verification and Storage
 "pipx:bump2version" = "latest" # Bump version
-"aqua:wtfutil/wtf" = "latest"
+"aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
