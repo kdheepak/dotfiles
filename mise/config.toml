@@ -182,7 +182,7 @@ sops = "latest"
 "aqua:pvolok/mprocs" = "latest"
 "cargo:navi" = "latest"
 "ubi:dathere/qsv" = "latest"
-"ubi:barthr/redo" = "latest"
+"ubi:barthr/redo" = { version = "latest", os = ["macos"] }
 "aqua:caarlos0/svu" = "latest"
 "aqua:yorukot/superfile" = { version = "latest", os = ["macos"] }
 "aqua:alexpasmantier/television" = "latest"
