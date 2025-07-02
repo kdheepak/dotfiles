@@ -150,6 +150,7 @@ coreutils = "latest"
 # --- AI ---
 "aqua:charmbracelet/mods" = "latest" # Large Language Model CLI tool
 "pipx:llm" = "latest"                # Large Language Model CLI tool
+"pipx:gitingest" = "latest"          # Turn any Git repository into a prompt-friendly text ingest for LLMs.
 
 # --- Containerization ---
 podman = "latest"
