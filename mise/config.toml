@@ -51,6 +51,7 @@ uv = "latest"                            # Fast Python package installer and res
 # --- Editors ---
 neovim = "latest" # Modern Vim-based text editor
 helix = "latest"
+"asdf:mise-plugins/mise-vim" = "latest"
 
 # --- Shell and Productivity ---
 direnv = "latest"              # Environment variable management per directory
@@ -64,6 +65,7 @@ zellij = "latest"              # Terminal workspace manager (tmux alternative)
 "cargo:atuin" = "latest"       # Replaces shell history with a powerful, searchable database
 cosign = "latest"              # A tool for Container Signing, Verification and Storage
 "pipx:bump2version" = "latest" # Bump version
+"aqua:wtfutil/wtf" = "latest"
 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
@@ -133,6 +135,7 @@ jless = "latest"         # JSON viewer for terminal - cargo:jless
 "cargo:choose" = "latest"                  # Alternative to cut
 "aqua:mr-karan/doggo" = "latest"           # Alternative to dig
 duckdb = "latest"
+"asdf:mise-plugins/mise-sqlite" = "latest"
 "asdf:mise-plugins/mise-ffmpeg" = "latest"
 "cargo:ouch" = "latest"                    # Archive extraction tool
 "cargo:pastel" = "latest"                  # Color manipulation and palette tool
@@ -182,6 +185,14 @@ sops = "latest"
 "cargo:navi" = "latest"
 "ubi:dathere/qsv" = "latest"
 "ubi:barthr/redo" = "latest"
+"aqua:caarlos0/svu" = "latest"
+"aqua:yorukot/superfile" = "latest"
+"aqua:alexpasmantier/television" = "latest"
+"asdf:jimmidyson/asdf-upx" = "latest"
+
+# --- latex ---
+"asdf:mise-plugins/mise-tinytex" = "latest"
+"typst" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
@@ -199,6 +210,7 @@ pandoc = "latest"                       # Convert markdown to word, pdf etc
 # --- Containerization ---
 podman = "latest"
 lazydocker = "latest"
+traefik = "latest"
 
 # --- Database Management ---
 "cargo:sqlx-cli" = "latest"
