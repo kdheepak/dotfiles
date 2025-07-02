@@ -154,6 +154,7 @@ ninja = "latest"
 cmake = "3.29"
 coreutils = "latest"
 hurl = "latest"
+"cargo:numbat-cli" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
