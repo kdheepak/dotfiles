@@ -184,7 +184,7 @@ sops = "latest"
 "ubi:dathere/qsv" = "latest"
 "ubi:barthr/redo" = "latest"
 "aqua:caarlos0/svu" = "latest"
-"aqua:yorukot/superfile" = "latest"
+"aqua:yorukot/superfile" = { version = "latest", os = ["macos"] }
 "aqua:alexpasmantier/television" = "latest"
 "asdf:jimmidyson/asdf-upx" = "latest"
 
