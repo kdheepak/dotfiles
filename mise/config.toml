@@ -87,8 +87,8 @@ difftastic = "latest"              # Structural diff tool for code
 delta = "latest"                   # Better git diffs (complements difftastic)
 "cargo:git-trim" = "latest"        # Git branch cleanup tool
 "cargo:git-cliff" = "latest"       # Changelog generator from git history
-"cargo:gitui" = "latest"           # Terminal UI for Git
-"cargo:gitu" = "latest"            # Magit inspired UI
+"cargo:gitui" = { version = "latest", os = ["macos"] }          # Terminal UI for Git
+"cargo:gitu" = { version = "latest" , os = ["macos"] } # Magit inspired UI
 "cargo:onefetch" = "latest"        # Git repository information display
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
 "aqua:git-lfs/git-lfs" = "latest"
