@@ -65,6 +65,7 @@ cosign = "latest"              # A tool for Container Signing, Verification and 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
 ripgrep = "latest"         # Better grep (rg command)
+ripgrep-all = "latest"         # Better grep (rg command)
 fd = "latest"              # Better find
 sd = "latest"              # Better sed
 dust = "latest"            # Better du - disk usage analyzer
@@ -152,6 +153,7 @@ taplo = "latest"                     # TOML validator
 ninja = "latest"
 cmake = "3.29"
 coreutils = "latest"
+hurl = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
