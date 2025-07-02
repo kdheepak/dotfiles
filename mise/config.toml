@@ -17,6 +17,7 @@ status.show_env = true
 
 # --- Languages and Runtimes ---
 rust = "latest"   # Rust programming language compiler and toolchain
+rust-analyzer = "latest"   # Rust programming language compiler and toolchain
 go = "latest"     # Go programming language compiler
 python = "latest" # Python programming language interpreter
 bun = "latest"    # Fast JavaScript runtime and package manager
@@ -180,6 +181,7 @@ sops = "latest"
 "aqua:pvolok/mprocs" = "latest"
 "cargo:navi" = "latest"
 "ubi:dathere/qsv" = "latest"
+"ubi:barthr/redo" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
