@@ -175,6 +175,7 @@ task = "latest"
 age = "latest"
 packer = "latest"
 sops = "latest"
+"aqua:pvolok/mprocs" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
