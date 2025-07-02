@@ -38,7 +38,7 @@ bun = "latest"                          # Fast JavaScript runtime and package ma
 "pipx:commitizen" = "latest"
 "pipx:json-schema-for-humans" = "latest"
 uv = "latest"                            # Fast Python package installer and resolver
-"cargo:uv-migrator" = "latest"           # Move from setup.py, conda env etc to uv
+"cargo:uv-migrator" = { version = "latest", os = ["macos"] }         # Move from setup.py, conda env etc to uv, 
 
 "pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material" }
 
