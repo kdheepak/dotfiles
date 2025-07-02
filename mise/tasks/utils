@@ -221,16 +221,16 @@ run_command() {
 
 # Check if command exists
 require_command() {
-    local cmd="${1}"
-    if ! command -v "${cmd}" &> /dev/null; then
-        fatal "Required command '${cmd}' not found" "Please install ${cmd} and try again"
+    local lcmd="${1}"
+    if ! command -v "${lcmd}" &> /dev/null; then
+        fatal "Required command '${lcmd}' not found" "Please install ${lcmd} and try again"
     fi
 }
 
 # Check if command exists (non-fatal)
 has_command() {
-    local cmd="${1}"
-    if ! command -v "${cmd}" &> /dev/null; then
+    local lcmd="${1}"
+    if ! command -v "${lcmd}" &> /dev/null; then
         return 1
     fi
     return 0
