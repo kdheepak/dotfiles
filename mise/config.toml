@@ -141,6 +141,8 @@ taplo = "latest"                     # TOML validator
 ninja = "latest"
 cmake = "3.29"
 coreutils = "latest"
+"aqua:mfontanini/presenterm" = "latest"
+"pipx:weasyprint" = "latest"
 
 # --- AI ---
 "aqua:charmbracelet/mods" = "latest"
