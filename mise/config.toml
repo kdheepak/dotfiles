@@ -155,6 +155,12 @@ cmake = "3.29"
 coreutils = "latest"
 hurl = "latest"
 "cargo:numbat-cli" = "latest"
+"cargo:fd-find" = "latest"
+"cargo:miniserve" = "latest"
+"cargo:du-dust" = "latest"
+"cargo:kmeans_colors" = "latest"
+"cargo:genact" = "latest"
+"cargo:xsv" = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
