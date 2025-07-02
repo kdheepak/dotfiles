@@ -93,6 +93,10 @@ yamllint = "latest"            # YAML linting tool (version 1.35)
 typos = "latest"               # Source code spell checker
 tokei = "latest"               # Code statistics and line counting - cargo:tokei
 typstyle = "latest"            # Typst markup language formatter - cargo:typstyle
+actionlint = "1.7.7"
+committed = "1.1.7"
+lychee = "0.18.1"
+"pipx:yamlfix" = "1.17.0"
 
 # --- Data Processing and Viewing ---
 jq = "latest"            # JSON processor and query tool
