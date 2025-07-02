@@ -41,9 +41,11 @@ app = typer.Typer(
 
 SCRIPT_NAME = f"./{Path(__file__).name}"
 
+GIT_VERSION = "2.50.0"
+
 
 def get_default_config(
-    version: str = "2.50.0", editor: str = "VisualStudioCode"
+    version: str = GIT_VERSION, editor: str = "VisualStudioCode"
 ) -> dict[str, str]:
     """Get default Git installation configuration"""
     username = os.environ.get("USERNAME", os.environ.get("USER", "User"))
@@ -230,7 +232,6 @@ def get_current_git_version() -> str | None:
             ["git", "--version"], capture_output=True, text=True, timeout=5
         )
         if result.returncode == 0:
-            # Extract version from "git version 2.50.0.windows.1"
             version_line = result.stdout.strip()
             version_match = version_line.split()
             if len(version_match) >= 3:
@@ -258,7 +259,9 @@ def find_git_uninstaller() -> Path | None:
 
 @app.command()
 def download(
-    version: str = typer.Option("2.50.0", "--version", help="Git version to download"),
+    version: str = typer.Option(
+        GIT_VERSION, "--version", help="Git version to download"
+    ),
     output_dir: str = typer.Option(
         Path("."), "--output", help="Output directory", exists=True, file_okay=False
     ),
@@ -305,7 +308,9 @@ def download(
 
 @app.command()
 def install(
-    version: str = typer.Option("2.50.0", "--version", help="Git version to install"),
+    version: str = typer.Option(
+        GIT_VERSION, "--version", help="Git version to install"
+    ),
     editor: str = typer.Option("VisualStudioCode", "--editor", help="Default editor"),
     install_dir: str | None = typer.Option(
         None, "--install-dir", help="Custom installation directory"
