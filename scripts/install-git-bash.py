@@ -9,8 +9,7 @@
 # ]
 # ///
 """
-Git installer script
-Automatically downloads and installs Git for Windows
+Git installer script that downloads and installs Git for Windows
 """
 
 import os
@@ -35,7 +34,10 @@ from rich.panel import Panel
 # Configure console
 console = Console()
 
-app = typer.Typer(help="Git installer for Windows")
+app = typer.Typer(
+    name=__name__, no_args_is_help=True, help=__doc__, add_completion=False
+)
+
 
 SCRIPT_NAME = f"./{Path(__file__).name}"
 
@@ -193,7 +195,9 @@ def install_git_from_installer(installer_path: Path, config_path: Path) -> int:
 @app.command()
 def download(
     version: str = typer.Option("2.50.0", "--version", help="Git version to download"),
-    output_dir: str = typer.Option(".", "--output", "-o", help="Output directory"),
+    output_dir: str = typer.Option(
+        Path("."), "--output", help="Output directory", exists=True, file_okay=False
+    ),
     force: bool = typer.Option(False, "--force", help="Overwrite existing file"),
 ):
     """Download Git installer for Windows"""
@@ -412,8 +416,4 @@ def config():
 
 
 if __name__ == "__main__":
-    try:
-        app()
-    except Exception as e:
-        exception_name = type(e).__name__
-        console.print(Panel(f"❌ [bold red]{exception_name}:[/] {e}", expand=False))
+    app()
