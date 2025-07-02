@@ -138,6 +138,9 @@ ninja = "latest"
 cmake = "3.29"
 coreutils = "latest"
 
+# --- AI ---
+"aqua:charmbracelet/mods" = "latest"
+
 # --- Containerization ---
 podman = "latest"
 lazydocker = "latest"
