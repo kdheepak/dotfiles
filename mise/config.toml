@@ -113,6 +113,7 @@ lychee = "latest"
 
 # --- Data Processing and Viewing ---
 jq = "latest"            # JSON processor and query tool
+"npm:json5" = "latest"
 yq = "latest"            # YAML processor (like jq for YAML)
 glow = "latest"          # Markdown renderer for terminal
 hexyl = "latest"         # Command-line hex viewer
