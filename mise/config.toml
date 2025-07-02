@@ -23,6 +23,7 @@ python = "latest" # Python programming language interpreter
 bun = "latest"    # Fast JavaScript runtime and package manager
 
 # --- Python Ecosystem Tools (via pipx) ---
+"pipx:pylint" = "latest"       # Linter
 "pipx:toml-sort" = "latest"    # TOML file sorter
 "pipx:pre-commit" = "latest"   # Git pre-commit hook framework
 "pipx:black" = "latest"        # Python code formatter
