@@ -89,6 +89,7 @@ delta = "latest"                   # Better git diffs (complements difftastic)
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
 "aqua:git-lfs/git-lfs" = "latest"
 "npm:git-cz" = "latest"
+"cargo:git-absorb" = "latest"
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"          # Shell script static analysis tool
@@ -160,6 +161,11 @@ hurl = "latest"
 "cargo:du-dust" = "latest"
 "cargo:kmeans_colors" = "latest"
 "cargo:xsv" = "latest"
+"cargo:lolcrab" = "latest"
+task = "latest"
+age = "latest"
+packer = "latest"
+sops = "latest"
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = "latest"
