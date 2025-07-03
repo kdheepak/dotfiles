@@ -106,6 +106,7 @@ delta = "latest" # Better git diffs (complements difftastic)
 wait-for-gh-rate-limit = "latest"
 "ubi:houseabsolute/omegasort" = "latest"
 "ubi:houseabsolute/precious" = "latest"
+"asdf:kdheepak/asdf-tig" = "latest"
 
 # --- Linters, Formatters, and Code Quality ---
 shellcheck = "latest"          # Shell script static analysis tool
