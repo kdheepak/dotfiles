@@ -41,7 +41,7 @@ if [ -z $print_format ]; then
 fi
 
 # commands
-eval "git log --graph --color=always --format='$print_format' $@ $emojify" |
+eval "git log --graph --all --color=always --format='$print_format' $@ $emojify" |
     fzf --no-sort \
         --reverse \
         --tiebreak=index \

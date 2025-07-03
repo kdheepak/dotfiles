@@ -64,3 +64,5 @@ rm -rf ~/.config/tmux/tmux.conf
 ln -s "$(pwd)/tmux.conf" ~/.config/tmux/tmux.conf
 rm -rf ~/mise
 ln -s "$(pwd)/mise" ~/mise
+
+ln -s "$(pwd)/scripts/git-ilog" ~/local/bin/git-ilog
