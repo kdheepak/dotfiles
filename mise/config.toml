@@ -49,7 +49,8 @@ uv = "latest" # Fast Python package installer and resolver
 "npm:markdownlint-cli" = "latest"  # Markdown linting tool
 "npm:markdownlint-cli2" = "latest"
 "npm:prettier" = "latest"          # Code formatter
-"npm:@fsouza/prettierd" = "latest"          # Code formatter
+"npm:@fsouza/prettierd" = "latest" # Code formatter
+"npm:neovim" = "latest"          # neovim client
 "npm:strip-ansi-cli" = "4.0.0"
 
 # --- Editors ---
