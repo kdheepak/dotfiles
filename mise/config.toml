@@ -203,6 +203,7 @@ sops = "latest"
 "pipx:pptx2md" = "latest"               # Convert powerpoint to markdown
 pandoc = "latest"                       # Convert markdown to word, pdf etc
 "pipx:weasyprint" = "latest"
+"cargo:viu" = "latest"
 
 # --- AI ---
 "aqua:charmbracelet/mods" = "latest" # Large Language Model CLI tool
