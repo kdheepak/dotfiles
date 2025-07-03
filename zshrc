@@ -298,15 +298,6 @@ if [ -f "$HOME/miniforge3/etc/profile.d/mamba.sh" ]; then
 fi
 # <<< conda initialize <<<
 
-# >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-path=('$HOME/.juliaup/bin' $path)
-export PATH
-
-# <<< juliaup initialize <<<
-
 # >>> gams initialize >>>
 # !! Contents within this block are managed by a gams installer script !!
 export PATH="$HOME/.local/bin/gams_49_6_1/gams49.6_osx_arm64:$PATH"
