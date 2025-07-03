@@ -234,11 +234,26 @@
     pager = delta
 [include]
     path = ~/.config/delta/themes.gitconfig
-[interactive]
-    diffFilter = delta --color-only --features=interactive
 [delta]
     line-numbers = true
     hyperlinks = true
+    features = interactive
+    navigate = true
+    light = true
+[delta "interactive"]
+    diffFilter = delta --color-only --features=interactive
+    keep-plus-minus-markers = false
+    # commit-decoration-style = bold yellow box ul
+    # file-style = bold yellow ul
+    # file-decoration-style = none
+    # hunk-header-decoration-style = cyan box ul
+    # minus-style                   = bold red
+    # minus-non-emph-style          = bold red
+    # minus-emph-style              = bold reverse red
+    # minus-empty-line-marker-style = normal "#3f0001"
+    # plus-style                    = bold green
+    # plus-non-emph-style           = bold green
+    # plus-emph-style               = bold reverse green
 [delta "one-window"]
     side-by-side = false
 [delta "two-window"]
