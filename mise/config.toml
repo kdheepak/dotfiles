@@ -15,214 +15,322 @@ status.show_env = true
 
 [tools]
 
-"cargo:cargo-binstall" = "latest" # Binary installation for cargo packages
+"cargo:cargo-binstall" = { version = "latest", os = [
+  "macos",
+] } # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
-go = "latest"                                                         # Go programming language compiler
-python = "latest"                                                     # Python programming language interpreter
-bun = "latest"                                                        # Fast JavaScript runtime and package manager
+go = { version = "latest", os = ["macos"] } # Go programming language compiler
+python = { version = "latest", os = [
+  "macos",
+] } # Python programming language interpreter
+bun = { version = "latest", os = [
+  "macos",
+] } # Fast JavaScript runtime and package manager
 "asdf:mise-plugins/mise-nim" = { version = "latest", os = ["macos"] }
-"cargo:juliaup" = "latest"
+"cargo:juliaup" = { version = "latest", os = ["macos"] }
 
 # --- Python Ecosystem Tools (via pipx) ---
-"pipx:pylint" = "latest" # Linter
-"pipx:toml-sort" = "latest" # TOML file sorter
-"pipx:pre-commit" = "latest" # Git pre-commit hook framework
-"pipx:black" = "latest" # Python code formatter
-"pipx:cookiecutter" = "latest" # Project template tool
-"pipx:httpie" = "latest" # HTTP client for APIs
-"pipx:ruff" = "latest" # Fast Python linter and formatter
-"pipx:ty" = "latest" # type checker
-"pipx:mypy" = "latest" # type checker
-"pipx:isort" = "latest"
-"pipx:commitizen" = "latest"
-"pipx:json-schema-for-humans" = "latest"
-"pipx:cmake-language-server" = "latest"
-uv = "latest" # Fast Python package installer and resolver
+"pipx:pylint" = { version = "latest", os = ["macos"] } # Linter
+"pipx:toml-sort" = { version = "latest", os = ["macos"] } # TOML file sorter
+"pipx:pre-commit" = { version = "latest", os = [
+  "macos",
+] } # Git pre-commit hook framework
+"pipx:black" = { version = "latest", os = ["macos"] } # Python code formatter
+"pipx:cookiecutter" = { version = "latest", os = [
+  "macos",
+] } # Project template tool
+"pipx:httpie" = { version = "latest", os = ["macos"] } # HTTP client for APIs
+"pipx:ruff" = { version = "latest", os = [
+  "macos",
+] } # Fast Python linter and formatter
+"pipx:ty" = { version = "latest", os = ["macos"] } # type checker
+"pipx:mypy" = { version = "latest", os = ["macos"] } # type checker
+"pipx:isort" = { version = "latest", os = ["macos"] }
+"pipx:commitizen" = { version = "latest", os = ["macos"] }
+"pipx:json-schema-for-humans" = { version = "latest", os = ["macos"] }
+"pipx:cmake-language-server" = { version = "latest", os = ["macos"] }
+uv = { version = "latest", os = [
+  "macos",
+] } # Fast Python package installer and resolver
 "cargo:uv-migrator" = { version = "latest", os = [
   "macos",
 ] } # Move from setup.py, conda env etc to uv,
 
-"pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material" }
+"pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material", os = [
+  "macos",
+] }
 
 # --- Node.js Ecosystem Tools (via npm) ---
-"npm:markdownlint-cli" = "latest"  # Markdown linting tool
-"npm:markdownlint-cli2" = "latest"
-"npm:prettier" = "latest"          # Code formatter
-"npm:@fsouza/prettierd" = "latest" # Code formatter
-"npm:neovim" = "latest"            # neovim client
-"npm:strip-ansi-cli" = "4.0.0"
+"npm:markdownlint-cli" = { version = "latest", os = [
+  "macos",
+] } # Markdown linting tool
+"npm:markdownlint-cli2" = { version = "latest", os = ["macos"] }
+"npm:prettier" = { version = "latest", os = ["macos"] } # Code formatter
+"npm:@fsouza/prettierd" = { version = "latest", os = [
+  "macos",
+] } # Code formatter
+"npm:neovim" = { version = "latest", os = ["macos"] } # neovim client
+"npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos"] }
 
 # --- Editors ---
-neovim = "nightly"                                                    # Modern Vim-based text editor
-helix = "latest"
+neovim = { version = "nightly", os = ["macos"] }                      # Modern Vim-based text editor
+helix = { version = "latest", os = ["macos"] }
 "asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
 
 # --- Shell and Productivity ---
-direnv = "latest"                                           # Environment variable management per directory
-fzf = "latest"                                              # Fuzzy finder for command line
-usage = "latest"                                            # Tool for generating CLI usage documentation
-watchexec = "latest"                                        # File watcher that executes commands on changes
-zoxide = "latest"                                           # Smart cd command (z command)
-gum = "latest"                                              # Tool for glamorous shell scripts and TUI components
-starship = "latest"                                         # Cross-shell prompt customization
-"cargo:atuin" = "latest"                                    # Replaces shell history with a powerful, searchable database
-cosign = "latest"                                           # A tool for Container Signing, Verification and Storage
-"pipx:bump2version" = "latest"                              # Bump version
+direnv = { version = "latest", os = [
+  "macos",
+] } # Environment variable management per directory
+fzf = { version = "latest", os = ["macos"] } # Fuzzy finder for command line
+usage = { version = "latest", os = [
+  "macos",
+] } # Tool for generating CLI usage documentation
+watchexec = { version = "latest", os = [
+  "macos",
+] } # File watcher that executes commands on changes
+zoxide = { version = "latest", os = ["macos"] } # Smart cd command (z command)
+gum = { version = "latest", os = [
+  "macos",
+] } # Tool for glamorous shell scripts and TUI components
+starship = { version = "latest", os = [
+  "macos",
+] } # Cross-shell prompt customization
+"cargo:atuin" = { version = "latest", os = [
+  "macos",
+] } # Replaces shell history with a powerful, searchable database
+cosign = { version = "latest", os = [
+  "macos",
+] } # A tool for Container Signing, Verification and Storage
+"pipx:bump2version" = { version = "latest", os = ["macos"] } # Bump version
 "aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
 
 # --- File System and Navigation ---
-bat = "latest"                                 # Better cat with syntax highlighting
-"asdf:mise-plugins/mise-bat-extras" = "latest" # Bat extras
-ripgrep = "latest"                             # Better grep (rg command)
-ripgrep-all = "latest"                         # Better grep (rg command)
-fd = "latest"                                  # Better find
-sd = "latest"                                  # Better sed
-dust = "latest"                                # Better du - disk usage analyzer
-"cargo:broot" = "latest"                       # Tree-view file manager - cargo:broot
-"cargo:yazi-fm" = "latest"                     # Terminal file manager - cargo:yazi-fm
-"cargo:eza" = "latest"                         # Better ls command (formerly exa) - cargo:eza
-dua = "latest"                                 # A tool to learn about disk usage, fast!
-duf = "latest"                                 # A disk utility
+bat = { version = "latest", os = [
+  "macos",
+] } # Better cat with syntax highlighting
+"asdf:mise-plugins/mise-bat-extras" = { version = "latest", os = [
+  "macos",
+] } # Bat extras
+ripgrep = { version = "latest", os = ["macos"] } # Better grep (rg command)
+ripgrep-all = { version = "latest", os = ["macos"] } # Better grep (rg command)
+fd = { version = "latest", os = ["macos"] } # Better find
+sd = { version = "latest", os = ["macos"] } # Better sed
+dust = { version = "latest", os = ["macos"] } # Better du - disk usage analyzer
+"cargo:broot" = { version = "latest", os = [
+  "macos",
+] } # Tree-view file manager - cargo:broot
+"cargo:yazi-fm" = { version = "latest", os = [
+  "macos",
+] } # Terminal file manager - cargo:yazi-fm
+"cargo:eza" = { version = "latest", os = [
+  "macos",
+] } # Better ls command (formerly exa) - cargo:eza
+dua = { version = "latest", os = [
+  "macos",
+] } # A tool to learn about disk usage, fast!
+duf = { version = "latest", os = ["macos"] } # A disk utility
 
 # --- Git and Version Control ---
-github-cli = "latest" # GitHub command line interface
-lazygit = "latest" # Terminal UI for Git commands
-jujutsu = "latest" # Git-compatible VCS with advanced features
-difftastic = "latest" # Structural diff tool for code
-delta = "latest" # Better git diffs (complements difftastic)
+github-cli = { version = "latest", os = [
+  "macos",
+] } # GitHub command line interface
+lazygit = { version = "latest", os = ["macos"] } # Terminal UI for Git commands
+jujutsu = { version = "latest", os = [
+  "macos",
+] } # Git-compatible VCS with advanced features
+difftastic = { version = "latest", os = [
+  "macos",
+] } # Structural diff tool for code
+delta = { version = "latest", os = [
+  "macos",
+] } # Better git diffs (complements difftastic)
 "cargo:git-trim" = { version = "latest", os = [
   "macos",
 ] } # Git branch cleanup tool
-"cargo:git-cliff" = "latest" # Changelog generator from git history
+"cargo:git-cliff" = { version = "latest", os = [
+  "macos",
+] } # Changelog generator from git history
 "cargo:gitui" = { version = "latest", os = ["macos"] } # Terminal UI for Git
 "cargo:gitu" = { version = "latest", os = ["macos"] } # Magit inspired UI
-"cargo:onefetch" = "latest" # Git repository information display
-"aqua:github/git-sizer" = "latest" # Summary about git repo size
-"aqua:git-lfs/git-lfs" = "latest"
-"npm:git-cz" = "latest"
-"cargo:git-absorb" = "latest"
-"pipx:git-revise" = "latest"
-wait-for-gh-rate-limit = "latest"
-"ubi:houseabsolute/omegasort" = "latest"
-"ubi:houseabsolute/precious" = "latest"
-"asdf:kdheepak/asdf-tig" = "latest"
+"cargo:onefetch" = { version = "latest", os = [
+  "macos",
+] } # Git repository information display
+"aqua:github/git-sizer" = { version = "latest", os = [
+  "macos",
+] } # Summary about git repo size
+"aqua:git-lfs/git-lfs" = { version = "latest", os = ["macos"] }
+"npm:git-cz" = { version = "latest", os = ["macos"] }
+"cargo:git-absorb" = { version = "latest", os = ["macos"] }
+"pipx:git-revise" = { version = "latest", os = ["macos"] }
+wait-for-gh-rate-limit = { version = "latest", os = ["macos"] }
+"ubi:houseabsolute/omegasort" = { version = "latest", os = ["macos"] }
+"ubi:houseabsolute/precious" = { version = "latest", os = ["macos"] }
+"asdf:kdheepak/asdf-tig" = { version = "latest", os = ["macos"] }
 
 # --- Linters, Formatters, and Code Quality ---
-shellcheck = "latest"          # Shell script static analysis tool
-shfmt = "latest"               # Shell script formatter
-stylua = "latest"              # Lua code formatter (version 2)
-lua-language-server = "latest" # Lua language server for IDE features (version 2)
-"cargo:selene" = "latest"
-yamllint = "latest"            # YAML linting tool (version 1.35)
-typos = "latest"               # Source code spell checker
-tokei = "latest"               # Code statistics and line counting - cargo:tokei
-typstyle = "latest"            # Typst markup language formatter - cargo:typstyle
-actionlint = "latest"
-committed = "latest"
-lychee = "latest"
-"pipx:yamlfix" = "latest"
-"pipx:codespell" = "latest"
-"aqua:mvdan/sh" = "latest"
+shellcheck = { version = "latest", os = [
+  "macos",
+] } # Shell script static analysis tool
+shfmt = { version = "latest", os = ["macos"] } # Shell script formatter
+stylua = { version = "latest", os = ["macos"] } # Lua code formatter (version 2)
+lua-language-server = { version = "latest", os = [
+  "macos",
+] } # Lua language server for IDE features (version 2)
+"cargo:selene" = { version = "latest", os = ["macos"] }
+yamllint = { version = "latest", os = [
+  "macos",
+] } # YAML linting tool (version 1.35)
+typos = { version = "latest", os = ["macos"] } # Source code spell checker
+tokei = { version = "latest", os = [
+  "macos",
+] } # Code statistics and line counting - cargo:tokei
+typstyle = { version = "latest", os = [
+  "macos",
+] } # Typst markup language formatter - cargo:typstyle
+actionlint = { version = "latest", os = ["macos"] }
+committed = { version = "latest", os = ["macos"] }
+lychee = { version = "latest", os = ["macos"] }
+"pipx:yamlfix" = { version = "latest", os = ["macos"] }
+"pipx:codespell" = { version = "latest", os = ["macos"] }
+"aqua:mvdan/sh" = { version = "latest", os = ["macos"] }
 
 # --- Data Processing and Viewing ---
-jq = "latest" # JSON processor and query tool
-"npm:json5" = "latest"
-yq = "latest" # YAML processor (like jq for YAML)
-glow = "latest" # Markdown renderer for terminal
-hexyl = "latest" # Command-line hex viewer
-"aqua:curlie" = "latest" # curl-like HTTP client (via Aqua)
-"aqua:fx" = "latest" # Interactive JSON tool (via Aqua)
-"cargo:xh" = "latest" # Better curl/httpie HTTP client (via cargo)
+jq = { version = "latest", os = ["macos"] } # JSON processor and query tool
+"npm:json5" = { version = "latest", os = ["macos"] }
+yq = { version = "latest", os = ["macos"] } # YAML processor (like jq for YAML)
+glow = { version = "latest", os = ["macos"] } # Markdown renderer for terminal
+hexyl = { version = "latest", os = ["macos"] } # Command-line hex viewer
+"aqua:curlie" = { version = "latest", os = [
+  "macos",
+] } # curl-like HTTP client (via Aqua)
+"aqua:fx" = { version = "latest", os = [
+  "macos",
+] } # Interactive JSON tool (via Aqua)
+"cargo:xh" = { version = "latest", os = [
+  "macos",
+] } # Better curl/httpie HTTP client (via cargo)
 "cargo:jless" = { version = "latest", os = [
   "macos",
 ] } # JSON viewer for terminal
 
 # --- Utilities ---
-"just" = "latest"                                                 # Command runner (Makefile alternative)
-"cargo:bottom" = "latest"                                         # Better top/htop system monitor
-"cargo:hyperfine" = "latest"                                      # Command-line benchmarking tool
-"cargo:license-generator" = "latest"                              # Software license generator
-"cargo:choose" = "latest"                                         # Alternative to cut
-"aqua:mr-karan/doggo" = "latest"                                  # Alternative to dig
-duckdb = "latest"
-"asdf:mise-plugins/mise-sqlite" = "latest"
-"asdf:mise-plugins/mise-ffmpeg" = "latest"
-"cargo:ouch" = "latest"                                           # Archive extraction tool
-"cargo:pastel" = "latest"                                         # Color manipulation and palette tool
-"cargo:procs" = "latest"                                          # Better ps process viewer
-"cargo:tealdeer" = "latest"                                       # Fast tldr pages implementation
-tree-sitter = "latest"                                            # Parsing library for syntax highlighting
-"cargo:eva" = "latest"                                            # CLI expressions and math (like bc on steroids)
-"cargo:bandwhich" = "latest"                                      # Network traffic analyzer
-"cargo:bacon" = "latest"
-"cargo:cargo-deny" = "latest"
-"cargo:cargo-dist" = "latest"
-"cargo:cargo-edit" = "latest"
-"cargo:cargo-feature" = "latest"
-"cargo:cargo-generate" = "latest"
-"cargo:cargo-insta" = "latest"
-"cargo:cargo-nextest" = "latest"
-"cargo:mergiraf" = "latest"
-"cargo:cargo-shear" = "latest"
-"cargo:cross" = "latest"
-"cargo:flamegraph" = "latest"
-"cargo:wasm-tools" = "latest"
-"cargo:toml-cli" = "latest"
-"cargo:wasm-bindgen-cli" = "latest"
-"cargo:wasm-pack" = "latest"
-"cargo:cargo-zigbuild" = "latest"
-taplo = "latest"                                                  # TOML validator
-ninja = "latest"
-cmake = "3.29"
-"aqua:artempyanykh/marksman" = "latest"
-coreutils = "latest"
-hurl = "latest"
-"cargo:numbat-cli" = "latest"
-"cargo:fd-find" = "latest"
-"cargo:miniserve" = "latest"
-"cargo:du-dust" = "latest"
-"cargo:kmeans_colors" = "latest"
-"cargo:xsv" = "latest"
-"cargo:lolcrab" = "latest"
-task = "latest"
-age = "latest"
-packer = "latest"
-sops = "latest"
-"aqua:pvolok/mprocs" = "latest"
-"cargo:navi" = "latest"
-"ubi:dathere/qsv" = "latest"
+"just" = { version = "latest", os = [
+  "macos",
+] } # Command runner (Makefile alternative)
+"cargo:bottom" = { version = "latest", os = [
+  "macos",
+] } # Better top/htop system monitor
+"cargo:hyperfine" = { version = "latest", os = [
+  "macos",
+] } # Command-line benchmarking tool
+"cargo:license-generator" = { version = "latest", os = [
+  "macos",
+] } # Software license generator
+"cargo:choose" = { version = "latest", os = ["macos"] } # Alternative to cut
+"aqua:mr-karan/doggo" = { version = "latest", os = [
+  "macos",
+] } # Alternative to dig
+duckdb = { version = "latest", os = ["macos"] }
+"asdf:mise-plugins/mise-sqlite" = { version = "latest", os = ["macos"] }
+"asdf:mise-plugins/mise-ffmpeg" = { version = "latest", os = ["macos"] }
+"cargo:ouch" = { version = "latest", os = ["macos"] } # Archive extraction tool
+"cargo:pastel" = { version = "latest", os = [
+  "macos",
+] } # Color manipulation and palette tool
+"cargo:procs" = { version = "latest", os = [
+  "macos",
+] } # Better ps process viewer
+"cargo:tealdeer" = { version = "latest", os = [
+  "macos",
+] } # Fast tldr pages implementation
+tree-sitter = { version = "latest", os = [
+  "macos",
+] } # Parsing library for syntax highlighting
+"cargo:eva" = { version = "latest", os = [
+  "macos",
+] } # CLI expressions and math (like bc on steroids)
+"cargo:bandwhich" = { version = "latest", os = [
+  "macos",
+] } # Network traffic analyzer
+"cargo:bacon" = { version = "latest", os = ["macos"] }
+"cargo:cargo-deny" = { version = "latest", os = ["macos"] }
+"cargo:cargo-dist" = { version = "latest", os = ["macos"] }
+"cargo:cargo-edit" = { version = "latest", os = ["macos"] }
+"cargo:cargo-feature" = { version = "latest", os = ["macos"] }
+"cargo:cargo-generate" = { version = "latest", os = ["macos"] }
+"cargo:cargo-insta" = { version = "latest", os = ["macos"] }
+"cargo:cargo-nextest" = { version = "latest", os = ["macos"] }
+"cargo:mergiraf" = { version = "latest", os = ["macos"] }
+"cargo:cargo-shear" = { version = "latest", os = ["macos"] }
+"cargo:cross" = { version = "latest", os = ["macos"] }
+"cargo:flamegraph" = { version = "latest", os = ["macos"] }
+"cargo:wasm-tools" = { version = "latest", os = ["macos"] }
+"cargo:toml-cli" = { version = "latest", os = ["macos"] }
+"cargo:wasm-bindgen-cli" = { version = "latest", os = ["macos"] }
+"cargo:wasm-pack" = { version = "latest", os = ["macos"] }
+"cargo:cargo-zigbuild" = { version = "latest", os = ["macos"] }
+taplo = { version = "latest", os = ["macos"] } # TOML validator
+ninja = { version = "latest", os = ["macos"] }
+cmake = { version = "3.29", os = ["macos"] }
+"aqua:artempyanykh/marksman" = { version = "latest", os = ["macos"] }
+coreutils = { version = "latest", os = ["macos"] }
+hurl = { version = "latest", os = ["macos"] }
+"cargo:numbat-cli" = { version = "latest", os = ["macos"] }
+"cargo:fd-find" = { version = "latest", os = ["macos"] }
+"cargo:miniserve" = { version = "latest", os = ["macos"] }
+"cargo:du-dust" = { version = "latest", os = ["macos"] }
+"cargo:kmeans_colors" = { version = "latest", os = ["macos"] }
+"cargo:xsv" = { version = "latest", os = ["macos"] }
+"cargo:lolcrab" = { version = "latest", os = ["macos"] }
+task = { version = "latest", os = ["macos"] }
+age = { version = "latest", os = ["macos"] }
+packer = { version = "latest", os = ["macos"] }
+sops = { version = "latest", os = ["macos"] }
+"aqua:pvolok/mprocs" = { version = "latest", os = ["macos"] }
+"cargo:navi" = { version = "latest", os = ["macos"] }
+"ubi:dathere/qsv" = { version = "latest", os = ["macos"] }
 "ubi:barthr/redo" = { version = "latest", os = ["macos"] }
-"aqua:caarlos0/svu" = "latest"
+"aqua:caarlos0/svu" = { version = "latest", os = ["macos"] }
 "aqua:yorukot/superfile" = { version = "latest", os = ["macos"] }
-"aqua:alexpasmantier/television" = "latest"
-"asdf:jimmidyson/asdf-upx" = "latest"
+"aqua:alexpasmantier/television" = { version = "latest", os = ["macos"] }
+"asdf:jimmidyson/asdf-upx" = { version = "latest", os = ["macos"] }
 
 # --- latex ---
-"asdf:mise-plugins/mise-tinytex" = "latest"
-"typst" = "latest"
+"asdf:mise-plugins/mise-tinytex" = { version = "latest", os = ["macos"] }
+"typst" = { version = "latest", os = ["macos"] }
 
 # --- presentation ---
-"aqua:mfontanini/presenterm" = "latest"
-'npm:@marp-team/marp-cli' = 'latest'
-"pipx:pptx2md" = "latest"               # Convert powerpoint to markdown
-pandoc = "latest"                       # Convert markdown to word, pdf etc
-"pipx:weasyprint" = "latest"
-"cargo:viu" = "latest"
+"aqua:mfontanini/presenterm" = { version = "latest", os = ["macos"] }
+'npm:@marp-team/marp-cli' = { version = 'latest', os = ["macos"] }
+"pipx:pptx2md" = { version = "latest", os = [
+  "macos",
+] } # Convert powerpoint to markdown
+pandoc = { version = "latest", os = [
+  "macos",
+] } # Convert markdown to word, pdf etc
+"pipx:weasyprint" = { version = "latest", os = ["macos"] }
+"cargo:viu" = { version = "latest", os = ["macos"] }
 
 # --- AI ---
-"aqua:charmbracelet/mods" = "latest" # Large Language Model CLI tool
-"pipx:llm" = "latest"                # Large Language Model CLI tool
-"pipx:gitingest" = "latest"          # Turn any Git repository into a prompt-friendly text ingest for LLMs.
+"aqua:charmbracelet/mods" = { version = "latest", os = [
+  "macos",
+] } # Large Language Model CLI tool
+"pipx:llm" = { version = "latest", os = [
+  "macos",
+] } # Large Language Model CLI tool
+"pipx:gitingest" = { version = "latest", os = [
+  "macos",
+] } # Turn any Git repository into a prompt-friendly text ingest for LLMs.
 
 # --- Containerization ---
-podman = "latest"
-lazydocker = "latest"
-traefik = "latest"
+podman = { version = "latest", os = ["macos"] }
+lazydocker = { version = "latest", os = ["macos"] }
+traefik = { version = "latest", os = ["macos"] }
 
 # --- Database Management ---
-"cargo:sqlx-cli" = "latest"
-"pipx:harlequin" = "latest"
+"cargo:sqlx-cli" = { version = "latest", os = ["macos"] }
+"pipx:harlequin" = { version = "latest", os = ["macos"] }
 
 [tasks]
 uv = "uv sync --group dev --all-extras"
@@ -234,4 +342,3 @@ setup-python = "uv pip install --system ipython jupyter neovim python-localvenv-
 description = "Generate a changelog for the current version"
 outputs = ["CHANGELOG.md"]
 run = ["git-cliff --config .cliff.toml --output CHANGELOG.md"]
-
