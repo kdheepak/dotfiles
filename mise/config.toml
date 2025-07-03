@@ -18,10 +18,10 @@ status.show_env = true
 "cargo:cargo-binstall" = "latest" # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
-go = "latest"                           # Go programming language compiler
-python = "latest" # Python programming language interpreter
-bun = "latest"    # Fast JavaScript runtime and package manager
-"asdf:mise-plugins/mise-nim" = "latest"
+go = "latest"                                                         # Go programming language compiler
+python = "latest"                                                     # Python programming language interpreter
+bun = "latest"                                                        # Fast JavaScript runtime and package manager
+"asdf:mise-plugins/mise-nim" = { version = "latest", os = ["macos"] }
 "cargo:juliaup" = "latest"
 
 # --- Python Ecosystem Tools (via pipx) ---
@@ -50,13 +50,13 @@ uv = "latest" # Fast Python package installer and resolver
 "npm:markdownlint-cli2" = "latest"
 "npm:prettier" = "latest"          # Code formatter
 "npm:@fsouza/prettierd" = "latest" # Code formatter
-"npm:neovim" = "latest"          # neovim client
+"npm:neovim" = "latest"            # neovim client
 "npm:strip-ansi-cli" = "4.0.0"
 
 # --- Editors ---
-neovim = "nightly"                      # Modern Vim-based text editor
+neovim = "nightly"                                                    # Modern Vim-based text editor
 helix = "latest"
-"asdf:mise-plugins/mise-vim" = "latest"
+"asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
 
 # --- Shell and Productivity ---
 direnv = "latest"                                           # Environment variable management per directory
@@ -72,18 +72,18 @@ cosign = "latest"                                           # A tool for Contain
 "aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
 
 # --- File System and Navigation ---
-bat = "latest"             # Better cat with syntax highlighting
-"asdf:mise-plugins/mise-bat-extras" = "latest"      # Bat extras
-ripgrep = "latest"         # Better grep (rg command)
-ripgrep-all = "latest"     # Better grep (rg command)
-fd = "latest"              # Better find
-sd = "latest"              # Better sed
-dust = "latest"            # Better du - disk usage analyzer
-"cargo:broot" = "latest"   # Tree-view file manager - cargo:broot
-"cargo:yazi-fm" = "latest" # Terminal file manager - cargo:yazi-fm
-"cargo:eza" = "latest"     # Better ls command (formerly exa) - cargo:eza
-dua = "latest"             # A tool to learn about disk usage, fast!
-duf = "latest"             # A disk utility
+bat = "latest"                                 # Better cat with syntax highlighting
+"asdf:mise-plugins/mise-bat-extras" = "latest" # Bat extras
+ripgrep = "latest"                             # Better grep (rg command)
+ripgrep-all = "latest"                         # Better grep (rg command)
+fd = "latest"                                  # Better find
+sd = "latest"                                  # Better sed
+dust = "latest"                                # Better du - disk usage analyzer
+"cargo:broot" = "latest"                       # Tree-view file manager - cargo:broot
+"cargo:yazi-fm" = "latest"                     # Terminal file manager - cargo:yazi-fm
+"cargo:eza" = "latest"                         # Better ls command (formerly exa) - cargo:eza
+dua = "latest"                                 # A tool to learn about disk usage, fast!
+duf = "latest"                                 # A disk utility
 
 # --- Git and Version Control ---
 github-cli = "latest" # GitHub command line interface
