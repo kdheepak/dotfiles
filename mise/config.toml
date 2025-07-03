@@ -15,30 +15,32 @@ status.show_env = true
 
 [tools]
 
-"cargo:cargo-binstall" = "latest"           # Binary installation for cargo packages
+"cargo:cargo-binstall" = "latest" # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
 # go = "latest"                           # Go programming language compiler
-python = "latest"                       # Python programming language interpreter
-bun = "latest"                          # Fast JavaScript runtime and package manager
+python = "latest" # Python programming language interpreter
+bun = "latest"    # Fast JavaScript runtime and package manager
 # "asdf:mise-plugins/mise-nim" = "latest"
 "cargo:juliaup" = "latest"
 
 # --- Python Ecosystem Tools (via pipx) ---
-"pipx:pylint" = "latest"                 # Linter
-"pipx:toml-sort" = "latest"              # TOML file sorter
-"pipx:pre-commit" = "latest"             # Git pre-commit hook framework
-"pipx:black" = "latest"                  # Python code formatter
-"pipx:cookiecutter" = "latest"           # Project template tool
-"pipx:httpie" = "latest"                 # HTTP client for APIs
-"pipx:ruff" = "latest"                   # Fast Python linter and formatter
-"pipx:ty" = "latest"                     # type checker
-"pipx:mypy" = "latest"                   # type checker
+"pipx:pylint" = "latest" # Linter
+"pipx:toml-sort" = "latest" # TOML file sorter
+"pipx:pre-commit" = "latest" # Git pre-commit hook framework
+"pipx:black" = "latest" # Python code formatter
+"pipx:cookiecutter" = "latest" # Project template tool
+"pipx:httpie" = "latest" # HTTP client for APIs
+"pipx:ruff" = "latest" # Fast Python linter and formatter
+"pipx:ty" = "latest" # type checker
+"pipx:mypy" = "latest" # type checker
 "pipx:isort" = "latest"
 "pipx:commitizen" = "latest"
 "pipx:json-schema-for-humans" = "latest"
-uv = "latest"                            # Fast Python package installer and resolver
-"cargo:uv-migrator" = { version = "latest", os = ["macos"] }         # Move from setup.py, conda env etc to uv, 
+uv = "latest" # Fast Python package installer and resolver
+"cargo:uv-migrator" = { version = "latest", os = [
+  "macos",
+] } # Move from setup.py, conda env etc to uv,
 
 "pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material" }
 
@@ -54,16 +56,16 @@ helix = "latest"
 "asdf:mise-plugins/mise-vim" = "latest"
 
 # --- Shell and Productivity ---
-direnv = "latest"              # Environment variable management per directory
-fzf = "latest"                 # Fuzzy finder for command line
-usage = "latest"               # Tool for generating CLI usage documentation
-watchexec = "latest"           # File watcher that executes commands on changes
-zoxide = "latest"              # Smart cd command (z command)
-gum = "latest"                 # Tool for glamorous shell scripts and TUI components
-starship = "latest"            # Cross-shell prompt customization
-"cargo:atuin" = "latest"       # Replaces shell history with a powerful, searchable database
-cosign = "latest"              # A tool for Container Signing, Verification and Storage
-"pipx:bump2version" = "latest" # Bump version
+direnv = "latest"                                           # Environment variable management per directory
+fzf = "latest"                                              # Fuzzy finder for command line
+usage = "latest"                                            # Tool for generating CLI usage documentation
+watchexec = "latest"                                        # File watcher that executes commands on changes
+zoxide = "latest"                                           # Smart cd command (z command)
+gum = "latest"                                              # Tool for glamorous shell scripts and TUI components
+starship = "latest"                                         # Cross-shell prompt customization
+"cargo:atuin" = "latest"                                    # Replaces shell history with a powerful, searchable database
+cosign = "latest"                                           # A tool for Container Signing, Verification and Storage
+"pipx:bump2version" = "latest"                              # Bump version
 "aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
 
 # --- File System and Navigation ---
@@ -80,16 +82,18 @@ dua = "latest"             # A tool to learn about disk usage, fast!
 duf = "latest"             # A disk utility
 
 # --- Git and Version Control ---
-github-cli = "latest"              # GitHub command line interface
-lazygit = "latest"                 # Terminal UI for Git commands
-jujutsu = "latest"                 # Git-compatible VCS with advanced features
-difftastic = "latest"              # Structural diff tool for code
-delta = "latest"                   # Better git diffs (complements difftastic)
-"cargo:git-trim" = { version = "latest" , os = ["macos"] }       # Git branch cleanup tool
-"cargo:git-cliff" = "latest"       # Changelog generator from git history
-"cargo:gitui" = { version = "latest", os = ["macos"] }          # Terminal UI for Git
-"cargo:gitu" = { version = "latest" , os = ["macos"] } # Magit inspired UI
-"cargo:onefetch" = "latest"        # Git repository information display
+github-cli = "latest" # GitHub command line interface
+lazygit = "latest" # Terminal UI for Git commands
+jujutsu = "latest" # Git-compatible VCS with advanced features
+difftastic = "latest" # Structural diff tool for code
+delta = "latest" # Better git diffs (complements difftastic)
+"cargo:git-trim" = { version = "latest", os = [
+  "macos",
+] } # Git branch cleanup tool
+"cargo:git-cliff" = "latest" # Changelog generator from git history
+"cargo:gitui" = { version = "latest", os = ["macos"] } # Terminal UI for Git
+"cargo:gitu" = { version = "latest", os = ["macos"] } # Magit inspired UI
+"cargo:onefetch" = "latest" # Git repository information display
 "aqua:github/git-sizer" = "latest" # Summary about git repo size
 "aqua:git-lfs/git-lfs" = "latest"
 "npm:git-cz" = "latest"
@@ -117,33 +121,35 @@ lychee = "latest"
 "aqua:mvdan/sh" = "latest"
 
 # --- Data Processing and Viewing ---
-jq = "latest"            # JSON processor and query tool
+jq = "latest" # JSON processor and query tool
 "npm:json5" = "latest"
-yq = "latest"            # YAML processor (like jq for YAML)
-glow = "latest"          # Markdown renderer for terminal
-hexyl = "latest"         # Command-line hex viewer
+yq = "latest" # YAML processor (like jq for YAML)
+glow = "latest" # Markdown renderer for terminal
+hexyl = "latest" # Command-line hex viewer
 "aqua:curlie" = "latest" # curl-like HTTP client (via Aqua)
-"aqua:fx" = "latest"     # Interactive JSON tool (via Aqua)
-"cargo:xh" = "latest"    # Better curl/httpie HTTP client (via cargo)
-"cargo:jless" = { version = "latest" , os = ["macos"] } # JSON viewer for terminal 
+"aqua:fx" = "latest" # Interactive JSON tool (via Aqua)
+"cargo:xh" = "latest" # Better curl/httpie HTTP client (via cargo)
+"cargo:jless" = { version = "latest", os = [
+  "macos",
+] } # JSON viewer for terminal
 
 # --- Utilities ---
-"just" = "latest"                           # Command runner (Makefile alternative)
-"cargo:bottom" = "latest"                   # Better top/htop system monitor
-"cargo:hyperfine" = "latest"                # Command-line benchmarking tool
-"cargo:license-generator" = "latest"        # Software license generator
-"cargo:choose" = "latest"                   # Alternative to cut
-"aqua:mr-karan/doggo" = "latest"            # Alternative to dig
+"just" = "latest"                                                 # Command runner (Makefile alternative)
+"cargo:bottom" = "latest"                                         # Better top/htop system monitor
+"cargo:hyperfine" = "latest"                                      # Command-line benchmarking tool
+"cargo:license-generator" = "latest"                              # Software license generator
+"cargo:choose" = "latest"                                         # Alternative to cut
+"aqua:mr-karan/doggo" = "latest"                                  # Alternative to dig
 duckdb = "latest"
 "asdf:mise-plugins/mise-sqlite" = "latest"
 "asdf:mise-plugins/mise-ffmpeg" = "latest"
-"cargo:ouch" = "latest"                     # Archive extraction tool
-"cargo:pastel" = "latest"                   # Color manipulation and palette tool
-"cargo:procs" = "latest"                    # Better ps process viewer
-"cargo:tealdeer" = "latest"                 # Fast tldr pages implementation
-tree-sitter = "latest"                      # Parsing library for syntax highlighting
-"cargo:eva" = "latest"                      # CLI expressions and math (like bc on steroids)
-"cargo:bandwhich" = "latest"                # Network traffic analyzer
+"cargo:ouch" = "latest"                                           # Archive extraction tool
+"cargo:pastel" = "latest"                                         # Color manipulation and palette tool
+"cargo:procs" = "latest"                                          # Better ps process viewer
+"cargo:tealdeer" = "latest"                                       # Fast tldr pages implementation
+tree-sitter = "latest"                                            # Parsing library for syntax highlighting
+"cargo:eva" = "latest"                                            # CLI expressions and math (like bc on steroids)
+"cargo:bandwhich" = "latest"                                      # Network traffic analyzer
 "cargo:bacon" = "latest"
 "cargo:cargo-deny" = "latest"
 "cargo:cargo-dist" = "latest"
@@ -161,7 +167,7 @@ tree-sitter = "latest"                      # Parsing library for syntax highlig
 "cargo:wasm-bindgen-cli" = "latest"
 "cargo:wasm-pack" = "latest"
 "cargo:cargo-zigbuild" = "latest"
-taplo = "latest"                            # TOML validator
+taplo = "latest"                                                  # TOML validator
 ninja = "latest"
 cmake = "3.29"
 "aqua:artempyanykh/marksman" = "latest"
