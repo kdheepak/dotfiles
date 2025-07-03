@@ -277,8 +277,6 @@ else
   eval "$($HOME/.local/bin/mise activate zsh)"
 fi
 
-eval "$(pixi completion --shell zsh)"
-
 . "$HOME/.cargo/env"
 
 # >>> conda initialize >>>
