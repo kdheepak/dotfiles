@@ -269,8 +269,6 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-export PATH=$HOME/.juliaup/bin:$PATH
-
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   eval "$($HOME/.local/bin/mise activate zsh --shims)"
 else
