@@ -18,10 +18,10 @@ status.show_env = true
 "cargo:cargo-binstall" = "latest" # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
-# go = "latest"                           # Go programming language compiler
+go = "latest"                           # Go programming language compiler
 python = "latest" # Python programming language interpreter
 bun = "latest"    # Fast JavaScript runtime and package manager
-# "asdf:mise-plugins/mise-nim" = "latest"
+"asdf:mise-plugins/mise-nim" = "latest"
 "cargo:juliaup" = "latest"
 
 # --- Python Ecosystem Tools (via pipx) ---
@@ -37,6 +37,7 @@ bun = "latest"    # Fast JavaScript runtime and package manager
 "pipx:isort" = "latest"
 "pipx:commitizen" = "latest"
 "pipx:json-schema-for-humans" = "latest"
+"pipx:cmake-language-server" = "latest"
 uv = "latest" # Fast Python package installer and resolver
 "cargo:uv-migrator" = { version = "latest", os = [
   "macos",
@@ -48,6 +49,7 @@ uv = "latest" # Fast Python package installer and resolver
 "npm:markdownlint-cli" = "latest"  # Markdown linting tool
 "npm:markdownlint-cli2" = "latest"
 "npm:prettier" = "latest"          # Code formatter
+"npm:@fsouza/prettierd" = "latest"          # Code formatter
 "npm:strip-ansi-cli" = "4.0.0"
 
 # --- Editors ---
