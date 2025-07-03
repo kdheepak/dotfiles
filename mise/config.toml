@@ -73,6 +73,7 @@ cosign = "latest"                                           # A tool for Contain
 
 # --- File System and Navigation ---
 bat = "latest"             # Better cat with syntax highlighting
+"asdf:mise-plugins/mise-bat-extras" = "latest"      # Bat extras
 ripgrep = "latest"         # Better grep (rg command)
 ripgrep-all = "latest"     # Better grep (rg command)
 fd = "latest"              # Better find
