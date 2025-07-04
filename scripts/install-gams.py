@@ -55,7 +55,7 @@ class GAMSManager:
         self.os_type = platform.system().lower()
 
         # Setup installation directories
-        install_dir = Path("~/.local/bin").expanduser()
+        install_dir = Path("~/local/bin").expanduser()
         _, info = self._get_download_info()
         self.info = info
 
@@ -257,7 +257,7 @@ class GAMSManager:
             console.print(f"❌ Installation failed: {e}", style="red")
             return False
 
-    def add_to_path(self, shell: str, add_gbin: bool = False) -> None:
+    def add_to_path(self, shell: str) -> None:
         """Add GAMS to system PATH for specified shell"""
         console.print(f"🔧 Adding GAMS to PATH for {shell}...", style="yellow")
 
@@ -275,8 +275,6 @@ class GAMSManager:
             content = f'$env:Path += ";{self.binary_install_dir}"'
             self._add_to_profile(profile_path, content)
 
-        elif shell == "cmd":
-            self._add_to_cmd_path(add_gbin)
         else:
             console.print(f"❌ Unsupported shell: {shell}", style="red")
 
@@ -308,44 +306,6 @@ class GAMSManager:
             console.print("🔄 Restart your terminal to apply changes", style="blue")
         except Exception as e:
             console.print(f"❌ Failed to update {profile_path}: {e}", style="red")
-
-    def _add_to_cmd_path(self, add_gbin: bool) -> None:
-        """Add GAMS to Windows CMD PATH using setx"""
-        try:
-            result = subprocess.run(
-                ["setx", "PATH", f"{self.binary_install_dir};%PATH%"],
-                capture_output=True,
-                text=True,
-            )
-
-            if result.returncode == 0:
-                console.print(
-                    f"✅ Added {self.binary_install_dir} to PATH", style="green"
-                )
-            else:
-                console.print(f"❌ Failed to add to PATH: {result.stderr}", style="red")
-
-            if add_gbin:
-                gbin_path = self.binary_install_dir / "gbin"
-                result = subprocess.run(
-                    ["setx", "PATH", f"{gbin_path};%PATH%"],
-                    capture_output=True,
-                    text=True,
-                )
-
-                if result.returncode == 0:
-                    console.print(f"✅ Added {gbin_path} to PATH", style="green")
-                else:
-                    console.print(
-                        f"❌ Failed to add gbin to PATH: {result.stderr}", style="red"
-                    )
-
-            console.print(
-                "🔄 Restart your command prompt to apply changes", style="blue"
-            )
-
-        except Exception as e:
-            console.print(f"❌ Failed to update PATH: {e}", style="red")
 
 
 # CLI Commands
@@ -459,7 +419,6 @@ def install(
     if gams.install_gams():
         # Add to PATH for common shells
         if gams.is_windows():
-            gams.add_to_path("cmd")
             gams.add_to_path("powershell")
         else:
             gams.add_to_path("bash")
@@ -485,10 +444,7 @@ def install(
 @app.command()
 def add_to_path(
     shell: str = typer.Option(
-        ..., "--shell", help="Shell type (bash, zsh, cmd, powershell)"
-    ),
-    add_gbin: bool = typer.Option(
-        False, "--add-gbin", help="Add gbin to PATH (Windows only)"
+        ..., "--shell", help="Shell type (bash, zsh, powershell)"
     ),
 ):
     """Add GAMS installation to system PATH"""
@@ -501,14 +457,14 @@ def add_to_path(
         console.print(f"💡 Run '{SCRIPT_NAME} install' first", style="blue")
         raise typer.Exit(1)
 
-    valid_shells = ["bash", "zsh", "cmd", "powershell"]
+    valid_shells = ["bash", "zsh", "powershell"]
     if shell not in valid_shells:
         console.print(
             f"❌ Invalid shell. Choose from: {', '.join(valid_shells)}", style="red"
         )
         raise typer.Exit(1)
 
-    gams.add_to_path(shell, add_gbin)
+    gams.add_to_path(shell)
 
 
 if __name__ == "__main__":
