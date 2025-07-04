@@ -16,19 +16,25 @@ status.show_env = true
 [tools]
 
 "cargo:cargo-binstall" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Binary installation for cargo packages
+uv = { version = "latest", os = [
+  "macos", "windows"
+] } # Fast Python package installer and resolver
 
 # --- Languages and Runtimes ---
 go = { version = "latest", os = ["macos"] } # Go programming language compiler
+node = { version = "latest", os = [
+  "macos", "windows"
+] } # Python programming language interpreter
 python = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Python programming language interpreter
 bun = { version = "latest", os = [
   "macos",
 ] } # Fast JavaScript runtime and package manager
 "asdf:mise-plugins/mise-nim" = { version = "latest", os = ["macos"] }
-"cargo:juliaup" = { version = "latest", os = ["macos"] }
+"cargo:juliaup" = { version = "latest", os = ["macos", "windows"] }
 
 # --- Python Ecosystem Tools (via pipx) ---
 "pipx:pylint" = { version = "latest", os = ["macos"] } # Linter
@@ -38,21 +44,18 @@ bun = { version = "latest", os = [
 ] } # Git pre-commit hook framework
 "pipx:black" = { version = "latest", os = ["macos"] } # Python code formatter
 "pipx:cookiecutter" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Project template tool
 "pipx:httpie" = { version = "latest", os = ["macos"] } # HTTP client for APIs
 "pipx:ruff" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Fast Python linter and formatter
-"pipx:ty" = { version = "latest", os = ["macos"] } # type checker
-"pipx:mypy" = { version = "latest", os = ["macos"] } # type checker
+"pipx:ty" = { version = "latest", os = ["macos", "windows"] } # type checker
+"pipx:mypy" = { version = "latest", os = ["macos", "windows"] } # type checker
 "pipx:isort" = { version = "latest", os = ["macos"] }
 "pipx:commitizen" = { version = "latest", os = ["macos"] }
 "pipx:json-schema-for-humans" = { version = "latest", os = ["macos"] }
 "pipx:cmake-language-server" = { version = "latest", os = ["macos"] }
-uv = { version = "latest", os = [
-  "macos",
-] } # Fast Python package installer and resolver
 "cargo:uv-migrator" = { version = "latest", os = [
   "macos",
 ] } # Move from setup.py, conda env etc to uv,
@@ -63,18 +66,18 @@ uv = { version = "latest", os = [
 
 # --- Node.js Ecosystem Tools (via npm) ---
 "npm:markdownlint-cli" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Markdown linting tool
-"npm:markdownlint-cli2" = { version = "latest", os = ["macos"] }
+"npm:markdownlint-cli2" = { version = "latest", os = ["macos", "windows"] }
 "npm:prettier" = { version = "latest", os = ["macos"] } # Code formatter
 "npm:@fsouza/prettierd" = { version = "latest", os = [
   "macos",
 ] } # Code formatter
-"npm:neovim" = { version = "latest", os = ["macos"] } # neovim client
-"npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos"] }
+"npm:neovim" = { version = "latest", os = ["macos", "windows"] } # neovim client
+"npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos", "windows"] }
 
 # --- Editors ---
-neovim = { version = "nightly", os = ["macos"] }                      # Modern Vim-based text editor
+neovim = { version = "nightly", os = ["macos", "windows"] }                      # Modern Vim-based text editor
 helix = { version = "latest", os = ["macos"] }
 "asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
 
@@ -82,7 +85,7 @@ helix = { version = "latest", os = ["macos"] }
 direnv = { version = "latest", os = [
   "macos",
 ] } # Environment variable management per directory
-fzf = { version = "latest", os = ["macos"] } # Fuzzy finder for command line
+fzf = { version = "latest", os = ["macos", "windows"] } # Fuzzy finder for command line
 usage = { version = "latest", os = [
   "macos",
 ] } # Tool for generating CLI usage documentation
@@ -91,10 +94,10 @@ watchexec = { version = "latest", os = [
 ] } # File watcher that executes commands on changes
 zoxide = { version = "latest", os = ["macos"] } # Smart cd command (z command)
 gum = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Tool for glamorous shell scripts and TUI components
 starship = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Cross-shell prompt customization
 "cargo:atuin" = { version = "latest", os = [
   "macos",
@@ -107,13 +110,13 @@ cosign = { version = "latest", os = [
 
 # --- File System and Navigation ---
 bat = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Better cat with syntax highlighting
 "asdf:mise-plugins/mise-bat-extras" = { version = "latest", os = [
   "macos",
 ] } # Bat extras
-ripgrep = { version = "latest", os = ["macos"] } # Better grep (rg command)
-ripgrep-all = { version = "latest", os = ["macos"] } # Better grep (rg command)
+ripgrep = { version = "latest", os = ["macos", "windows"] } # Better grep (rg command)
+ripgrep-all = { version = "latest", os = ["macos", "windows"] } # Better grep (rg command)
 fd = { version = "latest", os = ["macos"] } # Better find
 sd = { version = "latest", os = ["macos"] } # Better sed
 dust = { version = "latest", os = ["macos"] } # Better du - disk usage analyzer
@@ -124,32 +127,32 @@ dust = { version = "latest", os = ["macos"] } # Better du - disk usage analyzer
   "macos",
 ] } # Terminal file manager - cargo:yazi-fm
 "cargo:eza" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Better ls command (formerly exa) - cargo:eza
 dua = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # A tool to learn about disk usage, fast!
 duf = { version = "latest", os = ["macos"] } # A disk utility
 
 # --- Git and Version Control ---
 github-cli = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # GitHub command line interface
-lazygit = { version = "latest", os = ["macos"] } # Terminal UI for Git commands
+lazygit = { version = "latest", os = ["macos", "windows"] } # Terminal UI for Git commands
 jujutsu = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Git-compatible VCS with advanced features
 difftastic = { version = "latest", os = [
-  "macos",
+  "macos"
 ] } # Structural diff tool for code
 delta = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Better git diffs (complements difftastic)
 "cargo:git-trim" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Git branch cleanup tool
 "cargo:git-cliff" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Changelog generator from git history
 "cargo:gitui" = { version = "latest", os = ["macos"] } # Terminal UI for Git
 "cargo:gitu" = { version = "latest", os = ["macos"] } # Magit inspired UI
@@ -196,7 +199,7 @@ lychee = { version = "latest", os = ["macos"] }
 "aqua:mvdan/sh" = { version = "latest", os = ["macos"] }
 
 # --- Data Processing and Viewing ---
-jq = { version = "latest", os = ["macos"] } # JSON processor and query tool
+jq = { version = "latest", os = ["macos", "windows"] } # JSON processor and query tool
 "npm:json5" = { version = "latest", os = ["macos"] }
 yq = { version = "latest", os = ["macos"] } # YAML processor (like jq for YAML)
 glow = { version = "latest", os = ["macos"] } # Markdown renderer for terminal
@@ -216,7 +219,7 @@ hexyl = { version = "latest", os = ["macos"] } # Command-line hex viewer
 
 # --- Utilities ---
 "just" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Command runner (Makefile alternative)
 "cargo:bottom" = { version = "latest", os = [
   "macos",
@@ -304,10 +307,10 @@ sops = { version = "latest", os = ["macos"] }
 "aqua:mfontanini/presenterm" = { version = "latest", os = ["macos"] }
 'npm:@marp-team/marp-cli' = { version = 'latest', os = ["macos"] }
 "pipx:pptx2md" = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Convert powerpoint to markdown
 pandoc = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Convert markdown to word, pdf etc
 "pipx:weasyprint" = { version = "latest", os = ["macos"] }
 "cargo:viu" = { version = "latest", os = ["macos"] }
@@ -330,7 +333,7 @@ traefik = { version = "latest", os = ["macos"] }
 
 # --- Database Management ---
 "cargo:sqlx-cli" = { version = "latest", os = ["macos"] }
-"pipx:harlequin" = { version = "latest", os = ["macos"] }
+"pipx:harlequin" = { version = "latest", os = ["macos", "windows"] }
 
 [tasks]
 uv = "uv sync --group dev --all-extras"
