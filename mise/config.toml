@@ -15,9 +15,9 @@ status.show_env = true
 
 [tools]
 
-uv = { version = "latest", os = [
-  "macos", "windows"
-] } # Fast Python package installer and resolver
+# uv = { version = "latest", os = [
+#   "macos", "windows"
+# ] } # Fast Python package installer and resolver
 "cargo:cargo-binstall" = { version = "latest", os = [
   "macos", "windows"
 ] } # Binary installation for cargo packages
