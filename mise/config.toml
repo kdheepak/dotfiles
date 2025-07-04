@@ -15,12 +15,12 @@ status.show_env = true
 
 [tools]
 
-"cargo:cargo-binstall" = { version = "latest", os = [
-  "macos", "windows"
-] } # Binary installation for cargo packages
 uv = { version = "latest", os = [
   "macos", "windows"
 ] } # Fast Python package installer and resolver
+"cargo:cargo-binstall" = { version = "latest", os = [
+  "macos", "windows"
+] } # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
 go = { version = "latest", os = ["macos"] } # Go programming language compiler
