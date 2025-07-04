@@ -83,7 +83,7 @@ helix = { version = "latest", os = ["macos"] }
 
 # --- Shell and Productivity ---
 direnv = { version = "latest", os = [
-  "macos",
+  "macos", "windows"
 ] } # Environment variable management per directory
 fzf = { version = "latest", os = ["macos", "windows"] } # Fuzzy finder for command line
 usage = { version = "latest", os = [
