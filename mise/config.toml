@@ -33,6 +33,7 @@ python = { version = "latest", os = [
 bun = { version = "latest", os = [
   "macos",
 ] } # Fast JavaScript runtime and package manager
+zig = "latest"
 "asdf:mise-plugins/mise-nim" = { version = "latest", os = ["macos"] }
 "cargo:juliaup" = { version = "latest", os = ["macos", "windows"] }
 
