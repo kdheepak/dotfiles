@@ -37,14 +37,13 @@ case "$MIME_TYPE" in
         fi
         ;;
 
-    application/zip)
-        if command -v zipinfo > /dev/null; then
-            zipinfo "$FILENAME"
+    application/zip | application/x-tar | application/x-gzip | application/x-bzip2 | application/x-xz | application/x-7z-compressed)
+        if command -v ouch > /dev/null; then
+            ouch list "$FILENAME"
         else
-            zip -sf "$FILENAME"
+            echo "Archive file: $FILENAME (no archive lister found)"
         fi
         ;;
-
     *)
         if command -v bat > /dev/null; then
             bat --color=always --terminal-width "${FZF_PREVIEW_COLUMNS:-80}" "$FILENAME" 2> /dev/null
