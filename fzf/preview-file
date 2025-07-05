@@ -12,7 +12,9 @@ command -v file > /dev/null || {
 
 # Handle non-existent file (fallback to Git show)
 if [[ ! -e $FILENAME ]]; then
-    git show "HEAD^:${FILENAME}" || echo "File not found in Git history: ${FILENAME}"
+    git show ":$FILENAME" ||
+        git log --format=%H -- "$FILENAME" | head -n1 | xargs -I{} git show "{}:$FILENAME" ||
+        echo "File not found in working tree or Git history: ${FILENAME}"
     exit 0
 fi
 
@@ -24,6 +26,29 @@ case "$MIME_TYPE" in
             eza --git -lha --group-directories-first --no-user --color=always "$FILENAME"
         else
             ls -lah "$FILENAME"
+        fi
+        ;;
+    text/markdown)
+        if command -v glow > /dev/null; then
+            glow -p "$FILENAME"
+        elif command -v bat > /dev/null; then
+            bat --color=always --language=markdown --terminal-width "${FZF_PREVIEW_COLUMNS:-80}" "$FILENAME" 2> /dev/null
+        else
+            cat "$FILENAME"
+        fi
+        ;;
+    application/json)
+        if command -v jq > /dev/null; then
+            jq . "$FILENAME"
+        else
+            cat "$FILENAME"
+        fi
+        ;;
+    text/yaml | application/x-yaml)
+        if command -v yq > /dev/null; then
+            yq . "$FILENAME"
+        else
+            cat "$FILENAME"
         fi
         ;;
 
