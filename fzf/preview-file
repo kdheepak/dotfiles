@@ -1,32 +1,55 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-FILENAME="${1}"
+FILENAME="${1:-}"
 
-if [ ! -e "${FILENAME}" ]; then
-  git show HEAD^:${FILENAME}
-  exit 0
+# Check if required tools are available
+command -v file > /dev/null || {
+    echo "Error: 'file' command is required." >&2
+    exit 1
+}
+
+# Handle non-existent file (fallback to Git show)
+if [[ ! -e $FILENAME ]]; then
+    git show "HEAD^:${FILENAME}" || echo "File not found in Git history: ${FILENAME}"
+    exit 0
 fi
 
-case $(file --mime-type -b "${FILENAME}") in
-  inode/directory)
-    eza --git -lha --group-directories-first --no-user --color=always "${FILENAME}"
-    ;;
+MIME_TYPE=$(file --mime-type -b "$FILENAME")
 
-  image/*g)
-    if [ "$(command -v viu)" ]; then
-      catimg -w $((${FZF_PREVIEW_COLUMNS} - 2)) ${FILENAME}
-    else
-      echo ${FILENAME}
-    fi
-    ;;
+case "$MIME_TYPE" in
+    inode/directory)
+        if command -v eza > /dev/null; then
+            eza --git -lha --group-directories-first --no-user --color=always "$FILENAME"
+        else
+            ls -lah "$FILENAME"
+        fi
+        ;;
 
-  application/zip)
-    zip -sf ${FILENAME}
-    ;;
+    image/*)
+        if command -v viu > /dev/null; then
+            viu "$FILENAME"
+        elif command -v catimg > /dev/null; then
+            catimg -w $((${FZF_PREVIEW_COLUMNS:-80} - 2)) "$FILENAME"
+        else
+            echo "Image file: $FILENAME"
+        fi
+        ;;
 
-  *)
-    bat --color=always --terminal-width ${FZF_PREVIEW_COLUMNS} ${FILENAME} 2> /dev/null
-    ;;
+    application/zip)
+        if command -v zipinfo > /dev/null; then
+            zipinfo "$FILENAME"
+        else
+            zip -sf "$FILENAME"
+        fi
+        ;;
+
+    *)
+        if command -v bat > /dev/null; then
+            bat --color=always --terminal-width "${FZF_PREVIEW_COLUMNS:-80}" "$FILENAME" 2> /dev/null
+        else
+            cat "$FILENAME"
+        fi
+        ;;
 esac
