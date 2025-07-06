@@ -80,7 +80,7 @@ zig = "latest"
 # --- Editors ---
 neovim = { version = "nightly", os = ["macos", "windows"] }                      # Modern Vim-based text editor
 helix = { version = "latest", os = ["macos"] }
-"asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
+# "asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
 
 # --- Shell and Productivity ---
 direnv = { version = "latest", os = [
