@@ -1,5 +1,6 @@
 gui:
-  nerdFontsVersion: "3"
+  nerdFontsVersion: '3' 
+  border: single
 git:
   log:
     order: date-order
@@ -7,9 +8,7 @@ git:
 
   paging:
     colorArg: always
-    pager:
-      delta --light --paging=never --line-numbers --hyperlinks
-      --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --side-by-side
+    pager: delta --light --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 
   skipHookPrefix: wip
 
@@ -92,10 +91,6 @@ customCommands:
         initialValue: ""
       - type: "confirm"
         title: "Commit"
-        body:
-          "Commit with the message '{{.Form.Type}}{{.Form.Scope}}{{.Form.Breaking}}:
-          {{.Form.Message}}'. Is this okay?"
-    command:
-      "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end
-      }}{{.Form.Breaking}}: {{.Form.Message}}'"
+        body: "Commit with the message '{{.Form.Type}}{{.Form.Scope}}{{.Form.Breaking}}: {{.Form.Message}}'. Is this okay?"
+    command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
     loadingText: "Committing..."
