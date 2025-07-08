@@ -20,7 +20,7 @@ system-info:
 # Show current date and time
 [group("Info")]
 now:
-    @date '+%Y-%m-%d %H:%M:%S'
+    @date '+%Y-%m-%dT%H:%M:%S%z'
 
 # Show disk usage
 [group("Info")]
