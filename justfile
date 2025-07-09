@@ -340,7 +340,7 @@ checksum file:
 # Show weather for a location
 [group("Utils")]
 weather location="Ottawa,Canada":
-    @curl -s "wttr.in/{{location}}?format=3" 2>/dev/null || echo "Failed to get weather"
+    @curl -s "wttr.in/{{location}}?2nQT" 2>/dev/null || echo "Failed to get weather"
 
 # Convert timestamp to human readable format
 [group("Utils")]
@@ -351,4 +351,3 @@ timestamp-to-date ts:
 [group("Utils")]
 changelog:
     git-cliff --config .cliff.toml --output CHANGELOG.md
-
