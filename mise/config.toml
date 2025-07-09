@@ -345,7 +345,3 @@ clean = ["rm -rf .venv", "rm -rf node_modules"]
 lint = "pre-commit run --all-files"
 setup-python = "uv pip install --system ipython jupyter neovim python-localvenv-kernel jupyter jupyterlab jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext panel hvplot holoviews matplotlib numpy pandas 'ibis-framework[duckdb,geospatial]' lonboard jupyter_copilot jupyterlab-quarto jupyterlab-rainbow-brackets jupyterlab-code-formatter"
 
-[tasks.changelog]
-description = "Generate a changelog for the current version"
-outputs = ["CHANGELOG.md"]
-run = ["git-cliff --config .cliff.toml --output CHANGELOG.md"]
