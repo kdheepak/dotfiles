@@ -228,6 +228,9 @@ hexyl = { version = "latest", os = ["macos"] } # Command-line hex viewer
 "cargo:hyperfine" = { version = "latest", os = [
   "macos",
 ] } # Command-line benchmarking tool
+"cargo:cargo-criterion" = { version = "latest", os = [
+  "macos",
+] } # Command-line benchmarking tool
 "cargo:license-generator" = { version = "latest", os = [
   "macos",
 ] } # Software license generator
