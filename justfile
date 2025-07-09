@@ -347,6 +347,8 @@ weather location="Ottawa,Canada":
 timestamp-to-date ts:
     @date -d @{{ts}} 2>/dev/null || date -r {{ts}} 2>/dev/null || echo "Invalid timestamp"
 
-[no-cd]
-fzf:
-    just -g --choose
+# Generate a changelog for the current version
+[group("Utils")]
+changelog:
+    git-cliff --config .cliff.toml --output CHANGELOG.md
+

@@ -69,3 +69,6 @@ ln -s "$(pwd)/zed" ~/.config/zed
 
 rm -rf ~/local/bin/git-ilog
 ln -s "$(pwd)/scripts/git-ilog" ~/local/bin/git-ilog
+
+rm ~/.config/just/justfile
+ln -s "$(pwd)/justfile" ~/.config/just/justfile
