@@ -23,12 +23,14 @@ from typing import List, Optional
 
 import typer
 from rich.console import Console
+from rich.live import Live
+from rich.text import Text
+from rich.console import Group
 from rich.progress import (
     Progress,
     SpinnerColumn,
-    TextColumn,
     BarColumn,
-    TimeElapsedColumn,
+    TimeRemainingColumn,
 )
 
 console = Console()
@@ -67,74 +69,99 @@ class TimeoutError(Exception):
 
 def run_and_capture(command: list[str], timeout_seconds: Optional[float] = None):
     """Run a command with optional timeout, streaming output in real-time."""
+
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         bufsize=1,
         universal_newlines=True,
-        preexec_fn=os.setsid
-        if os.name != "nt"
-        else None,  # For process group termination
+        preexec_fn=os.setsid if os.name != "nt" else None,
     )
 
-    output = ""
     output_lines = []
+
+    # Create the progress bar (same as your original)
+    progress = Progress(
+        SpinnerColumn(),
+        BarColumn(bar_width=None),
+        TimeRemainingColumn(),
+        transient=True,
+        expand=True,
+    )
+
+    def create_progress_display(elapsed_time: float):
+        """Create multi-line progress display."""
+        lines = []
+
+        # Command line
+        cmd_display = f"[bold green]Running:[/] [code]`{' '.join(command)}`[/code]"
+        lines.append(Text.from_markup(cmd_display))
+
+        # Additional info line
+        if timeout_seconds:
+            info_line = f"[bold yellow]Timeout:[/] {timeout_seconds}s"
+            lines.append(Text.from_markup(info_line))
+
+        # Add the actual Rich progress bar
+        lines.append(progress)
+
+        return Group(*lines)
 
     def read_output():
         """Read output in a separate thread."""
-        nonlocal output
         try:
             for line in process.stdout:
-                # Sanitize sensitive info but preserve ANSI color codes
                 sanitized_line = sanitize(line.rstrip())
-                # Use Rich's capability to properly render ANSI codes
+                # Print output below the live display
                 console.print(sanitized_line, highlight=False, markup=False)
-                output += line
                 output_lines.append(line)
         except ValueError:
-            # Stream closed
             pass
 
     # Start reading thread
     reader_thread = threading.Thread(target=read_output, daemon=True)
     reader_thread.start()
 
+    start_time = time.time()
+
+    # Set up the progress task
+    task_desc = f"[code]`{' '.join(command)}`[/]"
+    if timeout_seconds:
+        task_desc += f" ([bold yellow]timeout[/]: {timeout_seconds} seconds)"
+
+    task = progress.add_task(task_desc, total=timeout_seconds or 1)
+
     try:
-        with Progress(
-            SpinnerColumn(),
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            TimeElapsedColumn(),
+        with Live(
+            create_progress_display(0),
             console=console,
-            transient=True,
-        ) as progress:
-            console.print("")
-            task_desc = f"[bold green]Running[/]: [code]`{' '.join(command)}`[/]"
-            if timeout_seconds:
-                task_desc += f" ([bold yellow]timeout[/]: {timeout_seconds} seconds)"
-
-            task = progress.add_task(task_desc, total=timeout_seconds or 1)
-
-            start_time = time.time()
-
-            # Poll process while updating progress
+            refresh_per_second=4,
+            transient=True,  # Remove when done, like Progress
+        ) as live:
+            # Update loop
             while process.poll() is None:
                 elapsed = time.time() - start_time
 
+                # Update the progress bar
                 if timeout_seconds:
                     progress.update(task, completed=elapsed)
-                    if elapsed >= timeout_seconds:
-                        raise subprocess.TimeoutExpired(command, timeout_seconds)
                 else:
                     # For no timeout, just update to show elapsed time
                     progress.update(task, completed=elapsed)
 
-                time.sleep(0.1)  # Small sleep to avoid busy waiting
+                # Update the live display
+                live.update(create_progress_display(elapsed))
+
+                if timeout_seconds and elapsed >= timeout_seconds:
+                    raise subprocess.TimeoutExpired(command, timeout_seconds)
+
+                time.sleep(0.25)  # Update every 250ms
 
             # Final update
             elapsed = time.time() - start_time
             progress.update(task, completed=elapsed)
+            live.update(create_progress_display(elapsed))
 
         return_code = process.returncode
 
@@ -144,38 +171,31 @@ def run_and_capture(command: list[str], timeout_seconds: Optional[float] = None)
         if return_code != 0:
             raise RuntimeError(f"Command failed with exit code {return_code}")
 
-        return sanitize(output)
-
     except subprocess.TimeoutExpired:
-        console.print(
-            f"\n[bold red]Command timed out after {timeout_seconds} seconds[/]"
-        )
-
-        # Terminate the process group
+        # Terminate process (same logic as before)
         try:
             if os.name != "nt":
                 os.killpg(os.getpgid(process.pid), signal.SIGTERM)
             else:
                 process.terminate()
 
-            # Give it a moment to terminate gracefully
             try:
                 process.wait(timeout=2.0)
             except subprocess.TimeoutExpired:
-                # Force kill if it doesn't terminate
                 if os.name != "nt":
                     os.killpg(os.getpgid(process.pid), signal.SIGKILL)
                 else:
                     process.kill()
                 process.wait()
         except (ProcessLookupError, OSError):
-            # Process already terminated
             pass
 
         raise TimeoutError(f"Command timed out after {timeout_seconds} seconds")
 
     finally:
-        # Ensure stdout is closed
+        # Stop the progress bar
+        progress.stop()
+
         if process.stdout and not process.stdout.closed:
             process.stdout.close()
 
