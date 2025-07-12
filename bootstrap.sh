@@ -69,6 +69,9 @@ ln -s "$(pwd)/zed" ~/.config/zed
 
 rm -rf ~/local/bin/git-ilog
 ln -s "$(pwd)/scripts/git-ilog" ~/local/bin/git-ilog
+rm -rf ~/local/bin/run-with-timeout
+ln -s "$(pwd)/scripts/run-with-timeout.py" ~/local/bin/run-with-timeout
 
+mkdir -p ~/.config/just
 rm ~/.config/just/justfile
 ln -s "$(pwd)/justfile" ~/.config/just/justfile
