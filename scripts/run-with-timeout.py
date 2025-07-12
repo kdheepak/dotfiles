@@ -109,9 +109,10 @@ def run_and_capture(command: list[str], timeout_seconds: Optional[float] = None)
             console=console,
             transient=True,
         ) as progress:
-            task_desc = f"Running: [code]`{' '.join(command)}`[/code]"
+            console.print("")
+            task_desc = f"[bold green]Running[/]: [code]`{' '.join(command)}`[/]"
             if timeout_seconds:
-                task_desc += f" (timeout: {timeout_seconds}s)"
+                task_desc += f" ([bold yellow]timeout[/]: {timeout_seconds} seconds)"
 
             task = progress.add_task(task_desc, total=timeout_seconds or 1)
 
