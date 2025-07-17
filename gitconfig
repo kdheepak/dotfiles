@@ -166,6 +166,7 @@
     edit = "!git ls-files --modified --other --exclude-standard | sort -u | fzf -0 --multi --preview 'git diff --color {}' | xargs -r $EDITOR -p"
     fixup = "!git log --oneline --no-decorate --no-merges | fzf -0 --preview 'git show --color=always --format=oneline {1}' | awk '{print $1}' | xargs -r git commit --fixup"
     resetm = "!git diff --name-only --cached | fzf -0 -m --preview 'git diff --color=always {-1}' | xargs -r git reset"
+    ai-commit = "!f() { uvx git-copilot-commit commit $@; }; f"
 
 
 [apply]
@@ -277,11 +278,11 @@
 # clearly makes git better
 
 [column]
-        ui = auto
+    ui = auto
 [branch]
-        sort = -committerdate
+    sort = -committerdate
 [tag]
-        sort = version:refname
+    sort = version:refname
 [merge "mergiraf"]
-	name = mergiraf
-	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
