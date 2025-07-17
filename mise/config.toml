@@ -321,6 +321,7 @@ pandoc = { version = "latest", os = [
 "pipx:weasyprint" = { version = "latest", os = ["macos"] }
 "cargo:viu" = { version = "latest", os = ["macos"] }
 vhs = { version = "latest", os = ["macos"] }
+"asdf:ivanvc/asdf-ttyd" = { version = "latest", os = ["macos"] }
 
 # --- AI ---
 "aqua:charmbracelet/mods" = { version = "latest", os = [
