@@ -60,6 +60,7 @@ zig = "latest"
 "cargo:uv-migrator" = { version = "latest", os = [
   "macos",
 ] } # Move from setup.py, conda env etc to uv,
+"pipx:git-copilot-commit" = { version = "latest" }
 
 "pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material", os = [
   "macos",
@@ -78,7 +79,7 @@ zig = "latest"
 "npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos", "windows"] }
 
 # --- Editors ---
-neovim = { version = "nightly", os = ["macos", "windows"] }                      # Modern Vim-based text editor
+neovim = { version = "latest", os = ["macos", "windows"] }                      # Modern Vim-based text editor
 helix = { version = "latest", os = ["macos"] }
 # "asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
 
