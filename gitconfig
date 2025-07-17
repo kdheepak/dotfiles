@@ -30,6 +30,7 @@
     algorithm = histogram
     colorMoved = plain
     mnemonicPrefix = true
+    context = 3
 
 [pretty]
     lg = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an%C(reset)%C(yellow)%d%C(reset)
