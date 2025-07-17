@@ -320,6 +320,7 @@ pandoc = { version = "latest", os = [
 ] } # Convert markdown to word, pdf etc
 "pipx:weasyprint" = { version = "latest", os = ["macos"] }
 "cargo:viu" = { version = "latest", os = ["macos"] }
+vhs = { version = "latest", os = ["macos"] }
 
 # --- AI ---
 "aqua:charmbracelet/mods" = { version = "latest", os = [
