@@ -279,7 +279,7 @@ fi
 
 # >>> gams initialize >>>
 # !! Contents within this block are managed by a gams installer script !!
-export PATH="$HOME/.local/bin/gams_49_6_1/gams49.6_osx_arm64:$PATH"
+export PATH="$HOME/.local/bin/gams_50_2_0/gams50.2_osx_arm64:$PATH"
 # <<< gams initialize <<<
 
 export NVM_DIR="$HOME/.nvm"

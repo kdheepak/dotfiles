@@ -41,7 +41,7 @@ app = typer.Typer(
     name=__name__, no_args_is_help=True, help=__doc__, add_completion=False
 )
 
-GAMS_VERSION_NUMBER = "49.6.1"
+GAMS_VERSION_NUMBER = "50.2.0"
 SCRIPT_NAME = f"./{Path(__file__).name}"
 
 
