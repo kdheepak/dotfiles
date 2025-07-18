@@ -5,7 +5,7 @@
 experimental = true # Enable experimental features in mise
 pipx_uvx = true # Enable pipx and uvx integration for Python package management
 pipx.uvx = true # Enable pipx and uvx integration for Python package management
-python.uv_venv_auto = true # Automatically create Python virtual environments using uv
+python.uv_venv_auto = false # Automatically create Python virtual environments using uv
 python.compile = false # always download precompiled binaries
 idiomatic_version_file_enable_tools = [
   "python",
