@@ -242,7 +242,6 @@ hexyl = { version = "latest", os = ["macos"] } # Command-line hex viewer
 ] } # Alternative to dig
 duckdb = { version = "latest", os = ["macos"] }
 "asdf:mise-plugins/mise-sqlite" = { version = "latest", os = ["macos"] }
-"asdf:mise-plugins/mise-ffmpeg" = { version = "latest", os = ["macos"] }
 "cargo:ouch" = { version = "latest", os = ["macos"] } # Archive extraction tool
 "cargo:pastel" = { version = "latest", os = [
   "macos",
