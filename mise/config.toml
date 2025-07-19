@@ -81,7 +81,7 @@ zig = "latest"
 
 # --- Editors ---
 neovim = { version = "latest", os = ["macos", "windows"] }                      # Modern Vim-based text editor
-helix = { version = "latest", os = ["macos"] }
+"aqua:helix-editor/helix" = { version = "latest", os = ["macos"] }
 # "asdf:mise-plugins/mise-vim" = { version = "latest", os = ["macos"] }
 
 # --- Shell and Productivity ---
