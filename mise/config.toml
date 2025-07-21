@@ -310,6 +310,7 @@ sops = { version = "latest", os = ["macos"] }
 
 # --- presentation ---
 "aqua:mfontanini/presenterm" = { version = "latest", os = ["macos"] }
+"patat" = { version = "latest", os = ["macos"] }
 'npm:@marp-team/marp-cli' = { version = 'latest', os = ["macos"] }
 "pipx:pptx2md" = { version = "latest", os = [
   "macos", "windows"
