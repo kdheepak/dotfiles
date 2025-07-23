@@ -37,6 +37,10 @@ config.inactive_pane_hsb = {
 }
 
 config.color_scheme = "rose-pine"
+config.colors = {
+  selection_bg = "#44475a", -- or any color that contrasts well
+  selection_fg = "none", -- "none" means it will use the existing foreground
+}
 
 local basename = function(s)
   return string.gsub(s, "(.*[/\\])(.*)", "%2")
