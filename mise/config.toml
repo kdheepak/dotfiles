@@ -62,6 +62,7 @@ zig = "latest"
 ] } # Move from setup.py, conda env etc to uv,
 "pipx:git-copilot-commit" = { version = "latest" }
 "pipx:python-semantic-release" = { version = "latest" }
+"pipx:py7zr" = { version = "latest" }
 
 "pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material", os = [
   "macos",
