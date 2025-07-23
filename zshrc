@@ -294,6 +294,7 @@ eval "$(starship init zsh)"
 
 eval "$(direnv hook zsh)"
 
+eval "$(zoxide init zsh --cmd cd)"
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
