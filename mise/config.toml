@@ -95,7 +95,7 @@ usage = { version = "latest", os = [
 watchexec = { version = "latest", os = [
   "macos",
 ] } # File watcher that executes commands on changes
-zoxide = { version = "latest", os = ["macos"] } # Smart cd command (z command)
+zoxide = { version = "latest", os = ["macos", "windows"] } # Smart cd command (z command)
 gum = { version = "latest", os = [
   "macos", "windows"
 ] } # Tool for glamorous shell scripts and TUI components
