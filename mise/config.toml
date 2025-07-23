@@ -23,7 +23,7 @@ status.show_env = true
 ] } # Binary installation for cargo packages
 
 # --- Languages and Runtimes ---
-go = { version = "latest", os = ["macos"] } # Go programming language compiler
+# go = { version = "latest", os = ["macos"] } # Go programming language compiler
 node = { version = "latest", os = [
   "macos", "windows"
 ] } # Python programming language interpreter
@@ -34,7 +34,7 @@ bun = { version = "latest", os = [
   "macos",
 ] } # Fast JavaScript runtime and package manager
 zig = "latest"
-"asdf:mise-plugins/mise-nim" = { version = "latest", os = ["macos"] }
+# "asdf:mise-plugins/mise-nim" = { version = "latest", os = ["macos"] }
 "cargo:juliaup" = { version = "latest", os = ["macos", "windows"] }
 
 # --- Python Ecosystem Tools (via pipx) ---
