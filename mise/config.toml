@@ -110,6 +110,7 @@ cosign = { version = "latest", os = [
 ] } # A tool for Container Signing, Verification and Storage
 "pipx:bump2version" = { version = "latest", os = ["macos"] } # Bump version
 "aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
+"aqua:ip7z/7zip" = { version = "latest" }
 
 # --- File System and Navigation ---
 bat = { version = "latest", os = [
@@ -170,6 +171,7 @@ delta = { version = "latest", os = [
 "cargo:git-absorb" = { version = "latest", os = ["macos"] }
 "pipx:git-revise" = { version = "latest", os = ["macos"] }
 wait-for-gh-rate-limit = { version = "latest", os = ["macos"] }
+"aqua:dlvhdr/gh-dash" = { version = "latest", os = ["macos"] }
 "ubi:houseabsolute/omegasort" = { version = "latest", os = ["macos"] }
 "ubi:houseabsolute/precious" = { version = "latest", os = ["macos"] }
 "asdf:kdheepak/asdf-tig" = { version = "latest", os = ["macos"] }
