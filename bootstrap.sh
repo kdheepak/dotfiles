@@ -66,6 +66,8 @@ rm -rf ~/mise
 ln -s "$(pwd)/mise" ~/mise
 rm -rf ~/.config/zed
 ln -s "$(pwd)/zed" ~/.config/zed
+rm -rf ~/.config/jj
+ln -s "$(pwd)/jj" ~/.config/jj
 
 rm -rf ~/local/bin/git-ilog
 ln -s "$(pwd)/scripts/git-ilog" ~/local/bin/git-ilog

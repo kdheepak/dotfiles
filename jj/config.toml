@@ -1,0 +1,80 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+merge-tools.delta.diff-expected-exit-codes = [0, 1]
+
+[user]
+email = "1813121+kdheepak@users.noreply.github.com"
+name = "Dheepak Krishnamurthy"
+
+[ui]
+editor = "nvim"
+default-command = "log"
+pager = "delta"
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+diff-formatter = "delta"
+merge-editor = "mergiraf"
+conflict-marker-style = "git"
+
+[aliases]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+init = ["git", "init", "--colocate"]
+ls = ["ls-files"]
+graph = ["log", "--graph"]
+file-diff = ["diff", "--name-only"]
+amecomi = ["commit", "--amend", "--no-edit"]
+cleanfetch = ["fetch", "--all", "--prune", "--tags", "--prune-tags"]
+push = [ "git", "push", "-c", "@-" ]
+blame = [ "file", "annotate" ]
+
+fetch = ['git', 'fetch']
+
+here = ['bookmark', 'set', '-r', '@-']
+give = ['squash', '--use-destination-message', '--from', '@', '--into']
+take = ['squash', '--use-destination-message', '--into', '@', '--from']
+
+# Retrunk a series. Typically used as `jj retrunk -s ...`, and notably can be
+# used with open:
+# - jj retrunk -s 'all:roots(open())'
+retrunk = [ "rebase", "-d", "trunk()" ]
+
+# Take content from any change, and move it into @.
+# - jj consume xyz path/to/file`
+consume = [ "squash", "--into", "@", "--from" ]
+
+# Eject content from @ into any other change.
+# - jj eject xyz --interactive
+eject = [ "squash", "--from", "@", "--into" ]
+
+[revset-aliases]
+# Prevent rewriting commits authored by other users.
+"immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
+# Show commits that are not in `main@origin`. Default is `present(@) | ancestors(immutable_heads().., 2) | present(trunk())`.
+log = "main@origin.."
+
+[git]
+write-change-id-header = true
+sign-on-push = true
+auto-local-bookmark = true # Automatically create local bookmarks for remote branches.
+private-commits = "description(glob:'wip:*') | description(glob:'private:*')" # Prevent pushing WIPs or anything explicitly labeled "private".
+push-new-bookmarks = true
+
+[snapshot]
+auto-track = "none()"
+
+[templates]
+draft_commit_description ='''
+    concat(
+      coalesce(description, default_commit_description, "\n"),
+      surround(
+        "\nJJ: This commit contains the following changes:\n", "",
+        indent("JJ:     ", diff.stat(72)),
+      ),
+      "\nJJ: ignore-rest\n",
+      diff.git(),
+    )
+'''
+
+[template-aliases]
+"format_timestamp(timestamp)" = "timestamp.ago()"
+"format_short_signature(signature)" = "signature.name()"
+
