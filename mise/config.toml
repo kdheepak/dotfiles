@@ -168,6 +168,7 @@ delta = { version = "latest", os = [
   "macos",
 ] } # Summary about git repo size
 "aqua:git-lfs/git-lfs" = { version = "latest", os = ["macos"] }
+"ubi:abhinav/git-spice[exe=gs]" = { version = "latest", os = ["macos"] } # mise use --global 'ubi:abhinav/git-spice[exe=gs]'
 "npm:git-cz" = { version = "latest", os = ["macos"] }
 "cargo:git-absorb" = { version = "latest", os = ["macos"] }
 "pipx:git-revise" = { version = "latest", os = ["macos"] }
@@ -346,6 +347,7 @@ traefik = { version = "latest", os = ["macos"] }
 # --- Database Management ---
 "cargo:sqlx-cli" = { version = "latest", os = ["macos"] }
 "pipx:harlequin" = { version = "latest", os = ["macos", "windows"] }
+"ubi:abhinav/git-spice" = { version = "latest", exe = "gs" }
 
 [tasks]
 uv = "uv sync --group dev --all-extras"
