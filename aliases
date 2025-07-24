@@ -287,11 +287,83 @@ alias gst='git status -s'
 alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
 
 cd-box() {
-    local box_dir="$HOME/Library/CloudStorage/Box-Box"
+    local box_dir=""
+    local os_type=""
+
+    # Detect operating system
+    if [[ $OSTYPE == "darwin"* ]]; then
+        # macOS
+        os_type="macos"
+        box_dir="$HOME/Library/CloudStorage/Box-Box"
+    elif [[ $OSTYPE == "linux-gnu"* ]]; then
+        # Linux
+        os_type="linux"
+        # Common Linux Box paths
+        if [ -d "$HOME/Box" ]; then
+            box_dir="$HOME/Box"
+        elif [ -d "$HOME/Box Sync" ]; then
+            box_dir="$HOME/Box Sync"
+        elif [ -d "$HOME/.local/share/Box" ]; then
+            box_dir="$HOME/.local/share/Box"
+        fi
+    elif [[ $OSTYPE == "msys" ]] || [[ $OSTYPE == "cygwin" ]] || [[ -n $WSL_DISTRO_NAME ]]; then
+        # Windows (Git Bash, Cygwin, or WSL)
+        os_type="windows"
+        # Try common Windows Box paths
+        if [ -d "$HOME/Box" ]; then
+            box_dir="$HOME/Box"
+        elif [ -d "/c/Users/$USER/Box" ]; then
+            box_dir="/c/Users/$USER/Box"
+        elif [ -d "/mnt/c/Users/$USER/Box" ]; then
+            box_dir="/mnt/c/Users/$USER/Box"
+        elif [ -d "$USERPROFILE/Box" ] 2> /dev/null; then
+            box_dir="$USERPROFILE/Box"
+        fi
+    else
+        # Fallback - try common generic paths
+        os_type="unknown"
+        if [ -d "$HOME/Box" ]; then
+            box_dir="$HOME/Box"
+        elif [ -d "$HOME/Box Sync" ]; then
+            box_dir="$HOME/Box Sync"
+        fi
+    fi
+
+    # Check if Box directory exists
+    if [ -z "$box_dir" ] || [ ! -d "$box_dir" ]; then
+        echo "Error: Box directory not found for $os_type system."
+        echo "Please check if Box is installed and synced."
+        return 1
+    fi
+
+    # Check if required commands are available
+    if ! command -v fzf > /dev/null 2>&1; then
+        echo "Error: fzf is not installed. Please install fzf first."
+        echo "Visit: https://github.com/junegunn/fzf#installation"
+        return 1
+    fi
+
+    # Use eza if available, otherwise fall back to ls
+    local preview_cmd
+    if command -v eza > /dev/null 2>&1; then
+        preview_cmd="eza --tree --color=always --level=1 {}"
+    elif command -v exa > /dev/null 2>&1; then
+        preview_cmd="exa --tree --color=always --level=1 {}"
+    else
+        preview_cmd="ls -la {}"
+    fi
+
+    echo "Searching Box directory: $box_dir"
+
+    # Find directories and let user select with fzf
     local dir
-    dir=$(find "$box_dir" -mindepth 1 -maxdepth 1 -type d | fzf --no-multi --preview 'eza --tree --color=always --level=1 {}')
+    dir=$(find "$box_dir" -mindepth 1 -maxdepth 1 -type d 2> /dev/null | fzf --no-multi --preview "$preview_cmd" --preview-window=right:50%:wrap)
+
     if [ -n "$dir" ]; then
-        cd "$dir"
+        cd "$dir" || return
+        echo "Changed to: $(pwd)"
+    else
+        echo "No directory selected."
     fi
 }
 
@@ -380,4 +452,3 @@ uv() {
             ;;
     esac
 }
-
