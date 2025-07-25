@@ -168,7 +168,6 @@ delta = { version = "latest", os = [
   "macos",
 ] } # Summary about git repo size
 "aqua:git-lfs/git-lfs" = { version = "latest", os = ["macos"] }
-"ubi:abhinav/git-spice[exe=gs]" = { version = "latest", os = ["macos"] } # mise use --global 'ubi:abhinav/git-spice[exe=gs]'
 "npm:git-cz" = { version = "latest", os = ["macos"] }
 "cargo:git-absorb" = { version = "latest", os = ["macos"] }
 "pipx:git-revise" = { version = "latest", os = ["macos"] }
