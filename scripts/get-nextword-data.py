@@ -25,7 +25,6 @@ from rich.progress import (
     BarColumn,
     DownloadColumn,
     Progress,
-    TaskID,
     TextColumn,
     TimeRemainingColumn,
     TransferSpeedColumn,
@@ -43,7 +42,7 @@ DEFAULT_DIR = Path.home() / "local" / "dictionary"
 EXPECTED_SUBDIR = "nextword-data-large"
 
 
-def format_size(bytes: int) -> str:
+def format_size(bytes: float) -> str:
     """Format bytes as human readable string."""
     for unit in ["B", "KB", "MB", "GB"]:
         if bytes < 1024:
@@ -58,23 +57,6 @@ def check_existing_data(dict_dir: Path) -> bool:
     return expected_path.exists() and any(expected_path.iterdir())
 
 
-def download_with_progress(url: str, progress: Progress, task_id: TaskID) -> bytes:
-    """Download file with progress tracking."""
-    with httpx.stream("GET", url, follow_redirects=True) as response:
-        response.raise_for_status()
-
-        # Get total size from headers
-        total_size = int(response.headers.get("content-length", 0))
-        progress.update(task_id, total=total_size)
-
-        data = bytearray()
-        for chunk in response.iter_bytes(chunk_size=8192):
-            data.extend(chunk)
-            progress.update(task_id, advance=len(chunk))
-
-    return bytes(data)
-
-
 def extract_tar_data(tar_data: bytes, extract_dir: Path) -> None:
     """Extract tar.gz data to directory."""
     with tempfile.NamedTemporaryFile() as tmp_file:
@@ -82,7 +64,12 @@ def extract_tar_data(tar_data: bytes, extract_dir: Path) -> None:
         tmp_file.flush()
 
         with tarfile.open(tmp_file.name, "r:gz") as tar:
-            tar.extractall(extract_dir)
+            # Use data_filter for security (Python 3.12+) or fallback to no filter
+            try:
+                tar.extractall(extract_dir, filter="data")
+            except TypeError:
+                # Fallback for older Python versions that don't support filter parameter
+                tar.extractall(extract_dir)
 
 
 @app.command()
@@ -121,24 +108,63 @@ def download(
             console.print("🗑️  [yellow]Removing existing data...[/yellow]")
             shutil.rmtree(expected_path)
 
-        # Download with progress bar
+        # Download with progress bar - we'll update columns after getting response
         with Progress(
             TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            "[progress.percentage]{task.percentage:>3.1f}%",
-            "•",
-            DownloadColumn(),
-            "•",
-            TransferSpeedColumn(),
-            "•",
-            TimeRemainingColumn(),
             console=console,
             transient=True,
         ) as progress:
-            task = progress.add_task("Downloading...", total=None)
+            progress.add_task("Connecting...", total=None)
 
             try:
-                tar_data = download_with_progress(DATA_URL, progress, task)
+                # First, check if we can get the total size
+                with httpx.stream("GET", DATA_URL, follow_redirects=True) as response:
+                    response.raise_for_status()
+                    total_size = int(response.headers.get("content-length", 0)) or None
+
+                    # Now configure progress bar based on whether we have total size
+                    progress.stop()
+
+                    if total_size:
+                        # We have size - show full progress bar
+                        progress_columns = [
+                            TextColumn("[progress.description]{task.description}"),
+                            BarColumn(),
+                            "[progress.percentage]{task.percentage:>3.1f}%",
+                            "•",
+                            DownloadColumn(),
+                            "•",
+                            TransferSpeedColumn(),
+                            "•",
+                            TimeRemainingColumn(),
+                        ]
+                    else:
+                        # No size - show simpler progress without percentage/time
+                        progress_columns = [
+                            TextColumn("[progress.description]{task.description}"),
+                            "•",
+                            DownloadColumn(),
+                            "•",
+                            TransferSpeedColumn(),
+                        ]
+
+                    # Restart progress with appropriate columns
+                    with Progress(
+                        *progress_columns, console=console, transient=True
+                    ) as sized_progress:
+                        download_task = sized_progress.add_task(
+                            "Downloading..."
+                            if total_size
+                            else "Downloading (size unknown)...",
+                            total=total_size,
+                        )
+
+                        data = bytearray()
+                        for chunk in response.iter_bytes(chunk_size=8192):
+                            data.extend(chunk)
+                            sized_progress.update(download_task, advance=len(chunk))
+
+                tar_data = bytes(data)
             except httpx.RequestError as e:
                 console.print(f"❌ [red]Download failed:[/red] {e}")
                 raise typer.Exit(1)
