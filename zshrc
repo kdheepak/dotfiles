@@ -51,40 +51,6 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer
 
-# zinit ice depth=1; zinit light romkatv/powerlevel10k
-
-# # To customize prompt, run `p10k configure` or edit ~/gitrepos/dotfiles/p10k.zsh.
-# [[ ! -f ~/gitrepos/dotfiles/p10k.zsh ]] || source ~/gitrepos/dotfiles/p10k.zsh
-
-# export POWERLEVEL9K_DIR_HYPERLINK=true
-#
-# export POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
-# export POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=4
-#
-# # cyan reads better
-# export POWERLEVEL9K_DIR_BACKGROUND='#89b4fa'
-# export POWERLEVEL9K_DIR_FOREGROUND='#11111b'
-# export POWERLEVEL9K_DIR_ANCHOR_FOREGROUND='#11111b'
-# export POWERLEVEL9K_DIR_SHORTENED_FOREGROUND='#11111b'
-# export POWERLEVEL9K_SHOW_CHANGESET=true
-# export POWERLEVEL9K_CHANGESET_HASH_LENGTH=6
-#
-# export POWERLEVEL9K_VCS_CLEAN_BACKGROUND=4
-# export POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=5
-# export POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=4
-# export POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=5
-# export POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
-#
-# export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-#     # =========================[ Line #1 ]=========================
-#     # os_icon                 # os identifier
-#     dir                     # current directory
-#     vcs                     # git status
-#     # =========================[ Line #2 ]=========================
-#     newline                 # \n
-#     # prompt_char           # prompt symbol
-# )
-
 setopt AUTO_CD
 bindkey '^P' up-history
 bindkey '^N' down-history
@@ -160,16 +126,6 @@ zinit ice lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
 zinit load "b4b4r07/emoji-cli"
-
-export NVM_SYMLINK_CURRENT=true
-export NVM_AUTO_USE=true
-zinit light lukechilds/zsh-nvm
-
-# zinit ice pick"iterm2.plugin.zsh" lucid; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-# zinit snippet OMZ::plugins/git/git.plugin.zsh
-# zinit snippet OMZ::lib/history.zsh
-# zinit snippet OMZ::lib/completion.zsh
-# zinit snippet OMZ::lib/git.zsh
 
 zinit light zdharma-continuum/fast-syntax-highlighting
 
@@ -259,14 +215,6 @@ zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=do
 autoload -U bashcompinit
 bashcompinit
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
 ### End of Zinit's installer chunk
 
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
@@ -275,16 +223,15 @@ else
   eval "$($HOME/.local/bin/mise activate zsh)"
 fi
 
+# need to do this after mise
+zinit light loiccoyle/zsh-github-copilot
+
 . "$HOME/.cargo/env"
 
 # >>> gams initialize >>>
 # !! Contents within this block are managed by a gams installer script !!
 export PATH="$HOME/local/bin/gams_50_2_0/gams50.2_osx_arm64:$PATH"
 # <<< gams initialize <<<
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
