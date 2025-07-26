@@ -151,15 +151,6 @@ datetime() {
     date +%Y-%m-%dT%H:%M:%S%z
 }
 
-function get_nextword_data() {
-    echo "Takes a long time to download..."
-    mkdir ~/local/dictionary
-    curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
-}
-
-alias gsb='git status -sb'
-alias gst='git status -s'
-
 alias luamake="$HOME/gitrepos/lua-language-server/3rd/luamake/luamake"
 
 cd-box() {
