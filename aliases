@@ -157,51 +157,10 @@ function get_nextword_data() {
     curl -L https://github.com/high-moctane/nextword-data/archive/large.tar.gz | tar zx -C ~/local/dictionary/
 }
 
-gli() {
-
-    # param validation
-    if [[ ! $(git log -n 1 "$@" | head -n 1) ]]; then
-        return
-    fi
-
-    # filter by file string
-    local filter
-    # param existed, git log for file if existed
-    if [ -n "$@" ] && [ -f "$@" ]; then
-        filter="-- $@"
-    fi
-
-    # git command
-    local gitlog=(
-        git log
-        --graph --color=always
-        --abbrev=7
-        --format='%C(auto)%h %an %C(blue)%s %C(yellow)%cr'
-        "$@"
-    )
-
-    # fzf command
-    local fzf=(
-        fzf
-        --ansi --no-sort --reverse --tiebreak=index
-        --preview "f() { set -- \$(echo -- \$@ | grep -o '[a-f0-9]\{7\}'); [ \$# -eq 0 ] || git show --color=always \$1 $filter; }; f {}"
-        --bind "ctrl-q:abort,ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % $filter | less -R') << 'FZF-EOF'
-                {}
-                FZF-EOF"
-        --preview-window=right:60%
-    )
-
-    # piping them
-    $gitlog | $fzf
-}
-
-alias gfap="gfa --prune"
 alias gsb='git status -sb'
 alias gst='git status -s'
 
-alias luamake=/Users/$USER/gitrepos/lua-language-server/3rd/luamake/luamake
+alias luamake="$HOME/gitrepos/lua-language-server/3rd/luamake/luamake"
 
 cd-box() {
     local box_dir=""
@@ -285,7 +244,6 @@ cd-box() {
 }
 
 function archive-folder() {
-
     # Show help message if no arguments or '-h' is passed
     if [[ -z $1 || $1 == "-h" || $1 == "--help" ]]; then
         echo "Usage: archive-folder <folder_name>"
