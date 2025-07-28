@@ -187,6 +187,9 @@ delta = { version = "latest", os = [
   "macos",
   "windows",
 ] } # Better git diffs (complements difftastic)
+"cargo:lazyjj" = { version = "latest", os = [
+  "macos",
+] } # lazyjj
 "cargo:git-trim" = { version = "latest", os = [
   "macos",
   "windows",
