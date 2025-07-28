@@ -241,7 +241,6 @@
     hyperlinks = true
     features = interactive
     navigate = true
-    light = true
 [delta "interactive"]
     diffFilter = delta --color-only --features=interactive
     keep-plus-minus-markers = false
