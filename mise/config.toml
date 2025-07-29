@@ -401,6 +401,9 @@ vhs = { version = "latest", os = ["macos"] }
 "pipx:ddgr" = { version = "latest", os = [
   "macos",
 ] } # DuckDuckGo search CLI tool
+"pipx:dunk" = { version = "latest", os = [
+  "macos",
+] } # git diff tool
 
 # --- Containerization ---
 podman = { version = "latest", os = ["macos"] }
