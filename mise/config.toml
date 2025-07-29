@@ -410,6 +410,7 @@ traefik = { version = "latest", os = ["macos"] }
 "ubi:abhinav/git-spice" = { version = "latest", exe = "gs" }
 
 [tasks]
+gh-extensions = "gh extension install dlvhdr/gh-dash && gh extension install github/gh-copilot"
 uv = "uv sync --group dev --all-extras"
 clean = ["rm -rf .venv", "rm -rf node_modules"]
 lint = "pre-commit run --all-files"
