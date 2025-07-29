@@ -273,7 +273,7 @@ uv() {
     local CYAN='\033[0;36m'
     local BOLD='\033[1m'
     local DIM='\033[2m'
-    local NC='\033[0m' # No Color
+    local NOCOLOR='\033[0m'
 
     case "${1:-}" in
         activate)
@@ -305,10 +305,10 @@ uv() {
 
             # Check if virtual environment exists
             if [[ ! -d $venv_path ]]; then
-                echo -e "${RED}${BOLD}Error:${NC} ${RED}Virtual environment directory not found: ${YELLOW}${venv_path}${NC}" >&2
-                echo -e "${DIM}Searched in:${NC}" >&2
-                echo -e "  ${DIM}•${NC} ${input_path}" >&2
-                echo -e "  ${DIM}•${NC} ~/venvs/${input_path}" >&2
+                echo -e "${RED}${BOLD}Error:${NOCOLOR} ${RED}Virtual environment directory not found: ${YELLOW}${venv_path}${NOCOLOR}" >&2
+                echo -e "${DIM}Searched in:${NOCOLOR}" >&2
+                echo -e "  ${DIM}•${NOCOLOR} ${input_path}" >&2
+                echo -e "  ${DIM}•${NOCOLOR} ~/venvs/${input_path}" >&2
                 return 1
             fi
 
@@ -316,25 +316,25 @@ uv() {
             if [[ -f $activate_script ]]; then
                 # shellcheck source=/dev/null
                 . "$activate_script"
-                echo -e "${GREEN}${BOLD}✓${NC} ${GREEN}Activated virtual environment:${NC} ${CYAN}${venv_path}${NC}"
+                echo -e "${GREEN}${BOLD}✓${NOCOLOR} ${GREEN}Activated virtual environment:${NOCOLOR} ${CYAN}${venv_path}${NOCOLOR}"
             else
-                echo -e "${RED}${BOLD}Error:${NC} ${RED}Activation script not found: ${YELLOW}${activate_script}${NC}" >&2
+                echo -e "${RED}${BOLD}Error:${NOCOLOR} ${RED}Activation script not found: ${YELLOW}${activate_script}${NOCOLOR}" >&2
                 return 1
             fi
             ;;
         deactivate)
             # Check if we're in a virtual environment
             if [[ -z ${VIRTUAL_ENV:-} ]]; then
-                echo -e "${RED}${BOLD}Error:${NC} ${RED}No virtual environment is currently active${NC}" >&2
+                echo -e "${RED}${BOLD}Error:${NOCOLOR} ${RED}No virtual environment is currently active${NOCOLOR}" >&2
                 return 1
             fi
             # Call the deactivate function if it exists
             if command -v deactivate > /dev/null 2>&1; then
                 local old_venv="$VIRTUAL_ENV"
                 deactivate
-                echo -e "${YELLOW}${BOLD}✗${NC} ${YELLOW}Deactivated virtual environment:${NC} ${CYAN}${old_venv}${NC}"
+                echo -e "${YELLOW}${BOLD}✗${NOCOLOR} ${YELLOW}Deactivated virtual environment:${NOCOLOR} ${CYAN}${old_venv}${NOCOLOR}"
             else
-                echo -e "${RED}${BOLD}Error:${NC} ${RED}deactivate function not available${NC}" >&2
+                echo -e "${RED}${BOLD}Error:${NOCOLOR} ${RED}deactivate function not available${NOCOLOR}" >&2
                 return 1
             fi
             ;;
