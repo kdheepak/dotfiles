@@ -130,6 +130,9 @@ cosign = { version = "latest", os = [
 "pipx:bump2version" = { version = "latest", os = ["macos"] } # Bump version
 "aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
 "aqua:ip7z/7zip" = { version = "latest" }
+"aqua:zyedidia/eget"= { version = "latest", os = [
+  "macos",
+] } # Easy Get - a tool to download and install binaries
 
 # --- File System and Navigation ---
 bat = { version = "latest", os = [
