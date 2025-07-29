@@ -267,9 +267,18 @@ function archive-folder() {
 uv() {
     case "${1:-}" in
         activate)
-            local venv_path="${2:-.venv}"
-            local activate_script
+            local input_path="${2:-.venv}"
+            local venv_path
 
+            # If the input path contains a .venv subdirectory, use that
+            if [[ -d "${input_path}/.venv" ]]; then
+                venv_path="${input_path}/.venv"
+            else
+                # Otherwise use the path as-is (maintains backward compatibility)
+                venv_path="$input_path"
+            fi
+
+            local activate_script
             # Determine activation script location based on platform
             if [[ $OSTYPE == "msys" || $OSTYPE == "cygwin" || -n ${WINDIR:-} ]]; then
                 activate_script="${venv_path}/Scripts/activate"
@@ -293,14 +302,12 @@ uv() {
                 return 1
             fi
             ;;
-
         deactivate)
             # Check if we're in a virtual environment
             if [[ -z ${VIRTUAL_ENV:-} ]]; then
                 echo "Error: No virtual environment is currently active" >&2
                 return 1
             fi
-
             # Call the deactivate function if it exists
             if command -v deactivate > /dev/null 2>&1; then
                 local old_venv="$VIRTUAL_ENV"
@@ -311,7 +318,6 @@ uv() {
                 return 1
             fi
             ;;
-
         *)
             # For all other commands, run the actual uv executable
             command uv "$@"
