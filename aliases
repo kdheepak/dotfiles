@@ -265,17 +265,34 @@ function archive-folder() {
 }
 
 uv() {
+    # Color definitions
+    local RED='\033[0;31m'
+    local GREEN='\033[0;32m'
+    local YELLOW='\033[0;33m'
+    local BLUE='\033[0;34m'
+    local CYAN='\033[0;36m'
+    local BOLD='\033[1m'
+    local DIM='\033[2m'
+    local NC='\033[0m' # No Color
+
     case "${1:-}" in
         activate)
-            local input_path="${2:-.venv}"
+            local input_path="${2:-.}"
             local venv_path
 
-            # If the input path contains a .venv subdirectory, use that
+            # Check multiple locations for the virtual environment
             if [[ -d "${input_path}/.venv" ]]; then
+                # If the input path contains a .venv subdirectory, use that
                 venv_path="${input_path}/.venv"
-            else
-                # Otherwise use the path as-is (maintains backward compatibility)
+            elif [[ -d $input_path && $input_path == */.venv ]]; then
+                # Use the path as-is if it exists and ends with .venv
                 venv_path="$input_path"
+            elif [[ -d "$HOME/venvs/${input_path}/.venv" ]]; then
+                # Check in ~/venvs/name-of-env/.venv
+                venv_path="$HOME/venvs/${input_path}/.venv"
+            elif [[ -d "$HOME/venvs/${input_path}" ]]; then
+                # Also check ~/venvs/name-of-env directly (without .venv)
+                venv_path="$HOME/venvs/${input_path}"
             fi
 
             local activate_script
@@ -288,7 +305,10 @@ uv() {
 
             # Check if virtual environment exists
             if [[ ! -d $venv_path ]]; then
-                echo "Error: Virtual environment directory not found: ${venv_path}" >&2
+                echo -e "${RED}${BOLD}Error:${NC} ${RED}Virtual environment directory not found: ${YELLOW}${venv_path}${NC}" >&2
+                echo -e "${DIM}Searched in:${NC}" >&2
+                echo -e "  ${DIM}•${NC} ${input_path}" >&2
+                echo -e "  ${DIM}•${NC} ~/venvs/${input_path}" >&2
                 return 1
             fi
 
@@ -296,25 +316,25 @@ uv() {
             if [[ -f $activate_script ]]; then
                 # shellcheck source=/dev/null
                 . "$activate_script"
-                echo "Activated virtual environment: ${venv_path}"
+                echo -e "${GREEN}${BOLD}✓${NC} ${GREEN}Activated virtual environment:${NC} ${CYAN}${venv_path}${NC}"
             else
-                echo "Error: Activation script not found: ${activate_script}" >&2
+                echo -e "${RED}${BOLD}Error:${NC} ${RED}Activation script not found: ${YELLOW}${activate_script}${NC}" >&2
                 return 1
             fi
             ;;
         deactivate)
             # Check if we're in a virtual environment
             if [[ -z ${VIRTUAL_ENV:-} ]]; then
-                echo "Error: No virtual environment is currently active" >&2
+                echo -e "${RED}${BOLD}Error:${NC} ${RED}No virtual environment is currently active${NC}" >&2
                 return 1
             fi
             # Call the deactivate function if it exists
             if command -v deactivate > /dev/null 2>&1; then
                 local old_venv="$VIRTUAL_ENV"
                 deactivate
-                echo "Deactivated virtual environment: ${old_venv}"
+                echo -e "${YELLOW}${BOLD}✗${NC} ${YELLOW}Deactivated virtual environment:${NC} ${CYAN}${old_venv}${NC}"
             else
-                echo "Error: deactivate function not available" >&2
+                echo -e "${RED}${BOLD}Error:${NC} ${RED}deactivate function not available${NC}" >&2
                 return 1
             fi
             ;;
