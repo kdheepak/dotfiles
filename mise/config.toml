@@ -133,6 +133,9 @@ cosign = { version = "latest", os = [
 "aqua:zyedidia/eget"= { version = "latest", os = [
   "macos",
 ] } # Easy Get - a tool to download and install binaries
+"ubi:jbreckmckye/daylight" = { version = "latest", os = [
+  "macos",
+] } # Daylight - a tool to manage and display time zones
 
 # --- File System and Navigation ---
 bat = { version = "latest", os = [
