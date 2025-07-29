@@ -136,6 +136,9 @@ cosign = { version = "latest", os = [
 "ubi:jbreckmckye/daylight" = { version = "latest", os = [
   "macos",
 ] } # Daylight - a tool to manage and display time zones
+"ubi:YS-L/flamelens" = { version = "latest", os = [
+  "macos",
+] } # Flamelens - a tool to visualize and analyze flamegraphs
 
 # --- File System and Navigation ---
 bat = { version = "latest", os = [
