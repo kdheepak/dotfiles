@@ -367,6 +367,7 @@ pandoc = { version = "latest", os = [
   "windows",
 ] } # Convert markdown to word, pdf etc
 "pipx:weasyprint" = { version = "latest", os = ["macos"] }
+"pipx:pyfiglet" = { version = "latest", os = ["macos"] }
 "cargo:viu" = { version = "latest", os = ["macos"] }
 "cargo:monochora" = { version = "latest", os = ["macos"] }
 vhs = { version = "latest", os = ["macos"] }
