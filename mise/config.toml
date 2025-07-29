@@ -139,6 +139,9 @@ cosign = { version = "latest", os = [
 "ubi:YS-L/flamelens" = { version = "latest", os = [
   "macos",
 ] } # Flamelens - a tool to visualize and analyze flamegraphs
+"ubi:dagimg-dot/gitsnip" = { version = "latest", os = [
+  "macos",
+] } # Gitsnip - a tool to download individual files from a git repository
 
 # --- File System and Navigation ---
 bat = { version = "latest", os = [
