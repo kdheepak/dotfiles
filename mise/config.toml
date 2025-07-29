@@ -85,6 +85,7 @@ zig = "latest"
 ] } # Code formatter
 "npm:neovim" = { version = "latest", os = ["macos", "windows"] } # neovim client
 "npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos", "windows"] }
+"npm:@mermaid-js/mermaid-cli" = { version = "latest", os = ["macos", "windows"] } # mermaid-cli
 
 # --- Editors ---
 neovim = { version = "latest", os = [
