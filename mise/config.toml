@@ -190,6 +190,9 @@ delta = { version = "latest", os = [
 "cargo:lazyjj" = { version = "latest", os = [
   "macos",
 ] } # lazyjj
+"cargo:ftdv" = { version = "latest", os = [
+  "macos",
+] }
 "cargo:git-trim" = { version = "latest", os = [
   "macos",
   "windows",
