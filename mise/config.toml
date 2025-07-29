@@ -411,6 +411,7 @@ traefik = { version = "latest", os = ["macos"] }
 "cargo:sqlx-cli" = { version = "latest", os = ["macos"] }
 "pipx:harlequin" = { version = "latest", os = ["macos", "windows"] }
 "ubi:abhinav/git-spice" = { version = "latest", exe = "gs" }
+"ubi:dlvhdr/diffnav" = { version = "latest", os = ["macos"] }
 
 [tasks]
 gh-extensions = "gh extension install dlvhdr/gh-dash && gh extension install github/gh-copilot"
