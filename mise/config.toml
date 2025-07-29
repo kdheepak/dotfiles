@@ -398,6 +398,9 @@ vhs = { version = "latest", os = ["macos"] }
 "pipx:gitingest" = { version = "latest", os = [
   "macos",
 ] } # Turn any Git repository into a prompt-friendly text ingest for LLMs.
+"pipx:ddgr" = { version = "latest", os = [
+  "macos",
+] } # DuckDuckGo search CLI tool
 
 # --- Containerization ---
 podman = { version = "latest", os = ["macos"] }
