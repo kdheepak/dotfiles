@@ -311,7 +311,11 @@ def download(
 
     # Get token from environment if not provided
     if not token:
-        token = os.environ.get("GH_RELEASE_GITHUB_TOKEN")
+        if CONFIG_FILE.exists():
+            saved = json.loads(CONFIG_FILE.read_text())
+            token = saved.get("token", token)
+        else:
+            token = os.environ.get("GH_RELEASE_GITHUB_TOKEN")
 
     with GitHubReleaseDownloader(owner, repo, token) as downloader:
         # Get platform info
