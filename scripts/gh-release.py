@@ -258,7 +258,7 @@ def main(
     ] = None,
     install_dir: Annotated[
         Path, typer.Option("--install-dir", "-d", help="Installation directory")
-    ] = Path("~/local/gh-release/bin"),
+    ] = Path("~/local/bin"),
     list_assets: Annotated[
         bool,
         typer.Option("--list", "-l", help="List available assets without downloading"),
