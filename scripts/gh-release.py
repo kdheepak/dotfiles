@@ -83,15 +83,11 @@ class GitHubReleaseDownloader:
 
         return os_names, arch
 
-    def get_releases(self, latest_only: bool = True) -> list[dict[str, Any]]:
+    def get_release(self) -> dict[str, Any]:
         """Fetch release information from GitHub."""
         try:
-            if latest_only:
-                release = self.api.repos.get_latest_release()
-                return [release]
-            else:
-                releases = self.api.repos.list_releases(per_page=30)
-                return list(releases)
+            release = self.api.repos.get_latest_release()
+            return release
         except HTTP403ForbiddenError as e:
             if "rate limit" in str(e).lower():
                 console.print("[red]GitHub API rate limit exceeded.[/red]")
@@ -182,13 +178,12 @@ class GitHubReleaseDownloader:
         archive_path: Path,
         extract_to: Path,
         binary_name: str | None = None,
-        yes: bool = False,
     ) -> Path | None:
         """Extract binary from archive with user selection if multiple files."""
         extracted_files = []
 
         def _extract_tar(tar: tarfile.TarFile):
-            tar.extractall(path=extract_to)
+            tar.extractall(path=extract_to, filter="data")
             return [
                 extract_to / member.name
                 for member in tar.getmembers()
@@ -263,17 +258,10 @@ def main(
     ] = None,
     install_dir: Annotated[
         Path, typer.Option("--install-dir", "-d", help="Installation directory")
-    ] = Path("~/local/bin"),
+    ] = Path("~/local/gh-release/bin"),
     list_assets: Annotated[
         bool,
         typer.Option("--list", "-l", help="List available assets without downloading"),
-    ] = False,
-    all_releases: Annotated[
-        bool,
-        typer.Option("--all-releases", "-a", help="Show all releases, not just latest"),
-    ] = False,
-    yes: Annotated[
-        bool, typer.Option("--yes", "-y", help="Automatic yes to prompts")
     ] = False,
     token: Annotated[
         str | None,
@@ -320,43 +308,44 @@ def main(
         os_names, arch = downloader.get_platform_info()
         console.print(f"Platform: {os_names[0]}-{arch}")
 
+        # Try to determine binary name
+        if not binary:
+            binary = repo
+
         try:
             # Get releases
             if tag:
                 release = downloader.get_release_by_tag(tag)
-                releases = [release]
             else:
-                releases = downloader.get_releases(latest_only=not all_releases)
+                release = downloader.get_release()
 
-            if not releases:
+            if not release:
                 console.print("[red]No releases found[/red]")
                 raise typer.Exit(1)
 
             # List mode
             if list_assets:
-                for release in releases:
-                    console.print(f"\n[bold]Release: {release['tag_name']}[/bold]")
-                    if release.get("name"):
-                        console.print(f"Name: {release['name']}")
+                console.print(f"\n[bold]Release: {release['tag_name']}[/bold]")
+                if release.get("name"):
+                    console.print(f"Name: {release['name']}")
 
-                    table = Table(title="Assets")
-                    table.add_column("Name", style="cyan")
-                    table.add_column("Size", style="green")
-                    table.add_column("Downloads", style="yellow")
+                table = Table(title="Assets")
+                table.add_column("Name", style="cyan")
+                table.add_column("Size", style="green")
+                table.add_column("Downloads", style="yellow")
 
-                    for asset in release["assets"]:
-                        size_mb = asset["size"] / 1024 / 1024
-                        table.add_row(
-                            asset["name"],
-                            f"{size_mb:.1f} MB",
-                            str(asset["download_count"]),
-                        )
+                for asset in release["assets"]:
+                    size_mb = asset["size"] / 1024 / 1024
+                    table.add_row(
+                        asset["name"],
+                        f"{size_mb:.1f} MB",
+                        str(asset["download_count"]),
+                    )
 
-                    console.print(table)
+                console.print(table)
                 return
 
             # Find matching assets for the latest/specified release
-            release = releases[0]
             version = release["tag_name"]
             console.print(f"Release: [green]{version}[/green]")
 
@@ -381,15 +370,11 @@ def main(
                     size_mb = match["size"] / 1024 / 1024
                     console.print(f"{i}. {match['name']} ({size_mb:.1f} MB)")
 
-                if yes:
-                    asset = matches[0]
-                    console.print(f"Auto-selecting: {asset['name']}")
-                else:
-                    choice = Prompt.ask(
-                        "Select asset",
-                        choices=[str(i) for i in range(1, len(matches) + 1)],
-                    )
-                    asset = matches[int(choice) - 1]
+                choice = Prompt.ask(
+                    "Select asset",
+                    choices=[str(i) for i in range(1, len(matches) + 1)],
+                )
+                asset = matches[int(choice) - 1]
 
             console.print(f"Selected: [cyan]{asset['name']}[/cyan]")
 
@@ -400,15 +385,10 @@ def main(
             if output:
                 final_path = output.expanduser()
             else:
-                # Try to determine binary name
-                if binary:
-                    binary_name = binary
-                else:
-                    binary_name = repo
-                final_path = install_path / binary_name
+                final_path = install_path / binary
 
             # Check if file exists
-            if final_path.exists() and not yes:
+            if final_path.exists():
                 if not Confirm.ask(f"{final_path} already exists. Overwrite?"):
                     console.print("[yellow]Aborted[/yellow]")
                     raise typer.Exit(0)
