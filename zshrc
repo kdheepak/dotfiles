@@ -243,5 +243,7 @@ eval "$(direnv hook zsh)"
 
 eval "$(zoxide init zsh --cmd cd)"
 
+eval "$(uv run --project ~/gitrepos/uv-shell-hook/ uv-shell-hook zsh)"
+
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
