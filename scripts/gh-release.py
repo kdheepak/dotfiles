@@ -178,72 +178,66 @@ class GitHubReleaseDownloader:
                         progress.update(task, advance=len(chunk))
 
     def extract_binary(
-        self, archive_path: Path, extract_to: Path, binary_name: str | None = None
+        self,
+        archive_path: Path,
+        extract_to: Path,
+        binary_name: str | None = None,
+        yes: bool = False,
     ) -> Path | None:
-        """Extract binary from archive."""
+        """Extract binary from archive with user selection if multiple files."""
         extracted_files = []
 
-        # Try to extract based on file extension
+        def _extract_tar(tar: tarfile.TarFile):
+            tar.extractall(path=extract_to)
+            return [
+                extract_to / member.name
+                for member in tar.getmembers()
+                if member.isfile()
+            ]
+
+        def _extract_zip(zip_ref: zipfile.ZipFile):
+            zip_ref.extractall(extract_to)
+            return [
+                extract_to / name
+                for name in zip_ref.namelist()
+                if not name.endswith("/")
+            ]
+
         if archive_path.suffix == ".gz" and archive_path.stem.endswith(".tar"):
-            # tar.gz file
             with tarfile.open(archive_path, "r:gz") as tar:
-                tar.extractall(path=extract_to)
-                extracted_files = [
-                    extract_to / member.name
-                    for member in tar.getmembers()
-                    if member.isfile()
-                ]
+                extracted_files = _extract_tar(tar)
         elif archive_path.suffix == ".zip":
-            # zip file
             with zipfile.ZipFile(archive_path, "r") as zip_ref:
-                zip_ref.extractall(extract_to)
-                extracted_files = [
-                    extract_to / name
-                    for name in zip_ref.namelist()
-                    if not name.endswith("/")
-                ]
+                extracted_files = _extract_zip(zip_ref)
         elif archive_path.suffix in [".tar", ".tgz"]:
-            # tar file
             mode = "r:gz" if archive_path.suffix == ".tgz" else "r"
             with tarfile.open(archive_path, mode) as tar:
-                tar.extractall(path=extract_to)
-                extracted_files = [
-                    extract_to / member.name
-                    for member in tar.getmembers()
-                    if member.isfile()
-                ]
+                extracted_files = _extract_tar(tar)
         else:
-            # Assume it's a binary file
-            return archive_path
+            return archive_path  # Direct binary
 
-        # Find the binary
+        if not extracted_files:
+            console.print("[red]No files found in archive[/red]")
+            return None
+
         if binary_name:
-            # Look for specific binary name
             for file in extracted_files:
-                if file.name == binary_name or file.stem == binary_name:
-                    return file
+                if file.name == binary_name or file.name == f"{binary_name}.exe":
+                    # Ensure it's an actual executable
+                    if os.access(file, os.X_OK) or not file.suffix:
+                        return file
 
-        # Look for executable files or files that look like binaries
-        executables = []
-        for file in extracted_files:
-            # Check if it's already executable or has no extension (common for Unix binaries)
-            if (file.stat().st_mode & stat.S_IXUSR) or not file.suffix:
-                executables.append(file)
+        # Show files and prompt user to pick one
+        table = Table(title="Archive Contents")
+        table.add_column("Index", justify="right", style="cyan")
+        table.add_column("File Name", style="green")
+        table.add_column("Size", justify="right")
 
-        if len(executables) == 1:
-            return executables[0]
-        elif len(executables) > 1:
-            # Try to find the main binary (often named after the repo)
-            for exe in executables:
-                if exe.stem.lower() == self.repo.lower():
-                    return exe
-            # Return the first executable
-            return executables[0]
-        elif extracted_files:
-            # No clear executable, return the first file
-            return extracted_files[0]
+        for idx, file in enumerate(extracted_files):
+            size_kb = file.stat().st_size / 1024
+            table.add_row(str(idx + 1), file.name, f"{size_kb:.1f} KB")
 
-        return None
+        console.print(table)
 
 
 @app.command()
@@ -269,7 +263,7 @@ def main(
     ] = None,
     install_dir: Annotated[
         Path, typer.Option("--install-dir", "-d", help="Installation directory")
-    ] = Path("~/gh-release/bin"),
+    ] = Path("~/local/bin"),
     list_assets: Annotated[
         bool,
         typer.Option("--list", "-l", help="List available assets without downloading"),
