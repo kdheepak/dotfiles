@@ -31,6 +31,16 @@ from rich.prompt import Prompt, Confirm
 from ghapi.all import GhApi
 from ghapi.core import HTTP403ForbiddenError
 
+from platformdirs import user_config_dir
+import time
+import json
+
+
+APP_NAME = "com.kdheepak.gh-release"
+CONFIG_FILE = Path(user_config_dir(APP_NAME)) / "config.json"
+GITHUB_CLIENT_ID = "Ov23liQ6dKYzJrqA6zef"
+
+
 console = Console()
 app = typer.Typer(
     help="Download binaries from GitHub releases.",
@@ -236,7 +246,7 @@ class GitHubReleaseDownloader:
 
 
 @app.command()
-def main(
+def download(
     repository: Annotated[
         str, typer.Argument(help="GitHub repository in format owner/repo")
     ],
@@ -443,6 +453,83 @@ def main(
             else:
                 console.print(f"[red]Error: {e}[/red]")
             raise typer.Exit(1)
+
+
+@app.command()
+def login(
+    launch: bool = typer.Option(
+        True,
+        "--launch/--no-launch",
+        help="Automatically launch the verification URL in the browser.",
+    ),
+):
+    """
+    Authenticate via GitHub Device Flow and save the access token.
+    """
+    if CONFIG_FILE.exists():
+        console.print(f"[yellow]Token already exists at {CONFIG_FILE}.[/yellow]")
+        if not Confirm.ask("Do you want to overwrite it?"):
+            console.print("[yellow]Aborted login, file already exists.[/yellow]")
+            raise typer.Exit(0)
+
+    device_code_url = "https://github.com/login/device/code"
+    token_url = "https://github.com/login/oauth/access_token"
+    headers = {"Accept": "application/json"}
+
+    # Step 1: Get device/user codes
+    response = httpx.post(
+        device_code_url,
+        data={"client_id": GITHUB_CLIENT_ID},
+        headers=headers,
+    )
+    response.raise_for_status()
+    data = response.json()
+
+    user_code = data["user_code"]
+    verification_uri = data["verification_uri"]
+    device_code = data["device_code"]
+    interval = data.get("interval", 5)
+
+    console.print(
+        f"\n[green]Visit {verification_uri}\nEnter the code:[/green] [bold]{user_code}[/bold]"
+    )
+
+    if launch:
+        time.sleep(1)
+        typer.launch(verification_uri)
+
+    # Step 2: Poll for token
+    with console.status("Waiting for authorization..."):
+        while True:
+            time.sleep(interval)
+            poll_resp = httpx.post(
+                token_url,
+                data={
+                    "client_id": GITHUB_CLIENT_ID,
+                    "device_code": device_code,
+                    "grant_type": "urn:ietf:params:oauth:grant-type:device_code",
+                },
+                headers=headers,
+            )
+
+            result = poll_resp.json()
+            if "error" in result:
+                if result["error"] in ("authorization_pending", "slow_down"):
+                    continue
+                else:
+                    console.print(
+                        f"[red]Error: {result.get('error_description', result['error'])}[/red]"
+                    )
+                    raise typer.Exit(1)
+            else:
+                token = result["access_token"]
+                break
+
+    # Save token
+    CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+    CONFIG_FILE.write_text(json.dumps({"token": token}, indent=2))
+
+    console.print(f"[green]✓ Logged in. Token saved to {CONFIG_FILE}[/green]")
 
 
 if __name__ == "__main__":
