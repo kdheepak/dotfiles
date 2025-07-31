@@ -56,8 +56,8 @@ zig = "latest"
   "macos",
   "windows",
 ] } # Fast Python linter and formatter
-"pipx:ty" = { version = "latest", os = ["macos", "windows"] } # type checker
-"pipx:mypy" = { version = "latest", os = ["macos", "windows"] } # type checker
+"pipx:ty" = { version = "latest", os = ["macos"] } # type checker
+"pipx:mypy" = { version = "latest", os = ["macos"] } # type checker
 "pipx:isort" = { version = "latest", os = ["macos"] }
 "pipx:commitizen" = { version = "latest", os = ["macos"] }
 "pipx:json-schema-for-humans" = { version = "latest", os = ["macos"] }
@@ -65,9 +65,11 @@ zig = "latest"
 "cargo:uv-migrator" = { version = "latest", os = [
   "macos",
 ] } # Move from setup.py, conda env etc to uv,
-"pipx:git-copilot-commit" = { version = "latest" }
-"pipx:python-semantic-release" = { version = "latest" }
-"pipx:py7zr" = { version = "latest" }
+"pipx:git-copilot-commit" = { version = "latest", os = [
+  "macos",
+] } # Git commit message generator using Copilot
+"pipx:python-semantic-release" = { version = "latest", os = ["macos"] }
+"pipx:py7zr" = { version = "latest", os = ["macos"] } # Python 7z archive tool
 
 "pipx:mkdocs" = { version = "latest", uvx_args = "--with mkdocs-material", os = [
   "macos",
@@ -85,7 +87,10 @@ zig = "latest"
 ] } # Code formatter
 "npm:neovim" = { version = "latest", os = ["macos", "windows"] } # neovim client
 "npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos", "windows"] }
-"npm:@mermaid-js/mermaid-cli" = { version = "latest", os = ["macos", "windows"] } # mermaid-cli
+"npm:@mermaid-js/mermaid-cli" = { version = "latest", os = [
+  "macos",
+  "windows",
+] } # mermaid-cli
 
 # --- Editors ---
 neovim = { version = "latest", os = [
@@ -130,8 +135,8 @@ cosign = { version = "latest", os = [
 ] } # A tool for Container Signing, Verification and Storage
 "pipx:bump2version" = { version = "latest", os = ["macos"] } # Bump version
 "aqua:wtfutil/wtf" = { version = "latest", os = ["macos"] }
-"aqua:ip7z/7zip" = { version = "latest" }
-"aqua:zyedidia/eget"= { version = "latest", os = [
+"aqua:ip7z/7zip" = { version = "latest", os = ["macos"] }
+"aqua:zyedidia/eget" = { version = "latest", os = [
   "macos",
 ] } # Easy Get - a tool to download and install binaries
 "ubi:jbreckmckye/daylight" = { version = "latest", os = [
@@ -200,12 +205,8 @@ delta = { version = "latest", os = [
   "macos",
   "windows",
 ] } # Better git diffs (complements difftastic)
-"cargo:lazyjj" = { version = "latest", os = [
-  "macos",
-] } # lazyjj
-"cargo:ftdv" = { version = "latest", os = [
-  "macos",
-] }
+"cargo:lazyjj" = { version = "latest", os = ["macos"] } # lazyjj
+"cargo:ftdv" = { version = "latest", os = ["macos"] }
 "cargo:git-trim" = { version = "latest", os = [
   "macos",
   "windows",
@@ -304,6 +305,7 @@ hexyl = { version = "latest", os = ["macos"] } # Command-line hex viewer
 ] } # Alternative to dig
 duckdb = { version = "latest", os = ["macos"] }
 "asdf:mise-plugins/mise-sqlite" = { version = "latest", os = ["macos"] }
+# "asdf:mise-plugins/mise-ffmpeg" = { version = "latest", os = ["macos"] }
 "cargo:ouch" = { version = "latest", os = ["macos"] } # Archive extraction tool
 "cargo:pastel" = { version = "latest", os = [
   "macos",
@@ -402,9 +404,7 @@ vhs = { version = "latest", os = ["macos"] }
 "pipx:ddgr" = { version = "latest", os = [
   "macos",
 ] } # DuckDuckGo search CLI tool
-"pipx:dunk" = { version = "latest", os = [
-  "macos",
-] } # git diff tool
+"pipx:dunk" = { version = "latest", os = ["macos"] } # git diff tool
 
 # --- Containerization ---
 podman = { version = "latest", os = ["macos"] }
@@ -424,3 +424,7 @@ clean = ["rm -rf .venv", "rm -rf node_modules"]
 lint = "pre-commit run --all-files"
 setup-python = "uv pip install --system ipython jupyter neovim python-localvenv-kernel jupyter jupyterlab jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext 'rich[jupyter]' panel hvplot holoviews matplotlib numpy pandas 'ibis-framework[duckdb,geospatial]' lonboard jupyter_copilot jupyterlab-quarto jupyterlab-rainbow-brackets jupyterlab-code-formatter"
 
+[tasks.changelog]
+description = "Generate a changelog for the current version"
+outputs = ["CHANGELOG.md"]
+run = ["git-cliff --config .cliff.toml --output CHANGELOG.md"]
