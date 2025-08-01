@@ -48,7 +48,7 @@ def print_env_setup(cert_path):
         print_section(
             "Windows Setup (Command Prompt)",
             [
-                f"{GREEN}Run the following commands as Administrator in Command Prompt:{RESET}",
+                f"{GREEN}Run the following commands in Command Prompt:{RESET}",
                 *[f'setx {var} "{val}"' for var, val in env_vars.items()],
             ],
         )
@@ -60,7 +60,7 @@ def print_env_setup(cert_path):
                 f"{CYAN}Add the following lines to your shell config file "
                 f"(`~/.bashrc`, `~/.zshrc`, etc.):{RESET}\n",
                 *[f"export {var}={val}" for var, val in env_vars.items()],
-                f"\n{CYAN}Then restart your terminal or run: source ~/.bashrc{RESET}",
+                f"\n{CYAN}Then restart your terminal.",
             ],
         )
     else:
