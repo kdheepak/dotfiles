@@ -71,7 +71,7 @@ def print_env_setup(cert_path, show_all=False):
             "Windows Setup (Command Prompt)",
             [
                 f"{GREEN}Run the following commands in Command Prompt:{RESET}",
-                *[f'setx {var} "{val}"' for var, val in env_vars.items()],
+                *[f"setx {var} {val}" for var, val in env_vars.items()],
             ],
         )
 
