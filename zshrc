@@ -220,9 +220,9 @@ bashcompinit
 ### End of Zinit's installer chunk
 
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-  eval "$($HOME/.local/bin/mise activate zsh --shims)"
+  eval "$(mise activate zsh --shims)"
 else
-  eval "$($HOME/.local/bin/mise activate zsh)"
+  eval "$(mise activate zsh)"
 fi
 
 # need to do this after mise
