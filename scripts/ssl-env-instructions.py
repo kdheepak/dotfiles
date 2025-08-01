@@ -7,8 +7,29 @@ import sys
 import argparse
 
 
-def print_env_setup(cert_path):
-    """Print environment variable setup commands for the current OS."""
+def print_current_env_vars(env_keys):
+    """Print current environment variable values as a table."""
+
+    # ANSI color codes
+    CYAN = "\033[96m"
+    BOLD = "\033[1m"
+    RESET = "\033[0m"
+
+    print(f"{BOLD}Current Environment Variables:{RESET}")
+    print("-" * 80)
+    print(f"{BOLD}{'Variable':<30} | {'Current Value'}{RESET}")
+    print("-" * 80)
+
+    for key in env_keys:
+        value = os.environ.get(key, "")
+        print(f"{CYAN}{key:<30}{RESET} | {value}")
+
+    print("-" * 80)
+    print()
+
+
+def print_env_setup(cert_path, show_all=False):
+    """Print environment variable setup commands for the target OS."""
 
     # ANSI color codes
     YELLOW = "\033[93m"
@@ -18,11 +39,9 @@ def print_env_setup(cert_path):
     BOLD = "\033[1m"
     RESET = "\033[0m"
 
-    # Enable ANSI escape codes on Windows (no-op if unsupported)
     if platform.system() == "Windows":
         os.system("")
 
-    # Expand ~ in path
     cert_path = os.path.expanduser(cert_path)
     cert_dir = os.path.dirname(cert_path)
 
@@ -35,16 +54,19 @@ def print_env_setup(cert_path):
         "SSL_VERIFY": "true",
     }
 
-    system = platform.system()
+    # Print current env var table
+    print_current_env_vars(env_vars.keys())
 
     def print_section(title, lines):
         print(f"{BOLD}{title}{RESET}:")
-        print("")
+        print()
         for line in lines:
             print(line)
         print()
 
-    if system == "Windows":
+    print(f"{YELLOW}NOTE: Using certificate path: {cert_path}{RESET}\n")
+
+    if show_all or platform.system() == "Windows":
         print_section(
             "Windows Setup (Command Prompt)",
             [
@@ -53,18 +75,22 @@ def print_env_setup(cert_path):
             ],
         )
 
-    elif system in ["Linux", "Darwin"]:
+    if show_all or platform.system() in ["Linux", "Darwin"]:
         print_section(
             "macOS/Linux Setup (bash/zsh)",
             [
-                f"{CYAN}Add the following lines to your shell config file "
+                f"{GREEN}Add the following lines to your shell config file "
                 f"(`~/.bashrc`, `~/.zshrc`, etc.):{RESET}\n",
                 *[f"export {var}={val}" for var, val in env_vars.items()],
-                f"\n{CYAN}Then restart your terminal.",
+                f"\n{CYAN}Then restart your terminal to apply changes.{RESET}",
             ],
         )
-    else:
-        print(f"{RED}❌ Unsupported operating system: {system}{RESET}", file=sys.stderr)
+
+    if not show_all and platform.system() not in ["Windows", "Linux", "Darwin"]:
+        print(
+            f"{RED}Unsupported operating system: {platform.system()}{RESET}",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
 
@@ -78,5 +104,12 @@ if __name__ == "__main__":
         default="~/.config/certs/cacert.pem",
         help="Path to the certificate file (default: ~/.config/certs/cacert.pem)",
     )
+    parser.add_argument(
+        "-a",
+        "--all",
+        action="store_true",
+        help="Show setup instructions for all supported operating systems",
+    )
+
     args = parser.parse_args()
-    print_env_setup(args.cert_path)
+    print_env_setup(args.cert_path, show_all=args.all)
