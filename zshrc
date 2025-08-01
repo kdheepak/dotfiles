@@ -2,7 +2,9 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
 
-eval "$($HOME/homebrew/bin/brew shellenv)"
+if [[ "$(uname)" == "Darwin" ]] && [[ -x "$HOME/homebrew/bin/brew" ]]; then
+    eval "$($HOME/homebrew/bin/brew shellenv)"
+fi
 
 set -o emacs
 
@@ -243,7 +245,7 @@ eval "$(direnv hook zsh)"
 
 eval "$(zoxide init zsh --cmd cd)"
 
-eval "$(uv run --project ~/gitrepos/uv-shell-hook/ uv-shell-hook zsh)"
+eval "$(uvx uv-shell-hook zsh)"
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
