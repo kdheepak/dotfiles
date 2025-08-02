@@ -100,14 +100,15 @@ def create_ssl_context(
     if ca_cert_dir is None:
         ca_cert_dir = os.environ.get("SSL_CERT_DIR")
 
+    # Validate certificate paths exist
     if ca_cert_file and not Path(ca_cert_file).exists():
         console.print(
-            f"⚠️  CA certificate file not found: {ca_cert_file}", style="yellow"
+            f"❌ CA certificate file not found: {ca_cert_file}", style="red bold"
         )
         raise typer.Exit(1)
     if ca_cert_dir and not Path(ca_cert_dir).exists():
         console.print(
-            f"⚠️  CA certificate directory not found: {ca_cert_dir}", style="yellow"
+            f"❌ CA certificate directory not found: {ca_cert_dir}", style="red bold"
         )
         raise typer.Exit(1)
 
