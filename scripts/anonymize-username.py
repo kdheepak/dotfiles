@@ -6,7 +6,6 @@
 # ]
 # ///
 
-import sys
 import pyperclip
 import getpass
 

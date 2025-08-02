@@ -12,10 +12,7 @@
 GAMS (General Algebraic Modeling System) installer script that downloads and installs GAMS
 """
 
-import os
-import pathlib
 import platform
-import shlex
 import shutil
 import subprocess
 from pathlib import Path

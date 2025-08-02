@@ -707,7 +707,7 @@ def test_ssl(
         response = client.get(url)
         response.raise_for_status()
 
-        console.print(f"✅ SSL connection successful!", style="green")
+        console.print("✅ SSL connection successful!", style="green")
         console.print(f"📄 Status code: {response.status_code}")
         console.print(f"🔒 Protocol: {response.http_version}")
 

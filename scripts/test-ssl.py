@@ -17,7 +17,6 @@ SSL connection tester - Test HTTPS connections with various certificate configur
 import os
 import ssl
 import socket
-import shutil
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import urlparse
@@ -224,7 +223,7 @@ def format_certificate_info(cert_info: dict) -> Table:
                 table.add_row("Status", f"[yellow]Expires in {days_left} days[/yellow]")
             else:
                 table.add_row("Status", f"[green]Valid ({days_left} days left)[/green]")
-        except:
+        except Exception as _:
             pass
 
     # SSL/TLS info
@@ -345,11 +344,11 @@ def main(
                     with ssl_context.wrap_socket(
                         sock, server_hostname=hostname
                     ) as ssock:
-                        console.print(f"✅ SSL connection successful!", style="green")
+                        console.print("✅ SSL connection successful!", style="green")
                         console.print(f"🔒 Protocol: {ssock.version()}")
                 else:
                     console.print(
-                        f"✅ Connection successful (no SSL verification)", style="green"
+                        "✅ Connection successful (no SSL verification)", style="green"
                     )
         except ssl.SSLError as e:
             console.print(f"❌ SSL Error: {e}", style="red")
@@ -367,7 +366,7 @@ def main(
             response = client.get(url)
             response.raise_for_status()
 
-            console.print(f"✅ SSL connection successful!", style="green")
+            console.print("✅ SSL connection successful!", style="green")
             console.print(f"📄 Status code: {response.status_code}")
             console.print(f"🔒 HTTP version: {response.http_version}")
 
