@@ -105,10 +105,55 @@ def create_ssl_context(
         console.print(
             f"❌ CA certificate file not found: {ca_cert_file}", style="red bold"
         )
+        console.print("\n💡 Troubleshooting tips:", style="yellow")
+        console.print(
+            "   • Check the file path is correct and the file exists", style="dim"
+        )
+        console.print(
+            "   • Ensure you have read permissions for the certificate file",
+            style="dim",
+        )
+        console.print(
+            "   • For corporate environments, ask your IT team for the CA certificate",
+            style="dim",
+        )
+        console.print("   • Common locations:", style="dim")
+        console.print(
+            "     - Windows: '%USERPROFILE%/.config/certs/company-ca.pem'", style="dim"
+        )
+        console.print("     - MacOS: '$HOME/.config/certs/company-ca.pem'", style="dim")
+        console.print("     - Linux: '/etc/ssl/certs/company-ca.pem'", style="dim")
+        console.print(
+            "   • Try using `--use-system-certs` instead if certificates are in system store",
+            style="dim",
+        )
         raise typer.Exit(1)
+
     if ca_cert_dir and not Path(ca_cert_dir).exists():
         console.print(
             f"❌ CA certificate directory not found: {ca_cert_dir}", style="red bold"
+        )
+        console.print("\n💡 Troubleshooting tips:", style="yellow")
+        console.print("   • Check the directory path is correct", style="dim")
+        console.print(
+            "   • Ensure the directory contains properly named certificate files",
+            style="dim",
+        )
+        console.print(
+            "   • Certificate files must be named with OpenSSL hash format (e.g., abc123.0)",
+            style="dim",
+        )
+        console.print("   • Common system certificate directories:", style="dim")
+        console.print("     - Windows: '%USERPROFILE%/.config/certs'", style="dim")
+        console.print("     - MacOS: '$HOME/.config/certs'", style="dim")
+        console.print("     - Linux: '/etc/ssl/certs'", style="dim")
+        console.print(
+            "   • Consider using `--ca-cert-file` with a single bundle file instead",
+            style="dim",
+        )
+        console.print(
+            "   • Try using `--use-system-certs` for automatic system certificate detection",
+            style="dim",
         )
         raise typer.Exit(1)
 
