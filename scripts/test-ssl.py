@@ -100,10 +100,13 @@ def create_ssl_context(
             style="dim green",
         )
         console.print("   • Common locations:", style="dim")
-        console.print("     - Windows: C:\\certs\\company-ca.pem", style="dim")
-        console.print("     - Linux: /etc/ssl/certs/company-ca.pem", style="dim")
         console.print(
-            "   • Try using --use-system-certs instead if certificates are in system store",
+            "     - Windows: '%USERPROFILE%/.config/certs/company-ca.pem'", style="dim"
+        )
+        console.print("     - MacOS: '$HOME/.config/certs/company-ca.pem'", style="dim")
+        console.print("     - Linux: '/etc/ssl/certs/company-ca.pem'", style="dim")
+        console.print(
+            "   • Try using `--use-system-certs` instead if certificates are in system store",
             style="dim",
         )
         raise typer.Exit(1)
@@ -123,14 +126,15 @@ def create_ssl_context(
             style="dim",
         )
         console.print("   • Common system certificate directories:", style="dim")
-        console.print("     - Windows: C:\\certs\\", style="dim")
-        console.print("     - Linux: /etc/ssl/certs/", style="dim")
+        console.print("     - Windows: '%USERPROFILE%/.config/certs'", style="dim")
+        console.print("     - MacOS: '$HOME/.config/certs'", style="dim")
+        console.print("     - Linux: '/etc/ssl/certs'", style="dim")
         console.print(
-            "   • Consider using --ca-cert-file with a single bundle file instead",
+            "   • Consider using `--ca-cert-file` with a single bundle file instead",
             style="dim",
         )
         console.print(
-            "   • Try using --use-system-certs for automatic system certificate detection",
+            "   • Try using `--use-system-certs` for automatic system certificate detection",
             style="dim",
         )
         raise typer.Exit(1)

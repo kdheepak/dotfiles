@@ -97,6 +97,16 @@ def create_ssl_context(
     # Check environment variables if no custom certs specified
     if ca_cert_file is None:
         ca_cert_file = os.environ.get("SSL_CERT_FILE")
+
+    # Check user config directory for CA certificate if not specified
+    if ca_cert_file is None:
+        user_ca_cert = Path.home() / ".config" / "certs" / "cacert.pem"
+        if user_ca_cert.exists():
+            ca_cert_file = str(user_ca_cert)
+            console.print(
+                f"🔒 Found user CA certificate: {ca_cert_file}", style="cyan dim"
+            )
+
     if ca_cert_dir is None:
         ca_cert_dir = os.environ.get("SSL_CERT_DIR")
 
@@ -116,6 +126,11 @@ def create_ssl_context(
         console.print(
             "   • For corporate environments, ask your IT team for the CA certificate",
             style="dim",
+        )
+        console.print("   • Save your corporate CA certificate to:", style="dim")
+        console.print(
+            f"     {Path.home() / '.config' / 'certs' / 'cacert.pem'}",
+            style="dim green",
         )
         console.print("   • Common locations:", style="dim")
         console.print(
