@@ -395,7 +395,7 @@ def main(
             raise typer.Exit(1)
         finally:
             if "client" in locals():
-                client.close()
+                client.close()  # noqa: F821
 
 
 if __name__ == "__main__":
