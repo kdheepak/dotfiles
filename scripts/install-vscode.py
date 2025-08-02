@@ -39,9 +39,7 @@ from rich.panel import Panel
 # Configure console
 console = Console()
 
-app = typer.Typer(
-    name=__name__, help=__doc__, add_completion=False, pretty_exceptions_enable=False
-)
+app = typer.Typer(name=__name__, help=__doc__, add_completion=False)
 
 SCRIPT_NAME = f"./{Path(__file__).name}"
 
@@ -663,8 +661,8 @@ def info():
 [bold]Installer Name:[/bold] {download_info["filename"]}
 
 [bold]SSL Configuration:[/bold]
-[dim]• SSL_CERT_FILE:[/dim] {os.environ.get('SSL_CERT_FILE', 'Not set')}
-[dim]• SSL_CERT_DIR:[/dim] {os.environ.get('SSL_CERT_DIR', 'Not set')}
+[dim]• SSL_CERT_FILE:[/dim] {os.environ.get("SSL_CERT_FILE", "Not set")}
+[dim]• SSL_CERT_DIR:[/dim] {os.environ.get("SSL_CERT_DIR", "Not set")}
 [dim]• Certifi location:[/dim] {certifi.where()}
 """
 
