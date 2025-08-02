@@ -6,20 +6,25 @@
 #     "httpx",
 #     "rich",
 #     "typer",
+#     "certifi",
+#     "truststore",
 # ]
 # ///
 """
 VS Code installer script that downloads and installs Visual Studio Code for Windows
+with enhanced SSL/TLS support for corporate environments
 """
 
 import os
 import subprocess
+import ssl
 from pathlib import Path
 import tempfile
 import time
-
 import typer
 import httpx
+import certifi
+import truststore
 from rich.console import Console
 from rich.progress import (
     Progress,
@@ -36,7 +41,7 @@ from rich.panel import Panel
 console = Console()
 
 app = typer.Typer(
-    name=__name__, no_args_is_help=True, help=__doc__, add_completion=False
+    name=__name__, help=__doc__, add_completion=False, pretty_exceptions_enable=False
 )
 
 SCRIPT_NAME = f"./{Path(__file__).name}"
@@ -51,6 +56,70 @@ DEFAULT_EXTENSIONS = [
     "bradlc.vscode-tailwindcss",
     "esbenp.prettier-vscode",
 ]
+
+
+@app.callback(invoke_without_command=True)
+def main(ctx: typer.Context):
+    """
+    VS Code installer script that downloads and installs Visual Studio Code for Windows
+    with enhanced SSL/TLS support for corporate environments
+    """
+    if ctx.invoked_subcommand is None:
+        # No command provided, show help
+        ctx.get_help()
+        typer.echo(ctx.get_help())
+        raise typer.Exit(0)
+
+
+def create_ssl_context(
+    verify: bool = True,
+    use_system_certs: bool = False,
+    ca_cert_file: str | None = None,
+    ca_cert_dir: str | None = None,
+) -> ssl.SSLContext | bool:
+    """
+    Create an SSL context with the specified verification settings.
+
+    Args:
+        verify: Whether to verify SSL certificates
+        use_system_certs: Use system certificate store instead of certifi
+        ca_cert_file: Path to custom CA certificate file
+        ca_cert_dir: Path to directory containing CA certificates
+
+    Returns:
+        SSL context or False for no verification
+    """
+    if not verify:
+        console.print(
+            "⚠️  SSL verification disabled - connection may be insecure!",
+            style="yellow bold",
+        )
+        return False
+
+    # Check environment variables if no custom certs specified
+    if ca_cert_file is None:
+        ca_cert_file = os.environ.get("SSL_CERT_FILE")
+    if ca_cert_dir is None:
+        ca_cert_dir = os.environ.get("SSL_CERT_DIR")
+
+    if use_system_certs:
+        console.print("🔒 Using system certificate store", style="cyan")
+        ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    else:
+        # Create default context with certifi or custom certificates
+        cafile = ca_cert_file or certifi.where()
+        ctx = ssl.create_default_context(cafile=cafile, capath=ca_cert_dir)
+
+        if ca_cert_file:
+            console.print(
+                f"🔒 Using custom CA certificate: {ca_cert_file}", style="cyan"
+            )
+        elif ca_cert_dir:
+            console.print(f"🔒 Using CA certificates from: {ca_cert_dir}", style="cyan")
+        else:
+            console.print("🔒 Using certifi CA bundle", style="cyan")
+
+    return ctx
 
 
 def check_vscode_installed() -> bool:
@@ -130,41 +199,99 @@ def get_vscode_download_info() -> dict:
     }
 
 
-def download_file_with_progress(url: str, destination: Path) -> bool:
-    """Download file from URL to destination with progress bar"""
-    try:
-        with httpx.stream("GET", url, follow_redirects=True, timeout=60.0) as response:
-            response.raise_for_status()
+def download_file_with_progress(
+    url: str,
+    destination: Path,
+    ssl_context: ssl.SSLContext | bool = True,
+    timeout: float = 60.0,
+    max_retries: int = 3,
+) -> bool:
+    """
+    Download file from URL to destination with progress bar and SSL support.
 
-            total_size = int(response.headers.get("content-length", 0))
+    Args:
+        url: URL to download from
+        destination: Path to save the file
+        ssl_context: SSL context for verification or False to disable
+        timeout: Request timeout in seconds
+        max_retries: Maximum number of retry attempts
 
-            with Progress(
-                SpinnerColumn(),
-                TextColumn("[progress.description]{task.description}"),
-                BarColumn(),
-                DownloadColumn(),
-                TransferSpeedColumn(),
-                console=console,
-            ) as progress:
-                download_task = progress.add_task(
-                    f"Downloading {destination.name}", total=total_size
+    Returns:
+        True if download successful, False otherwise
+    """
+    retry_count = 0
+    last_error = None
+
+    while retry_count < max_retries:
+        try:
+            # Create client with SSL context
+            client = httpx.Client(verify=ssl_context, timeout=timeout)
+
+            with client.stream("GET", url, follow_redirects=True) as response:
+                response.raise_for_status()
+
+                total_size = int(response.headers.get("content-length", 0))
+
+                with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    BarColumn(),
+                    DownloadColumn(),
+                    TransferSpeedColumn(),
+                    console=console,
+                ) as progress:
+                    download_task = progress.add_task(
+                        f"Downloading {destination.name}", total=total_size
+                    )
+
+                    with open(destination, "wb") as f:
+                        for chunk in response.iter_bytes(chunk_size=8192):
+                            f.write(chunk)
+                            progress.update(download_task, advance=len(chunk))
+
+            console.print(f"✅ Downloaded: {destination.name}", style="green")
+            return True
+
+        except httpx.ConnectError as e:
+            if "certificate" in str(e).lower():
+                console.print(f"❌ SSL Certificate error: {e}", style="red")
+                console.print("💡 Tips:", style="yellow")
+                console.print(
+                    "   • Try --use-system-certs if in a corporate environment",
+                    style="dim",
                 )
+                console.print(
+                    "   • Use --ca-cert-file with your organization's CA certificate",
+                    style="dim",
+                )
+                console.print(
+                    "   • Use --no-verify-ssl as a last resort (insecure!)", style="dim"
+                )
+                return False
+            else:
+                last_error = e
+                retry_count += 1
+                if retry_count < max_retries:
+                    console.print(
+                        f"⚠️  Connection error, retrying ({retry_count}/{max_retries})...",
+                        style="yellow",
+                    )
+                    time.sleep(2**retry_count)  # Exponential backoff
 
-                with open(destination, "wb") as f:
-                    for chunk in response.iter_bytes(chunk_size=8192):
-                        f.write(chunk)
-                        progress.update(download_task, advance=len(chunk))
+        except httpx.HTTPError as e:
+            console.print(f"❌ HTTP error: {e}", style="red")
+            console.print(f"[dim]Failed to download from: {url}[/dim]", style="red")
+            return False
 
-        console.print(f"✅ Downloaded: {destination.name}", style="green")
-        return True
+        except Exception as e:
+            console.print(f"❌ Download failed: {e}", style="red")
+            return False
+        finally:
+            if "client" in locals():
+                client.close()
 
-    except httpx.HTTPError as e:
-        console.print(f"❌ HTTP error: {e}", style="red")
-        console.print(f"[dim]Failed to download from: {url}[/dim]", style="red")
-        return False
-    except Exception as e:
-        console.print(f"❌ Download failed: {e}", style="red")
-        return False
+    console.print(f"❌ Failed after {max_retries} attempts: {last_error}", style="red")
+    return False
 
 
 def install_vscode(installer_path: Path) -> int:
@@ -201,8 +328,24 @@ def install_vscode(installer_path: Path) -> int:
 def download(
     output_dir: str = typer.Option(".", "--output", "-o", help="Output directory"),
     force: bool = typer.Option(False, "--force", help="Overwrite existing file"),
+    no_verify_ssl: bool = typer.Option(
+        False, "--no-verify-ssl", help="Disable SSL verification (insecure!)"
+    ),
+    use_system_certs: bool = typer.Option(
+        False, "--use-system-certs", help="Use system certificate store"
+    ),
+    ca_cert_file: str | None = typer.Option(
+        None, "--ca-cert-file", help="Path to custom CA certificate file"
+    ),
+    ca_cert_dir: str | None = typer.Option(
+        None, "--ca-cert-dir", help="Path to directory with CA certificates"
+    ),
+    timeout: float = typer.Option(
+        60.0, "--timeout", help="Download timeout in seconds"
+    ),
+    max_retries: int = typer.Option(3, "--max-retries", help="Maximum retry attempts"),
 ):
-    """Download VS Code installer"""
+    """Download VS Code installer with SSL/TLS support"""
 
     console.print(Panel.fit("📥 VS Code Downloader", style="bold cyan"))
 
@@ -210,6 +353,14 @@ def download(
     if not output_path.exists():
         console.print(f"❌ Output directory does not exist: {output_path}", style="red")
         raise typer.Exit(1)
+
+    # Create SSL context
+    ssl_context = create_ssl_context(
+        verify=not no_verify_ssl,
+        use_system_certs=use_system_certs,
+        ca_cert_file=ca_cert_file,
+        ca_cert_dir=ca_cert_dir,
+    )
 
     # Get download information
     console.print("🔍 Getting download info...", style="cyan")
@@ -229,7 +380,13 @@ def download(
     console.print(f"[dim]URL: {download_info['download_url']}[/dim]")
     console.print(f"[dim]Output: {installer_path}[/dim]")
 
-    if download_file_with_progress(download_info["download_url"], installer_path):
+    if download_file_with_progress(
+        download_info["download_url"],
+        installer_path,
+        ssl_context=ssl_context,
+        timeout=timeout,
+        max_retries=max_retries,
+    ):
         console.print("✅ Successfully downloaded VS Code installer", style="green")
         console.print(f"📂 Saved to: [green]{installer_path}[/green]")
         console.print(
@@ -248,8 +405,24 @@ def install(
     force: bool = typer.Option(
         False, "--force", help="Force reinstall even if VS Code exists"
     ),
+    no_verify_ssl: bool = typer.Option(
+        False, "--no-verify-ssl", help="Disable SSL verification (insecure!)"
+    ),
+    use_system_certs: bool = typer.Option(
+        False, "--use-system-certs", help="Use system certificate store"
+    ),
+    ca_cert_file: str | None = typer.Option(
+        None, "--ca-cert-file", help="Path to custom CA certificate file"
+    ),
+    ca_cert_dir: str | None = typer.Option(
+        None, "--ca-cert-dir", help="Path to directory with CA certificates"
+    ),
+    timeout: float = typer.Option(
+        60.0, "--timeout", help="Download timeout in seconds"
+    ),
+    max_retries: int = typer.Option(3, "--max-retries", help="Maximum retry attempts"),
 ):
-    """Install VS Code"""
+    """Install VS Code with SSL/TLS support"""
 
     console.print(Panel.fit("🚀 VS Code Installer", style="bold blue"))
 
@@ -278,6 +451,14 @@ def install(
                 f"📦 Using existing installer: [green]{installer_file}[/green]"
             )
         else:
+            # Create SSL context for download
+            ssl_context = create_ssl_context(
+                verify=not no_verify_ssl,
+                use_system_certs=use_system_certs,
+                ca_cert_file=ca_cert_file,
+                ca_cert_dir=ca_cert_dir,
+            )
+
             # Download installer
             temp_dir = Path(temp_dir_str)
 
@@ -293,7 +474,11 @@ def install(
                 f"📥 Downloading VS Code {download_info['version']}...", style="cyan"
             )
             if not download_file_with_progress(
-                download_info["download_url"], installer_file
+                download_info["download_url"],
+                installer_file,
+                ssl_context=ssl_context,
+                timeout=timeout,
+                max_retries=max_retries,
             ):
                 raise typer.Exit(1)
 
@@ -398,7 +583,7 @@ def check():
 
 @app.command()
 def info():
-    """Show information about VS Code"""
+    """Show information about VS Code and SSL configuration"""
     console.print(Panel.fit("📋 VS Code Information", style="cyan bold"))
 
     download_info = get_vscode_download_info()
@@ -406,9 +591,85 @@ def info():
     info_text = f"""[bold]Version:[/bold] {download_info["version"]}
 [bold]Download URL:[/bold] {download_info["download_url"]}
 [bold]Installer Name:[/bold] {download_info["filename"]}
+
+[bold]SSL Configuration:[/bold]
+[dim]• SSL_CERT_FILE:[/dim] {os.environ.get('SSL_CERT_FILE', 'Not set')}
+[dim]• SSL_CERT_DIR:[/dim] {os.environ.get('SSL_CERT_DIR', 'Not set')}
+[dim]• Certifi location:[/dim] {certifi.where()}
 """
 
     console.print(Panel(info_text, border_style="dim"))
+
+
+@app.command()
+def test_ssl(
+    url: str = typer.Argument(
+        "https://code.visualstudio.com", help="URL to test SSL connection"
+    ),
+    no_verify_ssl: bool = typer.Option(
+        False, "--no-verify-ssl", help="Disable SSL verification"
+    ),
+    use_system_certs: bool = typer.Option(
+        False, "--use-system-certs", help="Use system certificate store"
+    ),
+    ca_cert_file: str | None = typer.Option(
+        None, "--ca-cert-file", help="Path to custom CA certificate file"
+    ),
+    ca_cert_dir: str | None = typer.Option(
+        None, "--ca-cert-dir", help="Path to directory with CA certificates"
+    ),
+):
+    """Test SSL connection to a URL"""
+    console.print(Panel.fit(f"🔒 Testing SSL Connection to {url}", style="cyan bold"))
+
+    # Create SSL context
+    ssl_context = create_ssl_context(
+        verify=not no_verify_ssl,
+        use_system_certs=use_system_certs,
+        ca_cert_file=ca_cert_file,
+        ca_cert_dir=ca_cert_dir,
+    )
+
+    try:
+        console.print(f"🔍 Connecting to {url}...", style="cyan")
+
+        client = httpx.Client(verify=ssl_context, timeout=10.0)
+        response = client.get(url)
+        response.raise_for_status()
+
+        console.print(f"✅ SSL connection successful!", style="green")
+        console.print(f"📄 Status code: {response.status_code}")
+        console.print(f"🔒 Protocol: {response.http_version}")
+
+    except httpx.ConnectError as e:
+        if "certificate" in str(e).lower():
+            console.print(f"❌ SSL Certificate error: {e}", style="red")
+            console.print("\n💡 Troubleshooting tips:", style="yellow")
+            console.print(
+                "   1. Try --use-system-certs if in a corporate environment",
+                style="dim",
+            )
+            console.print(
+                "   2. Export your organization's CA certificate and use --ca-cert-file",
+                style="dim",
+            )
+            console.print(
+                "   3. Set SSL_CERT_FILE environment variable to your CA certificate",
+                style="dim",
+            )
+            console.print(
+                "   4. As a last resort, use --no-verify-ssl (NOT RECOMMENDED)",
+                style="dim",
+            )
+        else:
+            console.print(f"❌ Connection error: {e}", style="red")
+    except httpx.HTTPError as e:
+        console.print(f"❌ HTTP error: {e}", style="red")
+    except Exception as e:
+        console.print(f"❌ Error: {e}", style="red")
+    finally:
+        if "client" in locals():
+            client.close()
 
 
 if __name__ == "__main__":
