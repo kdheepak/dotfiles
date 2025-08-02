@@ -12,7 +12,6 @@
 # ///
 """
 VS Code installer script that downloads and installs Visual Studio Code for Windows
-with enhanced SSL/TLS support for corporate environments
 """
 
 import os
@@ -67,7 +66,6 @@ def main(ctx: typer.Context):
     if ctx.invoked_subcommand is None:
         # No command provided, show help
         ctx.get_help()
-        typer.echo(ctx.get_help())
         raise typer.Exit(0)
 
 
@@ -101,6 +99,17 @@ def create_ssl_context(
         ca_cert_file = os.environ.get("SSL_CERT_FILE")
     if ca_cert_dir is None:
         ca_cert_dir = os.environ.get("SSL_CERT_DIR")
+
+    if ca_cert_file and not Path(ca_cert_file).exists():
+        console.print(
+            f"⚠️  CA certificate file not found: {ca_cert_file}", style="yellow"
+        )
+        raise typer.Exit(1)
+    if ca_cert_dir and not Path(ca_cert_dir).exists():
+        console.print(
+            f"⚠️  CA certificate directory not found: {ca_cert_dir}", style="yellow"
+        )
+        raise typer.Exit(1)
 
     if use_system_certs:
         console.print("🔒 Using system certificate store", style="cyan")
