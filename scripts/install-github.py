@@ -6,6 +6,8 @@
 #     "httpx",
 #     "rich",
 #     "typer",
+#     "certifi",
+#     "truststore",
 # ]
 # ///
 """
@@ -17,6 +19,7 @@ import subprocess
 from pathlib import Path
 import tempfile
 import json
+import ssl
 
 import typer
 import httpx
@@ -31,6 +34,9 @@ from rich.progress import (
 )
 from rich.prompt import Confirm
 from rich.panel import Panel
+
+import certifi
+import truststore
 
 # Configure console
 console = Console()
@@ -155,41 +161,131 @@ def get_github_desktop_download_info() -> dict:
         }
 
 
-def download_file_with_progress(url: str, destination: Path) -> bool:
-    """Download file from URL to destination with progress bar"""
-    try:
-        with httpx.stream("GET", url, follow_redirects=True, timeout=30.0) as response:
-            response.raise_for_status()
+def create_ssl_context(
+    verify: bool = True,
+    use_system_certs: bool = False,
+    ca_cert_file: str | None = None,
+    ca_cert_dir: str | None = None,
+) -> ssl.SSLContext | bool:
+    if not verify:
+        console.print(
+            "⚠️  SSL verification disabled - connection may be insecure!",
+            style="yellow bold",
+        )
+        return False
+    if ca_cert_file is None:
+        ca_cert_file = os.environ.get("SSL_CERT_FILE")
+    if ca_cert_file is None:
+        user_ca_cert = Path.home() / ".config" / "certs" / "cacert.pem"
+        if user_ca_cert.exists():
+            ca_cert_file = str(user_ca_cert)
+            console.print(
+                f"🔒 Found user CA certificate: {ca_cert_file}", style="cyan dim"
+            )
+    if ca_cert_dir is None:
+        ca_cert_dir = os.environ.get("SSL_CERT_DIR")
+    if ca_cert_file and not Path(ca_cert_file).exists():
+        console.print(
+            f"❌ CA certificate file not found: {ca_cert_file}", style="red bold"
+        )
+        raise typer.Exit(1)
+    if ca_cert_dir and not Path(ca_cert_dir).exists():
+        console.print(
+            f"❌ CA certificate directory not found: {ca_cert_dir}", style="red bold"
+        )
+        raise typer.Exit(1)
+    if use_system_certs:
+        if truststore is not None:
+            console.print("🔒 Using system certificate store", style="cyan")
+            ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        else:
+            console.print("❌ truststore not available for system certs", style="red")
+            raise typer.Exit(1)
+    else:
+        cafile = ca_cert_file or (certifi.where() if certifi else None)
+        ctx = ssl.create_default_context(cafile=cafile, capath=ca_cert_dir)
+        if ca_cert_file:
+            console.print(
+                f"🔒 Using custom CA certificate: {ca_cert_file}", style="cyan"
+            )
+        elif ca_cert_dir:
+            console.print(f"🔒 Using CA certificates from: {ca_cert_dir}", style="cyan")
+        else:
+            console.print("🔒 Using certifi CA bundle", style="cyan")
+    return ctx
 
-            total_size = int(response.headers.get("content-length", 0))
 
-            with Progress(
-                SpinnerColumn(),
-                TextColumn("[progress.description]{task.description}"),
-                BarColumn(),
-                DownloadColumn(),
-                TransferSpeedColumn(),
-                console=console,
-            ) as progress:
-                download_task = progress.add_task(
-                    f"Downloading {destination.name}", total=total_size
+def download_file_with_progress(
+    url: str,
+    destination: Path,
+    ssl_context: ssl.SSLContext | bool = True,
+    timeout: float = 60.0,
+    max_retries: int = 3,
+) -> bool:
+    retry_count = 0
+    last_error = None
+    while retry_count < max_retries:
+        try:
+            client = httpx.Client(verify=ssl_context, timeout=timeout)
+            with client.stream("GET", url, follow_redirects=True) as response:
+                response.raise_for_status()
+                total_size = int(response.headers.get("content-length", 0))
+                with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    BarColumn(),
+                    DownloadColumn(),
+                    TransferSpeedColumn(),
+                    console=console,
+                ) as progress:
+                    download_task = progress.add_task(
+                        f"Downloading {destination.name}", total=total_size
+                    )
+                    with open(destination, "wb") as f:
+                        for chunk in response.iter_bytes(chunk_size=8192):
+                            f.write(chunk)
+                            progress.update(download_task, advance=len(chunk))
+            console.print(f"✅ Downloaded: {destination.name}", style="green")
+            return True
+        except httpx.ConnectError as e:
+            if "certificate" in str(e).lower():
+                console.print(f"❌ SSL Certificate error: {e}", style="red")
+                console.print("💡 Tips:", style="yellow")
+                console.print(
+                    "   • Try --use-system-certs if in a corporate environment",
+                    style="dim",
                 )
+                console.print(
+                    "   • Use --ca-cert-file with your organization's CA certificate",
+                    style="dim",
+                )
+                console.print(
+                    "   • Use --no-verify-ssl as a last resort (insecure!)", style="dim"
+                )
+                return False
+            else:
+                last_error = e
+                retry_count += 1
+                if retry_count < max_retries:
+                    console.print(
+                        f"⚠️  Connection error, retrying ({retry_count}/{max_retries})...",
+                        style="yellow",
+                    )
+                    import time
 
-                with open(destination, "wb") as f:
-                    for chunk in response.iter_bytes(chunk_size=8192):
-                        f.write(chunk)
-                        progress.update(download_task, advance=len(chunk))
-
-        console.print(f"✅ Downloaded: {destination.name}", style="green")
-        return True
-
-    except httpx.HTTPError as e:
-        console.print(f"❌ HTTP error: {e}", style="red")
-        console.print(f"[dim]Failed to download from: {url}[/dim]", style="red")
-        return False
-    except Exception as e:
-        console.print(f"❌ Download failed: {e}", style="red")
-        return False
+                    time.sleep(2**retry_count)
+        except httpx.HTTPError as e:
+            console.print(f"❌ HTTP error: {e}", style="red")
+            console.print(f"[dim]Failed to download from: {url}[/dim]", style="red")
+            return False
+        except Exception as e:
+            console.print(f"❌ Download failed: {e}", style="red")
+            return False
+        finally:
+            if "client" in locals():
+                client.close()
+    console.print(f"❌ Failed after {max_retries} attempts: {last_error}", style="red")
+    return False
 
 
 def install_github_desktop(installer_path: Path) -> int:
@@ -217,8 +313,24 @@ def install_github_desktop(installer_path: Path) -> int:
 def download(
     output_dir: str = typer.Option(".", "--output", "-o", help="Output directory"),
     force: bool = typer.Option(False, "--force", help="Overwrite existing file"),
+    no_verify_ssl: bool = typer.Option(
+        False, "--no-verify-ssl", help="Disable SSL verification (insecure!)"
+    ),
+    use_system_certs: bool = typer.Option(
+        False, "--use-system-certs", help="Use system certificate store"
+    ),
+    ca_cert_file: str | None = typer.Option(
+        None, "--ca-cert-file", help="Path to custom CA certificate file"
+    ),
+    ca_cert_dir: str | None = typer.Option(
+        None, "--ca-cert-dir", help="Path to directory with CA certificates"
+    ),
+    timeout: float = typer.Option(
+        60.0, "--timeout", help="Download timeout in seconds"
+    ),
+    max_retries: int = typer.Option(3, "--max-retries", help="Maximum retry attempts"),
 ):
-    """Download GitHub Desktop installer"""
+    """Download GitHub Desktop installer with SSL/TLS support"""
 
     console.print(Panel.fit("📥 GitHub Desktop Downloader", style="bold cyan"))
 
@@ -240,6 +352,13 @@ def download(
             console.print("Download cancelled.", style="blue")
             return
 
+    ssl_context = create_ssl_context(
+        verify=not no_verify_ssl,
+        use_system_certs=use_system_certs,
+        ca_cert_file=ca_cert_file,
+        ca_cert_dir=ca_cert_dir,
+    )
+
     # Download the installer
     console.print(
         f"📥 Downloading GitHub Desktop {download_info['version']}...", style="cyan"
@@ -247,7 +366,13 @@ def download(
     console.print(f"[dim]URL: {download_info['download_url']}[/dim]")
     console.print(f"[dim]Output: {installer_path}[/dim]")
 
-    if download_file_with_progress(download_info["download_url"], installer_path):
+    if download_file_with_progress(
+        download_info["download_url"],
+        installer_path,
+        ssl_context=ssl_context,
+        timeout=timeout,
+        max_retries=max_retries,
+    ):
         console.print(
             "✅ Successfully downloaded GitHub Desktop installer", style="green"
         )
@@ -268,8 +393,24 @@ def install(
     force: bool = typer.Option(
         False, "--force", help="Force reinstall even if GitHub Desktop exists"
     ),
+    no_verify_ssl: bool = typer.Option(
+        False, "--no-verify-ssl", help="Disable SSL verification (insecure!)"
+    ),
+    use_system_certs: bool = typer.Option(
+        False, "--use-system-certs", help="Use system certificate store"
+    ),
+    ca_cert_file: str | None = typer.Option(
+        None, "--ca-cert-file", help="Path to custom CA certificate file"
+    ),
+    ca_cert_dir: str | None = typer.Option(
+        None, "--ca-cert-dir", help="Path to directory with CA certificates"
+    ),
+    timeout: float = typer.Option(
+        60.0, "--timeout", help="Download timeout in seconds"
+    ),
+    max_retries: int = typer.Option(3, "--max-retries", help="Maximum retry attempts"),
 ):
-    """Install GitHub Desktop"""
+    """Install GitHub Desktop with SSL/TLS support"""
 
     console.print(Panel.fit("🚀 GitHub Desktop Installer", style="bold blue"))
 
@@ -312,12 +453,23 @@ def install(
 
                 installer_file = temp_dir / download_info["filename"]
 
+                ssl_context = create_ssl_context(
+                    verify=not no_verify_ssl,
+                    use_system_certs=use_system_certs,
+                    ca_cert_file=ca_cert_file,
+                    ca_cert_dir=ca_cert_dir,
+                )
+
                 console.print(
                     f"📥 Downloading GitHub Desktop {download_info['version']}...",
                     style="cyan",
                 )
                 if not download_file_with_progress(
-                    download_info["download_url"], installer_file
+                    download_info["download_url"],
+                    installer_file,
+                    ssl_context=ssl_context,
+                    timeout=timeout,
+                    max_retries=max_retries,
                 ):
                     raise typer.Exit(1)
 

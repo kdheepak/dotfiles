@@ -6,6 +6,8 @@
 #     "httpx",
 #     "rich",
 #     "typer",
+#     "certifi",
+#     "truststore",
 # ]
 # ///
 """
@@ -19,6 +21,7 @@ from pathlib import Path
 import os
 import ssl
 import certifi
+import truststore
 import typer
 import httpx
 from rich.console import Console
@@ -32,11 +35,6 @@ from rich.progress import (
 )
 from rich.prompt import Confirm
 from rich.panel import Panel
-
-try:
-    import truststore
-except ImportError:
-    truststore = None
 
 # Configure console
 console = Console()
