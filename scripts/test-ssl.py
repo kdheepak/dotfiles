@@ -360,7 +360,7 @@ def main(
     else:
         # Perform full HTTP request
         try:
-            console.print(f"\n🔍 Performing HTTPS request to {url}...", style="cyan")
+            console.print(f"\n🔍 Performing HTTPS request to {url}...\n", style="cyan")
 
             client = httpx.Client(verify=ssl_context, timeout=timeout)
             response = client.get(url)
