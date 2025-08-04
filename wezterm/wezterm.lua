@@ -36,7 +36,7 @@ config.inactive_pane_hsb = {
   brightness = 1,
 }
 
-config.color_scheme = "rose-pine"
+config.color_scheme = "Github (base16)"
 config.colors = {
   selection_bg = "#44475a", -- or any color that contrasts well
   selection_fg = "none", -- "none" means it will use the existing foreground
