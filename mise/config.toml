@@ -389,6 +389,7 @@ pandoc = { version = "latest", os = [
 "cargo:viu" = { version = "latest", os = ["macos"] }
 "cargo:monochora" = { version = "latest", os = ["macos"] }
 vhs = { version = "latest", os = ["macos"] }
+"cargo:auto-palette-cli" = { version = "latest", os = ["macos"] } # Generate color palettes from images
 # "asdf:ivanvc/asdf-ttyd" = { version = "latest", os = ["macos"] }
 
 # --- AI ---
