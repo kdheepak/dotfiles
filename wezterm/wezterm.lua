@@ -311,6 +311,7 @@ config.keys = {
   { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
   { key = "PageUp", mods = "SHIFT", action = act.ScrollByPage(-0.8) },
   { key = "PageDown", mods = "SHIFT", action = act.ScrollByPage(0.8) },
+  { key = "Enter", mods = "SHIFT", action = act.SendString("\n") },
 }
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
