@@ -36,7 +36,7 @@ config.inactive_pane_hsb = {
   brightness = 1,
 }
 
-config.color_scheme = "rose-pine"
+config.color_scheme = "Rosé Pine (base16)"
 config.colors = {
   selection_bg = "#44475a", -- or any color that contrasts well
   selection_fg = "none", -- "none" means it will use the existing foreground
@@ -50,7 +50,7 @@ local tab_title = function(tab_info)
   local active_pane = tab_info.active_pane
   local current_dir = basename(tostring(active_pane.current_working_dir))
 
-  local active_procces = active_pane.foreground_process_name
+  local active_process = active_pane.foreground_process_name
   local tab_title = string.lower(active_pane.title)
   local tab_index = tostring(tab_info.tab_index + 1)
   local icon = wezterm.nerdfonts.cod_terminal
@@ -62,10 +62,10 @@ local tab_title = function(tab_info)
   elseif string.find(tab_title, "lazygit") then
     icon = wezterm.nerdfonts.fa_git
     text_color = "#f5f5f5"
-  elseif string.find(active_procces, "node") then
+  elseif string.find(active_process, "node") then
     icon = wezterm.nerdfonts.dev_nodejs_small
     text_color = "#f5f5f5"
-  elseif string.find(active_procces, "net") then
+  elseif string.find(active_process, "net") then
     icon = wezterm.nerdfonts.md_dot_net
     text_color = "#f5f5f5"
   end
