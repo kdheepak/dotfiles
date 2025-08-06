@@ -40,7 +40,8 @@
 [alias]
     url =! bash -c 'git config --get remote.origin.url | sed -E "s/.+:\\(.+\\)\\.git$/https:\\\\/\\\\/github\\\\.com\\\\/\\\\1/g"'
     co = checkout
-    save = !git commit -am 'chore: Update files' && git push
+    save = !git ai-commit --all --yes && git push
+    chore = !git commit -am 'chore: Update files' && git push
     wip = !SKIP='check-commit-msg' git commit -anm 'wip: Update files'
     graph = log --all --graph --decorate --oneline
     lg = lazygit log
