@@ -448,6 +448,9 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_wi
         return {
           { Foreground = { Color = active_bg } },
           { Background = { Color = inactive_bg } },
+          THIN_ARROW,
+          { Foreground = { Color = active_bg } },
+          { Background = { Color = inactive_bg } },
           { Text = ps(tab) },
           { Foreground = { Color = inactive_bg } },
           { Background = { Color = active_bg } },
@@ -458,10 +461,24 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_wi
           { Background = { Color = inactive_bg } },
           THICK_ARROW,
         }
+      elseif i == 1 and tabs[i + 1] and tabs[i + 1].is_active then
+        return {
+          THIN_ARROW,
+          NORMAL,
+          { Text = ps(tab) .. i .. cwd(tab) },
+        }
       elseif tabs[i + 1] and tabs[i + 1].is_active then
         return {
           NORMAL,
           { Text = ps(tab) .. i .. cwd(tab) },
+        }
+      elseif i == 1 then
+        return {
+          THIN_ARROW,
+          NORMAL,
+          { Text = ps(tab) .. i .. cwd(tab) },
+          { Foreground = { Color = active_bg } },
+          { Background = { Color = inactive_bg } },
           THIN_ARROW,
           { Foreground = { Color = inactive_bg } },
           { Background = { Color = active_bg } },
