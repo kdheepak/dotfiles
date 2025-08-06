@@ -435,6 +435,15 @@ config.colors = {
 wezterm.plugin.require("https://gitlab.com/xarvex/presentation.wez").apply_to_config(config)
 
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
-smart_splits.apply_to_config(config)
+smart_splits.apply_to_config(config, {
+  direction_keys = {
+    move = { "h", "j", "k", "l" },
+    resize = { "LeftArrow", "DownArrow", "UpArrow", "RightArrow" },
+  },
+  modifiers = {
+    move = "CTRL",
+    resize = "CTRL",
+  },
+})
 
 return config
