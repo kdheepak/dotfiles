@@ -119,14 +119,19 @@ local rosepine_overrides = {
     inactive_hover = { fg = "#9ccfd8", bg = "#1f1d2e" },
   },
 }
+local cwd = {
+  "cwd",
+  padding = { left = 1, right = 1 },
+  max_length = 30,
+}
 
 tabline.setup({
   options = {
     theme_overrides = rosepine_overrides,
     icons_enabled = true,
     section_separators = {
-      left = wezterm.nerdfonts.ple_right_half_circle_thick,
-      right = wezterm.nerdfonts.ple_left_half_circle_thick,
+      left = wezterm.nerdfonts.pl_left_hard_divider,
+      right = wezterm.nerdfonts.pl_right_hard_divider,
     },
     component_separators = {
       left = wezterm.nerdfonts.ple_right_half_circle_thin,
@@ -138,14 +143,8 @@ tabline.setup({
     },
   },
   sections = {
-    tabline_a = { leader_component, { "mode", padding = { left = 1, right = 0 } } },
-    tabline_b = {
-      {
-        "datetime",
-        style = "%H:%M",
-        hour_to_icon = hours_icons,
-      },
-    },
+    tabline_a = { leader_component, { "mode", padding = { left = 1, right = 1 } } },
+    tabline_b = {},
     tabline_c = { " " },
     tab_active = {
       { "zoomed", icon = wezterm.nerdfonts.oct_zoom_in, padding = { left = 0, right = 0 } },
@@ -157,6 +156,8 @@ tabline.setup({
         padding = { left = 0, right = 1 },
       },
       wezterm.nerdfonts.pl_left_soft_divider,
+      { "process", icons_only = true, padding = { left = 2, right = 0 } },
+      cwd,
       {
         "tab",
         fmt = function(str)
@@ -166,13 +167,8 @@ tabline.setup({
             return ""
           end
         end,
-        padding = { left = 1, right = 0 },
-        icons_enabled = false,
-      },
-      {
-        "process",
-        icons_only = true,
         padding = { left = 0, right = 0 },
+        icons_enabled = false,
       },
     },
     tab_inactive = {
@@ -189,6 +185,8 @@ tabline.setup({
         padding = { left = 0, right = 1 },
       },
       wezterm.nerdfonts.pl_left_soft_divider,
+      { "process", icons_only = true, padding = { left = 2, right = 0 } },
+      cwd,
       {
         "tab",
         fmt = function(str)
@@ -198,13 +196,22 @@ tabline.setup({
             return ""
           end
         end,
-        padding = { left = 1, right = 0 },
+        padding = { left = 0, right = 0 },
         icons_enabled = false,
       },
-      { "process", icons_only = true, padding = { left = 0, right = 0 } },
     },
-    tabline_x = { "ram", "cpu" },
-    tabline_y = { "battery" },
+    tabline_x = {
+      { "ram" },
+      { "cpu" },
+    },
+    tabline_y = {
+      {
+        "datetime",
+        style = "%H:%M",
+        hour_to_icon = hours_icons,
+      },
+      { "battery" },
+    },
     tabline_z = { "domain" },
   },
   extensions = {},
@@ -426,5 +433,8 @@ config.colors = {
 }
 
 wezterm.plugin.require("https://gitlab.com/xarvex/presentation.wez").apply_to_config(config)
+
+local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+smart_splits.apply_to_config(config)
 
 return config
