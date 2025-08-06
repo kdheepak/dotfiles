@@ -408,4 +408,6 @@ config.colors = {
   selection_fg = "none", -- "none" means it will use the existing foreground
 }
 
+wezterm.plugin.require("https://gitlab.com/xarvex/presentation.wez").apply_to_config(config)
+
 return config
