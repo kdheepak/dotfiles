@@ -40,63 +40,206 @@ config.color_scheme = "rose-pine"
 config.colors = {
   selection_bg = "#44475a", -- or any color that contrasts well
   selection_fg = "none", -- "none" means it will use the existing foreground
+
+  brights = {
+    "#f2cdcd", -- "grey",
+    "#ff6188", -- "red",
+    "#a8dc76", -- "lime",
+    "#ffd966", -- "yellow",
+    "#82A6ED", -- "blue",
+    "#D499FF", -- "fuchsia",
+    "#94e2d5", -- "aqua",
+    "#FCFCFA", -- "white",
+  },
+
+  ansi = {
+    "#f2cdcd",
+    "#ff6188",
+    "#a8dc76",
+    "#ffd966",
+    "#82A6ED",
+    "#D499FF",
+    "#94e2d5",
+    "#FCFCFA",
+  },
+
+  tab_bar = {
+    background = "#1F1D20",
+    active_tab = {
+      bg_color = "#ebbcba",
+      fg_color = "#1f1d2e",
+      intensity = "Normal",
+      italic = false,
+      strikethrough = false,
+      underline = "None",
+    },
+    inactive_tab = {
+      bg_color = "#1f1d2e",
+      fg_color = "#ebbcba",
+      intensity = "Half",
+      italic = false,
+      strikethrough = false,
+      underline = "None",
+    },
+    new_tab = {
+      bg_color = "#1F1D20",
+      fg_color = "#ebbcba",
+      intensity = "Normal",
+      italic = false,
+      strikethrough = false,
+      underline = "None",
+    },
+  },
+}
+config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+
+-- Powerline separator symbols
+local separators = {
+  right_filled = "", -- U+E0B0
+  right_thin = "", -- U+E0B1
+  left_filled = "", -- U+E0B2
+  left_thin = "", -- U+E0B3
 }
 
-local basename = function(s)
-  return string.gsub(s, "(.*[/\\])(.*)", "%2")
+local icons = {
+  ["C:\\WINDOWS\\system32\\cmd.exe"] = wezterm.nerdfonts.md_console_line,
+  ["Topgrade"] = wezterm.nerdfonts.md_rocket_launch,
+  ["bash"] = wezterm.nerdfonts.cod_terminal_bash,
+  ["btm"] = wezterm.nerdfonts.mdi_chart_donut_variant,
+  ["cargo"] = wezterm.nerdfonts.dev_rust,
+  ["curl"] = wezterm.nerdfonts.mdi_flattr,
+  ["docker"] = wezterm.nerdfonts.linux_docker,
+  ["docker-compose"] = wezterm.nerdfonts.linux_docker,
+  ["fish"] = wezterm.nerdfonts.md_fish,
+  ["gh"] = wezterm.nerdfonts.dev_github_badge,
+  ["git"] = wezterm.nerdfonts.dev_git,
+  ["go"] = wezterm.nerdfonts.seti_go,
+  ["htop"] = wezterm.nerdfonts.md_chart_areaspline,
+  ["btop"] = wezterm.nerdfonts.md_chart_areaspline,
+  ["kubectl"] = wezterm.nerdfonts.linux_docker,
+  ["kuberlr"] = wezterm.nerdfonts.linux_docker,
+  ["lazydocker"] = wezterm.nerdfonts.linux_docker,
+  ["lua"] = wezterm.nerdfonts.seti_lua,
+  ["make"] = wezterm.nerdfonts.seti_makefile,
+  ["node"] = wezterm.nerdfonts.mdi_hexagon,
+  ["nvim"] = wezterm.nerdfonts.custom_vim,
+  ["pacman"] = "󰮯 ",
+  ["paru"] = "󰮯 ",
+  ["psql"] = wezterm.nerdfonts.dev_postgresql,
+  ["pwsh.exe"] = wezterm.nerdfonts.md_console,
+  ["ruby"] = wezterm.nerdfonts.cod_ruby,
+  ["sudo"] = wezterm.nerdfonts.fa_hashtag,
+  ["vim"] = wezterm.nerdfonts.dev_vim,
+  ["wget"] = wezterm.nerdfonts.mdi_arrow_down_box,
+  ["zsh"] = wezterm.nerdfonts.dev_terminal,
+  ["lazygit"] = wezterm.nerdfonts.cod_github,
+}
+
+local BOLD = { Attribute = { Intensity = "Bold" } }
+local NORMAL = { Attribute = { Intensity = "Normal" } }
+local THICK_ARROW = { Text = "" }
+local THIN_ARROW = { Text = "" }
+
+local home_dir = os.getenv("HOME")
+local fmt = wezterm.format
+
+local process_icon = {
+  rust = { { Foreground = { Color = "#f5a97f" } }, { Text = "  " } },
+  vim = { { Foreground = { Color = "#89e051" } }, { Text = "  " } },
+  git = { Foreground = { Color = "#41535b" }, { Text = " 󰊢 " } },
+  python = { { Foreground = { Color = "#F7CE57" } }, { Text = "  " } },
+  shell = { { Foreground = { Color = "#cdd6f4" } }, { Text = "  " } },
+  runner = { { Foreground = { Color = "#b4befe" } }, { Text = " 󰜎 " } },
+  docs = { { Text = "  " } },
+  node = { { Foreground = { Color = "#89e051" } }, { Text = " 󰎙 " } },
+  update = { { Text = "  " } },
+  brew = { { Text = " 󱄖 " } },
+}
+
+local icons = {
+  ["nvim"] = process_icon.vim,
+  ["git"] = process_icon.git,
+  ["lazygit"] = process_icon.git,
+  ["Python"] = process_icon.python,
+  ["fish"] = process_icon.shell,
+  ["zsh"] = process_icon.shell,
+  ["bash"] = process_icon.shell,
+  ["cargo-make"] = process_icon.rust,
+  ["cargo"] = process_icon.rust,
+  ["rustup"] = process_icon.rust,
+  ["rust-analyzer"] = process_icon.rust,
+  ["cr"] = process_icon.rust,
+  ["ct"] = process_icon.rust,
+  ["mdbook"] = process_icon.docs,
+  ["cargo-watch"] = process_icon.runner,
+  ["watch"] = process_icon.runner,
+  ["node"] = process_icon.node,
+  ["ruby"] = process_icon.brew,
+}
+
+local process_name_cache = {}
+local current_dir_cache = {
+  [home_dir] = "~ ",
+  DEBUG = " ",
+}
+
+local function cwd_cacher(name)
+  current_dir_cache[name] = " " .. name:match("[^/]*$") .. " "
+  return current_dir_cache[name]
 end
 
-local tab_title = function(tab_info)
-  local active_pane = tab_info.active_pane
-  local current_dir = basename(tostring(active_pane.current_working_dir))
-
-  local active_process = active_pane.foreground_process_name
-  local tab_title = string.lower(active_pane.title)
-  local tab_index = tostring(tab_info.tab_index + 1)
-  local icon = wezterm.nerdfonts.cod_terminal
-  local text_color = "#f5f5f5"
-
-  if string.find(tab_title, "nvim") then
-    icon = wezterm.nerdfonts.custom_neovim
-    text_color = "#f5f5f5"
-  elseif string.find(tab_title, "lazygit") then
-    icon = wezterm.nerdfonts.fa_git
-    text_color = "#f5f5f5"
-  elseif string.find(active_process, "node") then
-    icon = wezterm.nerdfonts.dev_nodejs_small
-    text_color = "#f5f5f5"
-  elseif string.find(active_process, "net") then
-    icon = wezterm.nerdfonts.md_dot_net
-    text_color = "#f5f5f5"
-  end
-
-  if tab_index and #tab_index > 0 then
-    return " " .. tab_index .. ": " .. current_dir .. " " .. icon .. " ", text_color
-  end
-
-  return tab_info.active_pane.title
+local function ps_cacher(name)
+  process_name_cache[name] = fmt(icons[name:match("[^/]*$")] or {
+    { Text = "  " },
+    -- name:match("[^/]*$") .. " "
+  })
+  return process_name_cache[name]
 end
 
-wezterm.on("format-tab-title", function(tab, _, _, _, _, max_width)
-  local background = "#5c6d74"
-  local edge_background = "none"
-  if tab.is_active then
-    background = "#0969da"
-  end
-  local edge_foreground = background
-  local title, text_color = tab_title(tab)
-  if tab.is_active then
-    return {
-      { Background = { Color = "#0969da" } },
-      { Foreground = { Color = text_color } },
-      { Text = title },
-    }
-  else
-    return {
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = title },
-    }
+local function ps(tab)
+  return process_name_cache[tab.active_pane.foreground_process_name]
+    or ps_cacher(tab.active_pane.foreground_process_name)
+end
+
+local function cwd(tab)
+  local dir = tab.active_pane.current_working_dir
+  return current_dir_cache[dir and dir.file_path or "DEBUG"] or cwd_cacher(dir.file_path)
+end
+
+local active_bg = config.colors.tab_bar.active_tab.bg_color
+local inactive_bg = config.colors.tab_bar.inactive_tab.bg_color
+
+---@diagnostic disable-next-line: unused-local
+wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
+  local t = #tabs
+  for i = 1, t do
+    if tabs[i].tab_id == tab.tab_id then
+      if tab.is_active then
+        return {
+          BOLD,
+          { Text = ps(tab) .. i .. cwd(tab) },
+          { Foreground = { Color = active_bg } },
+          { Background = { Color = inactive_bg } },
+          THICK_ARROW,
+        }
+      elseif tabs[i + 1] and tabs[i + 1].is_active then
+        return {
+          NORMAL,
+          { Text = ps(tab) .. i .. cwd(tab) },
+          { Foreground = { Color = inactive_bg } },
+          { Background = { Color = active_bg } },
+          THICK_ARROW,
+        }
+      else
+        return {
+          NORMAL,
+          { Text = ps(tab) .. i .. cwd(tab) },
+          { Foreground = { Color = active_bg } },
+          { Background = { Color = inactive_bg } },
+          THIN_ARROW,
+        }
+      end
+    end
   end
 end)
 
