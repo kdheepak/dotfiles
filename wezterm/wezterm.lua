@@ -155,8 +155,7 @@ tabline.setup({
         end,
         padding = { left = 0, right = 1 },
       },
-      wezterm.nerdfonts.pl_left_soft_divider,
-      { "process", icons_only = true, padding = { left = 2, right = 0 } },
+      { "process", icons_only = true, padding = { left = 1, right = 0 } },
       cwd,
       {
         "tab",
@@ -184,8 +183,7 @@ tabline.setup({
         end,
         padding = { left = 0, right = 1 },
       },
-      wezterm.nerdfonts.pl_left_soft_divider,
-      { "process", icons_only = true, padding = { left = 2, right = 0 } },
+      { "process", icons_only = true, padding = { left = 1, right = 0 } },
       cwd,
       {
         "tab",
@@ -199,6 +197,7 @@ tabline.setup({
         padding = { left = 0, right = 0 },
         icons_enabled = false,
       },
+      wezterm.nerdfonts.pl_left_soft_divider,
     },
     tabline_x = {
       { "ram" },
