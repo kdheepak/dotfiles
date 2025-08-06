@@ -43,6 +43,65 @@ config.window_padding = {
   bottom = 0,
 }
 
+-- Rose Pine theme table
+local theme = {
+  foreground = "#e0def4", -- text
+  background = "#191724", -- base
+  cursor_bg = "#524f67", -- highlightHigh
+  cursor_fg = "#e0def4", -- text
+  cursor_border = "#524f67", -- highlightHigh
+  selection_bg = "#403d52", -- highlightMed
+  selection_fg = "#e0def4", -- text
+
+  -- ANSI colors (0-7)
+  ansi = {
+    "#26233a", -- 0: black (overlay)
+    "#eb6f92", -- 1: red (love)
+    "#31748f", -- 2: green (pine)
+    "#f6c177", -- 3: yellow (gold)
+    "#9ccfd8", -- 4: blue (foam)
+    "#c4a7e7", -- 5: magenta (iris)
+    "#ebbcba", -- 6: cyan (rose)
+    "#e0def4", -- 7: white (text)
+  },
+
+  -- Bright colors (8-15)
+  brights = {
+    "#6e6a86", -- 8: bright black (muted)
+    "#eb6f92", -- 9: bright red (love)
+    "#31748f", -- 10: bright green (pine)
+    "#f6c177", -- 11: bright yellow (gold)
+    "#9ccfd8", -- 12: bright blue (foam)
+    "#c4a7e7", -- 13: bright magenta (iris)
+    "#ebbcba", -- 14: bright cyan (rose)
+    "#e0def4", -- 15: bright white (text)
+  },
+
+  -- Tab bar configuration
+  tab_bar = {
+    background = "#191724", -- base
+    inactive_tab = {
+      bg_color = "#1f1d2e", -- surface
+      fg_color = "#6e6a86", -- muted
+    },
+    inactive_tab_hover = {
+      bg_color = "#26233a", -- overlay
+      fg_color = "#908caa", -- subtle
+    },
+    active_tab = {
+      bg_color = "#26233a", -- overlay
+      fg_color = "#e0def4", -- text
+    },
+    inactive_tab_edge = "#1f1d2e", -- surface
+  },
+
+  -- Cursor table (for the get_colors function)
+  cursor = {
+    bg = "#524f67", -- highlightHigh
+    fg = "#e0def4", -- text
+  },
+}
+
 config.color_scheme = "rose-pine"
 
 local hours_icons = {
@@ -103,7 +162,7 @@ end
 
 tabline.setup({
   options = {
-    theme = "nord",
+    theme = theme,
     icons_enabled = true,
     section_separators = {
       left = wezterm.nerdfonts.ple_right_half_circle_thick,
