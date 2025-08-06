@@ -101,11 +101,6 @@ local separators = {
   left_thin = "", -- U+E0B3
 }
 
-local BOLD = { Attribute = { Intensity = "Bold" } }
-local NORMAL = { Attribute = { Intensity = "Normal" } }
-local THICK_ARROW = { Text = "" }
-local THIN_ARROW = { Text = "" }
-
 local home_dir = os.getenv("HOME")
 local fmt = wezterm.format
 
@@ -439,6 +434,11 @@ end
 local active_bg = config.colors.tab_bar.active_tab.bg_color
 local inactive_bg = config.colors.tab_bar.inactive_tab.bg_color
 
+local BOLD = { Attribute = { Intensity = "Bold" } }
+local NORMAL = { Attribute = { Intensity = "Normal" } }
+local THICK_ARROW = { Text = "" }
+local THIN_ARROW = { Text = "" }
+
 ---@diagnostic disable-next-line: unused-local
 wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
   local t = #tabs
@@ -446,8 +446,14 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_wi
     if tabs[i].tab_id == tab.tab_id then
       if tab.is_active then
         return {
+          { Foreground = { Color = active_bg } },
+          { Background = { Color = inactive_bg } },
+          { Text = ps(tab) },
+          { Foreground = { Color = inactive_bg } },
+          { Background = { Color = active_bg } },
+          THICK_ARROW,
           BOLD,
-          { Text = ps(tab) .. i .. cwd(tab) },
+          { Text = " " .. i .. cwd(tab) },
           { Foreground = { Color = active_bg } },
           { Background = { Color = inactive_bg } },
           THICK_ARROW,
@@ -456,9 +462,9 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_wi
         return {
           NORMAL,
           { Text = ps(tab) .. i .. cwd(tab) },
+          THIN_ARROW,
           { Foreground = { Color = inactive_bg } },
           { Background = { Color = active_bg } },
-          THICK_ARROW,
         }
       else
         return {
@@ -467,6 +473,8 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_wi
           { Foreground = { Color = active_bg } },
           { Background = { Color = inactive_bg } },
           THIN_ARROW,
+          { Foreground = { Color = inactive_bg } },
+          { Background = { Color = active_bg } },
         }
       end
     end
