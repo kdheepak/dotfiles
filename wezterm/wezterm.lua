@@ -140,7 +140,6 @@ tabline.setup({
   sections = {
     tabline_a = { leader_component, { "mode", padding = { left = 1, right = 0 } } },
     tabline_b = {
-      { "   " },
       {
         "datetime",
         style = "%H:%M",
