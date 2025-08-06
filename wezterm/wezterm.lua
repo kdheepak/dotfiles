@@ -402,9 +402,7 @@ config.keys = {
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 config.colors = {
-
   selection_bg = "#44475a", -- or any color that contrasts well
-
   selection_fg = "none", -- "none" means it will use the existing foreground
 }
 
