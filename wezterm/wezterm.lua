@@ -72,6 +72,10 @@ local hours_icons = {
   ["23"] = wezterm.nerdfonts.md_clock_time_eleven, -- 11:00 in solid icon
 }
 
+local modal = wezterm.plugin.require("https://github.com/MLFlexer/modal.wezterm")
+modal.apply_to_config(config)
+modal.set_default_keys(config)
+
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 
 local leader = {
@@ -396,5 +400,12 @@ config.keys = {
 }
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+
+config.colors = {
+
+  selection_bg = "#44475a", -- or any color that contrasts well
+
+  selection_fg = "none", -- "none" means it will use the existing foreground
+}
 
 return config
