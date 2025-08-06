@@ -133,13 +133,14 @@ tabline.setup({
       right = wezterm.nerdfonts.ple_left_half_circle_thin,
     },
     tab_separators = {
-      left = wezterm.nerdfonts.ple_right_half_circle_thick,
-      right = wezterm.nerdfonts.ple_left_half_circle_thick,
+      left = wezterm.nerdfonts.pl_left_hard_divider,
+      right = "", -- wezterm.nerdfonts.ple_left_hard_divider_inverse doesn't work for some reason
     },
   },
   sections = {
     tabline_a = { leader_component, { "mode", padding = { left = 1, right = 0 } } },
     tabline_b = {
+      { "   " },
       {
         "datetime",
         style = "%H:%M",
@@ -152,16 +153,16 @@ tabline.setup({
       {
         "index",
         fmt = function(n, _)
-          return ordinal(n)
+          return " " .. ordinal(n)
         end,
         padding = { left = 0, right = 1 },
       },
-      wezterm.nerdfonts.ple_right_half_circle_thin,
+      wezterm.nerdfonts.pl_left_soft_divider,
       {
         "tab",
         fmt = function(str)
           if str ~= "default" then
-            return str .. wezterm.nerdfonts.ple_right_half_circle_thin
+            return str .. wezterm.nerdfonts.pl_left_soft_divider
           else
             return ""
           end
@@ -184,11 +185,11 @@ tabline.setup({
       {
         "index",
         fmt = function(n, _)
-          return ordinal(n)
+          return " " .. ordinal(n)
         end,
         padding = { left = 0, right = 1 },
       },
-      wezterm.nerdfonts.ple_right_half_circle_thin,
+      wezterm.nerdfonts.pl_left_soft_divider,
       {
         "tab",
         fmt = function(str)
