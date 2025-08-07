@@ -121,7 +121,7 @@ local rosepine_overrides = {
 }
 local cwd = {
   "cwd",
-  padding = { left = 1, right = 1 },
+  padding = { left = 0, right = 1 },
   max_length = 30,
 }
 
@@ -151,10 +151,11 @@ tabline.setup({
       {
         "index",
         fmt = function(n, _)
-          return " " .. ordinal(n)
+          return ordinal(n)
         end,
-        padding = { left = 0, right = 1 },
+        padding = { left = 1, right = 0 },
       },
+      wezterm.nerdfonts.ple_right_half_circle_thin,
       { "process", icons_only = true, padding = { left = 1, right = 0 } },
       cwd,
       {
@@ -166,7 +167,7 @@ tabline.setup({
             return ""
           end
         end,
-        padding = { left = 0, right = 0 },
+        padding = { left = 0, right = 1 },
         icons_enabled = false,
       },
     },
@@ -179,10 +180,11 @@ tabline.setup({
       {
         "index",
         fmt = function(n, _)
-          return " " .. ordinal(n)
+          return ordinal(n)
         end,
-        padding = { left = 0, right = 1 },
+        padding = { left = 1, right = 0 },
       },
+      wezterm.nerdfonts.ple_right_half_circle_thin,
       { "process", icons_only = true, padding = { left = 1, right = 0 } },
       cwd,
       {
