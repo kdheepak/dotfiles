@@ -156,7 +156,7 @@ tabline.setup({
         end,
         padding = { left = 1, right = 0 },
       },
-      wezterm.nerdfonts.ple_right_half_circle_thin,
+      ".",
       { "process", icons_only = true, padding = { left = 1, right = 0 } },
       cwd,
       {
@@ -185,7 +185,7 @@ tabline.setup({
         end,
         padding = { left = 1, right = 0 },
       },
-      wezterm.nerdfonts.ple_right_half_circle_thin,
+      ".",
       { "process", icons_only = true, padding = { left = 1, right = 0 } },
       cwd,
       {
