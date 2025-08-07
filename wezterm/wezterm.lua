@@ -140,7 +140,7 @@ tabline.setup({
     },
     tab_separators = {
       left = wezterm.nerdfonts.pl_left_hard_divider,
-      right = "", -- wezterm.nerdfonts.ple_left_hard_divider_inverse doesn't work for some reason
+      right = wezterm.nerdfonts.ple_left_hard_divider_inverse,
     },
   },
   sections = {
