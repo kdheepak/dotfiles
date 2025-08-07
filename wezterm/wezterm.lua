@@ -96,9 +96,10 @@ local leader_component = function()
 end
 
 local ordinal = function(n)
-  local suffixes = { "th", "st", "nd", "rd" }
-  local mod100 = n % 100
-  return n .. (suffixes[(mod100 - 20) % 10 + 1] or suffixes[1])
+  -- local suffixes = { "th", "st", "nd", "rd" }
+  -- local mod100 = n % 100
+  -- return n .. (suffixes[(mod100 - 20) % 10 + 1] or suffixes[1])
+  return n
 end
 
 local rosepine_overrides = {
