@@ -114,7 +114,7 @@ local rosepine_overrides = {
     a = { fg = "#191724", bg = "#31748f" }, -- pine
   },
   tab = {
-    active = { fg = "#ffffff", bg = "#6e6a86" },
+    active = { fg = "#ffffff", bg = "#31748f" },
     inactive = { fg = "#ffffff", bg = "#333333" },
     inactive_hover = { fg = "#9ccfd8", bg = "#1f1d2e" },
   },
