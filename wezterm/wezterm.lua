@@ -106,7 +106,7 @@ local rosepine_overrides = {
   normal_mode = {
     a = { fg = "#191724", bg = "#ebbcba" }, -- iris
     b = { fg = "#ebbcba", bg = "#26233a" }, -- surface
-    c = { fg = "#e0def4", bg = "#333333" }, -- text on base
+    c = { fg = "#e0def4", bg = "#191723" }, -- text on base
   },
   copy_mode = {
     a = { fg = "#191724", bg = "#f6c177" }, -- gold
@@ -116,8 +116,8 @@ local rosepine_overrides = {
   },
   tab = {
     active = { fg = "#ffffff", bg = "#31748f" },
-    inactive = { fg = "#ffffff", bg = "#333333" },
-    inactive_hover = { fg = "#9ccfd8", bg = "#1f1d2e" },
+    inactive = { fg = "#e0def4", bg = "#191723" },
+    inactive_hover = { fg = "#9ccfd8", bg = "#191723" },
   },
 }
 local cwd = {
@@ -219,6 +219,14 @@ tabline.setup({
   extensions = {},
 })
 
+config.colors = {
+  tab_bar = {
+    background = rosepine_overrides.normal_mode.c.bg,
+  },
+  selection_bg = "#44475a", -- or any color that contrasts well
+  selection_fg = "none", -- "none" means it will use the existing foreground
+}
+
 config.default_cursor_style = "BlinkingBar"
 config.automatically_reload_config = true
 config.window_close_confirmation = "NeverPrompt"
@@ -229,6 +237,7 @@ config.tab_bar_at_bottom = true
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
 config.tab_max_width = 64
+config.show_new_tab_button_in_tab_bar = false
 config.audible_bell = "Disabled"
 config.font_size = 12
 config.swallow_mouse_click_on_pane_focus = true
@@ -428,11 +437,6 @@ config.keys = {
 }
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-
-config.colors = {
-  selection_bg = "#44475a", -- or any color that contrasts well
-  selection_fg = "none", -- "none" means it will use the existing foreground
-}
 
 wezterm.plugin.require("https://gitlab.com/xarvex/presentation.wez").apply_to_config(config)
 
