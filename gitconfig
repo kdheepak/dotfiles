@@ -225,8 +225,8 @@
     # templatedir = ~/gitrepos/dotfiles/git-templates
     defaultBranch = main
 [rerere]
-    enabled = false
-    autoupdate = false
+    enabled = true
+    autoupdate = true
 [github]
     user = kdheepak
 [commit]
