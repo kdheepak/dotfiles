@@ -380,6 +380,9 @@ sops = { version = "latest", os = ["macos"] }
   "macos",
   "windows",
 ] } # Convert powerpoint to markdown
+"asdf:kdheepak/asdf-pandoc-crossref" = { version = "latest", os = [
+  "macos",
+] } # Filter for pandoc
 pandoc = { version = "latest", os = [
   "macos",
   "windows",
