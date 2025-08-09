@@ -12,25 +12,29 @@
     default = simple
     autoSetupRemote = true
     followTags = true
+
 [merge]
     tool = vimdiff
     # Include summaries of merged commits in newly created merge commit messages
     log = true
     conflictStyle = zdiff3
+
 [mergetool]
     prompt = true
+
 [mergetool "vimdiff"]
     cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     trustExitCode = true
+
 [mergetool "vscode"]
     # Command to launch VSCode to resolve merge conflicts; 
     # --wait makes Git wait until you close the editor
     cmd = code --wait $MERGED
     # Trust the exit code from the tool to determine if the merge was successful
     trustExitCode = true
+
 [diff]
     tool = vimdiff
-    algorithm = patience
     # Detect copies as well as renames
     renames = copies
     algorithm = histogram
