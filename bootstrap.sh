@@ -77,3 +77,6 @@ ln -s "$(pwd)/scripts/run-with-timeout.py" ~/local/bin/run-with-timeout
 mkdir -p ~/.config/just
 rm ~/.config/just/justfile
 ln -s "$(pwd)/justfile" ~/.config/just/justfile
+
+rm ~/.Brewfile
+ln -s "$(pwd)/Brewfile" ~/.Brewfile
