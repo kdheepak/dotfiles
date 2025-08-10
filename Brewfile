@@ -108,3 +108,18 @@ cask "wezterm@nightly"
 cask "zed"
 # Firefox browser with custom app directory
 cask "firefox", args: { appdir: "~/Applications" }
+
+if OS.mac?
+    # access to clipboard for images (similar to pbcopy/pbpaste)
+    brew "pngpaste"
+
+    # Fonts
+    cask "font-fira-code"
+    cask "font-jetbrains-mono"
+    cask "font-cascadia-mono"
+    cask "font-symbols-only-nerd-font"
+    cask "font-recursive-code"
+    cask "font-monaspace"
+elsif OS.linux?
+    brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
+end
