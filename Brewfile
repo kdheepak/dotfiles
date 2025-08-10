@@ -92,6 +92,8 @@ brew "wdiff"
 brew "wget"
 # Pluggable terminal workspace, with terminal multiplexer as the base feature
 brew "zellij"
+# Wireshark's command-line network traffic analyzer
+brew "wireshark"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
 # A tiling window manager for macOS based on binary space partitioning.
