@@ -106,3 +106,5 @@ cask "sioyek"
 cask "wezterm@nightly"
 # Multiplayer code editor
 cask "zed"
+# Firefox browser with custom app directory
+cask "firefox", args: { appdir: "~/Applications" }
