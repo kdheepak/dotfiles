@@ -135,8 +135,8 @@ tabline.setup({
       right = wezterm.nerdfonts.pl_right_hard_divider,
     },
     component_separators = {
-      left = wezterm.nerdfonts.ple_right_half_circle_thin,
-      right = wezterm.nerdfonts.ple_left_half_circle_thin,
+      left = wezterm.nerdfonts.pl_left_soft_divider,
+      right = wezterm.nerdfonts.pl_right_soft_divider,
     },
     tab_separators = {
       left = wezterm.nerdfonts.pl_left_hard_divider,
