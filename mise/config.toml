@@ -25,7 +25,7 @@ status.show_env = true
 
 # --- Languages and Runtimes ---
 # go = { version = "latest", os = ["macos"] } # Go programming language compiler
-node = { version = "latest", os = [ "macos" ] } # nodejs runtime
+# node = { version = "latest", os = [ "macos" ] } # nodejs runtime
 python = { version = "latest", os = [
   "macos",
   "windows",
@@ -387,6 +387,8 @@ pandoc = { version = "latest", os = [
 "cargo:monochora" = { version = "latest", os = ["macos"] }
 vhs = { version = "latest", os = ["macos"] }
 "cargo:auto-palette-cli" = { version = "latest", os = ["macos"] } # Generate color palettes from images
+"cargo:svgbob_cli" = { version = "latest", os = ["macos"] } # ascii art to svg
+"asdf:upsetbit/asdf-d2" = { version = "latest", os = ["macos"] } # D2 diagramming language
 # "asdf:ivanvc/asdf-ttyd" = { version = "latest", os = ["macos"] }
 
 # --- AI ---
