@@ -68,6 +68,8 @@ brew "less"
 brew "luarocks"
 # Utility for directing compilation
 brew "make"
+# Utility for getting system information
+brew "neofetch"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
 # OpenBSD freely-licensed SSH connectivity tools
