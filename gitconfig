@@ -27,7 +27,7 @@
     trustExitCode = true
 
 [mergetool "vscode"]
-    # Command to launch VSCode to resolve merge conflicts; 
+    # Command to launch VSCode to resolve merge conflicts;
     # --wait makes Git wait until you close the editor
     cmd = code --wait $MERGED
     # Trust the exit code from the tool to determine if the merge was successful
@@ -35,7 +35,6 @@
 
 [diff]
     tool = vimdiff
-    # Detect copies as well as renames
     renames = copies
     algorithm = histogram
     colorMoved = plain

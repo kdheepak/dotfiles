@@ -25,10 +25,7 @@ status.show_env = true
 
 # --- Languages and Runtimes ---
 # go = { version = "latest", os = ["macos"] } # Go programming language compiler
-node = { version = "latest", os = [
-  "macos",
-  "windows",
-] } # Python programming language interpreter
+node = { version = "latest", os = [ "macos" ] } # nodejs runtime
 python = { version = "latest", os = [
   "macos",
   "windows",
@@ -380,9 +377,6 @@ sops = { version = "latest", os = ["macos"] }
   "macos",
   "windows",
 ] } # Convert powerpoint to markdown
-"asdf:kdheepak/asdf-pandoc-crossref" = { version = "latest", os = [
-  "macos",
-] } # Filter for pandoc
 pandoc = { version = "latest", os = [
   "macos",
   "windows",
