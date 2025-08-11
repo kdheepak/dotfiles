@@ -72,8 +72,6 @@ brew "make"
 brew "neofetch"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
-# OpenBSD freely-licensed SSH connectivity tools
-brew "openssh"
 # Reattach process (e.g., tmux) to background
 brew "reattach-to-user-namespace"
 # Terminal multiplexer
