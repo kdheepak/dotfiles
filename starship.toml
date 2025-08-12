@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 # Sets user-defined palette
-palette = "rosepine"
+palette = "catppuccin_mocha"
 
 add_newline = true
 format = """
@@ -264,32 +264,38 @@ mantle = "#e6e9ef"
 crust = "#dce0e8"
 
 [palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
+base = "#1e1e2e"           # base
+surface = "#313244"        # surface0
+overlay = "#45475a"        # surface1
+muted = "#6c7086"          # overlay0
+subtle = "#7f849c"         # overlay1
+text = "#cdd6f4"           # text
+love = "#f38ba8"           # red
+gold = "#f9e2af"           # yellow
+rose = "#f5e0dc"           # rosewater
+pine = "#94e2d5"           # teal
+foam = "#89dceb"           # sky
+iris = "#b4befe"           # lavender
+highlightLow = "#313244"   # surface0
+highlightMed = "#45475a"   # surface1
+highlightHigh = "#585b70"  # surface2
+
+base00 = "#1e1e2e"         # base
+base01 = "#313244"         # surface0
+base02 = "#45475a"         # surface1
+base03 = "#6c7086"         # overlay0
+base04 = "#7f849c"         # overlay1
+base05 = "#cdd6f4"         # text
+base06 = "#cdd6f4"         # text (same as base05)
+base07 = "#585b70"         # surface2
+base08 = "#f38ba8"         # red
+base09 = "#fab387"         # peach
+base0a = "#92B3F4"         # mauve
+base0b = "#a6e3a1"         # green
+base0c = "#94e2d5"         # teal
+base0d = "#cba6f7"         # blue
+base0e = "#f9e2af"         # yellow
+base0f = "#eba0ac"         # maroon
 
 [palettes.github]
 rosewater = "#ede3fe"
