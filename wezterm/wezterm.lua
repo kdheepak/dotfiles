@@ -107,23 +107,22 @@ local overrides = {
   normal_mode = {
     a = { fg = scheme.background, bg = scheme.ansi[5] },
     b = { fg = scheme.background, bg = scheme.brights[6] },
-    c = { fg = scheme.foreground, bg = scheme.background },
+    c = { fg = scheme.foreground, bg = "#ffffff" },
   },
   copy_mode = {
     a = { fg = scheme.background, bg = scheme.ansi[3] },
     b = { fg = scheme.background, bg = scheme.ansi[4] },
     c = { fg = scheme.foreground, bg = scheme.background },
   },
-
   search_mode = {
     a = { fg = scheme.background, bg = scheme.ansi[2] },
     b = { fg = scheme.background, bg = scheme.brights[3] },
     c = { fg = scheme.foreground, bg = scheme.background },
   },
   tab = {
-    active = { fg = scheme.background, bg = scheme.brights[1] },
-    inactive = { fg = scheme.foreground, bg = scheme.background },
-    inactive_hover = { fg = scheme.foreground, bg = scheme.background },
+    active = { fg = scheme.background, bg = scheme.ansi[6] },
+    inactive = { fg = scheme.foreground, bg = "#FFFFFF" },
+    inactive_hover = { fg = scheme.foreground, bg = "#FFFFFF" },
   },
 }
 
