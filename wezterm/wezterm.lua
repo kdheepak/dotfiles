@@ -44,7 +44,7 @@ config.window_padding = {
 }
 
 config.color_scheme = "Github (base16)"
-local scheme = wezterm.get_builtin_color_schemes()["Github (base16)"]
+local scheme = wezterm.get_builtin_color_schemes()["Github"]
 
 local hours_icons = {
   ["00"] = wezterm.nerdfonts.md_clock_time_twelve_outline,
@@ -105,20 +105,24 @@ end
 
 local overrides = {
   normal_mode = {
-    a = { fg = "#191724", bg = "#ebbcba" }, -- iris
-    b = { fg = "#ebbcba", bg = "#26233a" }, -- surface
-    c = { fg = "#e0def4", bg = "#191723" }, -- text on base
+    a = { fg = scheme.background, bg = scheme.brights[5] }, -- iris
+    b = { fg = scheme.brights[5], bg = scheme.background }, -- surface
+    c = { fg = scheme.foreground, bg = scheme.ansi[8] }, -- text on base
   },
   copy_mode = {
-    a = { fg = "#191724", bg = "#f6c177" }, -- gold
+    a = { fg = scheme.background, bg = scheme.ansi[3] },
+    b = { fg = scheme.ansi[3], bg = scheme.background }, -- surface
+    c = { fg = scheme.foreground, bg = scheme.ansi[8] }, -- text on base
   },
   search_mode = {
-    a = { fg = "#191724", bg = "#31748f" }, -- pine
+    a = { fg = scheme.background, bg = scheme.ansi[2] }, -- pine
+    b = { fg = scheme.ansi[2], bg = scheme.background }, -- surface
+    c = { fg = scheme.foreground, bg = scheme.ansi[8] }, -- text on base
   },
   tab = {
-    active = { fg = "#ffffff", bg = "#31748f" },
-    inactive = { fg = "#e0def4", bg = "#191723" },
-    inactive_hover = { fg = "#9ccfd8", bg = "#191723" },
+    active = { fg = scheme.background, bg = scheme.brights[1] },
+    inactive = { fg = scheme.foreground, bg = scheme.ansi[8] },
+    inactive_hover = { fg = scheme.foreground, bg = scheme.ansi[8] },
   },
 }
 
@@ -130,7 +134,7 @@ local cwd = {
 
 tabline.setup({
   options = {
-    -- theme_overrides = overrides,
+    theme_overrides = overrides,
     icons_enabled = true,
     section_separators = {
       left = wezterm.nerdfonts.pl_left_hard_divider,
@@ -225,7 +229,7 @@ config.colors = {
   tab_bar = {
     background = overrides.normal_mode.c.bg,
   },
-  selection_bg = "#44475a", -- or any color that contrasts well
+  selection_bg = scheme.cursor_fg,
   selection_fg = "none", -- "none" means it will use the existing foreground
 }
 
