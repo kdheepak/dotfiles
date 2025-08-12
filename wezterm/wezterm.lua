@@ -43,7 +43,7 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "rose-pine"
 
 local hours_icons = {
   ["00"] = wezterm.nerdfonts.md_clock_time_twelve_outline,
@@ -104,18 +104,18 @@ end
 
 local overrides = {
   normal_mode = {
-    a = { fg = "#191724", bg = "#92B3F4" }, -- iris
-    b = { fg = "#92B3F4", bg = "#26233a" }, -- surface
+    a = { fg = "#191724", bg = "#ebbcba" }, -- iris
+    b = { fg = "#ebbcba", bg = "#26233a" }, -- surface
     c = { fg = "#e0def4", bg = "#191723" }, -- text on base
   },
   copy_mode = {
     a = { fg = "#191724", bg = "#f6c177" }, -- gold
   },
   search_mode = {
-    a = { fg = "#191724", bg = "#313243" }, -- pine
+    a = { fg = "#191724", bg = "#31748f" }, -- pine
   },
   tab = {
-    active = { fg = "#92B3F4", bg = "#313243" },
+    active = { fg = "#ffffff", bg = "#31748f" },
     inactive = { fg = "#e0def4", bg = "#191723" },
     inactive_hover = { fg = "#9ccfd8", bg = "#191723" },
   },
