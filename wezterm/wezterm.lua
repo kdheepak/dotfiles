@@ -44,7 +44,7 @@ config.window_padding = {
 }
 
 config.color_scheme = "Github (base16)"
-local scheme = wezterm.get_builtin_color_schemes()["Github"]
+local scheme = wezterm.get_builtin_color_schemes()["Github Light (Gogh)"]
 
 local hours_icons = {
   ["00"] = wezterm.nerdfonts.md_clock_time_twelve_outline,
@@ -105,24 +105,25 @@ end
 
 local overrides = {
   normal_mode = {
-    a = { fg = scheme.background, bg = scheme.brights[5] }, -- iris
-    b = { fg = scheme.brights[5], bg = scheme.background }, -- surface
-    c = { fg = scheme.foreground, bg = scheme.ansi[8] }, -- text on base
+    a = { fg = scheme.background, bg = scheme.ansi[5] },
+    b = { fg = scheme.background, bg = scheme.brights[6] },
+    c = { fg = scheme.foreground, bg = scheme.background },
   },
   copy_mode = {
     a = { fg = scheme.background, bg = scheme.ansi[3] },
-    b = { fg = scheme.ansi[3], bg = scheme.background }, -- surface
-    c = { fg = scheme.foreground, bg = scheme.ansi[8] }, -- text on base
+    b = { fg = scheme.background, bg = scheme.ansi[4] },
+    c = { fg = scheme.foreground, bg = scheme.background },
   },
+
   search_mode = {
-    a = { fg = scheme.background, bg = scheme.ansi[2] }, -- pine
-    b = { fg = scheme.ansi[2], bg = scheme.background }, -- surface
-    c = { fg = scheme.foreground, bg = scheme.ansi[8] }, -- text on base
+    a = { fg = scheme.background, bg = scheme.ansi[2] },
+    b = { fg = scheme.background, bg = scheme.brights[3] },
+    c = { fg = scheme.foreground, bg = scheme.background },
   },
   tab = {
     active = { fg = scheme.background, bg = scheme.brights[1] },
-    inactive = { fg = scheme.foreground, bg = scheme.ansi[8] },
-    inactive_hover = { fg = scheme.foreground, bg = scheme.ansi[8] },
+    inactive = { fg = scheme.foreground, bg = scheme.background },
+    inactive_hover = { fg = scheme.foreground, bg = scheme.background },
   },
 }
 
