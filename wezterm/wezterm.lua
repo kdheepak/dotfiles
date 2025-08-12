@@ -43,7 +43,7 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.color_scheme = "rose-pine"
+config.color_scheme = "Catppuccin Mocha"
 
 local hours_icons = {
   ["00"] = wezterm.nerdfonts.md_clock_time_twelve_outline,
@@ -102,24 +102,25 @@ local ordinal = function(n)
   return n
 end
 
-local rosepine_overrides = {
+local overrides = {
   normal_mode = {
-    a = { fg = "#191724", bg = "#ebbcba" }, -- iris
-    b = { fg = "#ebbcba", bg = "#26233a" }, -- surface
+    a = { fg = "#191724", bg = "#92B3F4" }, -- iris
+    b = { fg = "#92B3F4", bg = "#26233a" }, -- surface
     c = { fg = "#e0def4", bg = "#191723" }, -- text on base
   },
   copy_mode = {
     a = { fg = "#191724", bg = "#f6c177" }, -- gold
   },
   search_mode = {
-    a = { fg = "#191724", bg = "#31748f" }, -- pine
+    a = { fg = "#191724", bg = "#313243" }, -- pine
   },
   tab = {
-    active = { fg = "#ffffff", bg = "#31748f" },
+    active = { fg = "#92B3F4", bg = "#313243" },
     inactive = { fg = "#e0def4", bg = "#191723" },
     inactive_hover = { fg = "#9ccfd8", bg = "#191723" },
   },
 }
+
 local cwd = {
   "cwd",
   padding = { left = 0, right = 1 },
@@ -128,7 +129,7 @@ local cwd = {
 
 tabline.setup({
   options = {
-    theme_overrides = rosepine_overrides,
+    theme_overrides = overrides,
     icons_enabled = true,
     section_separators = {
       left = wezterm.nerdfonts.pl_left_hard_divider,
@@ -221,7 +222,7 @@ tabline.setup({
 
 config.colors = {
   tab_bar = {
-    background = rosepine_overrides.normal_mode.c.bg,
+    background = overrides.normal_mode.c.bg,
   },
   selection_bg = "#44475a", -- or any color that contrasts well
   selection_fg = "none", -- "none" means it will use the existing foreground
