@@ -183,7 +183,9 @@ class GAMSManager:
             sfx = "_sfx" if self.version < "43" else ""
             filename, fragment = f"macosx/osx_{arch}_sfx.exe", f"osx_{arch}{sfx}"
         elif self.is_linux():
-            filename, fragment = "linux/linux_x64_64_sfx.exe", "linux_x64_64_sfx"
+            arch = {"arm64": "arm64", "x86_64": "x64_64"}[self.uname.machine]
+            sfx = "_sfx" if self.version < "43" else ""
+            filename, fragment = f"linux/linux_{arch}_sfx.exe", f"linux_{arch}{sfx}"
         elif self.is_windows():
             filename, fragment = "windows/windows_x64_64.exe", "windows_x64_64"
         else:
