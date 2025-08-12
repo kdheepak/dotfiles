@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 # Sets user-defined palette
-palette = "rosepine"
+palette = "github"
 
 add_newline = true
 format = """
