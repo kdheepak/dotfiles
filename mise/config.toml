@@ -528,6 +528,11 @@ hexyl = { version = "latest", os = ["macos"] }
   "macos",
 ] }
 
+# License BOM
+"cargo:cargo-license" = { version = "latest", os = [
+  "macos",
+] }
+
 # Alternative to cut
 "cargo:choose" = { version = "latest", os = ["macos"] }
 
