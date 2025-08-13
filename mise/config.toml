@@ -818,7 +818,6 @@ traefik = { version = "latest", os = ["macos"] }
 [tasks]
 gh-extensions = "gh extension install dlvhdr/gh-dash && gh extension install github/gh-copilot"
 uv = "uv sync --group dev --all-extras"
-clean = ["rm -rf .venv", "rm -rf node_modules"]
 lint = "pre-commit run --all-files"
 setup-python = "uv pip install --system ipython jupyter neovim python-localvenv-kernel jupyter jupyterlab jupyterlab_execute_time jupyterlab-lsp python-lsp-server jupytext 'rich[jupyter]' panel hvplot holoviews matplotlib numpy pandas 'ibis-framework[duckdb,geospatial]' lonboard jupyter_copilot jupyterlab-quarto jupyterlab-rainbow-brackets jupyterlab-code-formatter"
 
