@@ -108,6 +108,8 @@ class GAMSManager:
     BASE_URL = "https://d37drm4t2jghv5.cloudfront.net/distributions/"
 
     def __init__(self, version: str = GAMS_VERSION_NUMBER):
+        if version.startswith("v"):
+            version = version[1:]
         self.version = version
         self.console = console
         self.uname = platform.uname()
@@ -412,19 +414,21 @@ class GAMSManager:
 
 # CLI Commands
 @app.command()
-def check():
+def check(version: str = typer.Option(GAMS_VERSION_NUMBER, help="Version of GAMS")):
     """Check GAMS installation status and show version info"""
     console.print("🔍 Checking GAMS installation...", style="cyan")
 
-    gams = GAMSManager()
+    gams = GAMSManager(version=version)
 
     if gams.is_installed():
-        version = gams.get_installed_version()
+        v = gams.get_installed_version()
+        if v is None:
+            console.print("GAMS is not installed")
         install_path = gams.is_installed()
 
         console.print("✅ GAMS is installed", style="green")
-        if version:
-            console.print(f"📦 Version: [green]{version}[/green]")
+        if v:
+            console.print(f"📦 Version: [green]{v}[/green]")
         if install_path:
             console.print(f"📂 Location: [dim]{install_path}[/dim]")
 
@@ -444,11 +448,11 @@ def check():
 
 
 @app.command()
-def info():
+def info(version: str = typer.Option(GAMS_VERSION_NUMBER, help="Version of GAMS")):
     """Show information about GAMS version and download details"""
     console.print(Panel.fit("📋 GAMS Information", style="cyan bold"))
 
-    gams = GAMSManager()
+    gams = GAMSManager(version=version)
 
     info_text = f"""[bold]Version:[/bold] {gams.version}
 [bold]Download URL:[/bold] {gams._get_url()}
@@ -465,6 +469,7 @@ def info():
 
 @app.command()
 def download(
+    version: str = typer.Option(GAMS_VERSION_NUMBER, help="Version of GAMS to install"),
     force: bool = typer.Option(False, "--force", help="Overwrite existing file"),
     no_verify_ssl: bool = typer.Option(
         False, "--no-verify-ssl", help="Disable SSL verification (insecure!)"
@@ -486,7 +491,7 @@ def download(
     """Download GAMS installer with SSL/TLS support"""
     console.print(Panel.fit("📥 GAMS Downloader", style="bold cyan"))
 
-    gams = GAMSManager()
+    gams = GAMSManager(version=version)
 
     console.print(f"📥 Downloading GAMS {gams.version}...", style="cyan")
     console.print(f"[dim]URL: {gams._get_url()}[/dim]")
@@ -515,6 +520,7 @@ def download(
 
 @app.command()
 def install(
+    version: str = typer.Option(GAMS_VERSION_NUMBER, help="Version of GAMS to install"),
     force: bool = typer.Option(
         False, "--force", help="Force reinstall even if GAMS exists"
     ),
@@ -538,7 +544,7 @@ def install(
     """Download and install GAMS with SSL/TLS support"""
     console.print(Panel.fit("🚀 GAMS Installer", style="bold blue"))
 
-    gams = GAMSManager()
+    gams = GAMSManager(version=version)
 
     # Check if already installed
     if gams.is_installed() and not force:
@@ -573,6 +579,20 @@ def install(
             max_retries=max_retries,
         ):
             raise typer.Exit(1)
+    else:
+        console.print(
+            f"⚠️  Installer already exists: {gams.download_filename}", style="yellow"
+        )
+        if not force and Confirm.ask("Do you want to redownload it?"):
+            if not gams.download_with_progress(
+                gams._get_url(),
+                gams.download_filename,
+                force=True,
+                ssl_context=ssl_context,
+                timeout=timeout,
+                max_retries=max_retries,
+            ):
+                raise typer.Exit(1)
 
     # Install
     if gams.install_gams():
@@ -602,6 +622,7 @@ def install(
 
 @app.command()
 def add_to_path(
+    version: str = typer.Option(GAMS_VERSION_NUMBER, help="Version of GAMS to install"),
     shell: str = typer.Option(
         ..., "--shell", help="Shell type (bash, zsh, powershell)"
     ),
@@ -609,7 +630,7 @@ def add_to_path(
     """Add GAMS installation to system PATH"""
     console.print(Panel.fit("🔧 PATH Configuration", style="bold yellow"))
 
-    gams = GAMSManager()
+    gams = GAMSManager(version=GAMS_VERSION_NUMBER)
 
     if not gams.is_installed():
         console.print("❌ GAMS is not installed", style="red")
