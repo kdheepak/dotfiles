@@ -31,12 +31,12 @@ def run(cmd: list[str]) -> None:
 
 
 def mime_type(path: Path) -> str:
-    # 1️⃣ Try to detect from extension
+    # 1. Try to detect from extension
     mime, _ = mimetypes.guess_type(str(path))
     if mime:
         return mime
 
-    # 2️⃣ Fallback to 'file' command
+    # 2. Fallback to 'file' command
     try:
         result = subprocess.run(
             ["file", "--mime-type", "-b", str(path)],
