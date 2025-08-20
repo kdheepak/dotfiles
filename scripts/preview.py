@@ -11,6 +11,7 @@ import subprocess
 import typer
 import json
 import yaml
+import mimetypes
 from pathlib import Path
 from rich.console import Console
 from rich.syntax import Syntax
@@ -30,13 +31,20 @@ def run(cmd: list[str]) -> None:
 
 
 def mime_type(path: Path) -> str:
+    # 1️⃣ Try to detect from extension
+    mime, _ = mimetypes.guess_type(str(path))
+    if mime:
+        return mime
+
+    # 2️⃣ Fallback to 'file' command
     try:
-        return subprocess.run(
+        result = subprocess.run(
             ["file", "--mime-type", "-b", str(path)],
             check=True,
             capture_output=True,
             text=True,
-        ).stdout.strip()
+        )
+        return result.stdout.strip()
     except Exception:
         return "application/octet-stream"
 
