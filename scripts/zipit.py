@@ -8,12 +8,32 @@ import subprocess
 import zipfile
 import sys
 from pathlib import Path
+from datetime import datetime
 import typer
 from rich.console import Console
 from rich.progress import Progress
 
 app = typer.Typer(add_completion=False)
 console = Console()
+
+
+def make_output_filename(base: str) -> str:
+    """Append date (YYYYMMDD) to output filename before extension."""
+    date = datetime.now().strftime("%Y%m%d")
+    base_path = Path(base)
+    if base_path.suffix:
+        return f"{base_path.stem}-{date}{base_path.suffix}"
+    else:
+        return f"{base}-{date}.zip"
+
+
+def confirm_overwrite(path: Path) -> bool:
+    """Ask user before overwriting existing file."""
+    if path.exists():
+        console.print(f"[yellow]⚠️ File {path} already exists.[/]")
+        response = input("Overwrite? [y/N]: ").strip().lower()
+        return response == "y"
+    return True
 
 
 def zip_non_git_repo(output_file: str):
@@ -67,7 +87,7 @@ def zip_git_repo(output_file: str):
 @app.command()
 def main(
     output: str = typer.Option(
-        "archive.zip", "--output", "-o", help="Name of the output zip file"
+        "archive.zip", "--output", "-o", help="Base name of the output zip file"
     ),
 ):
     """
@@ -75,13 +95,20 @@ def main(
 
     - If it's a git repo → only git-tracked files.
     - Otherwise → all files (excluding .git).
+    - The output filename always has today's date suffix.
     """
+    output_file = Path(make_output_filename(output))
+
+    if not confirm_overwrite(output_file):
+        console.print("[red]❌ Aborted — not overwriting.[/]")
+        raise typer.Exit(code=1)
+
     if (Path(".") / ".git").exists():
         console.print("[bold blue]📦 Detected git repo[/]")
-        zip_git_repo(output)
+        zip_git_repo(str(output_file))
     else:
         console.print("[bold yellow]📦 Not a git repo — zipping all files[/]")
-        zip_non_git_repo(output)
+        zip_non_git_repo(str(output_file))
 
 
 if __name__ == "__main__":
