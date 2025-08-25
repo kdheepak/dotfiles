@@ -27,7 +27,7 @@ def sanitize_filename(name: str) -> str:
 
 
 def clean_text(text: str) -> str:
-    """Sanitize text to remove binary/non-printable characters and ensure UTF-8."""
+    """Sanitize text to remove null bytes and non-printable characters."""
     # Remove null bytes
     text = text.replace("\x00", "")
     # Keep only printable characters and standard whitespace
@@ -57,6 +57,9 @@ def convert_msg_to_md(
         except Exception:
             body = msg.htmlBody.decode("latin-1", errors="ignore")
 
+    # Remove null bytes early
+    body = body.replace("\x00", "")
+
     # Ensure assets folder exists
     assets_folder.mkdir(parents=True, exist_ok=True)
 
@@ -71,7 +74,7 @@ def convert_msg_to_md(
             f.write(att.data)
         attachment_links[filename] = filepath
 
-    # Replace inline images in HTML body
+    # Replace inline images in HTML body (if HTML)
     if body and "<html" in body.lower():
         for cid, filepath in attachment_links.items():
             short_name = filepath.name
@@ -84,7 +87,9 @@ def convert_msg_to_md(
     # Convert HTML body (if available) to Markdown
     body = html2text.html2text(body)
 
-    # Clean body to remove binary/non-printable characters
+    # Final cleanup: remove any remaining null bytes & non-printable characters line by line
+    lines = [line.replace("\x00", "") for line in body.splitlines()]
+    body = "\n".join(lines)
     body = clean_text(body)
 
     # Check if file exists and ask before overwriting
