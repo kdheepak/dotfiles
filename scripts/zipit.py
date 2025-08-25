@@ -24,7 +24,13 @@ from rich.progress import (
 )
 from rich.table import Table
 
-app = typer.Typer(add_completion=False)
+app = typer.Typer(
+    name=Path(__file__).stem,
+    add_completion=False,
+    no_args_is_help=True,
+    rich_markup_mode="rich",
+    pretty_exceptions_show_locals=False,
+)
 console = Console()
 
 
