@@ -98,14 +98,18 @@ def archive_zip(files: list[Path], output_file: Path, base_folder: Path):
             for i, filepath in enumerate(files, 1):
                 full_path = base_folder / filepath
                 if full_path.exists():
-                    # Update description to show current file
-                    progress.update(
-                        task, description=f"[cyan]Adding {filepath} ({i}/{len(files)})"
-                    )
-                    zipf.write(full_path, filepath)
+                    # Print each file being added (this will scroll)
+                    console.print(f"  [dim cyan]Adding:[/] {filepath}")
+                    # Update progress bar without changing description
                     progress.update(task, advance=1)
+                    zipf.write(full_path, filepath)
                 else:
                     progress.update(task, advance=1)
+
+            # Update to show completion
+            progress.update(
+                task, description=f"[green]ZIP archive created successfully"
+            )
 
     return total_size, output_file.stat().st_size
 
@@ -129,14 +133,18 @@ def archive_tar(files: list[Path], output_file: Path, base_folder: Path):
             for i, filepath in enumerate(files, 1):
                 full_path = base_folder / filepath
                 if full_path.exists():
-                    # Update description to show current file
-                    progress.update(
-                        task, description=f"[cyan]Adding {filepath} ({i}/{len(files)})"
-                    )
-                    tarf.add(full_path, arcname=filepath)
+                    # Print each file being added (this will scroll)
+                    console.print(f"  [dim cyan]Adding:[/] {filepath}")
+                    # Update progress bar without changing description
                     progress.update(task, advance=1)
+                    tarf.add(full_path, arcname=filepath)
                 else:
                     progress.update(task, advance=1)
+
+            # Update to show completion
+            progress.update(
+                task, description=f"[green]TAR.GZ archive created successfully"
+            )
 
     return total_size, output_file.stat().st_size
 
