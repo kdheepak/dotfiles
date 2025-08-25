@@ -79,23 +79,6 @@ modal.set_default_keys(config)
 
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 
-local leader = {
-  icon = "❯",
-  on = "❮",
-  off = "❯",
-  padding = {
-    left = " ",
-    right = "",
-  },
-}
-
-local leader_component = function()
-  local prefix = leader.padding.left or leader.prefix or " "
-  local suffix = leader.padding.right or leader.suffix or ""
-  local leaderstr = prefix .. leader.icon .. suffix
-  return leaderstr
-end
-
 local ordinal = function(n)
   -- local suffixes = { "th", "st", "nd", "rd" }
   -- local mod100 = n % 100
@@ -150,7 +133,7 @@ tabline.setup({
     },
   },
   sections = {
-    tabline_a = { leader_component, { "mode", padding = { left = 1, right = 1 } } },
+    tabline_a = { { "mode", padding = { left = 1, right = 1 } } },
     tabline_b = {},
     tabline_c = { " " },
     tab_active = {
