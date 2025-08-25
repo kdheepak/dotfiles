@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv --script
+#!/usr/bin/env -S uv
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["typer", "rich"]
