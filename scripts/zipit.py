@@ -28,16 +28,16 @@ app = typer.Typer(add_completion=False)
 console = Console()
 
 
-def project_name() -> str:
-    """Return the current folder name as project name."""
-    return Path.cwd().name
+def project_name(folder: Path) -> str:
+    """Return the folder name as project name."""
+    return folder.name
 
 
-def make_output_filename(base: str | None, fmt: str) -> Path:
+def make_output_filename(base: str | None, fmt: str, folder: Path) -> Path:
     """Make output filename with date suffix (YYYYMMDD)."""
     date = datetime.now().strftime("%Y%m%d")
     if base is None:
-        base = f"{project_name()}.{fmt}"
+        base = f"{project_name(folder)}.{fmt}"
     base_path = Path(base)
     suffix = base_path.suffix or f".{fmt}"
     return Path(f"{base_path.stem}-{date}{suffix}")
@@ -73,8 +73,10 @@ def filter_files(
     return files
 
 
-def archive_zip(files: list[Path], output_file: Path):
-    total_size = sum(f.stat().st_size for f in files if f.exists())
+def archive_zip(files: list[Path], output_file: Path, base_folder: Path):
+    total_size = sum(
+        (base_folder / f).stat().st_size for f in files if (base_folder / f).exists()
+    )
 
     with zipfile.ZipFile(output_file, "w", zipfile.ZIP_DEFLATED) as zipf:
         with Progress(
@@ -88,12 +90,13 @@ def archive_zip(files: list[Path], output_file: Path):
             task = progress.add_task("[cyan]Creating ZIP archive", total=len(files))
 
             for i, filepath in enumerate(files, 1):
-                if filepath.exists():
+                full_path = base_folder / filepath
+                if full_path.exists():
                     # Update description to show current file
                     progress.update(
                         task, description=f"[cyan]Adding {filepath} ({i}/{len(files)})"
                     )
-                    zipf.write(filepath, filepath)
+                    zipf.write(full_path, filepath)
                     progress.update(task, advance=1)
                 else:
                     progress.update(task, advance=1)
@@ -101,8 +104,10 @@ def archive_zip(files: list[Path], output_file: Path):
     return total_size, output_file.stat().st_size
 
 
-def archive_tar(files: list[Path], output_file: Path):
-    total_size = sum(f.stat().st_size for f in files if f.exists())
+def archive_tar(files: list[Path], output_file: Path, base_folder: Path):
+    total_size = sum(
+        (base_folder / f).stat().st_size for f in files if (base_folder / f).exists()
+    )
 
     with tarfile.open(output_file, "w:gz") as tarf:
         with Progress(
@@ -116,12 +121,13 @@ def archive_tar(files: list[Path], output_file: Path):
             task = progress.add_task("[cyan]Creating TAR.GZ archive", total=len(files))
 
             for i, filepath in enumerate(files, 1):
-                if filepath.exists():
+                full_path = base_folder / filepath
+                if full_path.exists():
                     # Update description to show current file
                     progress.update(
                         task, description=f"[cyan]Adding {filepath} ({i}/{len(files)})"
                     )
-                    tarf.add(filepath, arcname=filepath)
+                    tarf.add(full_path, arcname=filepath)
                     progress.update(task, advance=1)
                 else:
                     progress.update(task, advance=1)
@@ -129,17 +135,17 @@ def archive_tar(files: list[Path], output_file: Path):
     return total_size, output_file.stat().st_size
 
 
-def archive_7z(files: list[Path], output_file: Path):
+def archive_7z(files: list[Path], output_file: Path, base_folder: Path):
     if not shutil.which("7z"):
         console.print(
             "[red]❌ 7z not found. Please install it and ensure it's in PATH.[/]"
         )
         sys.exit(1)
 
-    total_size = sum(f.stat().st_size for f in files if f.exists())
+    total_size = sum(
+        (base_folder / f).stat().st_size for f in files if (base_folder / f).exists()
+    )
 
-    # For 7z, we'll show progress by adding files in batches
-    # since we can't easily show individual file progress with subprocess
     with Progress(
         TextColumn("[progress.description]{task.description}"),
         BarColumn(),
@@ -154,7 +160,11 @@ def archive_7z(files: list[Path], output_file: Path):
         progress.update(task, description="[cyan]Preparing 7z command...")
         progress.update(task, advance=10)
 
-        cmd = ["7z", "a", "-y", str(output_file)] + [str(f) for f in files]
+        # Use absolute path for output file
+        abs_output = (
+            output_file if output_file.is_absolute() else Path.cwd() / output_file
+        )
+        cmd = ["7z", "a", "-y", str(abs_output)] + [str(f) for f in files]
 
         # Show compression step
         progress.update(
@@ -162,7 +172,13 @@ def archive_7z(files: list[Path], output_file: Path):
         )
         progress.update(task, advance=70)
 
-        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(
+            cmd,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            cwd=base_folder,
+        )
 
         # Complete
         progress.update(task, description="[cyan]7z compression complete")
@@ -188,15 +204,16 @@ def show_summary(
     console.print(table)
 
 
-def get_git_files(use_archive: bool) -> list[Path]:
+def get_git_files(use_archive: bool, folder: Path) -> list[Path]:
     if use_archive:
-        tmpfile = Path(".git") / "tmp_archive.zip"
+        tmpfile = folder / ".git" / "tmp_archive.zip"
         try:
             subprocess.run(
                 ["git", "archive", "--format=zip", "HEAD", "-o", str(tmpfile)],
                 check=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
+                cwd=folder,
             )
             with zipfile.ZipFile(tmpfile, "r") as zf:
                 files = [Path(name) for name in zf.namelist()]
@@ -213,6 +230,7 @@ def get_git_files(use_archive: bool) -> list[Path]:
             stderr=subprocess.PIPE,
             text=True,
             check=True,
+            cwd=folder,
         )
         return [Path(f) for f in result.stdout.splitlines()]
     except subprocess.CalledProcessError as e:
@@ -220,18 +238,24 @@ def get_git_files(use_archive: bool) -> list[Path]:
         sys.exit(1)
 
 
-def get_non_git_files() -> list[Path]:
+def get_non_git_files(folder: Path) -> list[Path]:
     files = []
-    for root, _, filenames in os.walk("."):
-        if ".git" in root.split(os.sep):
+    for root, _, filenames in os.walk(folder):
+        if ".git" in Path(root).parts:
             continue
         for file in filenames:
-            files.append(Path(root) / file)
-    return [f.relative_to(".") for f in files]
+            full_path = Path(root) / file
+            # Make path relative to the target folder
+            relative_path = full_path.relative_to(folder)
+            files.append(relative_path)
+    return files
 
 
 @app.command()
 def main(
+    folder: str = typer.Argument(
+        ".", help="Directory to archive (defaults to current directory)"
+    ),
     output: str = typer.Option(
         None, "--output", "-o", help="Base name of the output archive"
     ),
@@ -258,23 +282,43 @@ def main(
     ),
 ):
     """
-    Archive the current directory.
+    Archive a directory.
+
+    - Default → archive current directory, all files (excluding .git/).
+    - With `--git-files` → only git-tracked files (or `git archive` if enabled).
+    - Supports zip, tar.gz, 7z formats.
+    - Output name auto-appends today's date.
+
+    Examples:
+      archive-dir                    # Archive current directory
+      archive-dir /path/to/project   # Archive specific directory
+      archive-dir ../my-project -f tar.gz --git-files
     """
+    # Determine target folder
+    target_folder = Path(folder).resolve()
+    if not target_folder.exists():
+        console.print(f"[red]❌ Directory {target_folder} does not exist.[/]")
+        raise typer.Exit(code=1)
+    if not target_folder.is_dir():
+        console.print(f"[red]❌ {target_folder} is not a directory.[/]")
+        raise typer.Exit(code=1)
+    console.print(f"[bold blue]📂 Archiving directory: {target_folder}[/]")
+
     if fmt not in {"zip", "tar.gz", "7z"}:
         console.print("[red]❌ Unsupported format. Use zip, tar.gz, or 7z.[/]")
         raise typer.Exit(code=1)
 
-    output_file = make_output_filename(output, fmt)
+    output_file = make_output_filename(output, fmt, target_folder)
 
     if not confirm_overwrite(output_file, force, no_overwrite):
         raise typer.Exit(code=1)
 
-    if git_files and (Path(".") / ".git").exists():
+    if git_files and (target_folder / ".git").exists():
         console.print("[bold blue]📦 Using git-tracked files[/]")
-        files = get_git_files(use_git_archive)
+        files = get_git_files(use_git_archive, target_folder)
     else:
         console.print("[bold yellow]📦 Archiving all files[/]")
-        files = get_non_git_files()
+        files = get_non_git_files(target_folder)
 
     files = filter_files(files, includes=include or [], excludes=exclude or [])
 
@@ -285,11 +329,11 @@ def main(
     console.print(f"[bold green]✨ Found {len(files)} files to archive[/]")
 
     if fmt == "zip":
-        total, compressed = archive_zip(files, output_file)
+        total, compressed = archive_zip(files, output_file, target_folder)
     elif fmt == "tar.gz":
-        total, compressed = archive_tar(files, output_file)
+        total, compressed = archive_tar(files, output_file, target_folder)
     else:
-        total, compressed = archive_7z(files, output_file)
+        total, compressed = archive_7z(files, output_file, target_folder)
 
     show_summary(files, total, compressed, output_file)
 
