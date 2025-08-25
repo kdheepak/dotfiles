@@ -259,11 +259,6 @@ def main(
 ):
     """
     Archive the current directory.
-
-    - Default → all files (excluding .git/).
-    - With `--git-files` → only git-tracked files (or `git archive` if enabled).
-    - Supports zip, tar.gz, 7z formats.
-    - Output name auto-appends today's date.
     """
     if fmt not in {"zip", "tar.gz", "7z"}:
         console.print("[red]❌ Unsupported format. Use zip, tar.gz, or 7z.[/]")
