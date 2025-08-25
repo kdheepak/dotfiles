@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv --script
+#!/usr/bin/env -S uv --quiet run --script
 # /// script
 # requires-python = ">=3.13"
 # dependencies = ["typer", "rich", "pygments", "pyyaml"]
