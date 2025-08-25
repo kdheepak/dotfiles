@@ -8,7 +8,6 @@
 #     "rich",
 # ]
 # ///
-
 import re
 import extract_msg
 import html2text
@@ -21,19 +20,49 @@ console = Console()
 app = typer.Typer(add_completion=False)
 
 
+def clean_text(text: str) -> str:
+    """Thoroughly clean text of null bytes and non-printable characters."""
+    if not text:
+        return ""
+
+    # Remove null bytes first
+    text = text.replace("\x00", "")
+
+    # Remove other problematic control characters but keep newlines, tabs, carriage returns
+    cleaned_chars = []
+    for char in text:
+        # Keep printable characters and essential whitespace
+        if char.isprintable() or char in "\n\r\t":
+            cleaned_chars.append(char)
+        # Replace other control characters with space
+        elif ord(char) < 32:
+            cleaned_chars.append(" ")
+
+    return "".join(cleaned_chars)
+
+
 def sanitize_filename(name: str) -> str:
     """Remove invalid characters for filenames."""
+    if not name:
+        return "untitled"
     return re.sub(r"[^a-zA-Z0-9_.-]", "_", name).strip("_") or "untitled"
 
 
-def clean_text(text: str) -> str:
-    """Sanitize text to remove null bytes and non-printable characters."""
-    # Remove null bytes
-    text = text.replace("\x00", "")
-    # Keep only printable characters and standard whitespace
-    text = "".join(c for c in text if c.isprintable() or c in "\n\r\t")
-    # Ensure UTF-8 encoding with replacement for invalid bytes
-    return text.encode("utf-8", errors="replace").decode("utf-8")
+def safe_decode_html(html_content) -> str:
+    """Safely decode HTML content to string."""
+    if isinstance(html_content, bytes):
+        # Try multiple encodings
+        for encoding in ["utf-8", "utf-16", "latin-1", "cp1252"]:
+            try:
+                decoded = html_content.decode(encoding, errors="ignore")
+                # Clean immediately after decoding
+                return clean_text(decoded)
+            except (UnicodeDecodeError, LookupError):
+                continue
+        # Fallback: force decode with replacement
+        return clean_text(html_content.decode("utf-8", errors="replace"))
+
+    return clean_text(str(html_content))
 
 
 def convert_msg_to_md(
@@ -43,22 +72,18 @@ def convert_msg_to_md(
 ):
     # Load message
     msg = extract_msg.Message(str(msg_path))
-    subject = msg.subject or "No Subject"
-    sender = msg.sender or "Unknown Sender"
-    date = msg.date or ""
+    subject = clean_text(msg.subject or "No Subject")
+    sender = clean_text(msg.sender or "Unknown Sender")
+    date = clean_text(str(msg.date) if msg.date else "")
 
-    # Pick best body
-    body = msg.body or msg.htmlBody or ""
-
-    # Decode htmlBody if it's bytes
-    if isinstance(msg.htmlBody, bytes):
-        try:
-            body = msg.htmlBody.decode("utf-8", errors="ignore")
-        except Exception:
-            body = msg.htmlBody.decode("latin-1", errors="ignore")
-
-    # Remove null bytes early
-    body = body.replace("\x00", "")
+    # Get the best available body content
+    body = ""
+    if msg.htmlBody:
+        # HTML body takes precedence, decode it safely
+        body = safe_decode_html(msg.htmlBody)
+    elif msg.body:
+        # Fallback to plain text body
+        body = clean_text(msg.body)
 
     # Ensure assets folder exists
     assets_folder.mkdir(parents=True, exist_ok=True)
@@ -69,28 +94,60 @@ def convert_msg_to_md(
         filename = sanitize_filename(att.longFilename or att.shortFilename)
         if not filename:
             continue
+
         filepath = assets_folder / filename
-        with open(filepath, "wb") as f:
-            f.write(att.data)
-        attachment_links[filename] = filepath
+        try:
+            with open(filepath, "wb") as f:
+                f.write(att.data)
+            attachment_links[filename] = filepath
+        except Exception as e:
+            console.print(
+                f"[yellow]Warning: Could not save attachment {filename}: {e}[/yellow]"
+            )
 
     # Replace inline images in HTML body (if HTML)
     if body and "<html" in body.lower():
         for cid, filepath in attachment_links.items():
             short_name = filepath.name
-            body = re.sub(
+            # More robust CID replacement
+            patterns = [
                 rf"cid:{re.escape(cid)}",
-                f"./{assets_folder}/{short_name}",
-                body,
-            )
+                rf"cid:{re.escape(cid.replace(' ', '%20'))}",  # URL encoded spaces
+                rf"src=[\"']cid:{re.escape(cid)}[\"']",
+            ]
 
-    # Convert HTML body (if available) to Markdown
-    body = html2text.html2text(body)
+            for pattern in patterns:
+                body = re.sub(
+                    pattern,
+                    f"./{assets_folder.name}/{short_name}",
+                    body,
+                    flags=re.IGNORECASE,
+                )
 
-    # Final cleanup: remove any remaining null bytes & non-printable characters line by line
-    lines = [line.replace("\x00", "") for line in body.splitlines()]
-    body = "\n".join(lines)
+    # Convert HTML to Markdown if it's HTML content
+    if body and (
+        "<html" in body.lower() or "<div" in body.lower() or "<p" in body.lower()
+    ):
+        h = html2text.HTML2Text()
+        h.ignore_links = False
+        h.ignore_images = False
+        h.ignore_emphasis = False
+        h.body_width = 0  # Don't wrap lines
+
+        try:
+            body = h.handle(body)
+        except Exception as e:
+            console.print(f"[yellow]Warning: HTML conversion failed: {e}[/yellow]")
+            # Fallback: strip HTML tags manually
+            body = re.sub(r"<[^>]+>", "", body)
+
+    # Final comprehensive cleanup
     body = clean_text(body)
+
+    # Remove excessive whitespace but preserve paragraph breaks
+    body = re.sub(r"\n\s*\n\s*\n+", "\n\n", body)  # Multiple newlines to double
+    body = re.sub(r"[ \t]+", " ", body)  # Multiple spaces/tabs to single space
+    body = body.strip()
 
     # Check if file exists and ask before overwriting
     if output_md.exists():
@@ -101,12 +158,23 @@ def convert_msg_to_md(
             console.print("[yellow]Aborted by user.[/yellow]")
             raise typer.Exit()
 
-    # Write markdown file
-    with open(output_md, "w", encoding="utf-8") as f:
-        f.write(f"# {subject}\n\n")
-        f.write(f"**From:** {sender}  \n")
-        f.write(f"**Date:** {date}\n\n")
-        f.write(body)
+    # Write markdown file with explicit encoding and error handling
+    try:
+        with open(output_md, "w", encoding="utf-8", errors="replace") as f:
+            f.write(f"# {subject}\n\n")
+            f.write(f"**From:** {sender}  \n")
+            f.write(f"**Date:** {date}\n\n")
+            if attachment_links:
+                f.write("## Attachments\n\n")
+                for filename, filepath in attachment_links.items():
+                    f.write(f"- [{filename}](./{assets_folder.name}/{filename})\n")
+                f.write("\n")
+            f.write("## Content\n\n")
+            f.write(body)
+            f.write("\n")
+    except Exception as e:
+        console.print(f"[red]Error writing file: {e}[/red]")
+        raise typer.Exit(1)
 
     console.print(f"✅ [green]Converted[/green] {msg_path} → {output_md}")
 
@@ -125,12 +193,25 @@ def main(
     """
     Convert an Outlook .msg email into a Markdown file with extracted images.
     """
+    if not msg_file.exists():
+        console.print(f"[red]Error: File {msg_file} does not exist.[/red]")
+        raise typer.Exit(1)
+
     # Default filename: based on subject, otherwise msg filename
-    msg = extract_msg.Message(str(msg_file))
-    base_name = sanitize_filename(msg.subject or msg_file.stem)
+    try:
+        msg = extract_msg.Message(str(msg_file))
+        base_name = sanitize_filename(msg.subject or msg_file.stem)
+    except Exception as e:
+        console.print(f"[red]Error reading MSG file: {e}[/red]")
+        raise typer.Exit(1)
+
     md_file = md_file or Path.cwd() / f"{base_name}.md"
 
-    convert_msg_to_md(msg_file, md_file, assets)
+    try:
+        convert_msg_to_md(msg_file, md_file, assets)
+    except Exception as e:
+        console.print(f"[red]Conversion failed: {e}[/red]")
+        raise typer.Exit(1)
 
 
 if __name__ == "__main__":
