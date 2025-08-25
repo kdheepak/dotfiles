@@ -26,6 +26,16 @@ def sanitize_filename(name: str) -> str:
     return re.sub(r"[^a-zA-Z0-9_.-]", "_", name).strip("_") or "untitled"
 
 
+def clean_text(text: str) -> str:
+    """Sanitize text to remove binary/non-printable characters and ensure UTF-8."""
+    # Remove null bytes
+    text = text.replace("\x00", "")
+    # Keep only printable characters and standard whitespace
+    text = "".join(c for c in text if c.isprintable() or c in "\n\r\t")
+    # Ensure UTF-8 encoding with replacement for invalid bytes
+    return text.encode("utf-8", errors="replace").decode("utf-8")
+
+
 def convert_msg_to_md(
     msg_path: Path,
     output_md: Path,
@@ -73,6 +83,9 @@ def convert_msg_to_md(
 
     # Convert HTML body (if available) to Markdown
     body = html2text.html2text(body)
+
+    # Clean body to remove binary/non-printable characters
+    body = clean_text(body)
 
     # Check if file exists and ask before overwriting
     if output_md.exists():
