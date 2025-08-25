@@ -15,7 +15,13 @@ from pathlib import Path
 from datetime import datetime
 import typer
 from rich.console import Console
-from rich.progress import Progress
+from rich.progress import (
+    Progress,
+    TextColumn,
+    BarColumn,
+    TaskProgressColumn,
+    TimeRemainingColumn,
+)
 from rich.table import Table
 
 app = typer.Typer(add_completion=False)
@@ -69,27 +75,57 @@ def filter_files(
 
 def archive_zip(files: list[Path], output_file: Path):
     total_size = sum(f.stat().st_size for f in files if f.exists())
-    with zipfile.ZipFile(output_file, "w", zipfile.ZIP_DEFLATED) as zipf, Progress(
-        console=console
-    ) as progress:
-        task = progress.add_task("[cyan]Creating ZIP...", total=len(files))
-        for filepath in files:
-            if filepath.exists():
-                zipf.write(filepath, filepath)
-            progress.update(task, advance=1)
+
+    with zipfile.ZipFile(output_file, "w", zipfile.ZIP_DEFLATED) as zipf:
+        with Progress(
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(),
+            TaskProgressColumn(),
+            TimeRemainingColumn(),
+            console=console,
+            transient=False,
+        ) as progress:
+            task = progress.add_task("[cyan]Creating ZIP archive", total=len(files))
+
+            for i, filepath in enumerate(files, 1):
+                if filepath.exists():
+                    # Update description to show current file
+                    progress.update(
+                        task, description=f"[cyan]Adding {filepath} ({i}/{len(files)})"
+                    )
+                    zipf.write(filepath, filepath)
+                    progress.update(task, advance=1)
+                else:
+                    progress.update(task, advance=1)
+
     return total_size, output_file.stat().st_size
 
 
 def archive_tar(files: list[Path], output_file: Path):
     total_size = sum(f.stat().st_size for f in files if f.exists())
-    with tarfile.open(output_file, "w:gz") as tarf, Progress(
-        console=console
-    ) as progress:
-        task = progress.add_task("[cyan]Creating TAR.GZ...", total=len(files))
-        for filepath in files:
-            if filepath.exists():
-                tarf.add(filepath, arcname=filepath)
-            progress.update(task, advance=1)
+
+    with tarfile.open(output_file, "w:gz") as tarf:
+        with Progress(
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(),
+            TaskProgressColumn(),
+            TimeRemainingColumn(),
+            console=console,
+            transient=False,
+        ) as progress:
+            task = progress.add_task("[cyan]Creating TAR.GZ archive", total=len(files))
+
+            for i, filepath in enumerate(files, 1):
+                if filepath.exists():
+                    # Update description to show current file
+                    progress.update(
+                        task, description=f"[cyan]Adding {filepath} ({i}/{len(files)})"
+                    )
+                    tarf.add(filepath, arcname=filepath)
+                    progress.update(task, advance=1)
+                else:
+                    progress.update(task, advance=1)
+
     return total_size, output_file.stat().st_size
 
 
@@ -99,9 +135,39 @@ def archive_7z(files: list[Path], output_file: Path):
             "[red]❌ 7z not found. Please install it and ensure it's in PATH.[/]"
         )
         sys.exit(1)
+
     total_size = sum(f.stat().st_size for f in files if f.exists())
-    cmd = ["7z", "a", "-y", str(output_file)] + [str(f) for f in files]
-    subprocess.run(cmd, check=True)
+
+    # For 7z, we'll show progress by adding files in batches
+    # since we can't easily show individual file progress with subprocess
+    with Progress(
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TaskProgressColumn(),
+        TimeRemainingColumn(),
+        console=console,
+        transient=False,
+    ) as progress:
+        task = progress.add_task("[cyan]Creating 7Z archive", total=100)
+
+        # Show preparation step
+        progress.update(task, description="[cyan]Preparing 7z command...")
+        progress.update(task, advance=10)
+
+        cmd = ["7z", "a", "-y", str(output_file)] + [str(f) for f in files]
+
+        # Show compression step
+        progress.update(
+            task, description=f"[cyan]Compressing {len(files)} files with 7z..."
+        )
+        progress.update(task, advance=70)
+
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # Complete
+        progress.update(task, description="[cyan]7z compression complete")
+        progress.update(task, advance=20)
+
     return total_size, output_file.stat().st_size
 
 
@@ -114,6 +180,10 @@ def show_summary(
     table.add_row("Files", str(len(files)))
     table.add_row("Original Size", f"{total_size/1024:.2f} KB")
     table.add_row("Compressed Size", f"{compressed_size/1024:.2f} KB")
+    table.add_row(
+        "Compression Ratio",
+        f"{(1 - compressed_size/total_size)*100:.1f}%" if total_size > 0 else "0%",
+    )
     table.add_row("Output File", str(output_file))
     console.print(table)
 
@@ -216,6 +286,8 @@ def main(
     if not files:
         console.print("[red]❌ No files matched your filters.[/]")
         raise typer.Exit(code=1)
+
+    console.print(f"[bold green]✨ Found {len(files)} files to archive[/]")
 
     if fmt == "zip":
         total, compressed = archive_zip(files, output_file)
