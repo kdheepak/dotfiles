@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv
+#!/usr/bin/env -S uv --quiet run --script
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["typer", "rich"]
@@ -174,8 +174,13 @@ def main(
     exclude: list[str] = typer.Option(
         None, "--exclude", help="Glob pattern of files to exclude"
     ),
+    git_files: bool = typer.Option(
+        False, "--git-files", help="Only include git-tracked files"
+    ),
     use_git_archive: bool = typer.Option(
-        False, "--use-git-archive", help="Use `git archive` instead of ls-files"
+        False,
+        "--use-git-archive",
+        help="Use `git archive` instead of ls-files (only if --git-files is set)",
     ),
     force: bool = typer.Option(False, "--force", help="Overwrite without asking"),
     no_overwrite: bool = typer.Option(
@@ -185,8 +190,8 @@ def main(
     """
     Archive the current directory.
 
-    - If it's a git repo → only git-tracked files (or `git archive` if enabled).
-    - Otherwise → all files (excluding .git).
+    - Default → all files (excluding .git/).
+    - With `--git-files` → only git-tracked files (or `git archive` if enabled).
     - Supports zip, tar.gz, 7z formats.
     - Output name auto-appends today's date.
     """
@@ -199,11 +204,11 @@ def main(
     if not confirm_overwrite(output_file, force, no_overwrite):
         raise typer.Exit(code=1)
 
-    if (Path(".") / ".git").exists():
-        console.print("[bold blue]📦 Detected git repo[/]")
+    if git_files and (Path(".") / ".git").exists():
+        console.print("[bold blue]📦 Using git-tracked files[/]")
         files = get_git_files(use_git_archive)
     else:
-        console.print("[bold yellow]📦 Not a git repo — archiving all files[/]")
+        console.print("[bold yellow]📦 Archiving all files[/]")
         files = get_non_git_files()
 
     files = filter_files(files, includes=include or [], excludes=exclude or [])
