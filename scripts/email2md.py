@@ -48,6 +48,24 @@ def sanitize_filename(name: str) -> str:
     return re.sub(r"[^a-zA-Z0-9_.-]", "_", name).strip("_") or "untitled"
 
 
+def make_unique_filename(filepath: Path, existing_files: set) -> Path:
+    """Generate a unique filename to avoid overwrites."""
+    if str(filepath) not in existing_files:
+        return filepath
+
+    stem = filepath.stem
+    suffix = filepath.suffix
+    parent = filepath.parent
+    counter = 1
+
+    while True:
+        new_name = f"{stem}_{counter}{suffix}"
+        new_path = parent / new_name
+        if str(new_path) not in existing_files:
+            return new_path
+        counter += 1
+
+
 def safe_decode_html(html_content) -> str:
     """Safely decode HTML content to string."""
     if isinstance(html_content, bytes):
@@ -88,41 +106,127 @@ def convert_msg_to_md(
     # Ensure assets folder exists
     assets_folder.mkdir(parents=True, exist_ok=True)
 
-    # Extract attachments
+    # Extract attachments and build CID mapping
     attachment_links = {}
-    for att in track(msg.attachments, description="Extracting attachments..."):
-        filename = sanitize_filename(att.longFilename or att.shortFilename)
-        if not filename:
-            continue
+    cid_to_filename = {}
+    existing_files = set()
 
+    for att in track(msg.attachments, description="Extracting attachments..."):
+        # Get original filename
+        original_filename = att.longFilename or att.shortFilename or "attachment"
+        filename = sanitize_filename(original_filename)
+
+        # Handle empty or generic filenames
+        if not filename or filename == "untitled":
+            # Try to determine file extension from data
+            ext = ""
+            if hasattr(att, "mimeType") and att.mimeType:
+                if "png" in att.mimeType.lower():
+                    ext = ".png"
+                elif "jpeg" in att.mimeType.lower() or "jpg" in att.mimeType.lower():
+                    ext = ".jpg"
+                elif "gif" in att.mimeType.lower():
+                    ext = ".gif"
+
+            # Generate a name based on content ID or index
+            if hasattr(att, "cid") and att.cid:
+                base_name = sanitize_filename(
+                    att.cid.replace("@", "").replace("<", "").replace(">", "")
+                )
+                filename = f"{base_name}{ext}"
+            else:
+                filename = f"attachment_{len(attachment_links)+1}{ext}"
+
+        # Ensure unique filename
         filepath = assets_folder / filename
+        filepath = make_unique_filename(filepath, existing_files)
+        existing_files.add(str(filepath))
+
         try:
             with open(filepath, "wb") as f:
                 f.write(att.data)
-            attachment_links[filename] = filepath
+
+            # Map both filename and CID
+            attachment_links[filepath.name] = filepath
+
+            # Build CID mapping for inline images
+            if hasattr(att, "cid") and att.cid:
+                # Clean the CID (remove angle brackets)
+                clean_cid = att.cid.strip("<>")
+                cid_to_filename[clean_cid] = filepath.name
+                # Also map without @ symbol variations
+                cid_to_filename[clean_cid.replace("@", "")] = filepath.name
+
         except Exception as e:
             console.print(
                 f"[yellow]Warning: Could not save attachment {filename}: {e}[/yellow]"
             )
 
-    # Replace inline images in HTML body (if HTML)
-    if body and "<html" in body.lower():
-        for cid, filepath in attachment_links.items():
-            short_name = filepath.name
-            # More robust CID replacement
+    # Replace inline images in HTML body using CID mapping
+    if body and "<html" in body.lower() and cid_to_filename:
+        console.print(f"[blue]Replacing CIDs in HTML content...[/blue]")
+
+        # Replace various CID formats
+        for cid, filename in cid_to_filename.items():
+            replacement_path = f"./{assets_folder.name}/{filename}"
+
+            # Common CID patterns in HTML
             patterns = [
-                rf"cid:{re.escape(cid)}",
-                rf"cid:{re.escape(cid.replace(' ', '%20'))}",  # URL encoded spaces
-                rf"src=[\"']cid:{re.escape(cid)}[\"']",
+                # Standard cid: references
+                (rf"cid:{re.escape(cid)}", replacement_path),
+                (
+                    rf'cid:{re.escape(cid.replace(" ", "%20"))}',
+                    replacement_path,
+                ),  # URL encoded
+                # src attribute patterns
+                (
+                    rf'src\s*=\s*["\']cid:{re.escape(cid)}["\']',
+                    f'src="{replacement_path}"',
+                ),
+                (
+                    rf'src\s*=\s*["\']cid:{re.escape(cid.replace(" ", "%20"))}["\']',
+                    f'src="{replacement_path}"',
+                ),
+                # Without quotes
+                (rf"src\s*=\s*cid:{re.escape(cid)}", f'src="{replacement_path}"'),
+                # Background image patterns
+                (
+                    rf'background-image\s*:\s*url\(["\']?cid:{re.escape(cid)}["\']?\)',
+                    f'background-image: url("{replacement_path}")',
+                ),
             ]
 
-            for pattern in patterns:
-                body = re.sub(
-                    pattern,
-                    f"./{assets_folder.name}/{short_name}",
-                    body,
-                    flags=re.IGNORECASE,
-                )
+            for pattern, replacement in patterns:
+                old_body = body
+                body = re.sub(pattern, replacement, body, flags=re.IGNORECASE)
+                if old_body != body:
+                    console.print(f"[green]Replaced CID {cid} → {filename}[/green]")
+
+        # Also try to catch any remaining cid: references that might have been missed
+        remaining_cids = re.findall(r'cid:([^"\'\s>]+)', body, re.IGNORECASE)
+        if remaining_cids:
+            console.print(
+                f"[yellow]Warning: Found unreplaced CIDs: {remaining_cids}[/yellow]"
+            )
+            # Try to match them with available filenames
+            for remaining_cid in remaining_cids:
+                # Look for similar filenames
+                for filename in attachment_links.keys():
+                    if (
+                        remaining_cid.lower() in filename.lower()
+                        or filename.lower() in remaining_cid.lower()
+                    ):
+                        replacement_path = f"./{assets_folder.name}/{filename}"
+                        body = re.sub(
+                            rf"cid:{re.escape(remaining_cid)}",
+                            replacement_path,
+                            body,
+                            flags=re.IGNORECASE,
+                        )
+                        console.print(
+                            f"[green]Matched remaining CID {remaining_cid} → {filename}[/green]"
+                        )
+                        break
 
     # Convert HTML to Markdown if it's HTML content
     if body and (
@@ -143,6 +247,17 @@ def convert_msg_to_md(
 
     # Final comprehensive cleanup
     body = clean_text(body)
+
+    # Check for any remaining CID references in the final markdown
+    remaining_cids = re.findall(r'cid:([^"\'\s\)]+)', body, re.IGNORECASE)
+    if remaining_cids:
+        console.print(
+            f"[yellow]Warning: Markdown still contains CID references: {remaining_cids}[/yellow]"
+        )
+        # Remove any remaining cid: references as a last resort
+        body = re.sub(
+            r'cid:[^\s\)\]"\']+', "[MISSING_IMAGE]", body, flags=re.IGNORECASE
+        )
 
     # Remove excessive whitespace but preserve paragraph breaks
     body = re.sub(r"\n\s*\n\s*\n+", "\n\n", body)  # Multiple newlines to double
