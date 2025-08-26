@@ -112,7 +112,7 @@ local overrides = {
 local cwd = {
   "cwd",
   padding = { left = 0, right = 1 },
-  max_length = 30,
+  max_length = 80,
 }
 
 tabline.setup({
