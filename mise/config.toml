@@ -35,10 +35,10 @@ status.show_env = true
 # node = { version = "latest", os = [ "macos" ] }
 
 # Python programming language interpreter
-python = { version = "latest", os = [
-  "macos",
-  "windows",
-] }
+# python = { version = "latest", os = [
+#   "macos",
+#   "windows",
+# ] }
 
 # Fast JavaScript runtime and package manager
 bun = { version = "latest", os = [
