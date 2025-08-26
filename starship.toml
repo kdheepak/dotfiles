@@ -5,7 +5,7 @@ palette = "github"
 
 add_newline = true
 format = """
-╭─$directory$git_branch$git_commit$git_state$git_status[](fg:base01) $fill $time
+╭─$directory$git_branch$git_commit$git_state$git_status[](fg:base01) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
 ╰ \
 """
 continuation_prompt = " "
