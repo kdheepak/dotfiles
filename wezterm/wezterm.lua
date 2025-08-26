@@ -137,7 +137,7 @@ tabline.setup({
     tabline_b = {},
     tabline_c = { " " },
     tab_active = {
-      { "zoomed", icon = wezterm.nerdfonts.oct_zoom_in, padding = { left = 0, right = 0 } },
+      { "zoomed", icon = wezterm.nerdfonts.oct_zoom_in, padding = { left = 1, right = 1 } },
       {
         "index",
         fmt = function(n, _)
@@ -165,7 +165,7 @@ tabline.setup({
       {
         "zoomed",
         icon = wezterm.nerdfonts.oct_zoom_in,
-        padding = { left = 0, right = 0 },
+        padding = { left = 1, right = 0 },
       },
       {
         "index",

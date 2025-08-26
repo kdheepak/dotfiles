@@ -5,7 +5,7 @@ palette = "github"
 
 add_newline = true
 format = """
-╭─$directory$git_branch$git_commit$git_state$git_status[](fg:base01) $fill ${custom.direnv_allowed}${custom.direnv_denied}$all$time
+╭─$directory$git_branch$git_commit$git_state$git_status[](fg:base01) $fill $time
 ╰ \
 """
 continuation_prompt = " "
@@ -36,8 +36,11 @@ repo_root_style = "bold bg:base0a fg:base01"
 repo_root_format = "[ $before_root_path]($style)[$repo_root  ]($repo_root_style)[$path]($style)[$read_only]($read_only_style)[](fg:base0a bg:base01)"
 fish_style_pwd_dir_length = 1
 truncation_length = 1
-truncate_to_repo = false
-read_only = " "
+truncate_to_repo = true
+read_only = " 🔒"
+
+[mise]
+health = 'ready'
 
 [git_branch]
 symbol = " " # ""
