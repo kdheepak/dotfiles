@@ -277,26 +277,8 @@ def show_summary(
     console.print(table)
 
 
-def get_git_files(use_archive: bool, folder: Path) -> list[Path]:
+def get_git_files(folder: Path) -> list[Path]:
     """Return git-tracked files using either ls-files or git archive."""
-    if use_archive:
-        tmpfile = folder / ".git" / "tmp_archive.zip"
-        try:
-            subprocess.run(
-                ["git", "archive", "--format=zip", "HEAD", "-o", str(tmpfile)],
-                check=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                cwd=folder,
-            )
-            with zipfile.ZipFile(tmpfile, "r") as zf:
-                files = [Path(name) for name in zf.namelist()]
-            tmpfile.unlink(missing_ok=True)
-            return files
-        except subprocess.CalledProcessError as e:
-            console.print(f"[red]❌ git archive failed:[/] {e}")
-            sys.exit(1)
-
     try:
         result = subprocess.run(
             ["git", "ls-files"],
@@ -312,12 +294,10 @@ def get_git_files(use_archive: bool, folder: Path) -> list[Path]:
         sys.exit(1)
 
 
-def get_non_git_files(folder: Path) -> list[Path]:
+def get_all_files(folder: Path) -> list[Path]:
     """Return all files under a folder, excluding .git/ directories."""
     files = []
     for root, _, filenames in os.walk(folder):
-        if ".git" in Path(root).parts:
-            continue
         for file in filenames:
             full_path = Path(root) / file
             relative_path = full_path.relative_to(folder)
@@ -347,11 +327,6 @@ def main(
     ),
     git_files: bool = typer.Option(
         False, "--git-files", help="Only include git-tracked files"
-    ),
-    use_git_archive: bool = typer.Option(
-        False,
-        "--use-git-archive",
-        help="Use `git archive` instead of ls-files (only if --git-files is set)",
     ),
     force: bool = typer.Option(False, "--force", help="Overwrite without asking"),
     ouch_options: list[str] = typer.Option(
@@ -391,10 +366,10 @@ def main(
 
     if git_files and (target_folder / ".git").exists():
         console.print("[bold blue]📦 Using git-tracked files[/]")
-        files = get_git_files(use_git_archive, target_folder)
+        files = get_git_files(target_folder)
     else:
         console.print("[bold yellow]📦 Archiving all files[/]")
-        files = get_non_git_files(target_folder)
+        files = get_all_files(target_folder)
 
     files = filter_files(files, includes=include or [], excludes=exclude or [])
 
