@@ -43,7 +43,15 @@ def get_git_describe(folder: Path) -> str | None:
     """Get git describe output if available."""
     try:
         result = subprocess.run(
-            ["git", "describe", "--tags", "--always", "--dirty"],
+            [
+                "git",
+                "describe",
+                "--tags",
+                "--long",
+                "--always",
+                "--dirty",
+                "--abbrev=7",
+            ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
