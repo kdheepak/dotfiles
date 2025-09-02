@@ -333,7 +333,7 @@ def main(
         "ouch:zip",
         "--format",
         "-f",
-        help="Archive format. Built-in: zip | tar.gz | 7z. External (default): ouch:<fmt> (zip, tar, 7z, zst, etc.)",
+        help="Archive format. zip | tar.gz | 7z | ouch:<fmt>",
     ),
     include: list[str] = typer.Option(
         None, "--include", help="Glob pattern of files to include"
@@ -367,10 +367,10 @@ def main(
     - Supports zip, tar.gz, 7z (built-in) and all formats ouch supports.
 
     Examples:
-      archive-dir                    # Archive current directory (ouch:zip)
-      archive-dir -f ouch:zst        # Use ouch with zstd format
-      archive-dir -f tar.gz          # Use built-in tar.gz
-      archive-dir ../my-project -f ouch:tar --ouch-option --threads=4
+      zipit.py                    # Archive current directory (ouch:zip)
+      zipit.py -f ouch:zst        # Use ouch with zstd format
+      zipit.py -f tar.gz          # Use built-in tar.gz
+      zipit.py ../my-project -f ouch:tar --ouch-option --threads=4
     """
     target_folder = Path(folder).resolve()
     if not target_folder.exists():
