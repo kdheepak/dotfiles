@@ -39,14 +39,46 @@ def project_name(folder: Path) -> str:
     return folder.name
 
 
-def make_output_filename(base: str | None, fmt: str, folder: Path) -> Path:
-    """Make output filename with date suffix (YYYYMMDD)."""
+def get_git_describe(folder: Path) -> str | None:
+    """Get git describe output if available."""
+    try:
+        result = subprocess.run(
+            ["git", "describe", "--tags", "--always", "--dirty"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+            cwd=folder,
+        )
+        return result.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        # git describe failed (no tags, not a git repo, git not installed, etc.)
+        return None
+
+
+def normalize_suffix(fmt: str) -> str:
+    """Return the proper suffix for the archive format."""
+    return ".tar.gz" if fmt == "tar.gz" else f".{fmt}"
+
+
+def default_base_name(folder: Path, fmt: str) -> Path:
+    """Generate a default base filename based on project + git describe."""
+    project = project_name(folder)
+    git_desc = get_git_describe(folder)
+    if git_desc:
+        return Path(f"{project}-{git_desc}{normalize_suffix(fmt)}")
+    return Path(f"{project}{normalize_suffix(fmt)}")
+
+
+def add_date_suffix(base: Path) -> Path:
+    """Add today's date before the extension, unless already present."""
     date = datetime.now().strftime("%Y%m%d")
-    if base is None:
-        base = f"{project_name(folder)}.{fmt}"
-    base_path = Path(base)
-    suffix = base_path.suffix or f".{fmt}"
-    return Path(f"{base_path.stem}-{date}{suffix}")
+    return base.with_name(f"{base.stem}-{date}{base.suffix}")
+
+
+def make_output_filename(base: str | None, fmt: str, folder: Path) -> Path:
+    base_path = Path(base) if base else default_base_name(folder, fmt)
+    return add_date_suffix(base_path)
 
 
 def confirm_overwrite(path: Path, force: bool, no_overwrite: bool) -> bool:
@@ -301,7 +333,7 @@ def main(
     - Default → archive current directory, all files (excluding .git/).
     - With `--git-files` → only git-tracked files (or `git archive` if enabled).
     - Supports zip, tar.gz, 7z formats.
-    - Output name auto-appends today's date.
+    - Output name auto-appends git describe info (if available) and today's date.
 
     Examples:
       archive-dir                    # Archive current directory
