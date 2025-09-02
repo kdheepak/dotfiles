@@ -323,7 +323,7 @@ def main(
         None, "--include", help="Glob pattern of files to include"
     ),
     exclude: list[str] = typer.Option(
-        None, "--exclude", help="Glob pattern of files to exclude"
+        [".git/**"], "--exclude", help="Glob pattern of files to exclude"
     ),
     git_files: bool = typer.Option(
         False, "--git-files", help="Only include git-tracked files"
@@ -371,7 +371,7 @@ def main(
         console.print("[bold yellow]📦 Archiving all files[/]")
         files = get_all_files(target_folder)
 
-    files = filter_files(files, includes=include or [], excludes=exclude or [])
+    files = filter_files(files, includes=include or [], excludes=exclude)
 
     if not files:
         console.print("[red]❌ No files matched your filters.[/]")
