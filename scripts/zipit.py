@@ -249,9 +249,10 @@ def archive_with_ouch(
 
     abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
 
-    cmd = ["ouch", "compress", "-f", fmt, "-y", "-q", "-o", str(abs_output)]
+    cmd = ["ouch", "compress", "-f", fmt, "-y", "-q"]
     cmd.extend(extra_opts)
     cmd.extend([str(f) for f in files])
+    cmd.append(str(abs_output))  # OUTPUT file goes last
 
     with Progress(
         SpinnerColumn(),
