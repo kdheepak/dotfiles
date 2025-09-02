@@ -39,9 +39,6 @@ truncation_length = 1
 truncate_to_repo = true
 read_only = " 🔒"
 
-[mise]
-health = 'ready'
-
 [git_branch]
 symbol = " " # ""
 style = "bg:base01 fg:base0a"
