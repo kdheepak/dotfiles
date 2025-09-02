@@ -90,15 +90,12 @@ def make_output_filename(base: str | None, fmt: str, folder: Path) -> Path:
     return add_date_suffix(base_path)
 
 
-def confirm_overwrite(path: Path, force: bool, no_overwrite: bool) -> bool:
+def confirm_overwrite(path: Path, force: bool) -> bool:
     """Decide if we should overwrite a file based on flags or user input."""
     if not path.exists():
         return True
     if force:
         return True
-    if no_overwrite:
-        console.print(f"[red]❌ File {path} exists — not overwriting.[/]")
-        return False
 
     console.print(f"[yellow]⚠️ File {path} already exists.[/]")
     response = input("Overwrite? [y/N]: ").strip().lower()
@@ -347,9 +344,6 @@ def main(
         help="Use `git archive` instead of ls-files (only if --git-files is set)",
     ),
     force: bool = typer.Option(False, "--force", help="Overwrite without asking"),
-    no_overwrite: bool = typer.Option(
-        False, "--no-overwrite", help="Do not overwrite existing files"
-    ),
     ouch_options: list[str] = typer.Option(
         None,
         "--ouch-option",
@@ -382,7 +376,7 @@ def main(
 
     output_file = make_output_filename(output, real_fmt, target_folder)
 
-    if not confirm_overwrite(output_file, force, no_overwrite):
+    if not confirm_overwrite(output_file, force):
         raise typer.Exit(code=1)
 
     if git_files and (target_folder / ".git").exists():
