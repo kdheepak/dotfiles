@@ -362,10 +362,6 @@ def main(
     """
     Archive a directory.
 
-    - Default → archive current directory with ouch (zip format).
-    - With `--git-files` → only git-tracked files (or `git archive` if enabled).
-    - Supports zip, tar.gz, 7z (built-in) and all formats ouch supports.
-
     Examples:
       zipit.py                    # Archive current directory (ouch:zip)
       zipit.py -f ouch:zst        # Use ouch with zstd format
