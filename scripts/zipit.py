@@ -333,7 +333,6 @@ def main(
     - Default → archive current directory, all files (excluding .git/).
     - With `--git-files` → only git-tracked files (or `git archive` if enabled).
     - Supports zip, tar.gz, 7z formats.
-    - Output name auto-appends git describe info (if available) and today's date.
 
     Examples:
       archive-dir                    # Archive current directory
