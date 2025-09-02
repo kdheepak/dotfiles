@@ -21,6 +21,7 @@ from rich.progress import (
     BarColumn,
     TaskProgressColumn,
     TimeRemainingColumn,
+    SpinnerColumn,
 )
 from rich.table import Table
 
@@ -227,9 +228,15 @@ def archive_7z(files: list[Path], output_file: Path, base_folder: Path):
 
 
 def archive_with_ouch(
-    files: list[Path], output_file: Path, base_folder: Path, fmt: str, extra: list[str]
+    files: list[Path],
+    output_file: Path,
+    base_folder: Path,
+    fmt: str,
+    extra_opts: list[str],
 ):
-    """Create an archive using ouch with the given format and extra options."""
+    """
+    Archive files using the external `ouch` tool with a simple spinner indicator.
+    """
     if not shutil.which("ouch"):
         console.print(
             "[red]❌ ouch not found. Please install it and ensure it's in PATH.[/]"
@@ -241,18 +248,35 @@ def archive_with_ouch(
     )
 
     abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
-    cmd = (
-        ["ouch", "compress"]
-        + [str(base_folder / f) for f in files]
-        + [str(abs_output), "--format", fmt]
-        + extra
-    )
 
-    console.print(f"[cyan]▶ Running with ouch:[/] {' '.join(cmd)}")
-    subprocess.run(cmd, check=True, cwd=base_folder)
+    cmd = ["ouch", "compress", "-f", fmt, "-y", "-q", "-o", str(abs_output)]
+    cmd.extend(extra_opts)
+    cmd.extend([str(f) for f in files])
 
-    compressed_size = abs_output.stat().st_size if abs_output.exists() else 0
-    return total_size, compressed_size
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        console=console,
+        transient=True,
+    ) as progress:
+        task = progress.add_task(f"[cyan]Compressing with ouch ({fmt})…", start=False)
+        try:
+            subprocess.run(
+                cmd,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                cwd=base_folder,
+            )
+            progress.update(
+                task, description=f"[green]ouch archive created successfully ({fmt})[/]"
+            )
+        except subprocess.CalledProcessError as e:
+            progress.update(task, description="[red]❌ ouch compression failed[/]")
+            console.print(f"[red]{e.stderr}[/]")
+            sys.exit(1)
+
+    return total_size, output_file.stat().st_size
 
 
 def show_summary(
