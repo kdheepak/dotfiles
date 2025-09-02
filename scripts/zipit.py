@@ -79,13 +79,23 @@ def default_base_name(folder: Path, fmt: str) -> Path:
 
 
 def add_date_suffix(base: Path) -> Path:
-    """Add today's date before the extension, unless already present."""
+    """Add today's date before the extension(s), unless already present."""
     date = datetime.now().strftime("%Y%m%d")
-    return base.with_name(f"{base.stem}-{date}{base.suffix}")
+    # Handle multi-part suffixes (e.g., .tar.gz)
+    suffix = "".join(base.suffixes)
+    # Get the "pure" name without any suffix
+    stem = base.name
+    for s in base.suffixes:
+        stem = stem[: -len(s)]
+    return base.with_name(f"{stem}-{date}{suffix}")
 
 
 def make_output_filename(base: str | None, fmt: str, folder: Path) -> Path:
-    """Return the output filename, adding default name and date suffix if needed."""
+    """
+    Return the output filename, adding default name and date suffix if needed.
+
+    Handles both single and multi-part extensions.
+    """
     base_path = Path(base) if base else default_base_name(folder, fmt)
     return add_date_suffix(base_path)
 
@@ -392,7 +402,9 @@ def main(
         console.print("[red]❌ No files matched your filters.[/]")
         raise typer.Exit(code=1)
 
-    console.print(f"[bold green]✨ Found {len(files)} files to archive[/]")
+    console.print(
+        f"[bold green]✨ Found {len(files)} files to archive into {real_fmt}[/]"
+    )
 
     if use_ouch:
         total, compressed = archive_with_ouch(
