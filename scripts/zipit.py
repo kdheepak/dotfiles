@@ -364,6 +364,8 @@ def main(
       zipit.py -f ouch:zst        # Use ouch with zstd format
       zipit.py -f tar.gz          # Use built-in tar.gz
       zipit.py ../my-project -f ouch:tar --ouch-option --threads=4
+
+    Supported formats with ouch: tar, zip, gz, 7z, xz/lzma, bz/bz2, bz3, lz4, sz (Snappy), zst, rar and br.
     """
     target_folder = Path(folder).resolve()
     if not target_folder.exists():
