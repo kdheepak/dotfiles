@@ -186,47 +186,6 @@ def archive_tar(files: list[Path], output_file: Path, base_folder: Path):
     return total_size, output_file.stat().st_size
 
 
-def archive_7z(files: list[Path], output_file: Path, base_folder: Path):
-    """Create a 7z archive using the external 7z binary."""
-    if not shutil.which("7z"):
-        console.print(
-            "[red]❌ 7z not found. Please install it and ensure it's in PATH.[/]"
-        )
-        sys.exit(1)
-
-    total_size = sum(
-        (base_folder / f).stat().st_size for f in files if (base_folder / f).exists()
-    )
-
-    with Progress(
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
-        TaskProgressColumn(),
-        TimeRemainingColumn(),
-        console=console,
-        transient=False,
-    ) as progress:
-        task = progress.add_task("[cyan]Creating 7Z archive", total=100)
-        abs_output = (
-            output_file if output_file.is_absolute() else Path.cwd() / output_file
-        )
-        cmd = ["7z", "a", "-y", str(abs_output)] + [str(f) for f in files]
-
-        progress.update(task, description="[cyan]Compressing with 7z...")
-        subprocess.run(
-            cmd,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            cwd=base_folder,
-        )
-
-        progress.update(task, description="[cyan]7z compression complete")
-        progress.update(task, advance=100)
-
-    return total_size, output_file.stat().st_size
-
-
 def archive_with_ouch(
     files: list[Path],
     output_file: Path,
@@ -254,7 +213,7 @@ def archive_with_ouch(
     cmd.extend([str(f) for f in files])
     cmd.append(str(abs_output))
 
-    # Print each file added, similar to zip/tar/7z
+    # Print each file added, similar to zip/tar
     for f in files:
         console.print(f"  [dim cyan]Adding:[/] {f}")
 
@@ -264,7 +223,9 @@ def archive_with_ouch(
         console=console,
         transient=True,
     ) as progress:
-        task = progress.add_task(f"[cyan]Compressing with ouch ({fmt})…", start=False)
+        task = progress.add_task(
+            f"[cyan]Compressing with ouch ({fmt})…", start=False, total=100
+        )
         try:
             subprocess.run(
                 cmd,
@@ -282,10 +243,10 @@ def archive_with_ouch(
                 f"[red]{e.stderr.decode() if isinstance(e.stderr, bytes) else e.stderr}[/]"
             )
             sys.exit(1)
+        progress.update(task, description="[green]ouch archive created successfully")
+        progress.update(task, advance=100)
 
-    console.print(
-        f"[green]ouch archive created successfully ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/]"
-    )
+    console.print()
 
     compressed_size = abs_output.stat().st_size if abs_output.exists() else 0
     return total_size, compressed_size
@@ -369,7 +330,7 @@ def main(
         "ouch:zip",
         "--format",
         "-f",
-        help="Archive format. zip | tar.gz | 7z | ouch:<fmt>",
+        help="Archive format. zip | tar.gz | ouch:<fmt>",
     ),
     include: list[str] = typer.Option(
         None, "--include", help="Glob pattern of files to include"
@@ -445,10 +406,8 @@ def main(
         total, compressed = archive_zip(files, output_file, target_folder)
     elif real_fmt == "tar.gz":
         total, compressed = archive_tar(files, output_file, target_folder)
-    elif real_fmt == "7z":
-        total, compressed = archive_7z(files, output_file, target_folder)
     else:
-        console.print("[red]❌ Unsupported format. Use zip, tar.gz, 7z, or ouch:<fmt>.")
+        console.print("[red]❌ Unsupported format. Use zip, tar.gz, or ouch:<fmt>.")
         raise typer.Exit(code=1)
 
     show_summary(files, total, compressed, output_file)
