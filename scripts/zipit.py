@@ -235,7 +235,7 @@ def archive_with_ouch(
     extra_opts: list[str],
 ):
     """
-    Archive files using the external `ouch` tool with a simple spinner indicator.
+    Archive files using the external `ouch` tool.
     """
     if not shutil.which("ouch"):
         console.print(
@@ -250,9 +250,13 @@ def archive_with_ouch(
     abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
 
     cmd = ["ouch", "compress", "-f", fmt, "-y", "-q"]
-    cmd.extend(extra_opts)
+    cmd.extend(extra_opts or [])
     cmd.extend([str(f) for f in files])
-    cmd.append(str(abs_output))  # OUTPUT file goes last
+    cmd.append(str(abs_output))
+
+    # Print each file added, similar to zip/tar/7z
+    for f in files:
+        console.print(f"  [dim cyan]Adding:[/] {f}")
 
     with Progress(
         SpinnerColumn(),
@@ -274,10 +278,17 @@ def archive_with_ouch(
             )
         except subprocess.CalledProcessError as e:
             progress.update(task, description="[red]❌ ouch compression failed[/]")
-            console.print(f"[red]{e.stderr}[/]")
+            console.print(
+                f"[red]{e.stderr.decode() if isinstance(e.stderr, bytes) else e.stderr}[/]"
+            )
             sys.exit(1)
 
-    return total_size, output_file.stat().st_size
+    console.print(
+        f"[green]ouch archive created successfully ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/]"
+    )
+
+    compressed_size = abs_output.stat().st_size if abs_output.exists() else 0
+    return total_size, compressed_size
 
 
 def show_summary(
