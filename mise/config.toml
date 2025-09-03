@@ -85,8 +85,8 @@ zig = "latest"
   "windows",
 ] }
 
-# type checker
-"pipx:ty" = { version = "latest", os = ["macos"] }
+# # type checker
+# "pipx:ty" = { version = "latest", os = ["macos"] }
 
 # type checker
 "pipx:mypy" = { version = "latest", os = ["macos"] }
