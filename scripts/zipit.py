@@ -14,6 +14,7 @@ import shutil
 from pathlib import Path
 from datetime import datetime
 import typer
+import signal
 from rich.console import Console
 from rich.progress import (
     Progress,
@@ -33,6 +34,15 @@ app = typer.Typer(
     pretty_exceptions_show_locals=False,
 )
 console = Console()
+
+
+def cleanup_file(path: Path):
+    if path.exists():
+        try:
+            path.unlink()
+            print(f"⚠️ Removed incomplete archive: {path}", file=sys.stderr, flush=True)
+        except Exception as e:
+            print(f"❌ Failed to remove {path}: {e}")
 
 
 def project_name(folder: Path) -> str:
@@ -203,6 +213,7 @@ def archive_with_ouch(
     """
     Archive files using the external `ouch` tool.
     """
+
     if not shutil.which("ouch"):
         console.print(
             "[red]❌ ouch not found. Please install it and ensure it's in PATH.[/]"
@@ -213,16 +224,29 @@ def archive_with_ouch(
         (base_folder / f).stat().st_size for f in files if (base_folder / f).exists()
     )
 
-    abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
-
     cmd = ["ouch", "compress", "-f", fmt, "-y", "-q"]
     cmd.extend(extra_opts or [])
-    cmd.extend([str(f) for f in files])
-    cmd.append(str(abs_output))
 
-    # Print each file added, similar to zip/tar
-    for f in files:
-        console.print(f"  [dim cyan]Adding:[/] {f}")
+    with Progress(
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TaskProgressColumn(),
+        TimeRemainingColumn(),
+        console=console,
+        transient=False,
+    ) as progress:
+        task = progress.add_task(
+            "[cyan]Creating zip archive with ouch", total=len(files)
+        )
+        # Print each file added, similar to zip/tar
+        for f in files:
+            console.print(f"  [dim cyan]Adding:[/] {f}")
+            cmd.append(str(f))
+            progress.update(task, advance=1)
+
+    abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
+
+    cmd.append(str(abs_output))
 
     with Progress(
         SpinnerColumn(),
@@ -357,7 +381,13 @@ def main(
 
     # detect ouch usage (default)
     use_ouch = fmt.startswith("ouch:")
+
     real_fmt = fmt.split(":", 1)[1] if use_ouch else fmt
+
+    if shutil.which("ouch") is None and use_ouch:
+        # fallback
+        console.print("[yellow]⚠️ ouch not found, falling back to zip format.[/]")
+        use_ouch = False
 
     output_file = make_output_filename(output, real_fmt, target_folder)
 
@@ -381,16 +411,26 @@ def main(
         f"[bold green]✨ Found {len(files)} files to archive into {real_fmt}[/]"
     )
 
-    if use_ouch:
-        total, compressed = archive_with_ouch(
-            files, output_file, target_folder, real_fmt, ouch_options or []
-        )
-    elif real_fmt == "zip":
-        total, compressed = archive_zip(files, output_file, target_folder)
-    elif real_fmt == "tar.gz":
-        total, compressed = archive_tar(files, output_file, target_folder)
-    else:
-        console.print("[red]❌ Unsupported format. Use zip, tar.gz, or ouch:<fmt>.")
+    def handle_sigint(sig, frame):
+        cleanup_file(output_file)
+        raise typer.Exit(code=1)
+
+    signal.signal(signal.SIGINT, handle_sigint)
+
+    try:
+        if use_ouch:
+            total, compressed = archive_with_ouch(
+                files, output_file, target_folder, real_fmt, ouch_options or []
+            )
+        elif real_fmt == "zip":
+            total, compressed = archive_zip(files, output_file, target_folder)
+        elif real_fmt == "tar.gz":
+            total, compressed = archive_tar(files, output_file, target_folder)
+        else:
+            console.print("[red]❌ Unsupported format. Use zip, tar.gz, or ouch:<fmt>.")
+            raise typer.Exit(code=1)
+    except KeyboardInterrupt:
+        cleanup_file(output_file)
         raise typer.Exit(code=1)
 
     show_summary(files, total, compressed, output_file)
