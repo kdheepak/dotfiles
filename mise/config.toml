@@ -708,7 +708,7 @@ sops = { version = "latest", os = ["macos"] }
 "asdf:mise-plugins/mise-tinytex" = { version = "latest", os = ["macos"] }
 
 # Modern typesetting system
-"typst" = { version = "latest", os = ["macos"] }
+"typst" = { version = "latest", os = ["macos", "windows"] }
 
 # --- presentation ---
 
