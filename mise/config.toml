@@ -73,7 +73,6 @@ zig = "latest"
 # Project template tool
 "pipx:cookiecutter" = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # HTTP client for APIs
@@ -82,7 +81,6 @@ zig = "latest"
 # Fast Python linter and formatter
 "pipx:ruff" = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # # type checker
@@ -129,11 +127,10 @@ zig = "latest"
 # Markdown linting tool
 "npm:markdownlint-cli" = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # Markdown linter (second implementation)
-"npm:markdownlint-cli2" = { version = "latest", os = ["macos", "windows"] }
+"npm:markdownlint-cli2" = { version = "latest", os = ["macos"] }
 
 # Code formatter
 "npm:prettier" = { version = "latest", os = ["macos"] }
@@ -144,15 +141,14 @@ zig = "latest"
 ] }
 
 # neovim client
-"npm:neovim" = { version = "latest", os = ["macos", "windows"] }
+"npm:neovim" = { version = "latest", os = ["macos"] }
 
 # Strip ANSI escape codes from text
-"npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos", "windows"] }
+"npm:strip-ansi-cli" = { version = "4.0.0", os = ["macos"] }
 
 # mermaid-cli
 "npm:@mermaid-js/mermaid-cli" = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # --- Editors ---
@@ -160,7 +156,6 @@ zig = "latest"
 # Modern Vim-based text editor
 neovim = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # Modern text editor inspired by Kakoune
@@ -196,13 +191,11 @@ watchexec = { version = "latest", os = [
 # Smart cd command (z command)
 zoxide = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # Tool for glamorous shell scripts and TUI components
 gum = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # Cross-shell prompt customization
@@ -303,7 +296,7 @@ dust = { version = "latest", os = ["macos"] }
 # A tool to learn about disk usage, fast!
 dua = { version = "latest", os = [
   "macos",
-  "windows",
+  # "windows",
 ] }
 
 # A disk utility
@@ -314,7 +307,7 @@ duf = { version = "latest", os = ["macos"] }
 # GitHub command line interface
 github-cli = { version = "latest", os = [
   "macos",
-  "windows",
+  # "windows",
 ] }
 
 # Terminal UI for Git commands
@@ -326,7 +319,7 @@ lazygit = { version = "latest", os = [
 # Git-compatible VCS with advanced features
 jujutsu = { version = "latest", os = [
   "macos",
-  "windows",
+  # "windows",
 ] }
 
 # Jujutsu TUI interface
@@ -731,7 +724,6 @@ sops = { version = "latest", os = ["macos"] }
 # Convert powerpoint to markdown
 "pipx:pptx2md" = { version = "latest", os = [
   "macos",
-  "windows",
 ] }
 
 # Convert markdown to word, pdf etc
@@ -809,7 +801,7 @@ traefik = { version = "latest", os = ["macos"] }
 "cargo:sqlx-cli" = { version = "latest", os = ["macos"] }
 
 # SQL IDE for the terminal
-"pipx:harlequin" = { version = "latest", os = ["macos", "windows"] }
+"pipx:harlequin" = { version = "latest", os = ["macos"] }
 
 # Git workflow management tool
 "ubi:abhinav/git-spice" = { version = "latest", exe = "gs" }
