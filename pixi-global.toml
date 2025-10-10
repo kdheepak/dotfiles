@@ -1,0 +1,46 @@
+version = 1
+
+[envs.fzf]
+channels = ["conda-forge"]
+dependencies = { fzf = "*" }
+exposed = { fzf = "fzf" }
+
+[envs.gh]
+channels = ["conda-forge"]
+dependencies = { gh = "*" }
+exposed = { gh = "gh" }
+
+[envs.nvim]
+channels = ["conda-forge"]
+dependencies = { nvim = "*" }
+exposed = { nvim = "nvim" }
+
+[envs.ipython]
+channels = ["conda-forge"]
+dependencies = { ipython = "*" }
+exposed = { ipython = "ipython", ipython3 = "ipython3" }
+
+[envs.btop]
+channels = ["conda-forge"]
+dependencies = { btop = "*" }
+exposed = { btop = "btop" }
+
+[envs.ripgrep]
+channels = ["conda-forge"]
+dependencies = { ripgrep = "*" }
+exposed = { rg = "rg" }
+
+[envs.starship]
+channels = ["conda-forge"]
+dependencies = { starship = "*" }
+exposed = { starship = "starship" }
+
+[envs.direnv]
+channels = ["conda-forge"]
+dependencies = { direnv = "*" }
+exposed = { direnv = "direnv" }
+
+[envs.zoxide]
+channels = ["conda-forge"]
+dependencies = { zoxide = "*" }
+exposed = { zoxide = "zoxide" }

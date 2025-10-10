@@ -219,11 +219,7 @@ bashcompinit
 
 ### End of Zinit's installer chunk
 
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-  eval "$(mise activate zsh --shims)"
-else
-  eval "$(mise activate zsh)"
-fi
+export PATH="$HOME/.pixi/bin:$PATH"
 
 # need to do this after mise
 zinit light loiccoyle/zsh-github-copilot

@@ -63,7 +63,6 @@ ln -s "$(pwd)/wezterm" ~/.config/wezterm
 rm -rf ~/.config/tmux/tmux.conf
 ln -s "$(pwd)/tmux.conf" ~/.config/tmux/tmux.conf
 rm -rf ~/mise
-ln -s "$(pwd)/mise" ~/mise
 rm -rf ~/.config/zed
 ln -s "$(pwd)/zed" ~/.config/zed
 rm -rf ~/.config/jj
@@ -80,3 +79,6 @@ ln -s "$(pwd)/justfile" ~/.config/just/justfile
 
 rm ~/.Brewfile
 ln -s "$(pwd)/Brewfile" ~/.Brewfile
+
+rm ~/.pixi/manifests/pixi-global.toml
+ln -s "$(pwd)/pixi-global.toml" ~/.pixi/manifests/pixi-global.toml
