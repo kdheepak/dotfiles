@@ -358,7 +358,7 @@ exposed = { pixi-pack = "pixi-pack" }
 [envs.data-science]
 channels = ["conda-forge"]
 dependencies = { jupyter = "*", numpy = "*", pandas = "*", matplotlib = "*", ipython = "*" }
-exposed = { jupyter = "jupyter", ipython = "ipython" }
+exposed = { jupyter = "jupyter", ipython = "ipython", python = "python" }
 
 [envs.bun-baseline]
 channels = ["https://prefix.dev/brads-forge"]
