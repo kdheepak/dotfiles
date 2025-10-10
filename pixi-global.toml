@@ -15,11 +15,6 @@ channels = ["conda-forge"]
 dependencies = { nvim = "*" }
 exposed = { nvim = "nvim" }
 
-[envs.ipython]
-channels = ["conda-forge"]
-dependencies = { ipython = "*" }
-exposed = { ipython = "ipython", ipython3 = "ipython3" }
-
 [envs.btop]
 channels = ["conda-forge"]
 dependencies = { btop = "*" }
@@ -320,3 +315,53 @@ exposed = { traefik = "traefik" }
 channels = ["conda-forge"]
 dependencies = { tectonic = "*" }
 exposed = { tectonic = "tectonic" }
+
+[envs.nodejs]
+channels = ["conda-forge"]
+dependencies = { nodejs = "*" }
+exposed = { corepack = "corepack", node = "node", npm = "npm", npx = "npx" }
+
+[envs.openssl]
+channels = ["conda-forge"]
+dependencies = { openssl = "*" }
+exposed = { c_rehash = "c_rehash", openssl = "openssl" }
+
+[envs.pkg-config]
+channels = ["conda-forge"]
+dependencies = { pkg-config = "*" }
+exposed = { "aarch64-apple-darwin20.0.0-pkg-config" = "aarch64-apple-darwin20.0.0-pkg-config", "arm64-apple-darwin20.0.0-pkg-config" = "arm64-apple-darwin20.0.0-pkg-config", pkg-config = "pkg-config", "pkg-config.bin" = "pkg-config.bin" }
+
+[envs.compilers]
+channels = ["conda-forge"]
+dependencies = { compilers = "*" }
+
+[envs.ffmpeg]
+channels = ["conda-forge"]
+dependencies = { ffmpeg = "*" }
+exposed = { ffmpeg = "ffmpeg", ffplay = "ffplay", ffprobe = "ffprobe" }
+
+[envs.imagemagick]
+channels = ["conda-forge"]
+dependencies = { imagemagick = "*" }
+exposed = { "Magick++-config" = "Magick++-config", MagickCore-config = "MagickCore-config", MagickWand-config = "MagickWand-config", animate = "animate", compare = "compare", composite = "composite", conjure = "conjure", convert = "convert", display = "display", identify = "identify", import = "import", magick = "magick", magick-script = "magick-script", mogrify = "mogrify", montage = "montage", stream = "stream" }
+
+[envs.rattler-build]
+channels = ["conda-forge"]
+dependencies = { rattler-build = "*" }
+exposed = { rattler-build = "rattler-build" }
+
+[envs.pixi-pack]
+channels = ["conda-forge"]
+dependencies = { pixi-pack = "*" }
+exposed = { pixi-pack = "pixi-pack" }
+
+[envs.data-science]
+channels = ["conda-forge"]
+dependencies = { jupyter = "*", numpy = "*", pandas = "*", matplotlib = "*", ipython = "*" }
+exposed = { jupyter = "jupyter", ipython = "ipython" }
+
+[envs.bun-baseline]
+channels = ["https://prefix.dev/brads-forge"]
+platform = "osx-64"
+dependencies = { bun-baseline = "*" }
+exposed = { bun = "bun" }

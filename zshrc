@@ -231,8 +231,11 @@ zinit light loiccoyle/zsh-github-copilot
 export PATH="$HOME/local/bin/gams_50_2_0/gams50.2_osx_arm64:$PATH"
 # <<< gams initialize <<<
 
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
 eval "$(uv generate-shell-completion zsh)"
 
 eval "$(starship init zsh)"
@@ -243,4 +246,10 @@ eval "$(zoxide init zsh --cmd cd)"
 
 # eval "$(uvx uv-shell-hook zsh)"
 
-fpath+=~/.zfunc; autoload -Uz compinit; compinit
+autoload -Uz compinit && compinit  # redundant with Oh My Zsh
+eval "$(pixi completion --shell zsh)"
+
+# zsh, default on macOS
+fpath+=(~/.pixi/completions/zsh)
+autoload -Uz compinit
+compinit

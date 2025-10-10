@@ -83,3 +83,6 @@ Backup of *.doc*
 .claude/*
 CLAUDE.local.md
 CLAUDE.md
+# pixi environments
+.pixi/*
+!.pixi/config.toml
