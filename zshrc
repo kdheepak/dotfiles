@@ -244,4 +244,3 @@ eval "$(zoxide init zsh --cmd cd)"
 # eval "$(uvx uv-shell-hook zsh)"
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
-
