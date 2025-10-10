@@ -370,3 +370,8 @@ exposed = { bun = "bun" }
 channels = ["conda-forge"]
 dependencies = { chezmoi = "*" }
 exposed = { chezmoi = "chezmoi" }
+
+[envs.ansible]
+channels = ["conda-forge"]
+dependencies = { ansible = "*" }
+exposed = { ansible-community = "ansible-community", ansible = "ansible" }
