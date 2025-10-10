@@ -365,3 +365,8 @@ channels = ["https://prefix.dev/brads-forge"]
 platform = "osx-64"
 dependencies = { bun-baseline = "*" }
 exposed = { bun = "bun" }
+
+[envs.chezmoi]
+channels = ["conda-forge"]
+dependencies = { chezmoi = "*" }
+exposed = { chezmoi = "chezmoi" }
