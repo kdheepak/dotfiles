@@ -35,6 +35,43 @@ app = typer.Typer(
 )
 console = Console()
 
+DEFAULT_EXCLUDES: list[str] = [
+    # VCS
+    ".git/**",
+    ".hg/**",
+    ".svn/**",
+    # Python caches & artifacts
+    "**/__pycache__/**",
+    "**/*.py[cod]",
+    "**/*.pyo",
+    ".mypy_cache/**",
+    ".pytest_cache/**",
+    ".ruff_cache/**",
+    ".tox/**",
+    # Virtual environments
+    "venv/**",
+    ".venv/**",
+    "env/**",
+    ".env/**",
+    # JS/TS
+    "node_modules/**",
+    # Build / dist outputs
+    "build/**",
+    "dist/**",
+    "target/**",
+    ".next/**",
+    ".turbo/**",
+    # IDE / editor stuff
+    ".vscode/**",
+    ".idea/**",
+    # OS cruft
+    ".DS_Store",
+    "**/.DS_Store",
+    "Thumbs.db",
+    # Logs
+    "**/*.log",
+]
+
 
 def cleanup_file(path: Path):
     if path.exists():
@@ -347,7 +384,7 @@ def main(
         None, "--include", help="Glob pattern of files to include"
     ),
     exclude: list[str] = typer.Option(
-        [".git/**"], "--exclude", help="Glob pattern of files to exclude"
+        DEFAULT_EXCLUDES, "--exclude", help="Glob pattern of files to exclude"
     ),
     git_files: bool = typer.Option(
         False, "--git-files", help="Only include git-tracked files"
