@@ -64,7 +64,7 @@ case "$MIME_TYPE" in
 
     application/zip | application/x-tar | application/x-gzip | application/x-bzip2 | application/x-xz | application/x-7z-compressed)
         if command -v ouch > /dev/null; then
-            ouch list "$FILENAME"
+            ouch list --tree "$FILENAME"
         else
             echo "Archive file: $FILENAME (no archive lister found)"
         fi
