@@ -1,4 +1,5 @@
 #!/usr/bin/env -S uv --quiet run --script
+# -*- coding: utf-8 -*-
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["typer", "rich"]
@@ -71,6 +72,11 @@ DEFAULT_EXCLUDES: list[str] = [
     # Logs
     "**/*.log",
 ]
+
+
+def to_posix(p: Path | str) -> str:
+    """Return a forward-slash path for archive/matching use (ZIP requires '/')."""
+    return p.as_posix() if isinstance(p, Path) else str(p).replace("\\", "/")
 
 
 def cleanup_file(path: Path):
@@ -166,6 +172,8 @@ def filter_files(
 
     def matches_any(path: Path, patterns: list[str]) -> bool:
         return any(fnmatch.fnmatch(str(path), pat) for pat in patterns)
+        ps = to_posix(path)
+        return any(fnmatch.fnmatch(ps, to_posix(pat)) for pat in patterns)
 
     if includes:
         files = [f for f in files if matches_any(f, includes)]
@@ -196,13 +204,11 @@ def archive_zip(files: list[Path], output_file: Path, base_folder: Path):
                 if full_path.exists():
                     console.print(f"  [dim cyan]Adding:[/] {filepath}")
                     progress.update(task, advance=1)
-                    zipf.write(full_path, filepath)
+                    zipf.write(full_path, arcname=to_posix(filepath))
                 else:
                     progress.update(task, advance=1)
 
-            progress.update(
-                task, description=f"[green]ZIP archive created successfully"
-            )
+            progress.update(task, description="[green]ZIP archive created successfully")
 
     return total_size, output_file.stat().st_size
 
@@ -229,12 +235,12 @@ def archive_tar(files: list[Path], output_file: Path, base_folder: Path):
                 if full_path.exists():
                     console.print(f"  [dim cyan]Adding:[/] {filepath}")
                     progress.update(task, advance=1)
-                    tarf.add(full_path, arcname=filepath)
+                    tarf.add(full_path, arcname=to_posix(filepath))
                 else:
                     progress.update(task, advance=1)
 
             progress.update(
-                task, description=f"[green]TAR.GZ archive created successfully"
+                task, description="[green]TAR.GZ archive created successfully"
             )
 
     return total_size, output_file.stat().st_size
@@ -278,7 +284,7 @@ def archive_with_ouch(
         # Print each file added, similar to zip/tar
         for f in files:
             console.print(f"  [dim cyan]Adding:[/] {f}")
-            cmd.append(str(f))
+            cmd.append(to_posix(f))
             progress.update(task, advance=1)
 
     abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
@@ -328,11 +334,11 @@ def show_summary(
     table.add_column("Metric", style="cyan")
     table.add_column("Value", style="green")
     table.add_row("Files", str(len(files)))
-    table.add_row("Original Size", f"{total_size/1024:.2f} KB")
-    table.add_row("Compressed Size", f"{compressed_size/1024:.2f} KB")
+    table.add_row("Original Size", f"{total_size / 1024:.2f} KB")
+    table.add_row("Compressed Size", f"{compressed_size / 1024:.2f} KB")
     table.add_row(
         "Compression Ratio",
-        f"{(1 - compressed_size/total_size)*100:.1f}%" if total_size > 0 else "0%",
+        f"{(1 - compressed_size / total_size) * 100:.1f}%" if total_size > 0 else "0%",
     )
     table.add_row("Output File", str(output_file))
     console.print(table)
@@ -375,7 +381,7 @@ def main(
         None, "--output", "-o", help="Base name of the output archive"
     ),
     fmt: str = typer.Option(
-        "ouch:zip",
+        "zip",
         "--format",
         "-f",
         help="Archive format. zip | tar.gz | ouch:<fmt>",
