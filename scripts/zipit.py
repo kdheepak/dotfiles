@@ -11,6 +11,7 @@ import zipfile
 import tarfile
 import sys
 import fnmatch
+import tempfile
 import shutil
 from pathlib import Path
 from datetime import datetime
@@ -253,9 +254,8 @@ def archive_with_ouch(
     extra_opts: list[str],
 ):
     """
-    Archive files using the external `ouch` tool.
+    Archive files using `ouch`, preserving relative folder structure by staging a tree.
     """
-
     if not shutil.which("ouch"):
         console.print(
             "[red]❌ ouch not found. Please install it and ensure it's in PATH.[/]"
@@ -266,60 +266,75 @@ def archive_with_ouch(
         (base_folder / f).stat().st_size for f in files if (base_folder / f).exists()
     )
 
+    # Build command (format is selected by -f plus the output filename’s extension)
     cmd = ["ouch", "compress", "-f", fmt, "-y", "-q"]
     cmd.extend(extra_opts or [])
 
-    with Progress(
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
-        TaskProgressColumn(),
-        TimeRemainingColumn(),
-        console=console,
-        transient=False,
-    ) as progress:
-        task = progress.add_task(
-            "[cyan]Creating zip archive with ouch", total=len(files)
-        )
-        # Print each file added, similar to zip/tar
-        for f in files:
-            console.print(f"  [dim cyan]Adding:[/] {f}")
-            cmd.append(to_posix(f))
-            progress.update(task, advance=1)
-
     abs_output = output_file if output_file.is_absolute() else Path.cwd() / output_file
 
-    cmd.append(str(abs_output))
+    # Stage a temp tree mirroring the relative paths of `files`
+    with tempfile.TemporaryDirectory(prefix="zipit-") as tmpdir:
+        stage_root = Path(tmpdir)
 
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        console=console,
-        transient=True,
-    ) as progress:
-        task = progress.add_task(
-            f"[cyan]Compressing with ouch ({fmt})…", start=False, total=100
-        )
-        try:
-            subprocess.run(
-                cmd,
-                check=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                cwd=base_folder,
-            )
-            progress.update(
-                task, description=f"[green]ouch archive created successfully ({fmt})[/]"
-            )
-        except subprocess.CalledProcessError as e:
-            progress.update(task, description="[red]❌ ouch compression failed[/]")
-            console.print(
-                f"[red]{e.stderr.decode() if isinstance(e.stderr, bytes) else e.stderr}[/]"
-            )
-            sys.exit(1)
-        progress.update(task, description="[green]ouch archive created successfully")
-        progress.update(task, advance=100)
+        with Progress(
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(),
+            TaskProgressColumn(),
+            TimeRemainingColumn(),
+            console=console,
+            transient=False,
+        ) as progress:
+            task = progress.add_task("[cyan]Staging files for ouch", total=len(files))
 
-    console.print()
+            for rel in files:
+                src = base_folder / rel
+                dst = stage_root / rel  # preserve relative structure
+                if not src.exists():
+                    progress.update(task, advance=1)
+                    continue
+
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    # Fast path: hardlink if possible
+                    if dst.exists():
+                        dst.unlink()
+                    os.link(src, dst)
+                except Exception:
+                    # Fallback: copy with metadata
+                    shutil.copy2(src, dst)
+                progress.update(task, advance=1)
+
+        # Compress the staged folder as inputs, with output file last
+        cmd.append(to_posix(stage_root))
+        cmd.append(str(abs_output))
+
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            console=console,
+            transient=True,
+        ) as progress:
+            task = progress.add_task(
+                f"[cyan]Compressing with ouch ({fmt})…", start=True
+            )
+            try:
+                subprocess.run(
+                    cmd,
+                    check=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    cwd=base_folder,
+                )
+                progress.update(
+                    task,
+                    description=f"[green]ouch archive created successfully ({fmt})[/]",
+                )
+            except subprocess.CalledProcessError as e:
+                progress.update(task, description="[red]❌ ouch compression failed[/]")
+                console.print(
+                    f"[red]{e.stderr.decode() if isinstance(e.stderr, bytes) else e.stderr}[/]"
+                )
+                sys.exit(1)
 
     compressed_size = abs_output.stat().st_size if abs_output.exists() else 0
     return total_size, compressed_size
