@@ -168,10 +168,9 @@ def confirm_overwrite(path: Path, force: bool) -> bool:
 def filter_files(
     files: list[Path], includes: list[str], excludes: list[str]
 ) -> list[Path]:
-    """Filter files with include/exclude patterns."""
+    """Filter files with include/exclude patterns (POSIX-style, stable on Windows)."""
 
     def matches_any(path: Path, patterns: list[str]) -> bool:
-        return any(fnmatch.fnmatch(str(path), pat) for pat in patterns)
         ps = to_posix(path)
         return any(fnmatch.fnmatch(ps, to_posix(pat)) for pat in patterns)
 
