@@ -375,3 +375,8 @@ exposed = { chezmoi = "chezmoi" }
 channels = ["conda-forge"]
 dependencies = { ansible = "*" }
 exposed = { ansible-community = "ansible-community", ansible = "ansible" }
+
+[envs.skim]
+channels = ["conda-forge"]
+dependencies = { skim = "*" }
+exposed = { sk = "sk" }
